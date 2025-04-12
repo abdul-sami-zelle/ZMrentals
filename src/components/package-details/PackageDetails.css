@@ -1,0 +1,54 @@
+.package-details-main-container {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    justify-content: start;
+    gap: 30px;
+    padding: 0 56px;
+    margin-bottom: 112px;
+}
+
+.package-image-container {
+    width: 50%;
+    flex: 1;
+  position: relative;
+}
+
+.package-image {
+    width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.package-detail-description-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 32px;
+    width: 50%;
+    height: auto;
+}
+
+.package-detail-description-container > h3 {
+    font-size: var(--font-heading-lg);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+.package-description-one {
+    font-size: var(--font-body-xl);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
+    color: #000;
+}
+
+.package-description-after-first {
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
+    color: #000;
+}
+

@@ -1,0 +1,58 @@
+.frequently-asked-outer-container {
+    display: flex;
+    width: 100%;
+    align-items: end;
+    justify-content: end;
+    margin-bottom: 112px;
+}
+
+.frequently-asked-inner {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 95%;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.frequently-asked-inner > h3 {
+    font-size: var(--font-heading-lg);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+}
+
+.frequently-asked-ques-anw {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+    padding: 0 40px;
+}
+
+.frequently-asked-single-que-ans {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+    gap: 32px;
+    border-bottom: 1px solid var(--primary-color);
+    padding: 10px 0;
+}
+
+.frequently-asked-single-que-ans > h3 {
+    font-size: var(--font-heading-md);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+.frequently-asked-single-que-ans > p {
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
+    width: 70%;
+    text-align: start;
+}

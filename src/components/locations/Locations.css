@@ -1,0 +1,97 @@
+.location-outer-main-container {
+    display: flex;
+    width: 100%;
+    align-items: end;
+    justify-content: end;
+    margin-bottom: 112px;
+}
+
+.locations-main-container {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    width: 95%;
+    height: auto;
+    background-image: url('/assets/images/nzMapBackground.png');
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    background-position: center;
+    background-size: cover;
+    background-color: rgba(17, 59, 132, 0.4);
+    padding: 56px 120px;
+}
+
+.nz-map-locations {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    background-image: url('/assets/images/nzMap.png');
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    background-position: center;
+    background-size: cover;
+}
+
+.nz-map-locations > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+    width: max-content;
+    margin-left: 120px;
+    font-size: var(--font-body-xl);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary-color);
+}
+
+
+.locations-details-container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: start;
+    justify-content: center;
+    padding: 50px;
+    gap: 32px;
+
+}
+
+.locations-details-container > h3 {
+    font-size: var(--font-heading-lg);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+.locations-details-container > p {
+    font-size: var(--font-body-xl);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
+    color: var(--primary-color);
+    text-align: start;
+}
+
+.locations-list-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 10px;
+    width: 100%;
+}
+
+.locations-list-main-container > a {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    align-items: center;
+    justify-content: start;
+    color: var(--primary-color);
+    font-size: var(--font-body-xl);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-semibold);
+    
+}
+

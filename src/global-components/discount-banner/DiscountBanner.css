@@ -1,0 +1,151 @@
+.discount-banner-main-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: end;
+    margin-bottom: 112px;
+}
+
+.discount-banner-inner-container {
+    display: flex;
+    width: 95%;
+    align-items: center;
+    justify-content: start;
+    background-image: linear-gradient(to bottom left, #0f4bbe, #0c47af, #0c43a1, #0e3f92, #113b84);
+    padding: 16px;
+    cursor: pointer;
+    border-bottom-left-radius: 25px;
+    transition: all 0.3s ease-in-out;
+    
+}
+
+.discount-banner-inner-container:hover {
+    background-image: linear-gradient(to right top, #0f3577, #0c3985, #0a3c93, #0a409f, #0d43ac);
+}
+
+.discount-banner-image-container {
+    width: 40% !important;
+    height: auto !important;
+}
+
+.discount-banner-image {
+    border-top-right-radius: 25px !important;
+    border-bottom-left-radius: 25px !important;
+}
+
+.discount-banner-details-and-subscribe-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 60%;
+    flex-shrink: 0;
+    padding: 0 32px;
+}
+
+.discount-banner-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 5px;
+    justify-content: space-between;
+
+}
+
+.mobile-view-paragraph {
+    display: none;
+}
+
+.mobile-view-discount-banner-heading {
+    display: none;
+}
+
+.discount-banner-detail-container > span {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+}
+
+.discount-banner-detail-container > span > h3 {
+    font-size: var(--font-heading-md);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-white);
+}
+
+.discount-banner-detail-container > span > p {
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-white);
+}
+
+.discount-banner-inner-container:hover .secondary-prop-class {
+    background-color: var(--color-white) !important;
+    border: 2px solid var(--color-white) !important;
+    color: var(--primary-color) !important;
+}
+
+@media only screen and (max-width: 480px) {
+    .discount-banner-inner-container {
+        flex-direction: column;
+        gap: 15px;
+        width: 100% !important;
+        border-top-right-radius: 25px;
+        gap: 40px;
+    }
+    .discount-banner-image-container {
+        width: 100% !important;
+        
+    }
+    .discount-banner-image {
+        min-height: 92px !important;
+    }
+    .discount-banner-details-and-subscribe-button-container {
+        flex-direction: column;
+        width: 100%;
+        align-items: start;
+        justify-content: start;
+        padding: 0;
+        gap: 30px;
+    }
+
+    .discount-banner-detail-container {
+        width: 100%;
+        align-items: start;
+        justify-content: start;
+        gap: 5px;
+    }
+    .discount-banner-detail-container > span {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-shrink: 0;
+        gap: 5px;
+    }
+
+    .discount-banner-detail-container > span > h3 {
+        
+        display: none;
+    }
+    .mobile-view-discount-banner-heading {
+        display: flex;
+        /* font-size: var(--font-heading-md); */
+        font-size: 18px;
+        line-height: var(--line-height-heading);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-white);
+    }
+
+    .discount-banner-detail-container > span > p {
+        display: none;
+    }
+    .mobile-view-paragraph {
+        display: flex;
+        font-size: var(--font-body-md);
+        line-height: var(--line-height-body);
+        font-weight: var(--font-weight-regular);
+        color: var(--color-white);
+        text-align: start;
+    }
+}
