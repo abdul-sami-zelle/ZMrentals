@@ -1,7 +1,7 @@
 import React from 'react'
 import './FeedbackGallery.css';
-import homeRoadImageOne from '../../assets/images/feedback-gallery/Home_Road_Support_1.avif'
-import homeRoadImageTwo from '../../assets/images/feedback-gallery/Home_Road_Support_2.avif'
+import homeRoadImageOne from '../../assets/images/feedback-gallery/Home_Road_Support_1.jpg'
+import homeRoadImageTwo from '../../assets/images/feedback-gallery/Home_Road_Support_2.jpg'
 import Image from 'next/image';
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton';
 

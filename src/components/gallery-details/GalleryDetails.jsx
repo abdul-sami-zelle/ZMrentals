@@ -3,9 +3,9 @@ import React from 'react'
 import './GalleryDetails.css'
 import PrimaryButton from '@/global-components/primary-button/PrimaryButton'
 import { GoArrowRight } from "react-icons/go";
-import imageOne from '../../assets/images/mix/Home_Fair_Rentals.avif';
-import qualityVehicle from '../../assets/images/mix/Home_Quality_Vehicle_1.avif';
-import qualityVehicleTwo from '../../assets/images/mix/Home_Quality_Vehicle_2.avif'
+import imageOne from '../../assets/images/mix/Home_Fair_Rentals.jpg';
+import qualityVehicle from '../../assets/images/mix/Home_Quality_Vehicle_1.jpg';
+import qualityVehicleTwo from '../../assets/images/mix/Home_Quality_Vehicle_2.jpg'
 import Image from 'next/image';
 
 const GalleryDetails = ({ flexDirection }) => {

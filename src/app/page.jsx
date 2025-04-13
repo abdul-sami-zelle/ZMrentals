@@ -11,7 +11,7 @@ import Locations from '../components/locations/Locations'
 import FrequentlyAsked from '../components/frequently-asked/FrequentlyAsked'
 import RollingContent from '../components/rolling-content/RollingContent'
 
-import discountBannerImage from '../assets/images/discount-banners/GO_Rentals_Newsletter.avif'
+import discountBannerImage from '../assets/images/discount-banners/GO_Rentals_Newsletter.jpg'
 
 export default function Home() {
 

@@ -13,8 +13,8 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { HiOutlineUserCircle } from "react-icons/hi2";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 
-import beforeImage from '../../assets/images/explore-nz/Travel_Guides_menu_Tablet.avif'
-import carImage from '../../assets/images/cars/small_cars_menu_Tablet.avif'
+import beforeImage from '../../assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg'
+import carImage from '../../assets/images/cars/small_cars_menu_Tablet.jpg'
 
 const Navbar = () => {
   const [currentIndex, setCurrentIndex] = useState(null);

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import './PackageDetails.css'
-import packageImage from '../../assets/images/mix/carbonClick-home.avif'
+import packageImage from '../../assets/images/mix/carbonClick-home.jpg'
 import Image from 'next/image'
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton'
 

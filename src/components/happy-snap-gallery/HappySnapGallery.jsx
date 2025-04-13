@@ -1,8 +1,8 @@
 import React from 'react'
 import './HappySnapGallery.css';
-import snapOne from '../../assets/images/happy-snap/Home_GO_Snap_Happy_0.avif'
-import snapTwo from '../../assets/images/happy-snap/Home_GO_Snap_Happy_1.avif'
-import snapThree from '../../assets/images/happy-snap/Home_GO_Snap_Happy_2.avif'
+import snapOne from '../../assets/images/happy-snap/Home_GO_Snap_Happy_0.jpg'
+import snapTwo from '../../assets/images/happy-snap/Home_GO_Snap_Happy_1.jpg'
+import snapThree from '../../assets/images/happy-snap/Home_GO_Snap_Happy_2.jpg'
 import mainLogo from '../../assets/logo.png';
 import Image from 'next/image';
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton';
