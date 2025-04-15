@@ -78,7 +78,7 @@ const Navbar = () => {
       data: [
         { name: 'Before You Book', image: beforeImage, link: '#', width: '209px', height: '104px' },
         { name: 'Ahead of Your Trip', image: beforeImage, link: '#', width: '209px', height: '104px' },
-        { name: 'Help on the roads', image: beforeImage, link: '#', width: '209px', height: '104px' },
+        { name: 'Help on the Roads', image: beforeImage, link: '#', width: '209px', height: '104px' },
         { name: 'After Your Journey', image: beforeImage, link: '#', width: '209px', height: '104px' },
         { name: 'Account and App', image: beforeImage, link: '#', width: '209px', height: '104px' },
       ]
