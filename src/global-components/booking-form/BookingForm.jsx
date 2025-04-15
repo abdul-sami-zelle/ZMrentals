@@ -5,7 +5,7 @@ import PrimaryButton from '../primary-button/PrimaryButton';
 import { GoArrowRight } from "react-icons/go";
 import Calendar from 'react-calendar';
 
-const BookingForm = ({ bgColor, textColor }) => {
+const BookingForm = ({ bgColor, textColor, primaryButtonText }) => {
 
     // const [showCalendar, setShowCalendar] = useState(false);
     const [pickupCalender, setPickupCalender] = useState(false);
@@ -161,7 +161,7 @@ const BookingForm = ({ bgColor, textColor }) => {
             <div className='booking-form-confirm-button-container'>
                 <PrimaryButton
                     primaryMainClass={'primary-button-main-class'}
-                    primaryText={'Subscribe'}
+                    primaryText={primaryButtonText}
                     primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}
                     width={'192px'}
                     height={'52px'}

@@ -19,7 +19,7 @@ export default function Home() {
     `
       We’ve partnered with CarbonClick to help you effortlessly reduce the environmental impact of your travel here 
       in New Zealand, contributing to a more sustainable tourism sector in Aotearoa. Find out more about the projects 
-      offsetting your carbon emissions when you rent a car with GO. We have also achieved a Toitū recertification 
+      offsetting your carbon emissions when you rent a car with ZM. We have also achieved a Toitū recertification 
       and are investing carbon credits in support of the highest quality carbon offsetting projects both in New 
       Zealand and internationally.
     `,
@@ -27,7 +27,7 @@ export default function Home() {
 
   const packageDescriptionTwo = [
     `
-      We’re on a mission at GO Rentals to make travel more sustainable in New Zealand for Kiwis and international visitors.
+      We’re on a mission at ZM Rentals to make travel more sustainable in New Zealand for Kiwis and international visitors.
       As well as our fleet of zero emission electric vehicles and eco-friendly hybrid vehicles, we are a Toitū certified business, 
       plus we’re also integrating Tiaki across our business.
     `,
@@ -39,7 +39,7 @@ export default function Home() {
 
   const pickAndDropDetails = [
     `
-      With our GO App, you'll be on the road (and on your holiday) faster.
+      With our ZM App, you'll be on the road (and on your holiday) faster.
     `,
     `
       Keep all your car rental info close at hand with no need to trawl through your emails. Our app icon is 
@@ -49,7 +49,7 @@ export default function Home() {
 
   const aboutGoRentals = [
     `
-      Here at GO we’re all about helping our customers turn their daydream into reality.
+      Here at ZM we’re all about helping our customers turn their daydream into reality.
     `,
     `
       Whether it’s a weekend away or the adventure of a lifetime, we’re excited to be part of your trip.
@@ -58,7 +58,7 @@ export default function Home() {
       We'll take care of the important stuff and point out the fun things you can do while on the road - freeing you up to really enjoy the journey.
     `,
     `
-      GO love every moment with the perfect rental car for your journey.
+      ZM love every moment with the perfect rental car for your journey.
     `,
   ]
 
@@ -105,7 +105,7 @@ export default function Home() {
       <HappySnapGallery />
 
       <PackageDetails
-        packageHeading={'About GO Rentals'}
+        packageHeading={'About ZM Rentals'}
         data={aboutGoRentals}
         flexDirection={'row-reverse'}
         // buttonText={'Download App'}

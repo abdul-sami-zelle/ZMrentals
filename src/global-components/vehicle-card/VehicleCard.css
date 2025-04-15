@@ -1,0 +1,109 @@
+.vehicle-card-main-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+    gap: 0;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    overflow: hidden;
+    border: 1px solid #f9f9f9;
+}
+
+.vehicle-card-image-container {
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+
+.vehicle-card-image-container > img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.vehicle-details-container {
+    display: flex;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    gap: 0;
+}
+
+.vehicle-name-and-price {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+    padding: 16px;
+}
+
+.vehicle-name-and-price > span {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--primary-color);
+}
+
+.vehicle-name-and-price > span > h3 {
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-bold);
+}
+
+.vehicle-name-and-price > span > p {
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
+}
+
+.vehicle-price-heading {
+    font-size: var(--font-body-lg);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-body);
+    color: var(--primary-color);
+}
+
+.vehicle-type {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    background-color: #F0F0F0;
+}
+
+.vehicle-fuel-type-and-gear-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    gap: 15px;
+
+}
+
+.vehicle-fuel-type-and-gear-container > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    gap: 5px;
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
+}
+
+.vehicle-type-info {
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+

@@ -25,10 +25,10 @@ const Locations = () => {
           </span>
         </div>
         <div className='locations-details-container'>
-          <h3>GO all across NZ</h3>
+          <h3>ZM all across NZ</h3>
           <p>
             We have nine car rental branches spread evenly throughout New Zealand, in the major destinations of Auckland,
-            Wellington, Christchurch, Nelson, Queenstown, Dunedin and Invercargill so that you’re never far from a GO rental car.
+            Wellington, Christchurch, Nelson, Queenstown, Dunedin and Invercargill so that you’re never far from a ZM rental car.
           </p>
           <div  className='locations-list-main-container'>
             {locationsData.map((item, index) => (

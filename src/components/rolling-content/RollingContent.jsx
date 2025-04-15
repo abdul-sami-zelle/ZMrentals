@@ -21,7 +21,7 @@ const RollingContent = () => {
                     What is fun is planning the holiday and being free to really enjoy the journey.
                 `,
                 `
-                    Visitor experience is extremely important to us at GO. From booking online via our website, to pick-up and drop-off,
+                    Visitor experience is extremely important to us at ZM. From booking online via our website, to pick-up and drop-off,
                      we’ve worked hard to make every part of your booking journey reflect that easy holiday feeling.
                 `,
                 `
@@ -35,7 +35,7 @@ const RollingContent = () => {
                 `,
                 `
                     But don’t just take our word for it - check out the reviews of those who have come before you and then come and 
-                    experience GO Rentals for yourself.
+                    experience ZM Rentals for yourself.
                 `,
             ]
         },
@@ -48,19 +48,19 @@ const RollingContent = () => {
                     and prices we understand that you’ve done your research.
                 `,
                 `
-                    So you know you can trust us when we tell you that here at GO, we’re proud to offer some of New Zealand’s most 
+                    So you know you can trust us when we tell you that here at ZM, we’re proud to offer some of New Zealand’s most 
                     competitive hire car rates. Whether you’re after one of our super spacious 4x4s or maybe something a bit more 
                     economical, we’ve got some great deals.
                 `,
                 `
-                    When you hire a car with GO, you’re guaranteed our excellent customer service from the first contact right through 
+                    When you hire a car with ZM, you’re guaranteed our excellent customer service from the first contact right through 
                     to dropping off your keys, regardless of whether you want to do that by chatting with our excellent team in person 
                     or prefer to go digital on the app. Car rental in NZ doesn’t need to be complicated, so we’ve made things as simple 
                     as we can so you can spend more time planning your trip of a lifetime.
                 `,
                 `
                     Oh and don’t forget that with GO you’ll get unlimited kilometres and free basic car rental insurance to ensure a 
-                    stress-free journey. It really does pay to rent with GO.
+                    stress-free journey. It really does pay to rent with ZM.
                 `,
             ]
         }

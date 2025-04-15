@@ -5,6 +5,7 @@
     align-items: start;
     justify-content: start;
     gap: 32px;
+    cursor: pointer;
 }
 
 .car-details-main-container > h3 {
@@ -39,3 +40,12 @@
 .car-details-description-and-all-vehicles-link-container > a:hover {
     color: var(--secondary-color);
 }
+
+.cars-cars-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    column-gap: 18px;
+    row-gap: 18px;
+}
+

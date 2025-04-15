@@ -34,3 +34,47 @@
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
 }
+
+.group-car-rental-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 32px;
+    margin-top: 80px;
+}
+
+.group-car-rental-main-container > h3 {
+    font-size: var(--font-heading-sm);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+    /* color: var(--primary-color); */
+}
+
+.group-items {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    padding-left: 16px;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.group-items > span {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: max-content;
+    gap: 16px;
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-medium);
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.group-items > span:hover {
+    color: var(--secondary-color);
+}

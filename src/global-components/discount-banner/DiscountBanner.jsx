@@ -22,11 +22,11 @@ const DiscountBanner = ({ discountImage }) => {
             </span>
             <h3 className='mobile-view-discount-banner-heading'>Save 10% on your next adventure</h3>
             <span>
-              <p>Join our GO newsletter for exclusive deals, travel tips</p>
+              <p>Join our ZM newsletter for exclusive deals, travel tips</p>
               <p>and inspirations</p>
             </span>
             <p className='mobile-view-paragraph'>
-              Join our GO newsletter for exclusive deals, travel tips and inspirations
+              Join our ZM newsletter for exclusive deals, travel tips and inspirations
             </p>
           </div>
           <SecondaryButton

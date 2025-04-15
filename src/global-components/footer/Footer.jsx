@@ -7,9 +7,9 @@ const Footer = () => {
 
   const footerData = [
     { name: 'Home', link: '#' },
-    { name: 'GO Zero', link: '#' },
-    { name: 'GO Tesla', link: '#' },
-    { name: 'GO App', link: '#' },
+    { name: 'ZM Zero', link: '#' },
+    { name: 'ZM Tesla', link: '#' },
+    { name: 'ZM App', link: '#' },
     {
       name: 'Vehicles', link: '#', footerItems: [
         { itemName: 'Small Cars', itemLink: '#' },
@@ -57,7 +57,7 @@ const Footer = () => {
       name: 'Explore NZ', link: '#', footerItems: [
         { itemName: 'Trip planner', itemLink: '#' },
         { itemName: 'Travel Guide', itemLink: '#' },
-        { itemName: 'GO Play', itemLink: '#' },
+        { itemName: 'ZM Play', itemLink: '#' },
         { itemName: 'Travel blog', itemLink: '#' },
         { itemName: 'Snap happy', itemLink: '#' },
         { itemName: 'Drive safe', itemLink: '#' },

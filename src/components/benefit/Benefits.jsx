@@ -24,7 +24,7 @@ const Benefits = () => {
   ]
   return (
     <div className='benefits-main-container'>
-      <h3>Reasons to GO with us</h3>
+      <h3>Reasons to ZM with us</h3>
       <div className='benefits-options-main-container'>
         {benefitsDetails.map((item, index) => (
           <React.Fragment key={index}>

@@ -123,7 +123,9 @@ const Navbar = () => {
   return (
     <>
       <div className='navbar-main-container'>
-        <Image src={logoImage} alt="Logo" className="navbar-logo" />
+      <Link href={'/'}>
+          <Image src={logoImage} alt="Logo" className="navbar-logo" />
+      </Link>
         <nav className="navbar">
           <ul className="navbar-list">
             {navData.map((item) => (

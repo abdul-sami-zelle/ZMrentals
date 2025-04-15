@@ -9,18 +9,18 @@ const Hero = () => {
             <div className='hero-section-content-container'>
                 <div className='hero-section-main-heading-container'>
                     <h3>
-                        Celebrating 25 Years of GO: <br />  WIN Your Share of $25,000!*
+                        Celebrating 25 Years of ZM: <br />  WIN Your Share of $25,000!*
                     </h3>
                 </div>
                 <div className='hero-section-main-pera-container'>
                     <p>
-                          GO in to <strong> WIN 1 of 25 car hire vouchers valued at $1,000 each </strong> when you book <br /> your car rental
+                          ZM in to <strong> WIN 1 of 25 car hire vouchers valued at $1,000 each </strong> when you book <br /> your car rental
                           with travel concluded by 31 March 2026 <strong> *See the full T&Cs here </strong>
                     </p>
                 </div>
                 <div className='booking-form-container-parent'>
                     <div className='booking-form-width-control-container'>
-                        <BookingForm bgColor={'var(--color-white)'} textColor={'var(--color-white)'} />
+                        <BookingForm bgColor={'var(--color-white)'} textColor={'var(--color-white)'} primaryButtonText={'Subscribe'} />
                     </div>
                 </div>
             </div>

@@ -1,33 +1,47 @@
 import React from 'react'
 import './VehicleCard.css';
 import Image from 'next/image';
+import { BsFillFuelPumpFill, BsFillGearFill } from "react-icons/bs";
 
-const VehicleCard = ({ vehicleImage, vehicleName, vehicleAge, vehiclePriceProp, transmissionIcon, transmission, fuelTypeIcon, fuelType }) => {
+const VehicleCard = (
+  { 
+    vehicleImage, 
+    vehicleName, 
+    vehicleAge, 
+    seePrice, 
+    transmission, 
+    fuelType 
+  }) => {
+
   return (
     <div className='vehicle-card-main-container'>
+        <div className='vehicle-card-image-container'>
+          <Image src={vehicleImage} alt='small car' />
+        </div>
+        <div className='vehicle-details-container'>
+            <div className='vehicle-name-and-price'>
+                <span>
+                  <h3>{vehicleName}</h3>
+                  <p>{vehicleAge}</p>
+                </span>
+                <h3 className='vehicle-price-heading'>{seePrice}</h3>
+            </div>
+            <div className='vehicle-type'>
+              <div className='vehicle-fuel-type-and-gear-container'>
+                <span>
+                  <BsFillGearFill size={20} color='var(--primary-color)' />
+                  {transmission}
+                </span>
 
-      {/* <Image src={vehicleImage} alt='vehicle image' className='vehicle-card-image' /> */}
-      <div>
-        <div>
-          <h3>{vehicleName}</h3>
-          <p>{vehicleAge}</p>
-          <hr />
-          <h3>{vehiclePriceProp}</h3>
+                <span>
+                  <BsFillFuelPumpFill size={20} color='var(--primary-color)' />
+                  {fuelType}
+                </span>
+              </div>
+
+              <p className='vehicle-type-info'>+info</p>
+            </div>
         </div>
-        <div>
-          <div>
-            <span>
-              {transmissionIcon}
-              {transmission}
-            </span>
-            <span>
-              {fuelTypeIcon}
-              {fuelType}
-            </span>
-          </div>
-          <h3>+info</h3>
-        </div>
-      </div>
     </div>
   )
 }

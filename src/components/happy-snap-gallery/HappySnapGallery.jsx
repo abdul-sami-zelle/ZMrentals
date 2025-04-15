@@ -15,9 +15,9 @@ const HappySnapGallery = () => {
 
             <div className='happy-snap-description-main-container'>
                 <Image src={mainLogo} alt='logo' className='happy-snap-logo' />
-                <h3>GO Snap Happy</h3>
+                <h3>ZM Snap Happy</h3>
                 <p>
-                      At GO Rentals, we love being a part of your travel journey and helping you make wonderful memories.
+                      At ZM Rentals, we love being a part of your travel journey and helping you make wonderful memories.
                       Snap a picture of your travels around New Zealand, and be in to win up to $500 of the cost of your rental back.
                 </p>
 
@@ -53,9 +53,9 @@ const HappySnapGallery = () => {
             </div>
             <div className='happy-snap-desktop-description-container'>
                 <Image src={mainLogo} alt='desktop logo' className='happy-snap-desktop-logo' />
-                <h3>GO Snap Happy</h3>
+                <h3>ZM Snap Happy</h3>
                 <p>
-                      At GO Rentals, we love being a part of your travel journey and helping you make wonderful memories.
+                      At ZM Rentals, we love being a part of your travel journey and helping you make wonderful memories.
                       Snap a picture of your travels around New Zealand, and be in to win up to $500 of the cost of your rental back.
                 </p>
                   <SecondaryButton

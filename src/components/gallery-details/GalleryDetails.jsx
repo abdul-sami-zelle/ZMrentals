@@ -11,7 +11,7 @@ import Image from 'next/image';
 const GalleryDetails = ({ flexDirection }) => {
     const descriptionsData = [
         `
-            We make renting a car in New Zealand ridiculously simple. Apart from GO Rentals being one of New Zealand’s 
+            We make renting a car in New Zealand ridiculously simple. Apart from ZM Rentals being one of New Zealand’s 
             largest independent car rental companies, we also have brand new cars of all shapes and sizes to best suit the 
             holiday you’ve got planned.
         `,
@@ -29,7 +29,7 @@ const GalleryDetails = ({ flexDirection }) => {
         `,
         `
             Don’t worry if you’re not built for the internet though as we have a helpful team of road savvy experts happy to 
-            chat on the phone and answer your questions or take care of the booking for you. GO Rentals - making car hire in New 
+            chat on the phone and answer your questions or take care of the booking for you. ZM Rentals - making car hire in New 
             Zealand simple for over 20 years.
         `,
     ]
@@ -40,7 +40,7 @@ const GalleryDetails = ({ flexDirection }) => {
     <div className='gallery-details-main-container' style={{flexDirection: flexDirection}}>
 
         <div className='gallery-details-descriptions'>
-              <h3>NZ Car Rental <br /> Made Easy</h3>
+              <h3>ZM Car Rental <br /> Made Easy</h3>
               {descriptionsData.map((item, index) => (
                 <p key={index} className={index === 0 ? 'gallery-main-description' : 'gallery-second-description'}>{item}</p>
               ))}

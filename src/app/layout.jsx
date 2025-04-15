@@ -22,7 +22,7 @@ export const metadata = {
 export default function RootLayout({children}) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning>
+      <body suppressHydrationWarning style={{backgroundColor: '#FFFFFF'}}>
         <Header />
         {children}
         <Footer />
