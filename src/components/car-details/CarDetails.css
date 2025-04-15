@@ -1,0 +1,41 @@
+.car-details-main-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+    gap: 32px;
+}
+
+.car-details-main-container > h3 {
+    font-size: var(--font-heading-sm);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+.car-details-description-and-all-vehicles-link-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 16px;
+}
+
+.car-details-description-and-all-vehicles-link-container > p {
+    font-size: var(--font-body-lg);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-body);
+}
+
+.car-details-description-and-all-vehicles-link-container > a {
+    color: var(--primary-color);
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-bold);
+}
+
+.car-details-description-and-all-vehicles-link-container > a:hover {
+    color: var(--secondary-color);
+}
