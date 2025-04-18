@@ -4,6 +4,7 @@
     width: 100%;
     align-items: start;
     justify-content: start;
+    /* min-width: 320px; */
     gap: 0;
     height: auto;
     border-radius: 15px;
@@ -18,7 +19,7 @@
     height: auto;
 }
 
-.vehicle-card-image-container > img {
+.vehicle-card-image-container>img {
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -41,7 +42,7 @@
     padding: 16px;
 }
 
-.vehicle-name-and-price > span {
+.vehicle-name-and-price>span {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -52,13 +53,13 @@
     border-bottom: 1px solid var(--primary-color);
 }
 
-.vehicle-name-and-price > span > h3 {
+.vehicle-name-and-price>span>h3 {
     font-size: var(--font-body-lg);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-bold);
 }
 
-.vehicle-name-and-price > span > p {
+.vehicle-name-and-price>span>p {
     font-size: var(--font-body-md);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
@@ -89,7 +90,7 @@
 
 }
 
-.vehicle-fuel-type-and-gear-container > span {
+.vehicle-fuel-type-and-gear-container>span {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -107,3 +108,10 @@
     color: var(--primary-color);
 }
 
+@media only screen and (max-width: 480px) {
+    .vehicle-card-main-container {
+        flex: 0 0 auto !important;
+        min-width: 250px !important; /* You can adjust this based on your design */
+        width: auto !important; /* Override the desktop 100% */
+      }
+}

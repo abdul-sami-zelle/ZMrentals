@@ -17,7 +17,7 @@ const PackageDetails = ({ data, packageHeading, flexDirection, buttonText, displ
         <div className='package-detail-description-container'>
               <h3>{packageHeading}</h3>
               {data.map((item, index) => (
-                <p key={index} className={index === 0 ? 'package-description-one' : 'package-description-after-first'}>{item}</p>
+                <p key={index} className={index === 0 ? 'mobile-package-description-one' : 'mobile-package-description-after-first'}>{item}</p>
               ))}
               <SecondaryButton
                   secondaryButtonClass={'secondary-prop-class'}
@@ -28,7 +28,7 @@ const PackageDetails = ({ data, packageHeading, flexDirection, buttonText, displ
                   textColor={'var(--primary-color)'}
                   fontSize={'var(--font-body-lg)'}
                   lineHeight={'var(--line-height-body)'}
-                  fontWeight={'var(--font-weight-body)'}
+                  fontWeight={'var(--font-weight-bold)'}
                   secondaryText={buttonText}
                   display={display}
               />

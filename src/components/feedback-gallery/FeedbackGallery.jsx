@@ -10,7 +10,7 @@ const FeedbackGallery = () => {
     <div className='feedback-gallery-main-container'>
         
         <div className='feedback-gallery-images-container'>
-              <Image src={homeRoadImageOne} alt='home road support' className='feedback-gallery-image' />
+              <Image src={homeRoadImageOne} alt='home road support' className='feedback-gallery-image' /> 
             <Image src={homeRoadImageTwo} alt='home road support' className='feedback-gallery-image-two' />
         </div>
         <div className='feedback-gallery-description-container'>

@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './CarDetails.css';
 import Link from 'next/link';
 import VehicleCard from '../../global-components/vehicle-card/VehicleCard'
+import CarDetailsModal from '@/modals/car-details-modal/CarDetailsModal';
 
 
 
 const CarDetails = ({data, openModal}) => {
+
+    const [showDetalModal, setShowDetailModal] = useState(false);
+  const handleOpenDetailsModal = (item) => {
+    setShowDetailModal(true);
+  }
+  const handleCloseModal = () => {
+    setShowDetailModal(false)
+  }
     return (
         <div className='car-details-main-container' onClick={openModal}>
             <h3>{data.heading}</h3>
@@ -23,11 +32,15 @@ const CarDetails = ({data, openModal}) => {
                     seePrice={car.seePrice}
                     transmission={car.transmission}
                     fuelType={car.fuelType}
+                    handleModalOpen={handleOpenDetailsModal}
                 />
                 ) )}
             </div>
 
-            
+            <CarDetailsModal 
+        showModal={showDetalModal}
+        handleClose={handleCloseModal}
+      />
             
         </div>
     )

@@ -5,7 +5,7 @@ import PrimaryButton from '../primary-button/PrimaryButton';
 import { GoArrowRight } from "react-icons/go";
 import Calendar from 'react-calendar';
 
-const BookingForm = ({ bgColor, textColor, primaryButtonText }) => {
+const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
 
     // const [showCalendar, setShowCalendar] = useState(false);
     const [pickupCalender, setPickupCalender] = useState(false);
@@ -65,7 +65,7 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText }) => {
     };
 
     return (
-        <div className='booking-form-main-container'>
+        <div className='booking-form-main-container' style={{boxShadow: boxShadow}}>
             <div className='booking-form-inputs-container'>
                 <div className='booking-form-inputs'>
                     <div className='booking-form-input-single-col'>

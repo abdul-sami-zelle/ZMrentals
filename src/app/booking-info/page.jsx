@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import './BookingInfo.css';
 import ServicesHero from '@/components/services-hero/ServicesHero';
@@ -54,6 +55,7 @@ const BookingInfo = () => {
         </div>
         <DiscountBanner
           discountImage={discountBannerImage}
+          marginBottom={'57px'}
         />
       </div>
     </div>

@@ -20,7 +20,7 @@ const Hero = () => {
                 </div>
                 <div className='booking-form-container-parent'>
                     <div className='booking-form-width-control-container'>
-                        <BookingForm bgColor={'var(--color-white)'} textColor={'var(--color-white)'} primaryButtonText={'Subscribe'} />
+                        <BookingForm bgColor={'var(--color-white)'} boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px;'} textColor={'var(--color-white)'} primaryButtonText={'Subscribe'} />
                     </div>
                 </div>
             </div>

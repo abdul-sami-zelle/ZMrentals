@@ -49,3 +49,14 @@
     row-gap: 18px;
 }
 
+@media only screen and (max-width: 480px) {
+    .cars-cars-container {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 16px;
+        padding-bottom: 10px; /* Optional: avoid scrollbar hiding cards */
+      }
+}

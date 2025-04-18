@@ -16,7 +16,7 @@ const Header = () => {
     {name: 'NZ 099741598', icon: MdOutlinePhoneIphone , down: MdOutlineArrowDropDown},
     { name: 'Email us', icon: IoMailOutline},
     { name: 'Manage Booking', icon: FaRegCheckCircle},
-    { name: 'Check-in', icon: FaRegCheckCircle},
+    // { name: 'Check-in', icon: FaRegCheckCircle},
     { name: 'Sign in', icon: HiOutlineUserCircle},
   ]
 

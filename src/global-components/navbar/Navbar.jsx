@@ -15,8 +15,11 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 
 import beforeImage from '../../assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg'
 import carImage from '../../assets/images/cars/small_cars_menu_Tablet.jpg'
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
+
+  const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(null);
   const navData = [
     { id: 1, name: 'Fleet /Vehicles', dropdown: true, link: '/vehicles' },
@@ -117,15 +120,20 @@ const Navbar = () => {
     document.body.style.overflow = shouldDisableScroll ? "hidden" : "auto";
   }, [openMenu]);
 
-  useEffect(() => {console.log("current index", currentIndex)}, [currentIndex])
+  const handleNavigate = (link) => {
+    router.push(link)
+    setOpenMenu(false)
+  } 
+
+  useEffect(() => { console.log("current index", currentIndex) }, [currentIndex])
 
 
   return (
     <>
       <div className='navbar-main-container'>
-      <Link href={'/'}>
+        <Link href={'/'}>
           <Image src={logoImage} alt="Logo" className="navbar-logo" />
-      </Link>
+        </Link>
         <nav className="navbar">
           <ul className="navbar-list">
             {navData.map((item) => (
@@ -133,7 +141,7 @@ const Navbar = () => {
                 key={item.id}
                 className={`navbar-item ${currentIndex === item.id ? 'active' : ''}`}
                 onMouseOver={() => setCurrentIndex(item.id)}
-              onMouseLeave={() => setCurrentIndex(null)}
+                onMouseLeave={() => setCurrentIndex(null)}
               >
                 <Link
                   href={item.link}
@@ -147,7 +155,9 @@ const Navbar = () => {
       </div>
 
       <div className='mobile-view-menu-main-container'>
-        <Image src={logoImage} alt='logo image' className='mobile-view-logo' />
+        <Link href={'/'}>
+          <Image src={logoImage} alt='logo image' className='mobile-view-logo' />
+        </Link>
         <button className='mobile-menu-toggler' onClick={handleMenuToggler}>
           <IoMenuSharp size={25} />
         </button>
@@ -165,8 +175,8 @@ const Navbar = () => {
           <div className='mobile-menu-nav-items-container'>
             <ul className='mobile-menu-list'>
               {navData.map((item) => (
-                <li key={item.id} className='mobile-menu-list-item'>
-                  <Link href={item.link}>{item.name}</Link>
+                <li key={item.id} className='mobile-menu-list-item' >
+                  <p onClick={() => handleNavigate(item.link)}>{item.name}</p>
                 </li>
               ))}
             </ul>
@@ -212,7 +222,7 @@ const Navbar = () => {
       {/* Drop down  */}
       {
         currentIndex !== null && navData.find((item) => item.id === currentIndex)?.dropdown && (
-          <div 
+          <div
             className={`nav-drop-down-main-container ${currentIndex !== null ? 'show-drop-down' : ''} `}
             onMouseEnter={() => setCurrentIndex(currentIndex)}
             // Close the dropdown when the cursor leaves
@@ -237,7 +247,7 @@ const Navbar = () => {
         )
       }
 
-      
+
 
     </>
   )

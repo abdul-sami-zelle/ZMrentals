@@ -9,6 +9,7 @@ import qualityVehicleTwo from '../../assets/images/mix/Home_Quality_Vehicle_2.jp
 import Image from 'next/image';
 
 const GalleryDetails = ({ flexDirection }) => {
+
     const descriptionsData = [
         `
             We make renting a car in New Zealand ridiculously simple. Apart from ZM Rentals being one of New Zealand’s 
@@ -34,38 +35,65 @@ const GalleryDetails = ({ flexDirection }) => {
         `,
     ]
 
-    
+    return (
+        <>
+            <div className='gallery-details-main-container' style={{ flexDirection: flexDirection }}>
 
-  return (
-    <div className='gallery-details-main-container' style={{flexDirection: flexDirection}}>
+                <div className='gallery-details-descriptions'>
+                    <h3>ZM Car Rental <br /> Made Easy</h3>
+                    {descriptionsData.map((item, index) => (
+                        <p key={index} className={index === 0 ? 'gallery-main-description' : 'gallery-second-description'}>{item}</p>
+                    ))}
+                    <PrimaryButton
+                        primaryMainClass={'primary-button-main-class'}
+                        primaryText={'Subscribe'}
+                        primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}
+                        width={'192px'}
+                        height={'52px'}
+                        gap={'20px'}
+                        fontSize={'var(--font-body-lg)'}
+                        lineHeight={'var(--line-height-body)'}
+                        fontWeight={'var(--font-weight-bold)'}
+                    />
+                </div>
 
-        <div className='gallery-details-descriptions'>
-              <h3>ZM Car Rental <br /> Made Easy</h3>
-              {descriptionsData.map((item, index) => (
-                <p key={index} className={index === 0 ? 'gallery-main-description' : 'gallery-second-description'}>{item}</p>
-              ))}
-              <PrimaryButton
-                  primaryMainClass={'primary-button-main-class'}
-                  primaryText={'Subscribe'}
-                  primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}
-                  width={'192px'}
-                  height={'52px'}
-                  gap={'20px'}
-                  fontSize={'var(--font-body-lg)'}
-                  lineHeight={'var(--line-height-body)'}
-                  fontWeight={'var(--font-weight-bold)'}
-              />
-        </div>
-
-        <div className='gallery-details-images'>
-            <Image src={imageOne} alt='' className='gallery-main-image' />
-            <div className='gallery-multiple-images-container'>
-                <Image src={qualityVehicle} alt='quality vehicle' className='gallery-multi-image' />
-                <Image src={qualityVehicleTwo} alt='quality vehicle two' className='gallery-multi-image' />
+                <div className='gallery-details-images'>
+                    <Image src={imageOne} alt='' className='gallery-main-image' />
+                    <div className='gallery-multiple-images-container'>
+                        <Image src={qualityVehicle} alt='quality vehicle' className='gallery-multi-image' />
+                        <Image src={qualityVehicleTwo} alt='quality vehicle two' className='gallery-multi-image' />
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-  )
+
+            <div className='mobile-gallery-details-main-contaier'>
+                <div className='mobile-main-image-container'>
+                    <Image src={imageOne} alt='main image' />
+                </div>
+                <div className='mobile-gallery-details-description-container'>
+                    <h3>ZM Car Rental Made Easy</h3>
+                    {descriptionsData.map((item, index) => (
+                        <p key={index} className={index === 0 ? 'mobile-gallery-main-description' : 'mobile-gallery-second-description'}>{item}</p>
+                    ))}
+                    <PrimaryButton
+                        primaryMainClass={'primary-button-main-class'}
+                        primaryText={'Subscribe'}
+                        primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}
+                        width={'160px'}
+                        height={'40px'}
+                        gap={'20px'}
+                        fontSize={'var(--font-body-sm)'}
+                        lineHeight={'var(--line-height-body)'}
+                        fontWeight={'var(--font-weight-medium)'}
+                    />
+                </div>
+                <div className='mobile-gallery-multiple-images-container'>
+                    <Image src={qualityVehicle} alt='quality vehicle' className='mobile-gallery-multi-image' />
+                    <Image src={qualityVehicleTwo} alt='quality vehicle two' className='mobile-gallery-multi-image' />
+                </div>
+            </div>
+        </>
+    )
 }
 
 export default GalleryDetails

@@ -8,7 +8,7 @@
     position: relative;
     gap: 15px;
     max-width: 1323px;
-    margin-bottom: 112px;
+    margin-bottom: 57px;
 }
 
 .feedback-gallery-images-container {
@@ -20,13 +20,13 @@
 }
 
 .feedback-gallery-image {
-    width: 100%;
+    width: 50%;
     height: auto;
     object-fit: cover;
 }
 
 .feedback-gallery-image-two {
-    width: 100%;
+    width: 50%;
     height: auto;
     object-fit: cover;
     border-top-right-radius: 25px;
@@ -126,6 +126,7 @@
         padding: 35px 65px;
         width: 100%;
         position: relative;
+        margin-bottom: 112px;
     }
 
     .feedback-gallery-description-container>h3 {
@@ -153,4 +154,14 @@
         background-color: rgba(255, 255, 255, 0.3);
         backdrop-filter: blur(10px);
     }
+
+    /* .feedback-gallery-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+    
+    .feedback-gallery-image-two {
+        width: 50%;
+    } */
 }

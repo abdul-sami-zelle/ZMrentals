@@ -17,7 +17,7 @@
     justify-content: start;
     height: auto;
     max-width: 1328px;
-    gap: 80px;
+    gap: 57px;
 }
 
 .page-main-heading-container {
@@ -42,7 +42,7 @@
     justify-content: start;
     width: 100%;
     gap: 32px;
-    margin-top: 80px;
+    /* margin-top: 80px; */
 }
 
 .group-car-rental-main-container > h3 {
@@ -77,4 +77,21 @@
 
 .group-items > span:hover {
     color: var(--secondary-color);
+}
+
+@media only screen and (max-width: 480px) {
+    .page-main-container  {
+        padding: 16px;
+    }
+
+    .vehicles-main-heading {
+        font-size: var(--font-heading-md);
+        line-height: var(--line-height-heading);
+        font-weight: var(--font-weight-bold);
+    }
+    .page-max-width-container {
+        gap: 32px;
+    }
+
+    
 }

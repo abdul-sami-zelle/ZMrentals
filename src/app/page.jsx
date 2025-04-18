@@ -63,12 +63,13 @@ export default function Home() {
   ]
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column',  padding: '56px 0', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'var(--background)' }}>
 
       <Hero />
 
       <DiscountBanner
         discountImage={discountBannerImage}
+        marginBottom={'112px'}
       />
 
       <GalleryDetails 

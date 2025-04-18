@@ -6,6 +6,7 @@
     width: 100%;
     height: auto;
     background-color: rgba(255, 255, 255, 0.3);
+    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
     /* background: rgba(17, 59, 132, 0.7); */
     border-top-right-radius: 25px;
     border-bottom-left-radius: 25px;
@@ -22,7 +23,7 @@
 
 .booking-form-inputs {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     gap: 8px;
     width: 100%;
@@ -59,21 +60,14 @@
     height: 100%;
 }
 
-/* .booking-date-drop-time-container {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-} */
-
 .select-date-button {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: start;
-    /* background-color: var(--color-white); */
+    height: 47px;
+    max-height: 60px;
     font-size: var(--font-body-lg);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-bold);
@@ -82,6 +76,8 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* .select-date-button .select-button-height-control */
 
 
 .booking-form-confirm-button-container {
@@ -98,7 +94,6 @@
     font-size: var(--font-weight-md);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
-    /* color: var(--color-white); */
     cursor: pointer;
 }
 
@@ -180,4 +175,26 @@
 .react-calendar__tile--disabled {
   cursor: not-allowed;
   opacity: 0.4;
+}
+
+@media only screen and (max-width: 480px) {
+    .booking-form-main-container {
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .booking-form-inputs-container {
+        width: 100%;
+    }
+    .booking-form-inputs {
+        flex-direction: column;
+    }
+    .booking-form-confirm-button-container {
+        width: 100%;
+        align-items: start;
+        justify-content: start;
+    }
 }

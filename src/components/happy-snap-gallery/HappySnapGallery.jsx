@@ -36,8 +36,8 @@ const HappySnapGallery = () => {
             </div>
 
             <div className='happy-snap-gallery-container'>
-                <Image src={snapTwo} alt='snap two' className='happy-snap-gallery-image-one' />
-                <Image src={snapThree} alt='snap Three' className='happy-snap-gallery-image-two' />
+                <Image src={snapTwo} alt='snap two' className='mobile-happy-snap-gallery-image-one' />
+                <Image src={snapThree} alt='snap Three' className='mobile-happy-snap-gallery-image-two' />
             </div>
         </div>
 

@@ -5,43 +5,61 @@ import Link from 'next/link';
 
 const Locations = () => {
   const locationsData = [
-    { branchName: 'Auckland City', link: '#'},
-    { branchName: 'Auckland Airport', link: '#'},
-    { branchName: 'Waiheke Island', link: '#'},
-    { branchName: 'Wellington Airport', link: '#'},
-    { branchName: 'Nelson Airport', link: '#'},
-    { branchName: 'Christchurch Airport', link: '#'},
-    { branchName: 'Queenstown Airport', link: '#'},
-    { branchName: 'Dunedin Airport', link: '#'},
-    { branchName: 'Invercargill Airport', link: '#'},
+    { branchName: 'Auckland City', link: '#' },
+    { branchName: 'Auckland Airport', link: '#' },
+    { branchName: 'Waiheke Island', link: '#' },
+    { branchName: 'Wellington Airport', link: '#' },
+    { branchName: 'Nelson Airport', link: '#' },
+    { branchName: 'Christchurch Airport', link: '#' },
+    { branchName: 'Queenstown Airport', link: '#' },
+    { branchName: 'Dunedin Airport', link: '#' },
+    { branchName: 'Invercargill Airport', link: '#' },
   ]
   return (
-    <div className='location-outer-main-container'>
-      <div className='locations-main-container'>
-        <div className='nz-map-locations'>
-          <span>
-            <TfiLocationPin size={40} color='var(--primary-color)' />
-            Nelson Airport
-          </span>
-        </div>
-        <div className='locations-details-container'>
-          <h3>ZM all across NZ</h3>
-          <p>
-            We have nine car rental branches spread evenly throughout New Zealand, in the major destinations of Auckland,
-            Wellington, Christchurch, Nelson, Queenstown, Dunedin and Invercargill so that you’re never far from a ZM rental car.
-          </p>
-          <div  className='locations-list-main-container'>
-            {locationsData.map((item, index) => (
-              <Link key={index} href={item.link}>
-                <TfiLocationPin size={30} color='var(--primary-color)' />
-                {item.branchName}
-              </Link>
-            ))}
+    <>
+      <div className='location-outer-main-container'>
+        <div className='locations-main-container'>
+          <div className='nz-map-locations'>
+            <span>
+              <TfiLocationPin size={40} color='var(--primary-color)' />
+              Nelson Airport
+            </span>
+          </div>
+          <div className='locations-details-container'>
+            <h3>ZM all across NZ</h3>
+            <p>
+              We have nine car rental branches spread evenly throughout New Zealand, in the major destinations of Auckland,
+              Wellington, Christchurch, Nelson, Queenstown, Dunedin and Invercargill so that you’re never far from a ZM rental car.
+            </p>
+            <div className='locations-list-main-container'>
+              {locationsData.map((item, index) => (
+                <Link key={index} href={item.link}>
+                  <TfiLocationPin size={30} color='var(--primary-color)' />
+                  {item.branchName}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    
+
+      <div className='mobile-location-main-container'>
+            <h3 className='mobile-location-main-heading'>ZM all across NZ</h3>
+            <p className='mobile-location-para'>
+              We have nine car rental branches spread evenly throughout New Zealand, in the major destinations of Auckland, Wellington, Christchurch, Nelson, 
+              Queenstown, Dunedin and Invercargill so that you’re never far from a GO rental car.
+            </p>
+            <div className='mobile-locations-list-main-container'>
+              {locationsData.map((item, index) => (
+                <Link key={index} href={item.link}>
+                  <TfiLocationPin size={20} color='var(--primary-color)' />
+                  {item.branchName}
+                </Link>
+              ))}
+            </div>
+      </div>
+    </>
+
   )
 }
 

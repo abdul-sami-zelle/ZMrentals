@@ -5,9 +5,9 @@ import './DiscountBanner.css';
 import Image from 'next/image';
 import SecondaryButton from '../secondary-button/SecondaryButton';
 
-const DiscountBanner = ({ discountImage }) => {
+const DiscountBanner = ({ discountImage , marginBottom}) => {
   return (
-    <div className='discount-banner-main-container'>
+    <div className='discount-banner-main-container' style={{marginBottom: marginBottom}}>
       <div className='discount-banner-inner-container'>
 
         <div className='discount-banner-image-container'>

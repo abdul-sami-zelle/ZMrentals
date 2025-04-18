@@ -69,7 +69,7 @@
     padding: 65px 0;
     justify-content: center;
     overflow: hidden;
-    transition: height 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 
 .nav-drop-down-main-container.show-drop-down {

@@ -10,11 +10,12 @@ const VehicleCard = (
     vehicleAge, 
     seePrice, 
     transmission, 
-    fuelType 
+    fuelType,
+    handleModalOpen
   }) => {
 
   return (
-    <div className='vehicle-card-main-container'>
+    <div className='vehicle-card-main-container' onClick={handleModalOpen}>
         <div className='vehicle-card-image-container'>
           <Image src={vehicleImage} alt='small car' />
         </div>

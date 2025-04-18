@@ -6,7 +6,6 @@ import BookingForm from '@/global-components/booking-form/BookingForm'
 import CarDetails from '../../components/car-details/CarDetails'
 import smallCar from '../../assets/images/cars/small_cars_menu_Tablet.jpg'
 import { HiUserGroup } from "react-icons/hi";
-import CarDetailsModal from '../../modals/car-details-modal/CarDetailsModal'
 
 const Vehicles = () => {
 
@@ -84,26 +83,19 @@ const Vehicles = () => {
     },
   ]
 
-  const [showDetalModal, setShowDetailModal] = useState(false);
-  const handleOpenDetailsModal = (item) => {
-    setShowDetailModal(true);
-  }
-  const handleCloseModal = () => {
-    setShowDetailModal(false)
-  }
+  
   return (
     <div className='page-main-container '>
       {/* Max wiwdth Container Start */}
       <div className='page-max-width-container'>
         <div className='page-main-heading-container'>
           <h3 className='vehicles-main-heading'>Vehicles for rent in New Zealand</h3>
-          <BookingForm bgColor={'#f7f7f7'} textColor={'var(--primary-color)'} primaryButtonText={'Find my car'} />
+          <BookingForm bgColor={'#f7f7f7'} boxShadow={'none'} textColor={'var(--primary-color)'} primaryButtonText={'Find my car'} />
         </div>
         {carsDetails.map((item, index) => (
           <CarDetails
             key={index}
             data={item}
-            openModal={handleOpenDetailsModal}
           />
         ))}
 
@@ -128,10 +120,7 @@ const Vehicles = () => {
       </div>
       {/* Max width Container End */}
 
-      <CarDetailsModal 
-        showModal={showDetalModal}
-        handleClose={handleCloseModal}
-      />
+      
     </div>
   )
 }
