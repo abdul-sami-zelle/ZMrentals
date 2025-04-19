@@ -132,7 +132,7 @@ const Navbar = () => {
     <>
       <div className='navbar-main-container'>
         <Link href={'/'}>
-          <Image src={logoImage} alt="Logo" className="navbar-logo" />
+          <Image src={'/assets/logo.png'} alt="Logo" width={200} height={50} className="navbar-logo" />
         </Link>
         <nav className="navbar">
           <ul className="navbar-list">
