@@ -12,7 +12,7 @@ const PackageDetails = ({ data, packageHeading, flexDirection, buttonText, displ
   return (
     <div className='package-details-main-container' style={{flexDirection: flexDirection}}>
         <div className='package-image-container'>
-            <Image src={packageImage} alt='package-image' className='package-image' />
+            <Image src={'/assets/images/mix/carbonClick-home.jpg'} fill alt='package-image' className='package-image' />
         </div>
         <div className='package-detail-description-container'>
               <h3>{packageHeading}</h3>

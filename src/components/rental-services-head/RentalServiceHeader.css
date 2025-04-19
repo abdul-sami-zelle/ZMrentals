@@ -21,3 +21,29 @@
     font-weight: var(--fonr-weight-mediums);
     text-align: center;
 }
+
+
+@media only screen and (max-width: 480px) {
+    .rental-services-content-container {
+        gap: 16px;
+        padding: 16px;
+    }
+    .rental-service-head-container {
+        gap: 16px;
+        padding: 16px;
+    }
+    .rental-service-head-container > h3 {
+        font-size: var(--font-body-xl);
+        text-align: center;
+        line-height: var(--line-height-heading);
+        font-weight: var(--font-weight-bold);
+        color: var(--primary-color);
+    }
+
+    .booking-instruction-cards-container {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+    }
+}

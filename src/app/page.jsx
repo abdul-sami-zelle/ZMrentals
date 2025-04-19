@@ -68,7 +68,7 @@ export default function Home() {
       <Hero />
 
       <DiscountBanner
-        discountImage={discountBannerImage}
+        discountImage={'/assets/images/discount-banners/Go_Rentals_Newsletter.jpg'}
         marginBottom={'112px'}
       />
 

@@ -23,3 +23,12 @@
     justify-content: start;
     max-width: 1323px;
 }
+
+@media only screen and (max-width: 480px) {
+    .rental-services-max-width-container {
+        gap: 32px;
+    }
+    .rental-services-content-container {
+        gap: 32px;
+    }
+}

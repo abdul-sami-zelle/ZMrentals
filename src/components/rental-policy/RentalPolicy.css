@@ -97,3 +97,23 @@
     font-weight: var(--font-weight-bold);
     color: var(--secondary-color);
 }
+
+@media only screen and (max-width: 480px) {
+    .rental-policies-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        flex-direction: column;
+        gap: 32px;
+        padding: 16px;
+    }
+
+    .rental-policies-slogan-container {
+        padding: 16px;
+    }
+
+    .rental-policies-slogan-container > p {
+        text-align: center;
+    }
+}

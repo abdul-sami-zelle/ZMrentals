@@ -25,12 +25,17 @@
 
 .discount-banner-image-container {
     width: 40% !important;
-    height: auto !important;
+    height: 126px !important;
+    /* height: auto; */
+    position: relative;
 }
 
 .discount-banner-image {
+    width: 100%;
     border-top-right-radius: 25px !important;
     border-bottom-left-radius: 25px !important;
+    object-fit: fill;
+    object-position: center;
 }
 
 .discount-banner-details-and-subscribe-button-container {

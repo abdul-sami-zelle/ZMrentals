@@ -11,7 +11,9 @@ const HappySnapGallery = () => {
   return (
     <>
         <div className='happy-snap-mobile-main-container'>
-            <Image src={snapOne} alt='happy snap' className='happy-snap-single-image' />
+            <div className='happy-snap-mobile-single-image-container'>
+                <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_0.jpg'} fill alt='happy snap' className='happy-snap-single-image' />
+            </div>
 
             <div className='happy-snap-description-main-container'>
                 <Image src={mainLogo} alt='logo' className='happy-snap-logo' />
@@ -36,23 +38,32 @@ const HappySnapGallery = () => {
             </div>
 
             <div className='happy-snap-gallery-container'>
-                <Image src={snapTwo} alt='snap two' className='mobile-happy-snap-gallery-image-one' />
-                <Image src={snapThree} alt='snap Three' className='mobile-happy-snap-gallery-image-two' />
+                <div className='mobile-happy-snap-gallery-image'>
+                    <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_1.jpg'} fill alt='snap two' className='mobile-happy-snap-gallery-image-one' />
+                </div>
+                <div className='mobile-happy-snap-gallery-image'>
+                    <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_2.jpg'} fill alt='snap Three' className='mobile-happy-snap-gallery-image-two' />
+                </div>
             </div>
         </div>
 
         <div className='happy-snap-desktop-main-container'>
             <div className='happy-snap-desktop-gallery-main-container'>
                 <div className='happy-snap-desktop-single-image-container'>
-                    <Image src={snapOne} alt='snap one' className='desktop-snap-gallery-main-image' />
+                    <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_0.jpg'} fill alt='snap one' className='desktop-snap-gallery-main-image' />
                 </div>
                 <div className='happy-snap-desktop-multi-images-container'>
-                      <Image src={snapTwo} alt='snap two' className='desktop-snap-gallery-image-one' />
-                      <Image src={snapThree} alt='snap two' className='desktop-snap-gallery-image-two' />
+                    <div className='desktop-snap-dual-images'>
+                      <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_1.jpg'} fill alt='snap two' className='desktop-snap-gallery-image-one' />
+                    </div>
+                    <div className='desktop-snap-dual-images'>
+                      <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_2.jpg'} fill alt='snap two' className='desktop-snap-gallery-image-two' />
+                    </div>
                 </div>
             </div>
             <div className='happy-snap-desktop-description-container'>
-                <Image src={mainLogo} alt='desktop logo' className='happy-snap-desktop-logo' />
+            
+                <Image src={'/assets/logo.png'} alt='desktop logo' height={50} width={200} className='happy-snap-desktop-logo' />
                 <h3>ZM Snap Happy</h3>
                 <p>
                       At ZM Rentals, we love being a part of your travel journey and helping you make wonderful memories.

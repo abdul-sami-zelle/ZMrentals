@@ -54,7 +54,7 @@ const CarDetailsModal = ({showModal, handleClose}) => {
 
   return (
     <div className={`car-detail-modal-main-container ${showModal ? 'show-details-modal' : ''} `} onClick={handleClose}>
-        <div className='car-details-modal-inner-content-container'>
+        <div className={`car-details-modal-inner-content-container ${showModal ? 'show-inner-modal-on-mobile-view' : ''}`}>
             <div className='car-detail-heading-and-close-section' onClick={() => e.stopPropagation()}>
                 <h3>Small Cars</h3>
                 <button onClick={(e) => {e.stopPropagation(); handleClose()}}>

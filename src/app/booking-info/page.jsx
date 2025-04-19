@@ -32,21 +32,21 @@ const BookingInfo = () => {
           <RentalPolicy />
 
           <ServiceDetail
-            serviceImage={insuranceImage}
+            serviceImage={'/assets/images/mix/Insurance-Coverage12-600x436.jpg'}
             serviceHeading={'Insurance Coverage'}
             flexDirection={'row-reverse'}
             serviceDescription={'Looking for an affordable and fuel-efficient option for your trip to Auckland? Our Economy Car Rentals are the perfect choice! Enjoy the convenience of a compact car that doesn’t compromise on comfort and reliability. Whether you’re traveling solo or with a small group, our economy cars are designed to provide a smooth and enjoyable driving experience. With competitive pricing and excellent mileage, you can explore Auckland without breaking the bank. Book your economy car rental now and embark on an unforgettable journey.'}
           />
 
           <ServiceDetail
-            serviceImage={insuranceImage}
+            serviceImage={'/assets/images/mix/Insurance-Coverage12-600x436.jpg'}
             serviceHeading={'Payment Options'}
             flexDirection={'row'}
             serviceDescription={'Looking for an affordable and fuel-efficient option for your trip to Auckland? Our Economy Car Rentals are the perfect choice! Enjoy the convenience of a compact car that doesn’t compromise on comfort and reliability. Whether you’re traveling solo or with a small group, our economy cars are designed to provide a smooth and enjoyable driving experience. With competitive pricing and excellent mileage, you can explore Auckland without breaking the bank. Book your economy car rental now and embark on an unforgettable journey.'}
           />
 
           <ServiceDetail
-            serviceImage={insuranceImage}
+            serviceImage={'/assets/images/mix/Insurance-Coverage12-600x436.jpg'}
             serviceHeading={'Cancellation and Refund Policy'}
             flexDirection={'row-reverse'}
             serviceDescription={'Looking for an affordable and fuel-efficient option for your trip to Auckland? Our Economy Car Rentals are the perfect choice! Enjoy the convenience of a compact car that doesn’t compromise on comfort and reliability. Whether you’re traveling solo or with a small group, our economy cars are designed to provide a smooth and enjoyable driving experience. With competitive pricing and excellent mileage, you can explore Auckland without breaking the bank. Book your economy car rental now and embark on an unforgettable journey.'}
@@ -54,7 +54,7 @@ const BookingInfo = () => {
           
         </div>
         <DiscountBanner
-          discountImage={discountBannerImage}
+          discountImage={'/assets/images/mix/Insurance-Coverage12-600x436.jpg'}
           marginBottom={'57px'}
         />
       </div>

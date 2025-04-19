@@ -8,6 +8,13 @@
     justify-content: start;
 }
 
+.happy-snap-mobile-single-image-container {
+    display: flex;
+    width: 100%;
+    height: 393px;
+    position: relative;
+}
+
 .happy-snap-single-image {
     width: 100%;
     height: auto;
@@ -53,6 +60,12 @@
     gap: 15px !important;
 }
 
+.mobile-happy-snap-gallery-image {
+    width: 50%;
+    height: 393px;
+    position: relative;
+}
+
 .mobile-happy-snap-gallery-image-one {
     width: 50%;
     height: auto;
@@ -94,6 +107,8 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    height: 393px;
+    position: relative;
 }
 
 .desktop-snap-gallery-main-image {
@@ -109,6 +124,13 @@
     flex-direction: row;
     gap: 16px;
     width: 100%;
+}
+
+.desktop-snap-dual-images {
+    display: flex;
+    width: 100%;
+    height: 393px;
+    position: relative;
 }
 
 .desktop-snap-gallery-image-one {

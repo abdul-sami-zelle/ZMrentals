@@ -10,7 +10,7 @@ const ServiceDetail = ({flexDirection, serviceImage, serviceHeading, serviceDesc
         style={{flexDirection: flexDirection}}
     >
         <div className='service-detail-image-container'>
-            <Image src={serviceImage} alt='service image' className='service-image' />
+            <Image src={serviceImage} alt='service image' width={590} height={393} className='service-image' />
         </div>
         <div className='service-detail-description-container'>
             <div className='service-heading-contaienr'>

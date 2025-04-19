@@ -34,67 +34,67 @@ const Navbar = () => {
     {
       item: 'Fleet /Vehicles',
       data: [
-        { name: 'Small Cars', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: 'Electric Vehicles', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: 'Hybrid Cars', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: 'Large Cars / SUVs', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: '4 Wheel Drive', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: 'Van or People Carrier', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: 'Car Rental Accessories', image: beforeImage, link: '#', width: '144px', height: '72px' },
+        { name: 'Small Cars', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: 'Electric Vehicles', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: 'Hybrid Cars', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: 'Large Cars / SUVs', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: '4 Wheel Drive', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: 'Van or People Carrier', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: 'Car Rental Accessories', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
       ]
     },
     {
       item: 'Car rental services',
       data: [
-        { name: 'Auckland City', image: beforeImage, link: '#', width: '108px', height: '54px' },
-        { name: 'Auckland Airport', image: beforeImage, link: '#', width: '108px', height: '54px' },
-        { name: 'Waiheke', image: beforeImage, link: '#', width: '108px', height: '54px' },
-        { name: 'Wellington Airport', image: beforeImage, link: '#', width: '108px', height: '54px' },
-        { name: 'Nelson Airport', image: beforeImage, link: '#', width: '108px', height: '54px' },
-        { name: 'Cristchurch Airport', image: beforeImage, link: '#', width: '108px', height: '54px' },
-        { name: 'Queenston Airport', image: beforeImage, link: '#', width: '108px', height: '54px' },
-        { name: 'Dunedin  Airport', image: beforeImage, link: '#', width: '108px', height: '54px' },
-        { name: 'InverCargill Airport', image: beforeImage, link: '#', width: '108px', height: '54px' },
+        { name: 'Auckland City', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
+        { name: 'Auckland Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
+        { name: 'Waiheke', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
+        { name: 'Wellington Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
+        { name: 'Nelson Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
+        { name: 'Cristchurch Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
+        { name: 'Queenston Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
+        { name: 'Dunedin  Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
+        { name: 'InverCargill Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
       ]
     },
     {
       item: 'Booking info',
       data: [
         { name: 'Hot Deals', image: carImage, link: '#' },
-        { name: 'Relocation Deals', image: beforeImage, link: '#', },
+        { name: 'Relocation Deals', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', },
       ]
     },
     {
       item: 'Locations',
       data: [
-        { name: 'Trip Planner', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: 'Travel Guide', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: 'Go Play', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: 'Travel Blog', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: 'Snap Happy', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: 'Drive Safe', image: beforeImage, link: '#', width: '144px', height: '72px' },
-        { name: 'Tiaki Promise', image: beforeImage, link: '#', width: '144px', height: '72px' },
+        { name: 'Trip Planner', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: 'Travel Guide', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: 'Go Play', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: 'Travel Blog', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: 'Snap Happy', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: 'Drive Safe', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        { name: 'Tiaki Promise', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
       ]
     },
     {
       item: 'Help',
       data: [
-        { name: 'Before You Book', image: beforeImage, link: '#', width: '209px', height: '104px' },
-        { name: 'Ahead of Your Trip', image: beforeImage, link: '#', width: '209px', height: '104px' },
-        { name: 'Help on the roads', image: beforeImage, link: '#', width: '209px', height: '104px' },
-        { name: 'After Your Journey', image: beforeImage, link: '#', width: '209px', height: '104px' },
-        { name: 'Account and App', image: beforeImage, link: '#', width: '209px', height: '104px' },
+        { name: 'Before You Book', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '209px', height: '104px' },
+        { name: 'Ahead of Your Trip', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '209px', height: '104px' },
+        { name: 'Help on the Roads', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '209px', height: '104px' },
+        { name: 'After Your Journey', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '209px', height: '104px' },
+        { name: 'Account and App', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '209px', height: '104px' },
       ]
     },
     {
       item: 'About Us',
       data: [
-        { name: 'Why Go With Us?', image: beforeImage, link: '#', width: '173px', height: '86px' },
-        { name: 'Awards & Endorsements', image: beforeImage, link: '#', width: '173px', height: '86px' },
-        { name: 'Costumer Reviews', image: beforeImage, link: '#', width: '173px', height: '86px' },
-        { name: 'Our Team', image: beforeImage, link: '#', width: '173px', height: '86px' },
-        { name: 'Work For Us', image: beforeImage, link: '#', width: '173px', height: '86px' },
-        { name: 'News', image: beforeImage, link: '#', width: '173px', height: '86px' },
+        { name: 'Why Go With Us?', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '173px', height: '86px' },
+        { name: 'Awards & Endorsements', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '173px', height: '86px' },
+        { name: 'Costumer Reviews', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '173px', height: '86px' },
+        { name: 'Our Team', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '173px', height: '86px' },
+        { name: 'Work For Us', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '173px', height: '86px' },
+        { name: 'News', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '173px', height: '86px' },
       ]
     },
   ]
@@ -156,7 +156,7 @@ const Navbar = () => {
 
       <div className='mobile-view-menu-main-container'>
         <Link href={'/'}>
-          <Image src={logoImage} alt='logo image' className='mobile-view-logo' />
+          <Image src={'/assets/logo.png'} alt='logo image' width={200} height={50} className='mobile-view-logo' />
         </Link>
         <button className='mobile-menu-toggler' onClick={handleMenuToggler}>
           <IoMenuSharp size={25} />

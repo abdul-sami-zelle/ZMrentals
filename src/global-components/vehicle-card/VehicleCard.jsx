@@ -17,7 +17,7 @@ const VehicleCard = (
   return (
     <div className='vehicle-card-main-container' onClick={handleModalOpen}>
         <div className='vehicle-card-image-container'>
-          <Image src={vehicleImage} alt='small car' />
+          <Image src={vehicleImage} alt='small car' width={315} height={160} />
         </div>
         <div className='vehicle-details-container'>
             <div className='vehicle-name-and-price'>

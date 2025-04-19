@@ -1,0 +1,32 @@
+.why-with-us-main-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(253, 241, 246, 1);
+}
+
+.why-with-us-inner-container {
+    width: 80%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: start;
+    justify-content: start;
+}
+
+.why-with-usinner-container > h3 {
+    font-size: var(--font-heading-lg);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+.why-with-us-cards-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 16px;
+}
