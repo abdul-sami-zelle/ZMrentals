@@ -12,11 +12,12 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+    padding: 56px;
     align-items: start;
     justify-content: start;
 }
 
-.why-with-usinner-container > h3 {
+.why-with-us-inner-container > h3 {
     font-size: var(--font-heading-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
@@ -28,5 +29,52 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    gap: 24px;
+}
+
+.why-with-us-single-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+    /* height: 170px; */
     gap: 16px;
+}
+
+.why-with-us-card-icon:nth-child(2) {
+    margin-top: 2px;
+}
+
+.why-with-us-single-card > h3 {
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+.why-with-us-single-card > p {
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
+}
+
+@media only screen and (max-width: 480px) {
+    .why-with-us-inner-container {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .why-with-us-inner-container > h3 {
+        font-size: var(--font-heading-md);
+    }
+
+    .why-with-us-cards-container {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+        width: 100%;
+        gap: 24px;
+    }
 }

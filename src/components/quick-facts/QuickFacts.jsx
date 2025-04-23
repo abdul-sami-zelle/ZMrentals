@@ -73,7 +73,7 @@ const QuickFacts = () => {
             <div className='quick-facts-inner-container'>
                 {/* <h3>ZM Rentals Customer Quick Facts</h3> */}
                 <div className='quick-facts-list-and-space-container'>
-                    <div className='empty-space-for-location'></div>
+                    {/* <div className='empty-space-for-location'></div> */}
                     <ul className='quick-facts-list'>
                     <h3 className='quick-facts-heading'>ZM Rentals Customer Quick Facts</h3>
                     {quickFacts.map((fact, index) => (

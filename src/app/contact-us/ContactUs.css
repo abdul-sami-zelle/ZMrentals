@@ -1,0 +1,27 @@
+.contact-us-page-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+}
+
+
+.contact-us-inner-section {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 57px;
+    padding-bottom: 57px;
+}
+
+.contact-us-max-width-container {
+    display: flex;
+    flex-direction: column;
+    gap: 57px;
+    align-items: start;
+    justify-content: start;
+    max-width: 1323px;
+}

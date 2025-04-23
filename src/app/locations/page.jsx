@@ -8,6 +8,12 @@ import { TfiLocationPin } from "react-icons/tfi";
 import PackageDetails from '@/components/package-details/PackageDetails'
 import QuickFackts from '../../components/quick-facts/QuickFacts';
 import WhyWithUs from '../../components/why-with-us/WhyWithUs';
+import RoadCare from '../../components/road-care/RoadCare'
+import ExclusiveDiscount from '../../components/exclusive-discount/ExclusiveDiscount'
+import InsuranceCoverage from '../../components/insurance-coverage/InsuranceCoverage'
+import PopularCars from '../../components/popular-cars/PopularCars'
+import CustomerThoughts from '../../components/customer-thoughts/CustomerThoughts'
+import LocationDetails from '../../components/location-details/LocationDetails'
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 const Locations = () => {
@@ -107,6 +113,8 @@ const Locations = () => {
 
         </div> */}
 
+        <LocationDetails />
+
 
         {/* Navigate Easy Section */}
         <div className='navigate-easy-main-container'>
@@ -142,6 +150,23 @@ const Locations = () => {
         <QuickFackts />
 
         <WhyWithUs />
+
+        <RoadCare />
+
+        <PackageDetails
+          packageHeading={'GO Rentals App for a ridiculously simple pick-up and drop-off'}
+          data={pickAndDropDetails}
+          flexDirection={'row-reverse'}
+          buttonText={'Dawnload App'}
+        />
+
+        <ExclusiveDiscount />
+
+        <InsuranceCoverage />
+
+        <PopularCars />
+
+        <CustomerThoughts />
 
       </div>
     </div>

@@ -22,6 +22,7 @@
     width: 100%;
     align-items: start;
     justify-content: start;
+    max-width: 1323px;
 }
 
 .empty-space-for-location {
@@ -80,14 +81,24 @@
 
 
 @media only screen and (min-width: 481px) {
+    .quick-facts-inner-container {
+        padding: 0;
+    }
+    
     .quick-facts-list-and-space-container {
         display: flex;
         flex-direction: row;
         width: 100%;
         gap: 32px;
-        padding-right: 50px;
+        align-items: center;
+        justify-content: center;
+        /* padding-right: 50px; */
     }
-    .empty-space-for-location {
+    .quick-facts-list {
+        width: 80%;
+        padding: 56px;
+    }
+    /* .empty-space-for-location {
         display: flex;
-    }
+    } */
 }
