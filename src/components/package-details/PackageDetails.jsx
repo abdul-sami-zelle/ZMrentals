@@ -15,7 +15,7 @@ const PackageDetails = ({ data, packageHeading, flexDirection, buttonText, displ
             <Image src={'/assets/images/mix/carbonClick-home.jpg'} fill alt='package-image' className='package-image' />
         </div>
         <div className='package-detail-description-container'>
-              <h3>{packageHeading}</h3>
+              <h3 className='section-main-heading'>{packageHeading}</h3>
               {data.map((item, index) => (
                 <p key={index} className={index === 0 ? 'mobile-package-description-one' : 'mobile-package-description-after-first'}>{item}</p>
               ))}

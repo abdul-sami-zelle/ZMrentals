@@ -1,8 +1,5 @@
 import React from 'react'
 import './HappySnapGallery.css';
-import snapOne from '../../assets/images/happy-snap/Home_GO_Snap_Happy_0.jpg'
-import snapTwo from '../../assets/images/happy-snap/Home_GO_Snap_Happy_1.jpg'
-import snapThree from '../../assets/images/happy-snap/Home_GO_Snap_Happy_2.jpg'
 import mainLogo from '../../assets/logo.png';
 import Image from 'next/image';
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton';
@@ -17,7 +14,7 @@ const HappySnapGallery = () => {
 
             <div className='happy-snap-description-main-container'>
                 <Image src={mainLogo} alt='logo' className='happy-snap-logo' />
-                <h3>ZM Snap Happy</h3>
+                <h3 className='section-main-heading'>ZM Snap Happy</h3>
                 <p>
                       At ZM Rentals, we love being a part of your travel journey and helping you make wonderful memories.
                       Snap a picture of your travels around New Zealand, and be in to win up to $500 of the cost of your rental back.

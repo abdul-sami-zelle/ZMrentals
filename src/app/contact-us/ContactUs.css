@@ -20,6 +20,7 @@
 .contact-us-max-width-container {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 57px;
     align-items: start;
     justify-content: start;

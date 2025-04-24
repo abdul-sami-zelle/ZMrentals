@@ -37,7 +37,7 @@ const GalleryDetails = ({ flexDirection }) => {
             <div className='gallery-details-main-container' style={{ flexDirection: flexDirection }}>
 
                 <div className='gallery-details-descriptions'>
-                    <h3>ZM Car Rental <br /> Made Easy</h3>
+                    <h3 className='section-main-heading'>ZM Car Rental <br /> Made Easy</h3>
                     {descriptionsData.map((item, index) => (
                         <p key={index} className={index === 0 ? 'gallery-main-description' : 'gallery-second-description'}>{item}</p>
                     ))}
@@ -74,7 +74,7 @@ const GalleryDetails = ({ flexDirection }) => {
                     <Image src={'/assets/images/mix/Home_Fair_Rentals.jpg'} fill alt='main image' />
                 </div>
                 <div className='mobile-gallery-details-description-container'>
-                    <h3>ZM Car Rental Made Easy</h3>
+                    <h3 className='section-main-heading'>ZM Car Rental Made Easy</h3>
                     {descriptionsData.map((item, index) => (
                         <p key={index} className={index === 0 ? 'mobile-gallery-main-description' : 'mobile-gallery-second-description'}>{item}</p>
                     ))}

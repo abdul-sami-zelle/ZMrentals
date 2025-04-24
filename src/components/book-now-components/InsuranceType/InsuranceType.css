@@ -1,0 +1,67 @@
+.insurance-type-main-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+    gap: 16px;
+}
+
+.insurance-type-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    column-gap: 16px;
+    row-gap: 16px;
+    align-items: center;
+    justify-content: center;
+}
+
+.insurance-single-tab {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: start;
+    justify-content: start;
+    padding: 22px 16px;
+    background-color: rgba(255, 139, 64, 0.1);
+    border-radius: 3px;
+    flex-direction: column;
+    gap: 16px;
+    cursor: pointer;
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.insurance-single-tab:hover {
+    border: 1px solid rgba(255, 139, 64, 0.3);
+}
+
+.insurance-single-tab.insurance-single-tab-selected {
+    border: 2px solid rgba(255, 139, 64, 0.3);
+}
+
+.popular-tag {
+    position: absolute;
+    top: -18px;
+    left: 20px;
+    border-radius: 25px;
+    background-color: #FFFFFF;
+    padding: 6px;
+    border: 2px solid rgba(255, 139, 64, 0.3);
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-regular);
+}
+
+.select-insurance-radio-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: start;
+    gap: 16px;
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+}

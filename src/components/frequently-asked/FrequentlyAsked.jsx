@@ -20,7 +20,7 @@ const FrequentlyAsked = () => {
   return (
     <div className='frequently-asked-outer-container'>
         <div className='frequently-asked-inner'>
-              <h3>Frequently asked questions</h3>
+              <h3 className='section-main-heading'>Frequently asked questions</h3>
               <div className='frequently-asked-ques-anw'>
                 {faqData.map((item, index) => (
                     <div key={index} className='frequently-asked-single-que-ans'>

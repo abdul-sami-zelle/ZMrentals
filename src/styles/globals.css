@@ -89,3 +89,17 @@ body {
   color: var(--foreground);
   font-family: 'Euclid Circular A', sans-serif;
 }
+
+.section-main-heading {
+  font-size: var(--font-heading-lg);
+  line-height: var(--line-height-heading);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-color);
+}
+
+
+@media only screen and (max-width: 480px) {
+  .section-main-heading {
+    font-size: var(--font-heading-md);
+  }
+}

@@ -26,7 +26,7 @@ const Locations = () => {
             </span>
           </div>
           <div className='locations-details-container'>
-            <h3>ZM all across NZ</h3>
+            <h3 className='section-main-heading'>ZM all across NZ</h3>
             <p>
               We have nine car rental branches spread evenly throughout New Zealand, in the major destinations of Auckland,
               Wellington, Christchurch, Nelson, Queenstown, Dunedin and Invercargill so that you’re never far from a ZM rental car.
@@ -44,7 +44,7 @@ const Locations = () => {
       </div>
 
       <div className='mobile-location-main-container'>
-            <h3 className='mobile-location-main-heading'>ZM all across NZ</h3>
+            <h3 className='section-main-heading'>ZM all across NZ</h3>
             <p className='mobile-location-para'>
               We have nine car rental branches spread evenly throughout New Zealand, in the major destinations of Auckland, Wellington, Christchurch, Nelson, 
               Queenstown, Dunedin and Invercargill so that you’re never far from a GO rental car.
