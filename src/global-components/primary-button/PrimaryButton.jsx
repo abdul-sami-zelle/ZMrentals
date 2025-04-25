@@ -2,6 +2,7 @@
 
 import React from 'react'
 import './PrimaryButton.css'
+import { useRouter } from 'next/navigation';
 
 const PrimaryButton = (
   { 
@@ -18,6 +19,9 @@ const PrimaryButton = (
     fontWeight 
   }) => {
 
+    const router = useRouter();
+    
+
     
   return (
     <button 
@@ -32,6 +36,7 @@ const PrimaryButton = (
         lineHeight: lineHeight,
         fontWeight: fontWeight
       }}
+      onClick={() => router.push('/book-now')}
     >
       {primaryText} {primaryIcon}
     </button>
