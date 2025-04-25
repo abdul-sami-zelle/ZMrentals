@@ -79,7 +79,8 @@
         align-items: start;
         justify-content: start;
         max-height: 100%;
-        height: auto;
+        height: 205px;
+        margin-bottom: 0;
     }
     .services-desktop-button {
         display: none;

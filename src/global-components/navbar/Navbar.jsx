@@ -169,7 +169,7 @@ const Navbar = () => {
         <div className='mobile-menu-bar-nav-section'>
           <div className='mobile-menu-close-container'>
             <button onClick={handleCloseMenuToggler}>
-              <IoCloseOutline size={30} color='var(--secondary-color)' />
+              <IoCloseOutline size={30} color='var(--color-white)' />
             </button>
           </div>
           <div className='mobile-menu-nav-items-container'>
@@ -188,30 +188,30 @@ const Navbar = () => {
 
           <div className='mobile-menu-other-options-top'>
             <span>
-              <HiOutlineUserCircle size={20} color='var(--secondary-color)' />
+              <HiOutlineUserCircle size={20} color='var(--color-white)' />
               Sign in
             </span>
 
             <span>
-              <FaRegCheckCircle size={20} color='var(--secondary-color)' />
+              <FaRegCheckCircle size={20} color='var(--color-white)' />
               Check-in
             </span>
 
             <span>
-              <FaRegCheckCircle size={20} color='var(--secondary-color)' />
+              <FaRegCheckCircle size={20} color='var(--color-white)' />
               Manage booking
             </span>
           </div>
 
           <div className='mobile-menu-other-options-bottom'>
             <span>
-              <MdOutlinePhoneIphone size={20} color='var(--secondary-color)' />
+              <MdOutlinePhoneIphone size={20} color='var(--color-white)' />
               <strong>NZ</strong> 099741598
-              <MdOutlineArrowDropDown size={15} color='var(--secondary-color)' />
+              <MdOutlineArrowDropDown size={15} color='var(--color-white)' />
             </span>
 
             <span>
-              <IoMailOutline size={20} color='var(--secondary-color)' />
+              <IoMailOutline size={20} color='var(--color-white)' />
               Email us
             </span>
           </div>

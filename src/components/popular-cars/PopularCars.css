@@ -134,5 +134,9 @@
     .one-way-rental-detail-container > h3 {
         font-size: var(--font-heading-md);
     }
+
+    .popular-car-card {
+        width: 100%;
+    }
     
 }

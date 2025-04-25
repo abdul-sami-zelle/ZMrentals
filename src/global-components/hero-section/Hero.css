@@ -85,6 +85,7 @@
 @media only screen and (max-width: 480px) {
     .hero-section-inner-container {
         padding: 15px;
+        width: 100%;
     }
 
     .hero-section-main-heading-container>h3 {
@@ -95,6 +96,10 @@
     .hero-section-main-pera-container>p {
         font-size: var(--font-body-lg);
         line-height: var(--line-height-body);
+    }
+
+    .booking-form-width-control-container {
+        width: 100%;
     }
 
 

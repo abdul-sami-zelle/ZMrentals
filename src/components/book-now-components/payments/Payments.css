@@ -288,6 +288,8 @@
     color: var(--primary-color);
 }
 
+
+
 .payment-policy-icon {
     cursor: pointer;
 }
@@ -319,6 +321,15 @@
     }
     .payment-type-disc  {
         width: 100%;
+    }
+    .selected-pay-type-detail > p {
+        font-size: 12px;
+    }
+    .payment-policy-icon {
+        display: none;
+    }
+    .agree-to-terms-and-conditions-highlight {
+        align-items: start;
     }
     
 }

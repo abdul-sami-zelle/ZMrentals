@@ -26,7 +26,7 @@
 @media only screen and (max-width: 480px) {
     .rental-services-content-container {
         gap: 16px;
-        padding: 16px;
+        padding: 0px;
     }
     .rental-service-head-container {
         gap: 16px;

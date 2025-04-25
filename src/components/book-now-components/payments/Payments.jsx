@@ -70,7 +70,7 @@ const Payments = () => {
         <p className={`processing-fee-text ${selectPaymentType > 0 ? 'hide-payment-proccessing-fee' : ''}`}>Payment processing fee</p>
       </div>
       <span className='payment-policy-hightlight'>
-            <p>Heads up, all online payments are subject to a non-refundable payment processing fee.</p>
+            <p>Heads up, all online payments are subject to a non-refundable payment processing fee. </p>
             <FaQuestionCircle size={15} color='var(--primary-color)' className='payment-policy-icon' />
       </span>
 
