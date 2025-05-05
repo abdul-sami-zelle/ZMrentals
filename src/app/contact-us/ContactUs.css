@@ -15,6 +15,7 @@
     flex-direction: column;
     gap: 57px;
     padding-bottom: 57px;
+    background:transparent;
 }
 
 .contact-us-max-width-container {
