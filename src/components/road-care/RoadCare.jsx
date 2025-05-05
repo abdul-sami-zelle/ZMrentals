@@ -9,26 +9,33 @@ const RoadCare = () => {
     const roadCAreData = [
         {
             icon: SiVlcmediaplayer,
-            title: 'Roadside Assistance',
-            para: `Complimentary callout service for ALL types of breakdowns.`
+            title: 'Easy Pick-Up Process',
+            para: `
+                If you’ve pre-booked your rental car online, you’re in for an ultra-smooth ride. Just check in at our reception, review and sign your rental 
+                agreement, and inspect the vehicle before hitting the road. It’s quick, efficient, and designed to get you behind the wheel in no time.
+                For walk-in bookings, the process is just as straightforward, but might take a bit longer during busy periods like weekends and holidays. 
+                Upon arrival at our Mangere car rental depot, simply approach our friendly staff at the front desk. We’ll verify your documents, help you choose a 
+                vehicle from our available options, and guide you through the agreement before handing over the keys.
+            `
         },
         {
             icon: LuCircleDollarSign,
-            title: 'Government Road Taxes',
-            para: `Covers registration costs, safety inspections and road user charges.`
+            title: 'Swift Drop-Off Procedure',
+            para: `Returning your rental is just as easy. Whether you booked online or in person, we keep the drop-off process fast and stress-free. A quick and courteous vehicle inspection is conducted to check for fuel level and condition. Once that’s done, just hand over the keys, either at the counter or directly to a staff member, and you’ll receive your deposit back without delay.`
         },
-        {
-            icon: TbCurrencyDollarOff,
-            title: 'Toll Road Freedom',
-            para: `Enjoy free passage on all toll roads, we cover all costs including admin fees.`
-        },
+        // {
+        //     icon: TbCurrencyDollarOff,
+        //     title: 'Toll Road Freedom',
+        //     para: `Enjoy free passage on all toll roads, we cover all costs including admin fees.`
+        // },
 
     ]
   return (
     <div className='road-care-main-container'>
         <div className='road-care-inner-container'>
-            <h3>Total Road Care</h3>
-            <p>A comprehensive $3 per day fee ensures your journey is simple and stress-free, <br /> we include the following services:</p>
+            <h3>Hassle-Free Pick-Up & Drop-Off</h3>
+            {/* <p>A comprehensive $3 per day fee ensures your journey is simple and stress-free, <br /> we include the following services:</p> */}
+            <p>At ZM Rentals, we go the extra mile to ensure that your car rental experience in Auckland is smooth from start to finish. Our goal is to make the pick-up and drop-off process as effortless as possible, so you can focus on enjoying your journey, not dealing with delays or paperwork.</p>
             <div className='road-care-cards-container'>
                 {roadCAreData.map((item, index) => {
                     let Icon = item.icon

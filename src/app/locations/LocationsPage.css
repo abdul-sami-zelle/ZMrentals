@@ -26,6 +26,20 @@
     padding: 16px;
 }
 
+.vehicles-main-heading {
+    font-size: var(--font-heading-lg);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary-color);
+}
+
+.page-main-heading-container > p {
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-semibold);
+}
+
+
 /* Navigate Easy Section */
 
 .navigate-easy-main-container {
@@ -78,6 +92,27 @@
 }
 
 .navigate-easy-single-container > p {
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
+}
+
+.prime-location-details-container {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    width: 100%;
+}
+
+.prime-location-details-container > h3 {
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary-color);
+}
+
+.prime-location-details-container > p {
     font-size: var(--font-body-md);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);

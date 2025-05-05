@@ -25,7 +25,11 @@
 }
 
 .why-with-us-cards-container {
-    display: flex;
+    /* display: flex; */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 32px;
+    column-gap: 32px;
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -38,6 +42,7 @@
     width: 100%;
     align-items: start;
     justify-content: start;
+    height: 100%;
     /* height: 170px; */
     gap: 16px;
 }

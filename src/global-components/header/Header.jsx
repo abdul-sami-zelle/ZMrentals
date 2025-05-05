@@ -13,7 +13,7 @@ import Navbar from '../navbar/Navbar';
 const Header = () => {
 
   const headerData = [
-    {name: 'NZ 099741598', icon: MdOutlinePhoneIphone , down: MdOutlineArrowDropDown},
+    {name: '+6421467261', icon: MdOutlinePhoneIphone , down: MdOutlineArrowDropDown},
     { name: 'Email us', icon: IoMailOutline},
     { name: 'Manage Booking', icon: FaRegCheckCircle},
     // { name: 'Check-in', icon: FaRegCheckCircle},

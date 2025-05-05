@@ -64,6 +64,30 @@ export default function Home() {
     `,
   ]
 
+  const faqData = [
+    { 
+        question: 'How long does it take to get to our Mangere location from the Auckland Airport?', 
+        answer: (<>
+          Getting to our Mangere depot from Auckland Airport is quick and easy, depending on your mode of transport. By car or taxi, it typically takes just 5 to 6 
+          minutes under normal traffic. Our free shuttle service usually takes around 5 to 10 minutes, with possible flight delays due to traffic or the shuttle schedule.
+          <br /> <br />
+          Public transport, like the Line 28 bus, takes longer, around 17 to 21 minutes for the ride, plus 15 to 20 minutes of wait time and a potential walk or 
+          rideshare from the bus stop to our office. Altogether, this option could take 30 to 50 minutes, making it the least convenient. For speed and comfort, 
+          we recommend using a taxi or our shuttle.
+        </>)
+    },
+    {
+        question: 'What is the easiest way to reach our Mangere location from the Auckland Airport?', 
+        answer: (
+          <>
+            The easiest and most cost-effective way to reach our Mangere location from Auckland Airport is by using our free-of-cost shuttle service. It’s quick, convenient, and saves you the hassle of carrying luggage or waiting for a bus. Plus, it’s free, which beats the cost of taxis or buses, especially for tourists.
+            <br /><br />
+            However, if you’re in a hurry or prefer not to wait, a taxi or rideshare is another option. Our location is just a few minutes away from the airport, so it’s a quick ride. Taxis typically charge between NZD $27 and $35 due to the high demand for immediate service. If you’re willing to pay a bit extra for speed and comfort, this is your best option.
+          </>
+        )
+    },
+]
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'var(--background)' }}>
 
@@ -115,7 +139,9 @@ export default function Home() {
         display={'none'}
       />
 
-      <FrequentlyAsked />
+      <FrequentlyAsked 
+        faqData={faqData}
+      />
 
       <RollingContent />
 

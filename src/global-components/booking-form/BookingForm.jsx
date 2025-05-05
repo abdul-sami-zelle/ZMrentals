@@ -17,18 +17,7 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
     const [selectedDropDate, setSelectedDropDate] = useState(null);
 
     const citiesList = [
-        'Auckland',
-        'Auckland Airport',
-        'Waiheke City',
-        'Waiheke Airport',
-        'Queenstown',
-        'Queenstown Airport',
-        'Auckland',
-        'Auckland Airport',
-        'Waiheke City',
-        'Waiheke Airport',
-        'Queenstown',
-        'Queenstown Airport',
+        'Mangere Auckland',
 
     ]
 

@@ -3,19 +3,11 @@ import './FrequentlyAsked.css';
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton';
 import { FiPlus } from "react-icons/fi";
 
-const FrequentlyAsked = () => {
-    const faqData = [
-        { 
-            question: 'What do your rental car rates include?', 
-            answer: 'We’ve packed your daily rate full of the good stuff. Our rental rates include GST, unlimited kilometres and ZM Basic Insurance cover. Our insurance is subject to an excess.'
-        },
-        {
-            question: 'Where can I find special deals on my car rental?', 
-            answer: 'Have you had a look at our deals page? It’s home to our latest discounts and offers and can help you save on your next car hire. Downloading our app is another great way of having everything you need at your fingertips.'
-        },
-    ]
+const FrequentlyAsked = ({faqData}) => {
+    
 
     const [currentIndex, setCurrentIndex] = useState(null);
+    
 
   return (
     <div className='frequently-asked-outer-container'>

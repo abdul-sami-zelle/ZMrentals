@@ -16,13 +16,13 @@ const FeedbackGallery = () => {
                 </div>
             </div>
             <div className='feedback-gallery-description-container'>
-                <h3 className='section-main-heading'>Beyond Rentals: Comprehensive On-Road Support</h3>
+                <h3 className='section-main-heading'>Flexible Car Rental Services in Auckland</h3>
                 <p>
-                    We are more than just a reliable car rental service in Auckland, we’re your partner throughout your adventures and exploration. Our commitment to 
-                    customer satisfaction extends far beyond handing over the keys and having them returned. We are committed to supporting you every step of the way, 
-                    addressing any rental-related concerns and needs quickly and efficiently. With our 24/7 roadside assistance, you can drive with peace, knowing that 
-                    help is always just a text or call away, no matter where you are or when you need it. With our comprehensive Auckland car rental services, we ensure 
-                    you drive confidently during your journey.
+                    At ZM Rentals, our top priority is to provide a flexible and enjoyable car rental experience, ensuring your time in Auckland, New Zealand is free of any hassles. 
+                    With tourism booming in New Zealand, we are committed to enhancing visitors’ experiences by offering the most adaptable car rental services. Whether you’re 
+                    embarking on an extensive solo adventure, enjoying a week-long family holiday, or here for a quick business trip, we provide full flexibility when it comes 
+                    to vehicle selection and rental durations. With ZM Rentals, you can count on a smooth and adaptable journey throughout Auckland, making your trip as 
+                    convenient and enjoyable as possible.
                 </p>
                 <SecondaryButton
                     secondaryButtonClass={'secondary-prop-class'}

@@ -8,59 +8,25 @@ const RollingContent = () => {
     const rollingContentData = [
         {
             icon: BsSun, 
-            heading: 'We’re all about YOUR experience',
+            heading: 'Driving in Auckland',
             content: [
                 `
-                    Let’s be honest, in the greater scheme of holiday planning, you’re not really that excited about booking your hire car.
+                    Driving in Auckland is straightforward, with its well-maintained roads, clear signage, and easy navigation through the city center. The suburban areas, popular with tourists, offer wider, quieter roads and plenty of free parking. Whether you're alone or with others, a car rental is a perfect way to drive across Auckland without the hassle of buses or taxis.
                 `,
                 `
-                    This year, we are super-excited to be welcoming back visitors from Australia and the rest of the world to New
-                     Zealand and we look forward to helping you to create amazing memories from your time here in New Zealand.
-                `,
-                `
-                    What is fun is planning the holiday and being free to really enjoy the journey.
-                `,
-                `
-                    Visitor experience is extremely important to us at ZM. From booking online via our website, to pick-up and drop-off,
-                     we’ve worked hard to make every part of your booking journey reflect that easy holiday feeling.
-                `,
-                `
-                    We’ve backed that up by winning cool stuff too - In 2018, we were thrilled to be announced winner of the Visitor 
-                    Experience Award at the New Zealand Tourism Awards - for a car rental company, that’s a pretty big deal!
-                `,
-                `
-                    We have received a perfect 5/5 stars across all categories and won the 2023 Canstar Blue Most Satisfied Customers 
-                    Award in the Hire Cars category. We were also winners in this category in 2018, 2020, 2022 & 2023. Couple this 
-                    with our amazing customer service and you’ve got a winning combination when it comes to renting a car in New Zealand.
-                `,
-                `
-                    But don’t just take our word for it - check out the reviews of those who have come before you and then come and 
-                    experience ZM Rentals for yourself.
+                    While roads are generally in great condition, be aware that the city center can get busy during peak hours (7-9 AM and 4-6 PM). Public transport options like buses and taxis can become crowded, leading to long waits, something many tourists prefer to avoid. A self-drive car rental lets you plan your itinerary with flexibility, so you can adapt to traffic or change your plans on the go. Our Auckland car rental for tourists will make this independent journey more enjoyable.
                 `,
             ]
         },
         {
             icon: GiMountainCave,
-            heading: 'Competitive New Zealand Rental Car Rates',
+            heading: 'Exploring Auckland',
             content: [
                 `
-                    Everyone says they have the best prices and with the internet offering comparisons of all the rental car options
-                    and prices we understand that you’ve done your research.
+                    The best way to explore Auckland is by car, offering you freedom and flexibility to travel at your own pace. With a rental car, you can visit stunning spots, take scenic detours, or chase sunsets - experiences that public transport can’t match. A private car lets you discover hidden gems like Piha and Muriwai beaches or scenic drives around Waitakere Ranges, providing a more authentic and personalized journey.
                 `,
                 `
-                    So you know you can trust us when we tell you that here at ZM, we’re proud to offer some of New Zealand’s most 
-                    competitive hire car rates. Whether you’re after one of our super spacious 4x4s or maybe something a bit more 
-                    economical, we’ve got some great deals.
-                `,
-                `
-                    When you hire a car with ZM, you’re guaranteed our excellent customer service from the first contact right through 
-                    to dropping off your keys, regardless of whether you want to do that by chatting with our excellent team in person 
-                    or prefer to go digital on the app. Car rental in NZ doesn’t need to be complicated, so we’ve made things as simple 
-                    as we can so you can spend more time planning your trip of a lifetime.
-                `,
-                `
-                    Oh and don’t forget that with GO you’ll get unlimited kilometres and free basic car rental insurance to ensure a 
-                    stress-free journey. It really does pay to rent with ZM.
+                    Renting a car in Auckland is one of the best and most cost-effective ways to explore it instead of relying on buses, taxis, or trains, especially for long trips or group travel. Daily fares for public transport can quickly add up, and coordinating multiple people on buses or taxis can be inconvenient. With a self-drive car hire, you and your companions can travel together comfortably, making your Auckland experience much easier and enjoyable.
                 `,
             ]
         }
