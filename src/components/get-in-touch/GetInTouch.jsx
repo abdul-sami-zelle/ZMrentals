@@ -14,8 +14,8 @@ const GetInTouch = () => {
     const addresses = [
         {
             city: 'Auckland City',
-            address: `Address: 127 Shirley Road Papatoetoe, Auckland, NZ`,
-            phone: `0955 8371 3`,
+            address: `Address: 11 peninsula road Mangere Auckland 2022`,
+            phone: `+6421467261`,
             openingHours: `Operating Hours: 9am - 5pm`,
             googleLocation: 'Google Location'
         }
@@ -41,7 +41,7 @@ const GetInTouch = () => {
     return (
         <div className='get-in-touch-main-container'>
             <h3>Get in Touch with ZM Rentals</h3>
-            <p>Thank you for choosing Speedy Rentals as your car hire service in Auckland.</p>
+            <p>Thank you for choosing ZM Rentals as your car hire service in Auckland.</p>
             <p>We are here to assist you with any inquiries or support you may need.</p>
             <p>Below are the different ways you can get in touch with us</p>
 
@@ -64,7 +64,7 @@ const GetInTouch = () => {
                             </div>
                             <span className='contact-type-section'>
                                 <FaPhone size={20} color='var(--color-white)' />
-                                ZN 099741598
+                                +6421467261
                             </span>
                             <span className='contact-type-section'>
                                 <FaEnvelope size={20} color='var(--color-white)' />
