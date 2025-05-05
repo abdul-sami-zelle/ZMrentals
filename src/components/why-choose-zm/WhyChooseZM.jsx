@@ -4,23 +4,30 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 const WhyChooseZM = () => {
     const whyWe = [
-        {que: 'Outstanding on-road support', ans: `We've got your back - so you can make the most of your time`},
-        {que: `Ridiculously simple pick-up and drop-off`, ans: `With our online check-in and app, you'll be through pick up and on the road faster. With our excellent customer service, we personalise the drop off service so you can be on your way to your next location.`}
+        {que: 'Customer-First Approach', ans: `We take a customer-first approach seriously to meet your needs and exceed your expectations. By focusing on you, we not only fulfill your rental requirements but also build long-lasting relationships.`},
+        {que: 'Full Transparency, No Surprises', ans: `With ZM Rentals, what you see is what you get. We maintain complete transparency throughout the rental experience, from the first contact to being dropped off at the airport.`},
+        {que: 'Affordable & Flexible Option', ans: `You shouldn’t have to break the bank for a flexible rental experience. Unlike other services, we offer an unbeatable combination of flexibility and affordability to fit your itinerary and budget. `},
+        {que: 'Seamless Digital Booking', ans: `Our easy-to-navigate website streamlines the Auckland car rental process, so you can get on the road without the wait. With ZM, you rent a car in Auckland without unnecessary complications.`},
+        {que: 'High-Quality Economy Fleet', ans: `At ZM Rentals, you can rest assured that even our most affordable cars are maintained to the highest standards, so you can enjoy your journey with peace of mind.`},
+        {que: 'Unmatched Safety Standards', ans: `Your safety is non-negotiable for us. Our fleet isn’t just clean and well-maintained, but each vehicle is equipped with top-notch safety features, including multiple airbags, ABS, EBD, and more.`},
+        {que: 'Eco-Friendly, Climate-Conscious Vehicles', ans: `As a responsible NZ car rental service, we’re committed to reducing our environmental footprint. Our fleet primarily consists of hybrid vehicles, designed to minimize CO2 emissions and protect Auckland’s stunning beauty.`},
+        {que: 'Effortless Pick-Up & Drop-Off', ans: `From reading the fine print before you pick up the keys to a smooth vehicle inspection at the time of drop-off, getting your rental car and returning it has never been easier.`},
     ]
   return (
     <div className='why-choose-us-main-contianer'>
         <div className='why-choose-us-inner-container'>
             <span className='why-choose-top-heading'>
-                <p>Our promise to you</p>
-                <h3>To be there with you every step of the way</h3>
+                <p>Our Purpose and Promise</p>
+                <h3>Making Every Ride Meaningful & Sustainable </h3>
             </span>
-            <p>Let's be honest, most companies put a whole lot of stuff on their 'mission page' to talk about how great they are. We prefer action over talk so you can make up your own mind.</p>
-            <p>We like to believe that GO is radically changing the way rental car companies work.</p>
+            <p>At ZM Rentals, we’re a proud Kiwi startup on a mission to drive positive change toward a greener, safer environment. We make eco-friendly travel affordable and accessible by offering carbon-conscious Auckland car rentals at budget-friendly rates. </p>
+            
+            <p>Our mission is simple: to empower travelers to explore Auckland sustainably without the heavy cost. By providing eco-conscious, wallet-friendly vehicle options, we help you enjoy Auckland’s stunning landscapes while leaving a lighter footprint. </p>
 
-            <p>We know other car rental companies can make booking a car difficult, so we've gone above and beyond to simplify the process. We'll take care of the important stuff leaving you the freedom to relax and enjoy the ride in your car hire. This is all so you can get on the road faster, without all the hassles, and GO love every moment of your holiday.</p>
+            <p>At ZM Rentals, it’s not just about getting you on the road — it’s about making every journey a step toward a more sustainable future.</p>
 
             <div className='why-we-defrent-main-container'>
-                <h3>Why we're diffrent</h3>
+                <h3>What Sets Us Apart?</h3>
                 <div className='why-we-faq-container'>
                     {whyWe.map((item, index) => (
                         <div key={index} className='why-we-single-faq'>

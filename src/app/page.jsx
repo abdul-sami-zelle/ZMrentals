@@ -17,48 +17,50 @@ export default function Home() {
 
   const packageDescription = [
     `
-      We’ve partnered with CarbonClick to help you effortlessly reduce the environmental impact of your travel here 
-      in New Zealand, contributing to a more sustainable tourism sector in Aotearoa. Find out more about the projects 
-      offsetting your carbon emissions when you rent a car with ZM. We have also achieved a Toitū recertification 
-      and are investing carbon credits in support of the highest quality carbon offsetting projects both in New 
-      Zealand and internationally.
+      As a proud Kiwi-owned and Kiwi-operated business, sustainability is integrated within us. With Auckland’s growing tourism, we recognize the need to 
+      reduce our environmental impact while still offering convenient travel options. That’s why a large part of our fleet includes hybrid vehicles, designed 
+      to cut fuel consumption and lower carbon emissions. These cars combine petrol engines with electric motors, making them far more efficient and eco-friendly 
+      than traditional vehicles. By choosing ZM, you’re not just renting a car, you’re supporting a cleaner, greener Auckland. We’re proud to be part of the movement 
+      toward responsible tourism, helping preserve the city's natural beauty while offering reliable and comfortable car rental solutions.
     `,
   ]
 
   const packageDescriptionTwo = [
     `
-      We’re on a mission at ZM Rentals to make travel more sustainable in New Zealand for Kiwis and international visitors.
-      As well as our fleet of zero emission electric vehicles and eco-friendly hybrid vehicles, we are a Toitū certified business, 
-      plus we’re also integrating Tiaki across our business.
+      At ZM Rentals, we take pride in offering a carefully selected fleet of vehicles designed to make your Auckland car hire experience seamless. 
+      Our experts have handpicked vehicles that are both budget-friendly and built for a smooth, safe ride. Whether you're looking for a car for scenic 
+      drives in the suburbs, need a spacious vehicle for a group trip, or want something affordable, we have the perfect choice for you. 
     `,
     `
-      iaki means to care for people and place. We hope you'll join us on our mission to look after Aotearoa New Zealand, 
-      keeping it safe and beautiful for the next generation of travellers.
+      Whatever your needs, our car hire fleet in Auckland ensures you'll find the right fit for your journey.
     `,
   ]
 
   const pickAndDropDetails = [
     `
-      With our ZM App, you'll be on the road (and on your holiday) faster.
+      Start and end your Auckland adventure as smoothly as possible, whether you book online or in person. At ZM Rentals, we focus on simplicity, 
+      making your Auckland car rental experience fast and hassle-free. Reserve your preferred car in advance or make a quick last-minute check-in; 
+      either way, the process is straightforward and efficient. Our easy-to-use online booking system saves you time, while our in-person reservation 
+      process ensures a swift experience. With ZM Rentals, Auckland car hire takes just minutes, no long queues or complicated steps. Pick up your vehicle 
+      from our convenient near-airport depot and drop it off effortlessly when you're ready to say goodbye to New Zealand.
     `,
-    `
-      Keep all your car rental info close at hand with no need to trawl through your emails. Our app icon is 
-      bright pink so brighten up your home screen and make your car rental experience in New Zealand super-simple.
-    `,
+    // `
+    //   Keep all your car rental info close at hand with no need to trawl through your emails. Our app icon is 
+    //   bright pink so brighten up your home screen and make your car rental experience in New Zealand super-simple.
+    // `,
   ]
 
   const aboutGoRentals = [
     `
-      Here at ZM we’re all about helping our customers turn their daydream into reality.
+      At ZM Rentals, we’re a proud Kiwi startup on a mission to drive positive change toward a greener, safer environment. We make eco-friendly travel 
+      affordable and accessible by offering carbon-conscious Auckland car rentals at budget-friendly rates.
     `,
     `
-      Whether it’s a weekend away or the adventure of a lifetime, we’re excited to be part of your trip.
+      Our mission is simple: to empower travelers to explore Auckland sustainably without the heavy cost. By providing eco-conscious, wallet-friendly 
+      vehicle options, we help you enjoy Auckland’s stunning landscapes while leaving a lighter footprint. 
     `,
     `
-      We'll take care of the important stuff and point out the fun things you can do while on the road - freeing you up to really enjoy the journey.
-    `,
-    `
-      ZM love every moment with the perfect rental car for your journey.
+      At ZM Rentals, it’s not just about getting you on the road — it’s about making every journey a step toward a more sustainable future.
     `,
   ]
 
@@ -77,14 +79,14 @@ export default function Home() {
       />
 
       <PackageDetails
-        packageHeading={'Sustainable car rental in New Zealand'}
+        packageHeading={'Our Commitment to Sustainability'}
         data={packageDescription}
         flexDirection={'row'}
         buttonText={'Find out more'}
       />
 
       <PackageDetails
-        packageHeading={'Our commitment to the Tiaki Promise'}
+        packageHeading={'Curated Fleet Collection in Auckland'}
         data={packageDescriptionTwo}
         flexDirection={'row-reverse'}
         buttonText={'Find out more'}
@@ -95,7 +97,7 @@ export default function Home() {
       <Locations />
 
       <PackageDetails
-        packageHeading={'Ridiculously simple pick-up & drop-off of our rental cars'}
+        packageHeading={'Smooth Pick-Up and Drop-Off with ZM Car Rentals'}
         data={pickAndDropDetails}
         flexDirection={'row'}
         buttonText={'Find out more'}

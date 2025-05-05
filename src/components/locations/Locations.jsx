@@ -6,14 +6,6 @@ import Link from 'next/link';
 const Locations = () => {
   const locationsData = [
     { branchName: 'Auckland City', link: '#' },
-    { branchName: 'Auckland Airport', link: '#' },
-    { branchName: 'Waiheke Island', link: '#' },
-    { branchName: 'Wellington Airport', link: '#' },
-    { branchName: 'Nelson Airport', link: '#' },
-    { branchName: 'Christchurch Airport', link: '#' },
-    { branchName: 'Queenstown Airport', link: '#' },
-    { branchName: 'Dunedin Airport', link: '#' },
-    { branchName: 'Invercargill Airport', link: '#' },
   ]
   return (
     <>
@@ -22,14 +14,16 @@ const Locations = () => {
           <div className='nz-map-locations'>
             <span>
               <TfiLocationPin size={40} color='var(--primary-color)' />
-              Nelson Airport
+              Auckland City
             </span>
           </div>
           <div className='locations-details-container'>
-            <h3 className='section-main-heading'>ZM all across NZ</h3>
+            <h3 className='section-main-heading'>Prime Auckland Location</h3>
             <p>
-              We have nine car rental branches spread evenly throughout New Zealand, in the major destinations of Auckland,
-              Wellington, Christchurch, Nelson, Queenstown, Dunedin and Invercargill so that you’re never far from a ZM rental car.
+              At ZM Rentals, we prioritize your convenience, which is why we’ve chosen the perfect location for both travelers and locals. Our South Auckland Car Rental Depot, 
+              located in Mangere, is just minutes from the Auckland Airport terminal, making it easy for tourists to pick up their pre-booked car or make a walk-in reservation 
+              upon arrival. For locals, our depot is the ideal spot for renting a car, whether it's for occasional use or a long-term car rental in Auckland. With our strategic 
+              location, we ensure a smooth, hassle-free experience, whether you’re a visitor or live here and need to rent a car in Auckland.
             </p>
             <div className='locations-list-main-container'>
               {locationsData.map((item, index) => (
@@ -44,10 +38,12 @@ const Locations = () => {
       </div>
 
       <div className='mobile-location-main-container'>
-            <h3 className='section-main-heading'>ZM all across NZ</h3>
+            <h3 className='section-main-heading'>Prime Auckland Location</h3>
             <p className='mobile-location-para'>
-              We have nine car rental branches spread evenly throughout New Zealand, in the major destinations of Auckland, Wellington, Christchurch, Nelson, 
-              Queenstown, Dunedin and Invercargill so that you’re never far from a GO rental car.
+            At ZM Rentals, we prioritize your convenience, which is why we’ve chosen the perfect location for both travelers and locals. Our South Auckland Car Rental Depot, 
+              located in Mangere, is just minutes from the Auckland Airport terminal, making it easy for tourists to pick up their pre-booked car or make a walk-in reservation 
+              upon arrival. For locals, our depot is the ideal spot for renting a car, whether it's for occasional use or a long-term car rental in Auckland. With our strategic 
+              location, we ensure a smooth, hassle-free experience, whether you’re a visitor or live here and need to rent a car in Auckland.
             </p>
             <div className='mobile-locations-list-main-container'>
               {locationsData.map((item, index) => (

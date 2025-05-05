@@ -9,26 +9,17 @@ const GalleryDetails = ({ flexDirection }) => {
 
     const descriptionsData = [
         `
-            We make renting a car in New Zealand ridiculously simple. Apart from ZM Rentals being one of New Zealand’s 
-            largest independent car rental companies, we also have brand new cars of all shapes and sizes to best suit the 
-            holiday you’ve got planned.
+            Renting a car in Auckland is hassle-free with ZM Rentals. As an independent car rental company, we offer a straightforward service that lets you explore 
+            the city and suburbs with ease. Whether you're visiting Auckland’s cultural sites or seeking a peaceful escape to the outskirts, we have the perfect 
+            vehicle for you.
         `,
         `
-            With a fleet of some of the best rental cars in NZ, pop onto the vehicles page and check out our huge range of modern 
-            rental cars, including the Tesla Model 3 and Model Y, Ford Everest Titanium, Mitsubishi Pajero Sport, and Toyota CHR.
+            Our carefully selected fleet ensures quality, comfort, and efficiency, offering reliable cars with excellent fuel economy for cost-effective travel. 
+            Plus, enjoy peace of mind with our 24/7 roadside assistance, always just a call away.
         `,
         `
-            And don’t worry, its not all about the techy car details – you can also explore some of our fantastic trip planning 
-            resources and discounts from our local experts.
-        `,
-        `
-            Once you’ve sorted out where you’re going and what you want to see along the way, booking your rental car is as simple 
-            as clicking a button.
-        `,
-        `
-            Don’t worry if you’re not built for the internet though as we have a helpful team of road savvy experts happy to 
-            chat on the phone and answer your questions or take care of the booking for you. ZM Rentals - making car hire in New 
-            Zealand simple for over 20 years.
+            Booking with ZM Rentals is simple – reserve online in a few clicks or visit us in-person for personalized service. Whatever your travel plans in Auckland, 
+            we’ve got you covered with the right vehicle and flexible options.
         `,
     ]
 
@@ -37,7 +28,10 @@ const GalleryDetails = ({ flexDirection }) => {
             <div className='gallery-details-main-container' style={{ flexDirection: flexDirection }}>
 
                 <div className='gallery-details-descriptions'>
-                    <h3 className='section-main-heading'>ZM Car Rental <br /> Made Easy</h3>
+                    <h3 className='section-main-heading'>
+                        {/* ZM Car Rental <br /> Made Easy */}
+                        Seamless Car Rental <br /> Experience in Auckland
+                    </h3>
                     {descriptionsData.map((item, index) => (
                         <p key={index} className={index === 0 ? 'gallery-main-description' : 'gallery-second-description'}>{item}</p>
                     ))}

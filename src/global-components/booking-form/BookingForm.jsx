@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import 'react-calendar/dist/Calendar.css';
 import './BookingForm.css';
 import DropdownInput from '../dropdown-input/DropdownInput'
 import PrimaryButton from '../primary-button/PrimaryButton';
 import { GoArrowRight } from "react-icons/go";
 import Calendar from 'react-calendar';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
 
@@ -44,7 +46,7 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
         '03: 00 AM',
         '01: 00 AM',
     ]
-    
+
     // const toggleCalendar = () => {
     //     setShowCalendar(prev => !prev);
     // };
@@ -65,11 +67,11 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
     };
 
     return (
-        <div className='booking-form-main-container' style={{boxShadow: boxShadow}}>
+        <div className='booking-form-main-container' style={{ boxShadow: boxShadow }}>
             <div className='booking-form-inputs-container'>
                 <div className='booking-form-inputs'>
                     <div className='booking-form-input-single-col'>
-                        <DropdownInput 
+                        <DropdownInput
                             width={'100%'}
                             defaultValue={'Pick-up Location'}
                             placeholder={'Pick-up Location'}
@@ -88,21 +90,34 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
                                         <Calendar
                                             onChange={handlePickupDateChange}
                                             value={selectedPickupDate}
-                                            view="month"            // always show month view
-                                            maxDetail="month"       // prevent navigating into days
-                                            minDetail="month"       // prevent navigating to years
-                                            next2Label={null}       // hides double right arrow (>>)
+                                            view="month"
+                                            maxDetail="month"
+                                            minDetail="month"
+                                            next2Label={null}
                                             prev2Label={null}
-                                            formatShortWeekday={(locale, date) => date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)}
                                             minDate={new Date()}
+                                            formatShortWeekday={(locale, date) =>
+                                                date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
+                                            }
+                                            nextLabel={<IoIosArrowForward />}
+                                            prevLabel={<IoIosArrowBack />}
+                                            tileDisabled={({ date }) => {
+                                                const today = new Date();
+                                                today.setHours(0, 0, 0, 0); // strip time
+
+                                                const checkDate = new Date(date);
+                                                checkDate.setHours(0, 0, 0, 0); // strip time
+
+                                                return checkDate < today;
+                                            }}
                                         />
                                     </div>
                                 )}
 
                             </div>
-                            
-                            <DropdownInput 
-                                width={'48%'} 
+
+                            <DropdownInput
+                                width={'48%'}
                                 defaultValue={'Time'}
                                 data={timeList}
                                 bgColor={bgColor}
@@ -112,8 +127,8 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
                     </div>
 
                     <div className='booking-form-input-single-col'>
-                        <DropdownInput 
-                            width={'100%'} 
+                        <DropdownInput
+                            width={'100%'}
                             defaultValue={'Drop-of Location'}
                             placeholder={'Drop-of Location'}
                             data={citiesList}
@@ -123,38 +138,49 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
                         <div className='booking-time-container'>
 
                             <div className='select-drop-up-date-button'>
-                                <button 
-                                    className="select-date-button" 
+                                <button
+                                    className="select-date-button"
                                     onClick={toggleDropCalendar}
-                                    style={{backgroundColor: bgColor}}
+                                    style={{ backgroundColor: bgColor }}
                                 >
-                                    {selectedDropDate ? selectedDropDate.toDateString() : 'Date'} 
+                                    {selectedDropDate ? selectedDropDate.toDateString() : 'Date'}
                                 </button>
 
                                 {dropCalender && (
                                     <div className='booking-drop-calender-container'>
-                                        <Calendar 
-                                            onChange={handleDropDateChange} 
-                                            value={selectedDropDate} 
+                                        <Calendar
+                                            onChange={handleDropDateChange}
+                                            value={selectedDropDate}
                                             view="month"            // always show month view
                                             maxDetail="month"       // prevent navigating into days
                                             minDetail="month"       // prevent navigating to years
                                             next2Label={null}       // hides double right arrow (>>)
-                                            prev2Label={null} 
+                                            prev2Label={null}
                                             formatShortWeekday={(locale, date) => date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)}
                                             minDate={new Date()}
+                                            tileDisabled={({ date }) => {
+                                                if (!selectedPickupDate) return true; // disable everything if no pickup date selected
+
+                                                const pickupDate = new Date(selectedPickupDate);
+                                                pickupDate.setHours(0, 0, 0, 0);
+
+                                                const checkDate = new Date(date);
+                                                checkDate.setHours(0, 0, 0, 0);
+
+                                                return checkDate < pickupDate;
+                                            }}
                                         />
                                     </div>
-                                )} 
-                                
+                                )}
+
                             </div>
-                            <DropdownInput 
-                                width={'48%'} 
+                            <DropdownInput
+                                width={'48%'}
                                 defaultValue={'Time'}
                                 data={timeList}
                                 bgColor={bgColor}
                             />
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,7 +196,7 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
                     lineHeight={'var(--line-height-body)'}
                     fontWeight={'var(--font-weight-bold)'}
                 />
-                <p className='add-promo-option' style={{color: textColor}}>Add a promo code</p>
+                <p className='add-promo-option' style={{ color: textColor }}>Add a promo code</p>
             </div>
         </div>
     )

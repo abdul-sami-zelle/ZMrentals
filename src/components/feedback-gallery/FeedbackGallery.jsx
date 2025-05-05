@@ -16,10 +16,13 @@ const FeedbackGallery = () => {
                 </div>
             </div>
             <div className='feedback-gallery-description-container'>
-                <h3 className='section-main-heading'>Outstanding on-road support</h3>
+                <h3 className='section-main-heading'>Beyond Rentals: Comprehensive On-Road Support</h3>
                 <p>
-                    24/7 roadside assistance, we’ve got your back — so you can make the most of your time in New Zealand.
-                    Tick rental car off your list of things to do when you book with ZM - we’ve got you covered every step of the way.
+                    We are more than just a reliable car rental service in Auckland, we’re your partner throughout your adventures and exploration. Our commitment to 
+                    customer satisfaction extends far beyond handing over the keys and having them returned. We are committed to supporting you every step of the way, 
+                    addressing any rental-related concerns and needs quickly and efficiently. With our 24/7 roadside assistance, you can drive with peace, knowing that 
+                    help is always just a text or call away, no matter where you are or when you need it. With our comprehensive Auckland car rental services, we ensure 
+                    you drive confidently during your journey.
                 </p>
                 <SecondaryButton
                     secondaryButtonClass={'secondary-prop-class'}

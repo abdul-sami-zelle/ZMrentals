@@ -149,7 +149,7 @@
 
     .feedback-gallery-description-container>p {
         display: flex;
-        width: 70%;
+        width: 85%;
         text-align: start;
         font-size: var(--font-body-xl);
     }
@@ -160,7 +160,7 @@
         left: 50%;
         width: 350px;
         height: auto;
-        transform: translate(-30%, -50%);
+        transform: translate(-15%, -50%);
 
     }
 
