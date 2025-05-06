@@ -25,10 +25,10 @@ const CarDetails = ({ data, openModal }) => {
   }, [showDetalModal])
   return (
     <div className='car-details-main-container' onClick={openModal}>
-      <h3>{data.heading}</h3>
+      <h3 className='section-main-heading'>{data.heading}</h3>
       <div className='car-details-description-and-all-vehicles-link-container'>
         <p>{data.description}</p>
-        <Link href={'/'}>{`View all ${data.viewAll} details`}</Link>
+        <Link href={'/'}>{`Our Fleet`}</Link>
       </div>
       <div className='cars-cars-container'>
         {data.carsData.map((car, carIndex) => (

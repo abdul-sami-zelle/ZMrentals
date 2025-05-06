@@ -29,6 +29,18 @@ const RollingContent = () => {
                     Renting a car in Auckland is one of the best and most cost-effective ways to explore it instead of relying on buses, taxis, or trains, especially for long trips or group travel. Daily fares for public transport can quickly add up, and coordinating multiple people on buses or taxis can be inconvenient. With a self-drive car hire, you and your companions can travel together comfortably, making your Auckland experience much easier and enjoyable.
                 `,
             ]
+        },
+        {
+            icon: GiMountainCave,
+            heading: 'Exploring Auckland',
+            content: [
+                `
+                    The best way to explore Auckland is by car, offering you freedom and flexibility to travel at your own pace. With a rental car, you can visit stunning spots, take scenic detours, or chase sunsets - experiences that public transport can’t match. A private car lets you discover hidden gems like Piha and Muriwai beaches or scenic drives around Waitakere Ranges, providing a more authentic and personalized journey.
+                `,
+                `
+                    Renting a car in Auckland is one of the best and most cost-effective ways to explore it instead of relying on buses, taxis, or trains, especially for long trips or group travel. Daily fares for public transport can quickly add up, and coordinating multiple people on buses or taxis can be inconvenient. With a self-drive car hire, you and your companions can travel together comfortably, making your Auckland experience much easier and enjoyable.
+                `,
+            ]
         }
     ]
   return (
@@ -43,7 +55,7 @@ const RollingContent = () => {
                       ))}
                   </div>
               ))}
-              <div className='rolling-empty-container'></div>
+              {/* <div className='rolling-empty-container'></div> */}
           </div>
     </div>
   )

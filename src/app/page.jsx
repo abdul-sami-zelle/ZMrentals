@@ -95,7 +95,7 @@ export default function Home() {
 
       <DiscountBanner
         discountImage={'/assets/images/discount-banners/Go_Rentals_Newsletter.jpg'}
-        marginBottom={'112px'}
+        marginBottom={'32px'}
       />
 
       <GalleryDetails 
@@ -106,7 +106,7 @@ export default function Home() {
         packageHeading={'Our Commitment to Sustainability'}
         data={packageDescription}
         flexDirection={'row'}
-        buttonText={'Find out more'}
+        buttonText={'Find Out More'}
       />
 
       <PackageDetails
@@ -124,7 +124,7 @@ export default function Home() {
         packageHeading={'Smooth Pick-Up and Drop-Off with ZM Car Rentals'}
         data={pickAndDropDetails}
         flexDirection={'row'}
-        buttonText={'Find out more'}
+        buttonText={'Find Out More'}
       />
 
       <FeedbackGallery />

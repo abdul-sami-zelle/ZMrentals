@@ -43,7 +43,7 @@ const GetInTouch = () => {
             <h3>Get in Touch with ZM Rentals</h3>
             <p>Thank you for choosing ZM Rentals as your car hire service in Auckland.</p>
             <p>We are here to assist you with any inquiries or support you may need.</p>
-            <p>Below are the different ways you can get in touch with us</p>
+            {/* <p>Below are the different ways you can get in touch with us</p> */}
 
             <div className='get-in-touch-types-container'>
                 <div className='contact-form-container'>

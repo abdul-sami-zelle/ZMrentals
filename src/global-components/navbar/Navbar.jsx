@@ -23,11 +23,11 @@ const Navbar = () => {
   const [currentIndex, setCurrentIndex] = useState(null);
   const navData = [
     { id: 1, name: 'Vehicles', dropdown: true, link: '/vehicles' },
-    { id: 2, name: 'Car rental services', dropdown: false, link: '/car-rental-services' },
-    { id: 3, name: 'Booking info', dropdown: false, link: '/booking-info' },
+    { id: 2, name: 'Car Rental Services', dropdown: false, link: '/car-rental-services' },
+    { id: 3, name: 'Booking Info', dropdown: false, link: '/booking-info' },
     { id: 4, name: 'Locations', dropdown: false, link: '/locations' },
-    { id: 5, name: 'Contact us', dropdown: false, link: '/contact-us' },
-    { id: 6, name: 'About us', dropdown: false, link: '/about-us' },
+    { id: 5, name: 'Contact Us', dropdown: false, link: '/contact-us' },
+    { id: 6, name: 'About Us', dropdown: false, link: '/about-us' },
   ]
 
   const dropdownData = [
@@ -125,6 +125,8 @@ const Navbar = () => {
     setOpenMenu(false)
   } 
 
+  const [navItem, setNavItem ]= useState(null)
+
 
 
   return (
@@ -138,7 +140,8 @@ const Navbar = () => {
             {navData.map((item) => (
               <li
                 key={item.id}
-                className={`navbar-item ${currentIndex === item.id ? 'active' : ''}`}
+                className={`navbar-item ${navItem === item.id ? 'active' : ''}`}
+                onClick={() => setNavItem(item.id)}
                 onMouseOver={() => setCurrentIndex(item.id)}
                 onMouseLeave={() => setCurrentIndex(null)}
               >

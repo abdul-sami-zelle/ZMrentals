@@ -40,7 +40,7 @@ const BookingInfo = () => {
         heading={'Cruise Auckland in Style'}
         paraOne={`Book your best car rental today and craft a journey to remember `}
         // paraTwo={'Find out what makes us tick.'}
-        buttonText={'Book now'}
+        buttonText={'Book Now'}
       />
       <div className='bookinng-info-content-container'>
         <div className='booking-info-max-width-container'>

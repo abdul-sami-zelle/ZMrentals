@@ -11,7 +11,7 @@ const ContactUs = () => {
         heading={'Contact us'}
         paraOne={`We're a different kind of car rental company.`}
         paraTwo={'Find out what makes us tick.'}
-        buttonText={'What we are about'}
+        buttonText={'What We Are About'}
       />
 
       <div className="contact-us-inner-section">

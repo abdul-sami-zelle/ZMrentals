@@ -8,7 +8,7 @@
     position: relative;
     gap: 15px;
     max-width: 1323px;
-    margin-bottom: 57px;
+    margin-bottom: 32px;
 }
 
 .feedback-gallery-images-container {
@@ -140,7 +140,7 @@
         padding: 35px 65px;
         width: 100%;
         position: relative;
-        margin-bottom: 112px;
+        margin-bottom: 0px;
     }
 
     .feedback-gallery-description-container>h3 {
@@ -151,7 +151,7 @@
         display: flex;
         width: 85%;
         text-align: start;
-        font-size: var(--font-body-xl);
+        font-size: var(--font-body-18);
     }
 
     .feedback-gallery-customer-comment-card-main-container {

@@ -4,7 +4,7 @@ import './RentalServiceHeader.css';
 const RentalServiceHeader = ({heading, description}) => {
   return (
     <div className='rental-service-head-container'>
-        <h3>{heading}</h3>
+        <h3 className='section-main-heading'>{heading}</h3>
         <p>{description}</p>
     </div>
   )

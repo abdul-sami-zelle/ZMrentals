@@ -7,7 +7,7 @@
     height: auto;
     gap: 20px;
     max-width: 1323px;
-    margin-bottom: 112px;
+    margin-bottom: 32px;
 }
 
 .benefits-empty-column {
@@ -47,7 +47,6 @@
 }
 
 .benefits-option-container>p {
-    cursor: pointer;
     font-size: var(--font-body-lg);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-normal);

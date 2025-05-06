@@ -69,10 +69,20 @@
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
     cursor: pointer;
+    
+
 }
 
 .booking-tabs-numbers.booking-selected-tab {
-    font-weight: var(--font-weight-bold);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-white);
+    background-color: var(--secondary-color);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 
@@ -84,7 +94,7 @@
     height: auto;
     padding: 10px;
     border-radius: 25px;
-    background-color: rgba(255, 139, 64, 0.7);
+    background-color: rgba(255, 139, 64, 1);
     color: var(--color-white);
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
@@ -200,6 +210,12 @@
     font-weight: var(--font-weight-regular);
 }
 
+.drop-off-section > p:nth-last-child(1) {
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-regular);
+    opacity: 0.5;
+}
 
 .pick-drop-time {
     font-size: var(--font-body-md);

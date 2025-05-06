@@ -3,10 +3,9 @@
     width: 100%;
     align-items: start;
     justify-content: start;
-    padding: 0 56px;
+    padding: 35px 56px;
     gap: 30px;
     max-width: 1323px;
-    margin-bottom: 112px;
 }
 
 .gallery-details-descriptions {
@@ -27,7 +26,7 @@
 }
 
 .gallery-main-description {
-    font-size: var(--font-body-xl) !important;
+    font-size: var(--font-body-18) !important;
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     color: #000;
@@ -36,7 +35,7 @@
 }
 
 .gallery-second-description {
-    font-size: var(--font-body-lg) !important;
+    font-size: var(--font-body-18) !important;
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     color: #000;

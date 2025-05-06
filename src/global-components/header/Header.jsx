@@ -14,10 +14,10 @@ const Header = () => {
 
   const headerData = [
     {name: '+6421467261', icon: MdOutlinePhoneIphone , down: MdOutlineArrowDropDown},
-    { name: 'Email us', icon: IoMailOutline},
-    { name: 'Manage Booking', icon: FaRegCheckCircle},
+    { name: 'Email Us', icon: IoMailOutline},
+    // { name: 'Manage Booking', icon: FaRegCheckCircle},
     // { name: 'Check-in', icon: FaRegCheckCircle},
-    { name: 'Sign in', icon: HiOutlineUserCircle},
+    // { name: 'Sign in', icon: HiOutlineUserCircle},
   ]
 
   return (

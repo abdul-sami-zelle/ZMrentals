@@ -6,7 +6,7 @@ const RentalPolicyCard = ({data}) => {
   return (
     <div className='rental-policy-card-container'>
         <div className='rental-policy-single-card-item'>
-            <SiTicktick size={20} />
+            <SiTicktick className='rental-policy-icon' />
             <p>{data}</p>
         </div>
     </div>

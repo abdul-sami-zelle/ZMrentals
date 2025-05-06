@@ -18,7 +18,7 @@ const WhyChooseZM = () => {
         <div className='why-choose-us-inner-container'>
             <span className='why-choose-top-heading'>
                 <p>Our Purpose and Promise</p>
-                <h3>Making Every Ride Meaningful & Sustainable </h3>
+                <h3 className='section-main-heading'>Making Every Ride Meaningful & Sustainable </h3>
             </span>
             <p>At ZM Rentals, we’re a proud Kiwi startup on a mission to drive positive change toward a greener, safer environment. We make eco-friendly travel affordable and accessible by offering carbon-conscious Auckland car rentals at budget-friendly rates. </p>
             
@@ -31,7 +31,7 @@ const WhyChooseZM = () => {
                 <div className='why-we-faq-container'>
                     {whyWe.map((item, index) => (
                         <div key={index} className='why-we-single-faq'>
-                            <MdKeyboardDoubleArrowRight />
+                            <MdKeyboardDoubleArrowRight className='why-we-faq-arrow' />
                             <span>
                                 <h3>{item.que}</h3>
                                 <p>{item.ans}</p>

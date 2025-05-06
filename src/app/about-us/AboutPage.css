@@ -45,7 +45,7 @@
 }
 
 .about-us-driving-standered-para-sec > p {
-    font-size: var(--font-body-lg);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
 }
@@ -65,7 +65,7 @@
 }
 
 .why-choose-un-content-container > p {
-    font-size: var(--font-body-lg);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-semibold);
     text-align: center;

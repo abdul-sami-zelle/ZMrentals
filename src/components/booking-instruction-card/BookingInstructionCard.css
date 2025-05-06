@@ -47,9 +47,10 @@
 
 /* .booking-instruction-card-arrow {
     transition: all 0.3s ease-in-out;
-}
+} */
 
 .booking-instruction-single-item:hover .booking-instruction-card-arrow {
-    margin-right: 20px;
-} */
+    color: var(--secondary-color);
+    font-weight: 700;
+} 
 

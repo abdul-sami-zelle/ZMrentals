@@ -18,6 +18,11 @@
     cursor: pointer;
 }
 
+.rental-policy-icon {
+    width: 30px;
+    height: 20px;
+}
+
 .rental-policy-single-card-item > p {
     font-size: var(--font-body-md);
     line-height: var(--line-height-body);
@@ -27,3 +32,4 @@
 .rental-policy-single-card-item:hover > p {
     color: var(--secondary-color);
 }
+

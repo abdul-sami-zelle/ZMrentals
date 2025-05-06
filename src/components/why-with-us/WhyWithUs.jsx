@@ -5,12 +5,14 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { LiaLeafSolid } from "react-icons/lia";
 import { SiVlcmediaplayer } from "react-icons/si";
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton';
+import Image from 'next/image';
+// import peacIcon from '../../assets/peace.png'
 
 const WhyWithUs = () => {
     const whyWithUsData = [
         {
             icon: SiAdguard, 
-            title: 'Unlimited Freedom:',
+            title: 'Unlimited Freedom',
             para: (
                 <p>
                     Explore Auckland without limits, thanks to our unlimited kilometers.
@@ -20,7 +22,8 @@ const WhyWithUs = () => {
         },
         {
             icon: FaArrowRightLong, 
-            title: '24/7 Peace of Mind:',
+            // icon: '/assets/peace.png',
+            title: '24/7 Peace of Mind',
             para: (
                 <p>
                      Drive confidently with round-the-clock roadside assistance, always there when you need it.
@@ -30,7 +33,7 @@ const WhyWithUs = () => {
         },
         {
             icon: LiaLeafSolid, 
-            title: 'Prime Location: ',
+            title: 'Prime Location ',
             para: (
                 <p>
                     Conveniently located just minutes from the airport for easy pick-up and drop-off.
@@ -40,7 +43,7 @@ const WhyWithUs = () => {
         },
         {
             icon: SiAdguard, 
-            title: 'Always Here for You:',
+            title: 'Always Here for You',
             para: (
                 <p>
                     Our customer support team is available 24/7, ready to assist with anything you need.
@@ -50,7 +53,7 @@ const WhyWithUs = () => {
         },
         {
             icon: SiAdguard, 
-            title: 'No Hidden Surprises:',
+            title: 'No Hidden Surprises',
             para: (
                 <p>
                     Our transparent car rental process means no hidden fees, just honest pricing.
@@ -60,7 +63,7 @@ const WhyWithUs = () => {
         },
         {
             icon: SiAdguard, 
-            title: 'Tailored for You:',
+            title: 'Tailored for You',
             para: (
                 <p>
                     Personalize your Auckland car hire experience with flexible rental plans designed to fit your needs.
@@ -70,7 +73,7 @@ const WhyWithUs = () => {
         },
         {
             icon: SiAdguard, 
-            title: 'Affordable Quality:',
+            title: 'Affordable Quality',
             para: (
                 <p>
                     Get the best budget deals without compromising on comfort, safety, or quality.
@@ -80,7 +83,7 @@ const WhyWithUs = () => {
         },
         {
             icon: SiAdguard, 
-            title: 'Comfort and Safety:',
+            title: 'Comfort and Safety',
             para: (
                 <p>
                     Enjoy a smooth ride in our well-maintained, air-conditioned vehicles, built for your comfort.
@@ -90,7 +93,7 @@ const WhyWithUs = () => {
         },
         {
             icon: SiAdguard, 
-            title: 'Navigate with Ease:',
+            title: 'Navigate with Ease',
             para: (
                 <p>
                     Find your way effortlessly with the integrated GPS, guiding you through Auckland.
@@ -100,7 +103,7 @@ const WhyWithUs = () => {
         },
         {
             icon: SiAdguard, 
-            title: 'Stay Connected:',
+            title: 'Stay Connected',
             para: (
                 <p>
                     With Bluetooth and USB ports, keeping your devices charged and connected is easy.
@@ -110,7 +113,7 @@ const WhyWithUs = () => {
         },
         {
             icon: SiAdguard, 
-            title: 'Choose Your Coverage:',
+            title: 'Choose Your Coverage',
             para: (
                 <p>
                     Select from basic or premium insurance plans to suit your peace of mind.
@@ -127,7 +130,8 @@ const WhyWithUs = () => {
                 {whyWithUsData.map((item, index) => {
                     let Icon = item.icon;
                     return <div key={index} className='why-with-us-single-card'>
-                        <Icon className='why-with-us-card-icon' size={30} color='var(--primary-color)' />
+                        {item.title === '24/7 Peace of Mind' ? <Image src={'/assets/peace.png'} width={30} height={40} className='why-with-us-card-icon' alt='img'/> : <Icon className='why-with-us-card-icon' size={30} color='var(--primary-color)' />}
+                        
                         <h3>{item.title}</h3>
                         {item.para}
                     </div>
@@ -144,7 +148,7 @@ const WhyWithUs = () => {
                   fontSize={'var(--font-body-lg)'}
                   lineHeight={'var(--line-height-body)'}
                   fontWeight={'var(--font-weight-bold)'}
-                  secondaryText={'Learn more'}
+                  secondaryText={'Learn More'}
                   display={'flex'}
               />
         </div>

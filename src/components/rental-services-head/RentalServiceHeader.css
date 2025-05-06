@@ -8,15 +8,15 @@
     gap: 32px;
 }
 
-.rental-service-head-container > h3 {
+/* .rental-service-head-container > h3 {
     font-size: var(--font-heading-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     color: var(--primary-color);
-}
+} */
 
 .rental-service-head-container > p {
-    font-size: var(--font-body-lg);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--fonr-weight-mediums);
     text-align: center;

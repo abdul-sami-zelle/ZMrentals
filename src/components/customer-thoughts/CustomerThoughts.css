@@ -24,13 +24,13 @@
 }
 
 .customer-thoughts-first-para {
-    font-size: var(--font-body-lg);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
 }
 
 .customer-thoughts-second {
-    font-size: var(--font-body-md);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
 }

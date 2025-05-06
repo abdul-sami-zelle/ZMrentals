@@ -50,6 +50,7 @@
     align-items: center;
     justify-content: center;
     gap: 16px;
+    margin-left: 80px;
     width: max-content;
     color: var(--primary-color);
 }
@@ -72,14 +73,14 @@
 }
 
 .location-details-para-one {
-    font-size: var(--font-body-lg);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     color: var(--color-white);
 }
 
 .location-details-para-two {
-    font-size: var(--font-body-lg);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     color: var(--color-white);
@@ -92,6 +93,9 @@
     width: max-content;
     gap: 16px;
     color: var(--color-white);
+    font-size: var(--font-body-18);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
 }
 
 .city-details-section {
@@ -119,7 +123,7 @@
 }
 
 .city-and-opening-times-contianer > p {
-    font-size: var(--font-body-md);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     color: var(--color-white);

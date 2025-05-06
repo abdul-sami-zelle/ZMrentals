@@ -107,15 +107,15 @@ const Locations = () => {
     <div className='locations-main-outer-contaienr'>
 
       <div className='page-main-heading-container'>
-        <h3 className='vehicles-main-heading'>Car Rental New Zealand</h3>
+        <h3 className='vehicles-main-heading'>Car Rental Auckland</h3>
         <p>ZM the distance with an affordable car rental</p>
-        <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} textColor={'var(--primary-color)'} primaryButtonText={'Find my car'} />
+        <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} textColor={'var(--primary-color)'} primaryButtonText={'Find My Car'} />
       </div>
 
-      <DiscountBanner
+      {/* <DiscountBanner
         discountImage={discountBannerImage}
         marginBottom={'57px'}
-      />
+      /> */}
 
       <div className='location-max-width-control-container'>
 
@@ -125,7 +125,7 @@ const Locations = () => {
         {/* Navigate Easy Section */}
         <div className='navigate-easy-main-container'>
           <div className='navigate-easy-inner-container'>
-            <h3>What Makes Our Mangere Location Prime?</h3>
+            <h3 className='section-main-heading'>What Makes Our Mangere Location Prime?</h3>
 
             <p>
               Our car rental depot, centrally located in the heart of Mangere, is one of the most convenient spots to rent a car in Auckland. Its strategic placement makes it a top choice for both tourists and residents alike. With easy access to key attractions and major routes, it’s the perfect launchpad for your Auckland adventures.
@@ -155,7 +155,7 @@ const Locations = () => {
           buttonText={'Dawnload App'}
         /> */}
 
-        <QuickFackts />
+        {/* <QuickFackts /> */}
 
         <WhyWithUs />
 

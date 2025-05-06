@@ -8,7 +8,7 @@ const FrequentlyAsked = ({ faqData }) => {
 
 
     const [currentIndex, setCurrentIndex] = useState(null);
-    const [desktopIndex, setDesktopIndex] = useState(null)
+    const [desktopIndex, setDesktopIndex] = useState(0)
     function toTitleCase(str) {
         return str
             .toLowerCase()
@@ -59,7 +59,7 @@ const FrequentlyAsked = ({ faqData }) => {
                     fontSize={'var(--font-body-lg)'}
                     lineHeight={'var(--line-height-body)'}
                     fontWeight={'var(--font-weight-body)'}
-                    secondaryText={'Read more FAQs'}
+                    secondaryText={'Read More FAQs'}
                     display={'flex'}
                 />
             </div>

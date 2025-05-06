@@ -33,7 +33,7 @@ const HappySnapGallery = () => {
                       fontSize={'var(--font-body-lg)'}
                       lineHeight={'var(--line-height-body)'}
                       fontWeight={'var(--font-weight-body)'}
-                      secondaryText={'Find out more'}
+                      secondaryText={'Find Out More'}
                   />
             </div>
 
@@ -82,7 +82,7 @@ const HappySnapGallery = () => {
                       fontSize={'var(--font-body-lg)'}
                       lineHeight={'var(--line-height-body)'}
                       fontWeight={'var(--font-weight-body)'}
-                      secondaryText={'Find out more'}
+                      secondaryText={'Find Out More'}
                   />
             </div>
         </div>

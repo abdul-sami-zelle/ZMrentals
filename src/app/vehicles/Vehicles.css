@@ -127,16 +127,16 @@
 }
 
 .fleet-detail-desc-para {
-    font-size: var(--font-body-md);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
 }
 
 .fleet-detail-desc-items-container {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     width: 100%;
-    align-items: start;
+    align-items: stretch;
     justify-content: start;
     padding-left: 60px;
     gap: 16px;
@@ -148,6 +148,10 @@
     align-items: start;
     justify-content: start;
     gap: 7px;
+    background-color: #f9f9f9;
+    padding: 16px;
+    width: 100%;
+    border-radius: 5px;
 }
 
 .delet-detail-desc-single-item > h3 {
@@ -172,15 +176,15 @@
     justify-content: start;
 }
 
-.perfect-ride-zm-main-container > h3 {
+/* .perfect-ride-zm-main-container > h3 {
     font-size: var(--font-heading-sm);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     color: var(--primary-color);
-}
+} */
 
 .perfect-ride-zm-main-container > p {
-    font-size: var(--font-body-md);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
 }

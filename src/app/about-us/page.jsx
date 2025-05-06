@@ -12,7 +12,7 @@ export default function AboutUs() {
         heading={'Empowering Your Journey'}
         paraOne={`Providing seamless, sustainable travel experiences with Auckland car rentals `}
         paraTwo={'Find out what makes us tick.'}
-        buttonText={'What we are about'}
+        buttonText={'What We Are About'}
       />
 
       <div className="about-us-inner-section">

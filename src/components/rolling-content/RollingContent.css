@@ -4,7 +4,8 @@
     justify-content: end;
     width: 100%;
     max-width: 1323px;
-    margin-bottom: 112px;
+    margin-bottom: 32px;
+    padding-right: 32px;
 }
 
 .rolling-content-main-container {

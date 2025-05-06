@@ -3,7 +3,7 @@
     flex-direction: column;
     width: 100%;
     gap: 15px;
-    margin-bottom: 57px;
+    margin-bottom: 32px;
     align-items: start;
     justify-content: start;
 }
@@ -90,7 +90,6 @@
     max-width: 1323px;
     padding: 35px 56px;
     gap: 16px;
-    margin-bottom: 57px;
 }
 
 .happy-snap-desktop-gallery-main-container {
@@ -171,7 +170,7 @@
 }
 
 .happy-snap-desktop-description-container > p {
-    font-size: var(--font-body-lg);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
 }
@@ -185,4 +184,5 @@
     .happy-snap-desktop-main-container {
         display: flex;
     }
+    
 }

@@ -59,7 +59,7 @@ const RoadCare = () => {
                   fontSize={'var(--font-body-lg)'}
                   lineHeight={'var(--line-height-body)'}
                   fontWeight={'var(--font-weight-bold)'}
-                  secondaryText={'Terms and Conditions'}
+                  secondaryText={'Terms And Conditions'}
                   display={'flex'}
               />
         </div>

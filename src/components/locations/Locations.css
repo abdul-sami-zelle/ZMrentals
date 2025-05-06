@@ -3,7 +3,7 @@
     width: 100%;
     align-items: end;
     justify-content: end;
-    margin-bottom: 112px;
+    margin-bottom: 32px;
 }
 
 .locations-main-container {
@@ -66,7 +66,7 @@
 }
 
 .locations-details-container > p {
-    font-size: var(--font-body-xl);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     color: var(--primary-color);

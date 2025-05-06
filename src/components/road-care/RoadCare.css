@@ -25,9 +25,12 @@
 }
 
 .road-care-inner-container > p {
-    font-size: var(--font-body-xl);
+    /* font-size: var(--font-body-xl);
     line-height: var(--line-height-body);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium); */
+    font-size: var(--font-body-18);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
 }
 
 .road-care-cards-container {

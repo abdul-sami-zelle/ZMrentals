@@ -58,16 +58,16 @@
     gap: 16px;
     width: 100%;
 }
-
+/* 
 .navigate-easy-inner-container > h3 {
     font-size: var(--font-body-xl);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     color: var(--primary-color);
-}
+} */
 
 .navigate-easy-inner-container > p {
-    font-size: var(--font-body-md);
+    font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     text-align: start;
