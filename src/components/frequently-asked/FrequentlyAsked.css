@@ -38,23 +38,47 @@
     width: 100%;
     align-items: start;
     justify-content: start;
-    gap: 32px;
+    gap: 0px;
     border-bottom: 1px solid var(--primary-color);
     padding: 10px 0;
 }
 
-.frequently-asked-single-que-ans > h3 {
-    font-size: var(--font-heading-md);
+.faq-desktop-head {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: start;
+    gap: 16px;
+    cursor: pointer;
+    padding: 7px 0;
+}
+
+.faq-desktop-head > h3 {
+    font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     color: var(--primary-color);
 }
 
-.frequently-asked-single-que-ans > p {
-    font-size: var(--font-body-lg);
+.faq-desktop-body {
+    display: flex;
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+    height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.faq-desktop-body.show-desktop-body {
+    height: 160px;
+}
+
+.faq-desktop-body > p {
+    font-size: var(--font-body-md);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
-    width: 70%;
+    width: 100%;
     text-align: start;
 }
 

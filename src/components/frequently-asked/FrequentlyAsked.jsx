@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import './FrequentlyAsked.css';
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton';
 import { FiPlus } from "react-icons/fi";
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
 const FrequentlyAsked = ({faqData}) => {
     
 
     const [currentIndex, setCurrentIndex] = useState(null);
+    const [desktopIndex, setDesktopIndex] = useState(null)
     
 
   return (
@@ -16,8 +18,13 @@ const FrequentlyAsked = ({faqData}) => {
               <div className='frequently-asked-ques-anw'>
                 {faqData.map((item, index) => (
                     <div key={index} className='frequently-asked-single-que-ans'>
-                        <h3>{item.question}</h3>
-                        <p>{item.answer}</p>
+                        <div className={`faq-desktop-head`} onClick={() => setDesktopIndex((prevIndex) => prevIndex === index ? null : index)}>
+                            <MdKeyboardDoubleArrowRight size={25} color='var(--primary-color)' />
+                            <h3>{item.question}</h3>
+                        </div>
+                        <div className={`faq-desktop-body ${desktopIndex === index ? 'show-desktop-body' : ''}`}>
+                            <p>{item.answer}</p>
+                        </div>
                     </div>
                 ))}
 
