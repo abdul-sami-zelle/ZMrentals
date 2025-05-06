@@ -60,62 +60,23 @@ const GetInTouch = () => {
 
                             <div className='contact-info-heading-section'>
                                 <h3>Contact Information</h3>
-                                <p>Thank you for choosing Speedy Rentals as your car hire service in Auckland.</p>
+                                <p>Thank you for choosing ZM Rentals as your car hire service in Auckland.</p>
                             </div>
                             <span className='contact-type-section'>
                                 <FaPhone size={20} color='var(--color-white)' />
-                                +6421467261
+                                <a href="tel:+6421467261">+64 21 467 261</a>
                             </span>
                             <span className='contact-type-section'>
                                 <FaEnvelope size={20} color='var(--color-white)' />
-                                support.zmrentals@gmail.com
+                                <a href="mailto:info@zmrentals.co.nz">info@zmrentals.co.nz</a>
                             </span>
                             <span className='contact-type-section'>
                                 <FaLocationArrow size={20} color='var(--color-white)' />
                                 Auckland, New Zeeland
                             </span>
-
-                            {/* <div className='contact-form-city-image-container'>
-                                <Image
-                                    src='/assets/images/mix/auckland_city.jpg'
-                                    alt='Auckland City'
-                                    fill
-                                    style={{ objectFit: 'cover' }}
-                                />
-                            </div> */}
                         </div>
 
                     </div>
-
-
-                    {/* <div className='cotact-info-section'>
-
-                        <div className='contact-info-heading-section'>
-                            <h3>Contact Information</h3>
-                            <p>Thank you for choosing Speedy Rentals as your car hire service in Auckland.</p>
-                        </div>
-                        <span className='contact-type-section'>
-                            <FaPhone size={20} color='var(--color-white)' />
-                            ZN 099741598
-                        </span>
-                        <span className='contact-type-section'>
-                            <FaEnvelope size={20} color='var(--color-white)' />
-                            support.zmrentals@gmail.com
-                        </span>
-                        <span className='contact-type-section'>
-                            <FaLocationArrow size={20} color='var(--color-white)' />
-                            Auckland, New Zeeland
-                        </span>
-
-                        <div className='contact-form-city-image-container'>
-                            <Image
-                                src='/assets/images/mix/auckland_city.jpg'
-                                alt='Auckland City'
-                                fill
-                                style={{ objectFit: 'cover' }}
-                            />
-                        </div>
-                    </div> */}
 
 
                     <div className='contact-form-inputs-container'>
@@ -150,11 +111,11 @@ const GetInTouch = () => {
                     <div className='mobile-view-contact-details'>
                         <span>
                             <h3>Phone</h3>
-                            NZ 099741598
+                            <a href="tel:+6421467261">+64 21 467 261</a>
                         </span>
                         <span>
                             <h3>Email</h3>
-                            support.zmrentals@gmail.com
+                            <a href="mailto:info@zmrentals.co.nz">info@zmrentals.co.nz</a>
                         </span>
                         <span>
                             <h3>Address</h3>

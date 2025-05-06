@@ -28,6 +28,7 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
+    text-align: center;
 }
 
 .booking-instruction-cards-container {

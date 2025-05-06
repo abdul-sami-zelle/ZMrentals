@@ -113,7 +113,7 @@ export default function Home() {
         packageHeading={'Curated Fleet Collection in Auckland'}
         data={packageDescriptionTwo}
         flexDirection={'row-reverse'}
-        buttonText={'Find out more'}
+        buttonText={'Hire Now'}
       />
 
       <Benefits />

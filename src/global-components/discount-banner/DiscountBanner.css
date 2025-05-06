@@ -44,7 +44,7 @@
     justify-content: space-between;
     width: 60%;
     flex-shrink: 0;
-    padding: 0 32px;
+    padding: 0 160px 0 32px;
 }
 
 .discount-banner-detail-container {

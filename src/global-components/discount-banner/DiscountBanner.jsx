@@ -17,10 +17,10 @@ const DiscountBanner = ({ discountImage , marginBottom}) => {
         <div className='discount-banner-details-and-subscribe-button-container'>
           <div className='discount-banner-detail-container'>
             <span>
-              <h3>Save 10% on your</h3>
-              <h3>next adventure</h3>
+              <h3>Get Exclusive Deals</h3>
+              <h3>For Your Next Adventure</h3>
             </span>
-            <h3 className='mobile-view-discount-banner-heading'>Save 10% on your next adventure</h3>
+            <h3 className='mobile-view-discount-banner-heading'>Get Exclusive Deals For Your Next Adventure</h3>
             <span>
               <p>Join our ZM newsletter for exclusive deals, travel tips</p>
               <p>and inspirations</p>

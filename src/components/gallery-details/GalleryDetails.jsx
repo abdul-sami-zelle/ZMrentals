@@ -37,7 +37,7 @@ const GalleryDetails = ({ flexDirection }) => {
                     ))}
                     <PrimaryButton
                         primaryMainClass={'primary-button-main-class'}
-                        primaryText={'Subscribe'}
+                        primaryText={'Search Cars'}
                         primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}
                         width={'192px'}
                         height={'52px'}
@@ -68,7 +68,7 @@ const GalleryDetails = ({ flexDirection }) => {
                     <Image src={'/assets/images/mix/Home_Fair_Rentals.jpg'} fill alt='main image' />
                 </div>
                 <div className='mobile-gallery-details-description-container'>
-                    <h3 className='section-main-heading'>ZM Car Rental Made Easy</h3>
+                    <h3 className='section-main-heading'>Seamless Car Rental Experience in Auckland</h3>
                     {descriptionsData.map((item, index) => (
                         <p key={index} className={index === 0 ? 'mobile-gallery-main-description' : 'mobile-gallery-second-description'}>{item}</p>
                     ))}

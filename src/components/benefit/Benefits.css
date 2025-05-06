@@ -40,6 +40,12 @@
     gap: 10px;
 }
 
+.benifit-option-icon {
+    width: 50px;
+    height: 20px;
+    color: var(--secondary-color);
+}
+
 .benefits-option-container>p {
     cursor: pointer;
     font-size: var(--font-body-lg);

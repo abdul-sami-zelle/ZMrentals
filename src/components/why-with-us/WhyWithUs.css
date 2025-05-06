@@ -82,4 +82,13 @@
         width: 100%;
         gap: 24px;
     }
+    .why-with-us-single-card  {
+        align-items: center;
+        justify-content: center;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--primary-color);
+    }
+    .why-with-us-single-card > p {
+        text-align: center;
+    }
 }

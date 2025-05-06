@@ -70,3 +70,13 @@
     font-weight: var(--font-weight-semibold);
     text-align: center;
 }
+
+@media only screen and (max-width: 480px) {
+    .about-us-driving-standered-para-sec {
+        padding: 0 16px;
+    }
+    .why-choose-un-content-container {
+        width: 100%;
+        padding: 16px;
+    }
+}

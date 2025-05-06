@@ -101,5 +101,6 @@ body {
 @media only screen and (max-width: 480px) {
   .section-main-heading {
     font-size: var(--font-heading-md);
+    padding: 0 16px;
   }
 }

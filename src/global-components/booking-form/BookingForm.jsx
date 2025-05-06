@@ -7,7 +7,7 @@ import { GoArrowRight } from "react-icons/go";
 import Calendar from 'react-calendar';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
+const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow }) => {
 
     // const [showCalendar, setShowCalendar] = useState(false);
     const [pickupCalender, setPickupCalender] = useState(false);
@@ -62,6 +62,7 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
                     <div className='booking-form-input-single-col'>
                         <DropdownInput
                             width={'100%'}
+                            height={'32px'}
                             defaultValue={'Pick-up Location'}
                             placeholder={'Pick-up Location'}
                             data={citiesList}
@@ -107,6 +108,7 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
 
                             <DropdownInput
                                 width={'48%'}
+                                height={'162px'}
                                 defaultValue={'Time'}
                                 data={timeList}
                                 bgColor={bgColor}
@@ -118,6 +120,7 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
                     <div className='booking-form-input-single-col'>
                         <DropdownInput
                             width={'100%'}
+                            height={'32px'}
                             defaultValue={'Drop-of Location'}
                             placeholder={'Drop-of Location'}
                             data={citiesList}
@@ -165,6 +168,7 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
                             </div>
                             <DropdownInput
                                 width={'48%'}
+                                height={'162px'}
                                 defaultValue={'Time'}
                                 data={timeList}
                                 bgColor={bgColor}
@@ -185,7 +189,7 @@ const BookingForm = ({ bgColor, textColor, primaryButtonText, boxShadow }) => {
                     lineHeight={'var(--line-height-body)'}
                     fontWeight={'var(--font-weight-bold)'}
                 />
-                <p className='add-promo-option' style={{ color: textColor }}>Add a promo code</p>
+                <p className='add-promo-option' style={{ color: textColor, fontWeight: 700, textShadow: textShadow }}>Add a promo code</p>
             </div>
         </div>
     )

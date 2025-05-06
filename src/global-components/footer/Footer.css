@@ -15,6 +15,8 @@
     padding: 16px;
     column-gap: 8px;
     row-gap: 32px;
+    align-items: stretch;
+    justify-content: center;
     background-image: linear-gradient(to right top, #b35100, #c75f14, #db6e27, #ef7d39, #ff8b40);
     border-top-right-radius: 25px;
     border-bottom-left-radius: 25px;
@@ -103,7 +105,7 @@
         grid-template-columns: repeat(5, minmax(0, 1fr));
         width: 95%;
         height: auto;
-        padding: 35px 60px;
+        padding: 35px 250px;
         column-gap: 16px;
         row-gap: 24px;
         /* background-image: linear-gradient(to right top, #113b84, #0e3f92, #0c43a1, #0c47af, #0f4bbe); */
@@ -116,29 +118,37 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: end;
         padding: 16px 57px;
         width: 100%;
         /* padding-top: 0; */
     }
 
+    .footer-social-and-terms-inner-section {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 32px;
+        width: 84%;
+    }
+
     .footer-terms-and-privacy-container {
-        width: 50%;
+        width: max-content;
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: start;
         gap: 15px;
-        padding-left: 150px;
+        /* padding-left: 150px; */
         padding-top: 0;
     }
 
     .footer-social-links-container {
-        width: 50%;
+        width: max-content;
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: start;
         gap: 15px;
     }
 

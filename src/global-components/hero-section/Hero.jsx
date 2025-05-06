@@ -10,19 +10,19 @@ const Hero = () => {
                 <div className='hero-section-main-heading-container'>
                     <h3>
                         {/* Celebrating 25 Years of ZM: <br />  WIN Your Share of $25,000!* */}
-                        Your Auckland Adventure Starts Here
+                        Your Auckland <br /> Adventure Starts Here
                     </h3>
                 </div>
                 <div className='hero-section-main-pera-container'>
                     <p>
                           {/* ZM in to <strong> WIN 1 of 25 car hire vouchers valued at $1,000 each </strong> when you book <br /> your car rental
                           with travel concluded by 31 March 2026 <strong> *See the full T&Cs here </strong> */}
-                          Explore Auckland with sustainable and reliable car rentals - your perfect ride awaits!
+                          Explore Auckland with sustainable & <br /> reliable car rentals - your perfect ride awaits!
                     </p>
                 </div>
                 <div className='booking-form-container-parent'>
                     <div className='booking-form-width-control-container'>
-                        <BookingForm bgColor={'var(--color-white)'} boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px'} textColor={'var(--color-white)'} primaryButtonText={'Subscribe'} />
+                        <BookingForm bgColor={'var(--color-white)'} boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px'} textColor={'var(--color-white)'} textShadow={'1px 1px 2px #FF8B40;'} primaryButtonText={'Search Cars'} />
                     </div>
                 </div>
             </div>

@@ -22,7 +22,7 @@ const Navbar = () => {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(null);
   const navData = [
-    { id: 1, name: 'Fleet /Vehicles', dropdown: true, link: '/vehicles' },
+    { id: 1, name: 'Vehicles', dropdown: true, link: '/vehicles' },
     { id: 2, name: 'Car rental services', dropdown: false, link: '/car-rental-services' },
     { id: 3, name: 'Booking info', dropdown: false, link: '/booking-info' },
     { id: 4, name: 'Locations', dropdown: false, link: '/locations' },
@@ -32,29 +32,29 @@ const Navbar = () => {
 
   const dropdownData = [
     {
-      item: 'Fleet /Vehicles',
+      item: 'Vehicles',
       data: [
         { name: 'Small Cars', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
         { name: 'Electric Vehicles', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
         { name: 'Hybrid Cars', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
-        { name: 'Large Cars / SUVs', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
-        { name: '4 Wheel Drive', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
-        { name: 'Van or People Carrier', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
-        { name: 'Car Rental Accessories', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: 'Large Cars / SUVs', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: '4 Wheel Drive', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: 'Van or People Carrier', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: 'Car Rental Accessories', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
       ]
     },
     {
       item: 'Car rental services',
       data: [
-        { name: 'Auckland City', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
-        { name: 'Auckland Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
-        { name: 'Waiheke', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
-        { name: 'Wellington Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
-        { name: 'Nelson Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
-        { name: 'Cristchurch Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
-        { name: 'Queenston Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
-        { name: 'Dunedin  Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
-        { name: 'InverCargill Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '108px', height: '54px' },
+        // { name: 'Auckland City', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: 'Auckland Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: 'Waiheke', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: 'Wellington Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: 'Nelson Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: 'Cristchurch Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: 'Queenston Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: 'Dunedin  Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
+        // { name: 'InverCargill Airport', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
       ]
     },
     {
@@ -125,7 +125,6 @@ const Navbar = () => {
     setOpenMenu(false)
   } 
 
-  useEffect(() => { console.log("current index", currentIndex) }, [currentIndex])
 
 
   return (
@@ -220,18 +219,19 @@ const Navbar = () => {
       </div>
 
       {/* Drop down  */}
-      {
-        currentIndex !== null && navData.find((item) => item.id === currentIndex)?.dropdown && (
+      {/* {
+        currentIndex !== null && navData.find((item) => item.id === currentIndex)?.dropdown && ( */}
+          
           <div
-            className={`nav-drop-down-main-container ${currentIndex !== null ? 'show-drop-down' : ''} `}
+            className={`nav-drop-down-main-container ${currentIndex !== null && navData.find((item) => item.id === currentIndex)?.dropdown ? 'show-drop-down' : ''} `}
             onMouseEnter={() => setCurrentIndex(currentIndex)}
             // Close the dropdown when the cursor leaves
             onMouseLeave={() => setCurrentIndex(null)}
           >
             {
               // Dynamically render dropdown content based on the current item
-              getDropdownData()?.data.map((dataItem, index) => (
-                <div key={index} style={{ width: dataItem.width }}>
+              getDropdownData()?.data.map((dataItem, index) => {
+                return <div key={index} style={{ width: dataItem.width }}>
                   <NavCard
                     name={dataItem.name}
                     image={dataItem.image}
@@ -241,11 +241,11 @@ const Navbar = () => {
                     height={dataItem.height}
                   />
                 </div>
-              ))
+            })
             }
           </div>
-        )
-      }
+        {/* )
+      } */}
 
 
 

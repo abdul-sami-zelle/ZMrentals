@@ -11,7 +11,7 @@
 
 .rental-policy-single-card-item {
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: start;
     width: 100%;
     gap: 10px;

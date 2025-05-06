@@ -134,6 +134,7 @@ const Footer = () => {
         ))}
       </div>
       <div className='footer-social-and-terms-links-section'>
+        <div className='footer-social-and-terms-inner-section'>
           <div className='footer-terms-and-privacy-container'>
             <Link className='footer-terms-item' href={'#'}>Privacy & Cookie Policy</Link>
             <Link className='footer-terms-item' href={'#'}>Terms & Conditions</Link>
@@ -146,6 +147,8 @@ const Footer = () => {
               </Link>
             ) )}
           </div>
+
+        </div>
       </div>
     </div>
   )

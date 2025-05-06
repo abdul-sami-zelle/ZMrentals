@@ -34,7 +34,7 @@ const FeedbackGallery = () => {
                     fontSize={'var(--font-body-lg)'}
                     lineHeight={'var(--line-height-body)'}
                     fontWeight={'var(--font-weight-body)'}
-                    secondaryText={'Why ZM with us'}
+                    secondaryText={'See More Details'}
                 />
             </div>
 

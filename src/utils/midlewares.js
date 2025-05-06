@@ -4,3 +4,4 @@ export const useDisableBodyScroll = (...states) => {
     document.body.style.overflow = shouldDisableScroll ? "hidden" : "auto";
   }, [...states]);
 };
+
