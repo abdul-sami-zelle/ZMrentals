@@ -25,18 +25,18 @@
     gap: 16px;
 }
 
-.car-details-description-and-all-vehicles-link-container > p {
+/* .car-details-description-and-all-vehicles-link-container > p {
     font-size: var(--font-body-18);
     font-weight: var(--font-weight-regular);
     line-height: var(--line-height-body);
-}
+} */
 
-.car-details-description-and-all-vehicles-link-container > a {
+/* .car-details-description-and-all-vehicles-link-container > a {
     color: var(--primary-color);
     font-size: var(--font-body-lg);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-bold);
-}
+} */
 
 .car-details-description-and-all-vehicles-link-container > a:hover {
     color: var(--secondary-color);
@@ -48,6 +48,14 @@
     width: 100%;
     column-gap: 32px;
     row-gap: 32px;
+}
+
+.vehicle-page-cars-details {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+
 }
 
 @media only screen and (max-width: 480px) {

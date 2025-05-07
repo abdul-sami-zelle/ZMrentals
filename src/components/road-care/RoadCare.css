@@ -54,7 +54,7 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.road-care-single-item > h3 {
+/* .road-care-single-item > h3 {
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
@@ -65,7 +65,7 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
-}
+} */
 
 .road-care-litle-details {
     font-size: var(--font-body-md) !important;

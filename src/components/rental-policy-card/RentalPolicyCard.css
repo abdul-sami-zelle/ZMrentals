@@ -15,7 +15,6 @@
     justify-content: start;
     width: 100%;
     gap: 10px;
-    cursor: pointer;
 }
 
 .rental-policy-icon {
@@ -32,6 +31,10 @@
 }
 
 .rental-policy-single-card-item:hover > p {
+    color: var(--secondary-color);
+}
+
+.rental-policy-single-card-item:hover .rental-policy-icon {
     color: var(--secondary-color);
 }
 

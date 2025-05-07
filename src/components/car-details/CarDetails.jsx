@@ -27,8 +27,8 @@ const CarDetails = ({ data, openModal }) => {
     <div className='car-details-main-container' onClick={openModal}>
       <h3 className='section-main-heading'>{data.heading}</h3>
       <div className='car-details-description-and-all-vehicles-link-container'>
-        <p>{data.description}</p>
-        <Link href={'/'}>{`Our Fleet`}</Link>
+        {/* <p>{data.description}</p> */}
+        <Link href={'/'} className='global-heading-style'>{`Our Fleet`}</Link>
       </div>
       <div className='cars-cars-container'>
         {data.carsData.map((car, carIndex) => (
@@ -43,6 +43,10 @@ const CarDetails = ({ data, openModal }) => {
             handleModalOpen={handleOpenDetailsModal}
           />
         ))}
+      </div>
+
+      <div className='vehicle-page-cars-details'>
+        <p className='global-content-style'>{data.description}</p>
       </div>
 
       <CarDetailsModal

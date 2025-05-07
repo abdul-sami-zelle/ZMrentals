@@ -36,8 +36,6 @@ const GetInTouch = () => {
         }))
     }
 
-    useEffect(() => { console.log("contact inputs", contactData) })
-
     return (
         <div className='get-in-touch-main-container'>
             <h3>Get in Touch with ZM Rentals</h3>

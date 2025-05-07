@@ -107,6 +107,13 @@
     font-weight: var(--font-weight-regular);
 }
 
+.navigate-arrow {
+    display: flex;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+}
+
 .prime-location-details-container {
     display: flex;
     align-items: start;
@@ -115,7 +122,7 @@
     width: 100%;
 }
 
-.prime-location-details-container > h3 {
+/* .prime-location-details-container > h3 {
     font-size: var(--font-body-md);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-semibold);
@@ -126,7 +133,7 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
-}
+} */
 
 
 

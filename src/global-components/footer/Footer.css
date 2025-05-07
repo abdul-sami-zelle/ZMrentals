@@ -47,6 +47,40 @@
     gap: 10px;
 }
 
+.footer-logo-container {
+    display: none;
+    
+}
+
+.footer-logo-image {
+    width: 100%;
+    height: 50px;
+}
+
+.footer-logo-container > p {
+    font-size: var(--font-body-lg);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-body);
+    color: var(--color-white);
+}
+
+.footer-deal-of-month-column {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-locations-column {
+    margin-top: 25px;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    gap: 10px;
+    flex-direction: column;
+}
+
 .footer-menu-heading {
     font-size: 20px;
     line-height: 20px;
@@ -126,8 +160,8 @@
 
 .footer-design-by-container {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: start;
+    justify-content: start;
     width: max-content;
     gap: 7px;
     flex-shrink: 0;
@@ -190,6 +224,13 @@
         /* background-image: linear-gradient(to right top, #113b84, #0e3f92, #0c43a1, #0c47af, #0f4bbe); */
         border-top-right-radius: 0px;
         border-bottom-left-radius: 25px;
+    }
+
+    .footer-logo-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 0 25px;
     }
 
     

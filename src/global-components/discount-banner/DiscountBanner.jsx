@@ -11,7 +11,7 @@ const DiscountBanner = ({ discountImage , marginBottom}) => {
       <div className='discount-banner-inner-container'>
 
         <div className='discount-banner-image-container'>
-          <Image src='/assets/images/discount-banners/Go_Rentals_Newsletter.jpg' fill  alt='discount image' className='discount-banner-image' />
+          <Image src={'/assets/home/home_get_exclusive_image.jpg'} width={1599} height={130}  alt='discount image' className='discount-banner-image' />
         </div>
 
         <div className='discount-banner-details-and-subscribe-button-container'>

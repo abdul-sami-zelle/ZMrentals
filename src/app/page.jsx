@@ -11,7 +11,7 @@ import Locations from '../components/locations/Locations'
 import FrequentlyAsked from '../components/frequently-asked/FrequentlyAsked'
 import RollingContent from '../components/rolling-content/RollingContent'
 
-import discountBannerImage from '../assets/images/discount-banners/GO_Rentals_Newsletter.jpg'
+
 
 export default function Home() {
 
@@ -82,7 +82,7 @@ export default function Home() {
 ]
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'var(--background)' }}>
+    <div style={{ display : 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'var(--background)' }}>
 
       <Hero />
 
@@ -98,6 +98,7 @@ export default function Home() {
       <PackageDetails
         packageHeading={'Our Commitment to Sustainability'}
         data={packageDescription}
+        sectionImage={'/assets/home/Home_page_Our_Commitment_to_Sustainability_image.jpg'}
         flexDirection={'row'}
         buttonText={'Find Out More'}
       />
@@ -105,6 +106,7 @@ export default function Home() {
       <PackageDetails
         packageHeading={'Curated Fleet Collection in Auckland'}
         data={packageDescriptionTwo}
+        sectionImage={'/assets/home/home_page_Curated_Fleet_Collection_image.jpg'}
         flexDirection={'row-reverse'}
         buttonText={'Hire Now'}
       />
@@ -116,6 +118,7 @@ export default function Home() {
       <PackageDetails
         packageHeading={'Smooth Pick-Up and Drop-Off with ZM Car Rentals'}
         data={pickAndDropDetails}
+        sectionImage={'/assets/home/home_Smooth_Pick-Up_and_Drop-Off_image.jpg'}
         flexDirection={'row'}
         buttonText={'Find Out More'}
       />
@@ -127,6 +130,7 @@ export default function Home() {
       <PackageDetails
         packageHeading={'About ZM Rentals'}
         data={aboutGoRentals}
+        sectionImage={'/assets/home/home_About_ZM_Rentals_image_1.png'}
         flexDirection={'row-reverse'}
         // buttonText={'Download App'}
         display={'none'}

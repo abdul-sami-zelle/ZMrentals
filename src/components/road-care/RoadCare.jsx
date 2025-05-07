@@ -42,8 +42,8 @@ const RoadCare = () => {
                     return (
                         <div className='road-care-single-item' key={index}>
                             <Icon size={30} color='var(--primary-color)' />
-                            <h3>{item.title}</h3>
-                            <p>{item.para}</p>
+                            <h3 className='global-heading-style'>{item.title}</h3>
+                            <p className='global-content-style'>{item.para}</p>
                         </div>
                     )
                 })}

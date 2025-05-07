@@ -58,6 +58,7 @@
     width: 100%;
     height: 393px;
     position: relative;
+    object-fit: contain;
 }
 
 .gallery-main-image {

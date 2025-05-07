@@ -22,7 +22,7 @@ const Navbar = () => {
   const router = useRouter();
   const [currentIndex, setCurrentIndex] = useState(null);
   const navData = [
-    { id: 1, name: 'Vehicles', dropdown: true, link: '/vehicles' },
+    { id: 1, name: 'Vehicles', dropdown: false, link: '/vehicles' },
     { id: 2, name: 'Car Rental Services', dropdown: false, link: '/car-rental-services' },
     { id: 3, name: 'Booking Info', dropdown: false, link: '/booking-info' },
     { id: 4, name: 'Locations', dropdown: false, link: '/locations' },

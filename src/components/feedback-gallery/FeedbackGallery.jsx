@@ -3,16 +3,18 @@ import './FeedbackGallery.css';
 import Image from 'next/image';
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton';
 
+import imgOne from '../../assets/home/home_pageFlexible_Car_Rental_Services_image_2.jpg'
+
 const FeedbackGallery = () => {
     return (
         <div className='feedback-gallery-main-container'>
 
             <div className='feedback-gallery-images-container'>
                 <div className='feedback-gallery-images-single-image-container'>
-                    <Image src={'/assets/images/feedback-gallery/Home_Road_Support_1.jpg'} fill alt='home road support' className='feedback-gallery-image' />
+                    <Image src={'/assets/home/homeFlexible_Car_Rental_Services_image 1.jpg'} fill alt='home road support' className='feedback-gallery-image' />
                 </div>
                 <div className='feedback-gallery-images-single-image-container'>
-                    <Image src={'/assets/images/feedback-gallery/Home_Road_Support_2.jpg'} fill alt='home road support' className='feedback-gallery-image-two' />
+                    <Image src={'/assets/home/home_pageFlexible_Car_Rental_Services_image_2.jpg'} fill alt='home road support' className='feedback-gallery-image-two' />
                 </div>
             </div>
             <div className='feedback-gallery-description-container'>

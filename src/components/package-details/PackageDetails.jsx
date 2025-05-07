@@ -6,13 +6,13 @@ import packageImage from '../../assets/images/mix/carbonClick-home.jpg'
 import Image from 'next/image'
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton'
 
-const PackageDetails = ({ data, packageHeading, flexDirection, buttonText, display }) => {
+const PackageDetails = ({ data, sectionImage, packageHeading, flexDirection, buttonText, display }) => {
     
 
   return (
     <div className='package-details-main-container' style={{flexDirection: flexDirection}}>
         <div className='package-image-container'>
-            <Image src={'/assets/images/mix/carbonClick-home.jpg'} fill alt='package-image' className='package-image' />
+            <Image src={sectionImage} fill alt='package-image' className='package-image' />
         </div>
         <div className='package-detail-description-container'>
               <h3 className='section-main-heading'>{packageHeading}</h3>

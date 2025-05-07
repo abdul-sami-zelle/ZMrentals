@@ -133,10 +133,10 @@ const Locations = () => {
               <div className='navigate-easy-options-container'>
                 {navigateEasy.map((item, index) => (
                   <div key={index} className='navigate-easy-single-container'>
-                    <MdKeyboardDoubleArrowRight size={20} color='var(--primary-color)' />
+                    <MdKeyboardDoubleArrowRight  className='navigate-arrow' color='var(--primary-color)' />
                     <div className='prime-location-details-container'>
-                      <h3>{item.heading}</h3>
-                      <p>{item.para}</p>
+                      <h3 className='global-heading-style'>{item.heading}</h3>
+                      <p className='global-content-style'>{item.para}</p>
                     </div>
                   </div>
                 ))}

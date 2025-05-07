@@ -5,6 +5,7 @@ import PrimaryButton from '@/global-components/primary-button/PrimaryButton'
 import { GoArrowRight } from "react-icons/go";
 import Image from 'next/image';
 
+
 const GalleryDetails = ({ flexDirection }) => {
 
     const descriptionsData = [
@@ -50,14 +51,14 @@ const GalleryDetails = ({ flexDirection }) => {
 
                 <div className='gallery-details-images'>
                     <div className='gallery-main-image-container'>
-                        <Image src={'/assets/images/mix/Home_Fair_Rentals.jpg'} fill alt='' className='gallery-main-image' />
+                        <Image src={'/assets/home/home_Seamless_Car_Rental_image_1.jpg'} fill alt='' className='gallery-main-image' />
                     </div>
                     <div className='gallery-multiple-images-container'>
                         <div className='gallery-multi-images-single-image-container'>
-                            <Image src={'/assets/images/mix/Home_Quality_Vehicle_1.jpg'} fill alt='quality vehicle' className='gallery-multi-image' />
+                            <Image src={'/assets/home/home_page_Seamless_Car_Rental_image_2.jpg'} fill alt='quality vehicle' className='gallery-multi-image' />
                         </div>
                         <div className='gallery-multi-images-single-image-container'>
-                            <Image src={'/assets/images/mix/Home_Quality_Vehicle_2.jpg'} fill alt='quality vehicle two' className='gallery-multi-image' />
+                            <Image src={'/assets/home/home_pageSeamless_Car_Rental_image_3.jpg'} fill alt='quality vehicle two' className='gallery-multi-image' />
                         </div>
                     </div>
                 </div>
@@ -65,7 +66,7 @@ const GalleryDetails = ({ flexDirection }) => {
 
             <div className='mobile-gallery-details-main-contaier'>
                 <div className='mobile-main-image-container'>
-                    <Image src={'/assets/images/mix/Home_Fair_Rentals.jpg'} fill alt='main image' />
+                    <Image src={'/assets/home/home_Seamless_Car_Rental_image_1.jpg'} fill alt='main image' />
                 </div>
                 <div className='mobile-gallery-details-description-container'>
                     <h3 className='section-main-heading'>Seamless Car Rental Experience in Auckland</h3>
@@ -86,10 +87,10 @@ const GalleryDetails = ({ flexDirection }) => {
                 </div>
                 <div className='mobile-gallery-multiple-images-container'>
                 <div className='mobile-gallery-multi-images-item'>
-                    <Image src={'/assets/images/mix/Home_Quality_Vehicle_1.jpg'} fill alt='quality vehicle' className='mobile-gallery-multi-image' />
+                    <Image src={'/assets/home/home_page_Seamless_Car_Rental_image_2.jpg'} fill alt='quality vehicle' className='mobile-gallery-multi-image' />
                 </div>
                 <div className='mobile-gallery-multi-images-item'>
-                    <Image src={'/assets/images/mix/Home_Quality_Vehicle_2.jpg'} fill alt='quality vehicle two' className='mobile-gallery-multi-image' />
+                    <Image src={'/assets/home/home_pageSeamless_Car_Rental_image_3.jpg'} fill alt='quality vehicle two' className='mobile-gallery-multi-image' />
                 </div>
                 </div>
             </div>

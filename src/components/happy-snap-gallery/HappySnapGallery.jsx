@@ -3,13 +3,15 @@ import './HappySnapGallery.css';
 import mainLogo from '../../assets/logo.png';
 import Image from 'next/image';
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton';
+import discountBannerImage from '../../assets/home/Beyond_Rentals_image_1.jpg'
+
 
 const HappySnapGallery = () => {
   return (
     <>
         <div className='happy-snap-mobile-main-container'>
             <div className='happy-snap-mobile-single-image-container'>
-                <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_0.jpg'} fill alt='happy snap' className='happy-snap-single-image' />
+                <Image src={'/assets/home/Beyond_Rentals_image_1.jpg'} fill alt='happy snap' className='happy-snap-single-image' />
             </div>
 
             <div className='happy-snap-description-main-container'>
@@ -39,10 +41,10 @@ const HappySnapGallery = () => {
 
             <div className='happy-snap-gallery-container'>
                 <div className='mobile-happy-snap-gallery-image'>
-                    <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_1.jpg'} fill alt='snap two' className='mobile-happy-snap-gallery-image-one' />
+                    <Image src={'/assets/home/Beyond_Rentals_image_2.jpg'} fill alt='snap two' className='mobile-happy-snap-gallery-image-one' />
                 </div>
                 <div className='mobile-happy-snap-gallery-image'>
-                    <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_2.jpg'} fill alt='snap Three' className='mobile-happy-snap-gallery-image-two' />
+                    <Image src={'/assets/home/Beyond_Rentals_image_3.jpg'} fill alt='snap Three' className='mobile-happy-snap-gallery-image-two' />
                 </div>
             </div>
         </div>
@@ -50,14 +52,14 @@ const HappySnapGallery = () => {
         <div className='happy-snap-desktop-main-container'>
             <div className='happy-snap-desktop-gallery-main-container'>
                 <div className='happy-snap-desktop-single-image-container'>
-                    <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_0.jpg'} fill alt='snap one' className='desktop-snap-gallery-main-image' />
+                    <Image src={'/assets/home/Beyond_Rentals_image_1.jpg'} fill alt='snap one' className='desktop-snap-gallery-main-image' />
                 </div>
                 <div className='happy-snap-desktop-multi-images-container'>
                     <div className='desktop-snap-dual-images'>
-                      <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_1.jpg'} fill alt='snap two' className='desktop-snap-gallery-image-one' />
+                      <Image src={'/assets/home/Beyond_Rentals_image_2.jpg'} fill alt='snap two' className='desktop-snap-gallery-image-one' />
                     </div>
                     <div className='desktop-snap-dual-images'>
-                      <Image src={'/assets/images/happy-snap/Home_GO_Snap_Happy_2.jpg'} fill alt='snap two' className='desktop-snap-gallery-image-two' />
+                      <Image src={'/assets/home/Beyond_Rentals_image_3.jpg'} fill alt='snap two' className='desktop-snap-gallery-image-two' />
                     </div>
                 </div>
             </div>

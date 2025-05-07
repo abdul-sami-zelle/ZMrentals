@@ -84,4 +84,15 @@
         padding: 0;
         gap: 25px;
     }
+    .about-us-max-width-container {
+        gap: 16px;
+        padding: 0 16px;
+    }
+
+    .why-choose-un-content-container > p {
+        font-size: var(--font-body-lg);
+        line-height: var(--line-height-body);
+        font-weight: var(--font-weight-semibold);
+        text-align: start;
+    }
 }

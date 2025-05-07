@@ -2,6 +2,7 @@ import React from 'react'
 import './Hero.css'
 import BookingForm from '../booking-form/BookingForm'
 
+
 const Hero = () => {
   return (
     <div className='hero-section-main-container'>

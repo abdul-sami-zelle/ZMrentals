@@ -189,7 +189,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                     lineHeight={'var(--line-height-body)'}
                     fontWeight={'var(--font-weight-bold)'}
                 />
-                <p className='add-promo-option' style={{ color: textColor, fontWeight: 700, textShadow: textShadow }}>Add a promo code</p>
+                <p className='add-promo-option' style={{ color: textColor, fontWeight: 700, }}> Add a promo code</p>
             </div>
         </div>
     )
