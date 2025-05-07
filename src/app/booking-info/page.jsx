@@ -14,15 +14,15 @@ import CancelationPolicyDetails from '../../components/cancelaton-policy-details
 const BookingInfo = () => {
 
     const insurancePoints = [
-      {title: (<> <strong>Basic Insurance:</strong> Our most affordable option, covering collision damage, theft, and third-party liability, though some out-of-pocket costs may apply.  </>)},
-      {title: (<> <strong>Excess Reduction Package:</strong>  Our most popular choice, offering Collision Damage Waiver (CDW) and Loss Damage Waiver (LDW) to reduce financial strain.  </>)},
-      {title: (<> <strong>Full Protection Coverage:</strong> Comprehensive protection, covering accidents, theft, windscreen damage, tires, and more for total peace of mind.  </>)},
+      {title: (<> <strong className='global-heading-style'>Basic Insurance:</strong> Our most affordable option, covering collision damage, theft, and third-party liability, though some out-of-pocket costs may apply.  </>)},
+      {title: (<> <strong className='global-heading-style'>Excess Reduction Package:</strong>  Our most popular choice, offering Collision Damage Waiver (CDW) and Loss Damage Waiver (LDW) to reduce financial strain.  </>)},
+      {title: (<> <strong className='global-heading-style'>Full Protection Coverage:</strong> Comprehensive protection, covering accidents, theft, windscreen damage, tires, and more for total peace of mind.  </>)},
     ]
 
     const payTypes = [
-      {title: (<> <strong>Credit/Debit Cards:</strong>  All major cards accepted for secure, PCI-compliant transactions. </>)},
-      {title: (<> <strong>Online Payment Platforms:</strong> Verified for added convenience and security.  </>)},
-      {title: (<> <strong>Flexible Payment Options:</strong> Pre-pay online or pay on-site with ease. </>)},
+      {title: (<> <strong className='global-heading-style'>Credit/Debit Cards:</strong>  All major cards accepted for secure, PCI-compliant transactions. </>)},
+      {title: (<> <strong className='global-heading-style'>Online Payment Platforms:</strong> Verified for added convenience and security.  </>)},
+      {title: (<> <strong className='global-heading-style'>Flexible Payment Options:</strong> Pre-pay online or pay on-site with ease. </>)},
     ]
 
   const cancelationPoints = [
@@ -42,7 +42,7 @@ const BookingInfo = () => {
         // paraTwo={'Find out what makes us tick.'}
         buttonText={'Book Now'}
       />
-      <div className='bookinng-info-content-container'>
+      <div className='bookinng-info-content-container'> 
         <div className='booking-info-max-width-container'>
           <RentalServiceHeader
             heading={'Booking Car Rental in Auckland'}

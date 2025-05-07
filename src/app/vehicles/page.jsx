@@ -109,7 +109,7 @@ const Vehicles = () => {
       ]
     },
   ]
-
+ 
 
   return (
     <div className='page-main-container '>
@@ -126,15 +126,6 @@ const Vehicles = () => {
           />
         ))}
 
-        {/* {fleetDetails.map((item, index) => (
-            <div className='fleet-para-container' key={index}>
-              <h3 className='fleet-para-heading'>{item.heading}</h3>
-              {item.details.map((paraItem, paraIndex) => (
-                <p className='fleet-para-desc' key={paraIndex}>{paraItem}</p>
-              ))}
-            </div>
-          ))} */}
-
         {fleetDetails.map((item, index) => (
           <PackageDetails
             key={index}
@@ -145,14 +136,6 @@ const Vehicles = () => {
             display={'none'}
           />
         ))} 
-
-        {/* <PackageDetails
-            packageHeading={'Compact Economy Fleet'}
-            data={fleetDetails[0].details}
-            flexDirection={'row-reverse'}
-            // buttonText={'Download App'}
-            display={'none'}
-          /> */}
 
         {fleetFeatures.map((item, index) => (
           <div key={index} className='fleet-details-derc-main-container'>
@@ -177,26 +160,6 @@ const Vehicles = () => {
           <p>Choosing ZM Rentals for your Auckland car hire means you’re set for a smooth, self-drive journey. Cruise through Auckland’s vibrant neighborhoods with the freedom to go where you want, when you want — all in comfort. Backed by our well-maintained vehicles and helpful team, finding the ideal rental car for your plans and budget is easy.</p>
           <p>Start planning your Auckland getaway and book your ride today with ZM Rentals!</p>
         </div>
-
-
-
-        {/* <div className='group-car-rental-main-container'>
-          <h3>Check out group car hires</h3>
-          <div className='group-items'>
-            <span>
-              <HiUserGroup size={30} className='group-people-icons' />
-              6-Seater car rental
-            </span>
-            <span>
-              <HiUserGroup size={30} className='group-people-icons' />
-              7-Seater car rental
-            </span>
-            <span>
-              <HiUserGroup size={30} className='group-people-icons' />
-              10-Seater car rental
-            </span>
-          </div>
-        </div> */}
 
       </div>
       {/* Max width Container End */}

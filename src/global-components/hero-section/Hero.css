@@ -6,7 +6,7 @@
     height: auto;
     margin: 0;
     padding: 0;
-    margin-bottom: 32px;
+    margin-bottom: 50px;
 }
 
 .hero-section-inner-container {
@@ -83,6 +83,9 @@
 }
 
 @media only screen and (max-width: 480px) {
+    .hero-section-main-container {
+        margin-bottom: 25px;
+    }
     .hero-section-inner-container {
         padding: 15px;
         width: 100%;

@@ -13,8 +13,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 57px;
-    padding-bottom: 57px;
+    gap: 50px;
+    padding: 25px 56px;
 }
 
 .about-us-max-width-container {
@@ -78,5 +78,10 @@
     .why-choose-un-content-container {
         width: 100%;
         padding: 16px;
+    }
+
+    .about-us-inner-section {
+        padding: 0;
+        gap: 25px;
     }
 }

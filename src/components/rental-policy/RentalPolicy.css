@@ -16,12 +16,12 @@
     flex-direction: column;
 }
 
-.rental-policies-heading-container > h3 {
+/* .rental-policies-heading-container > h3 {
     font-size: var(--font-heading-sm);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     color: var(--primary-color);
-}
+} */
 
 .rental-policy-under-line-container {
     display: flex;
@@ -69,7 +69,7 @@
 }
 
 .rental-policies-slogan-container > p{
-    font-size: var(--font-body-lg);
+    font-size: var(--font-body-18);
     line-height: var(--line-heightbody);
     font-weight: var(--font-weight-regular);
 }
@@ -105,15 +105,17 @@
         justify-content: center;
         width: 100%;
         flex-direction: column;
-        gap: 32px;
-        padding: 16px;
+        gap: 16px;
+        padding: 0px;
     }
 
     .rental-policies-slogan-container {
-        padding: 16px;
+        padding: 0px;
     }
 
     .rental-policies-slogan-container > p {
         text-align: center;
+        font-size: var(--font-body-lg);
     }
+    
 }

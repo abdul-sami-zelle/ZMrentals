@@ -78,8 +78,10 @@
 }
 
 .why-we-faq-arrow {
-    width: 50px;
-    height: 20px;
+    display: flex;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
 }
 
 .why-we-single-faq > span {
@@ -88,7 +90,7 @@
     width: 100%;
 }
 
-.why-we-single-faq > span > h3 {
+/* .why-we-single-faq > span > h3 {
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
@@ -98,7 +100,7 @@
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-}
+} */
 
 @media only screen and (max-width: 480px) {
     .why-choose-us-inner-container {

@@ -53,12 +53,11 @@ const Locations = () => {
     {
       question: 'How long does it take to get to our Mangere location from the Auckland Airport?',
       answer: (<>
-        Getting to our Mangere depot from Auckland Airport is quick and easy, depending on your mode of transport. By car or taxi, it typically takes just 5 to 6
-        minutes under normal traffic. Our free shuttle service usually takes around 5 to 10 minutes, with possible flight delays due to traffic or the shuttle schedule.
+        Getting to our Mangere depot from Auckland Airport is quick and easy, depending on your mode of transport. By car or taxi, it typically takes just 5 to 6 
+        minutes under normal traffic.
         <br /> <br />
-        Public transport, like the Line 28 bus, takes longer, around 17 to 21 minutes for the ride, plus 15 to 20 minutes of wait time and a potential walk or
-        rideshare from the bus stop to our office. Altogether, this option could take 30 to 50 minutes, making it the least convenient. For speed and comfort,
-        we recommend using a taxi or our shuttle.
+        Public transport, like the Line 28 bus, takes longer, around 17 to 21 minutes for the ride, plus potential wait time and a walk or rideshare from the bus 
+        stop to our office. Altogether, this option could take anywhere between 30 to 50 minutes. 
       </>)
     },
     {
@@ -77,7 +76,7 @@ const Locations = () => {
         <>
           To get our ZM shuttle service from Auckland Airport, follow these easy steps. After clearing customs (for international travelers), call or text us using the number provided in your booking confirmation email. Once we receive your message, we’ll dispatch a shuttle to pick you up. Even if you pre-booked your shuttle online, you still need to notify us upon arrival so we can arrange your pick-up promptly.
           <br /><br />
-          When your pick-up is confirmed, head to the appropriate terminal. If you’re an international traveler, go outside Door 11 and look for the “Rental Car Shuttle” signs. For domestic travelers, wait outside Door 4 or 7, depending on your airline. The shuttle will be there shortly, so you can relax while we take care of the rest.  
+          When your pick-up is confirmed, head to the appropriate terminal. If you’re an international traveler, go outside Door 11 and look for the “Rental Car Shuttle” signs. For domestic travelers, wait outside Door 4 or 7, depending on your airline. The shuttle will be there shortly, so you can relax while we take care of the rest.
         </>
       )
     },
@@ -85,9 +84,9 @@ const Locations = () => {
       question: 'How long will it take to drive from Mangere to Auckland’s central city?',
       answer: (
         <>
-          Driving from our Mangere car rental depot to Auckland’s central city is quick and easy. The distance is about 18-20 km (11-12 miles) via State Highway 20 and State Highway 1, typically taking 20 to 30 minutes. However, traffic conditions can vary depending on the time of day. 
+          Driving from our Mangere car rental depot to Auckland’s central city is quick and easy. The distance is about 18-20 km (11-12 miles) via State Highway 20 and State Highway 1, typically taking 20 to 30 minutes. However, traffic conditions can vary depending on the time of day.
           <br /><br />
-          During peak hours, morning (7:00 AM - 9:30 AM) and evening (4:00 PM - 6:30 PM), traffic can slow you down, and the drive may take 35-45 minutes or more. For a smoother journey, take Kirkbride Road or George Bolt Memorial Drive to State Highway 20, then merge onto State Highway 1 towards the city center. Avoid peak hours if possible for a quicker trip.  
+          During peak hours, morning (7:00 AM - 9:30 AM) and evening (4:00 PM - 6:30 PM), traffic can slow you down, and the drive may take 35-45 minutes or more. For a smoother journey, take Kirkbride Road or George Bolt Memorial Drive to State Highway 20, then merge onto State Highway 1 towards the city center. Avoid peak hours if possible for a quicker trip.
         </>
       )
     },
@@ -97,7 +96,7 @@ const Locations = () => {
         <>
           Yes, you can easily get a shuttle to Auckland Airport after returning your car with ZM Rentals. We offer a comprehensive shuttle service for both arrivals and departures, ensuring a smooth and convenient journey. Our depot’s close proximity to the airport allows for quick shuttle turnaround times, so you won’t need to worry about hiring a taxi, booking a rideshare, or catching a bus after dropping off your rental vehicle.
           <br /><br />
-          Once you’ve returned the car, completed the vehicle inspection, and received your deposit refund, you can request a shuttle directly from our reception desk. If you have an early or late flight, simply inform our staff in advance, and we’ll prioritize your shuttle service. Our shuttles will drop you off at the designated terminal based on your flight, whether domestic or international. 
+          Once you’ve returned the car, completed the vehicle inspection, and received your deposit refund, you can request a shuttle directly from our reception desk. If you have an early or late flight, simply inform our staff in advance, and we’ll prioritize your shuttle service. Our shuttles will drop you off at the designated terminal based on your flight, whether domestic or international.
         </>
       )
     },
@@ -106,81 +105,61 @@ const Locations = () => {
   return (
     <div className='locations-main-outer-contaienr'>
 
-      <div className='page-main-heading-container'>
-        <h3 className='vehicles-main-heading'>Car Rental Auckland</h3>
-        <p>ZM the distance with an affordable car rental</p>
-        <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} textColor={'var(--primary-color)'} primaryButtonText={'Find My Car'} />
-      </div>
-
-      {/* <DiscountBanner
-        discountImage={discountBannerImage}
-        marginBottom={'57px'}
-      /> */}
-
-      <div className='location-max-width-control-container'>
-
-        <LocationDetails />
-
-
-        {/* Navigate Easy Section */}
-        <div className='navigate-easy-main-container'>
-          <div className='navigate-easy-inner-container'>
-            <h3 className='section-main-heading'>What Makes Our Mangere Location Prime?</h3>
-
-            <p>
-              Our car rental depot, centrally located in the heart of Mangere, is one of the most convenient spots to rent a car in Auckland. Its strategic placement makes it a top choice for both tourists and residents alike. With easy access to key attractions and major routes, it’s the perfect launchpad for your Auckland adventures.
-            </p>
-
-            <div className='navigate-easy-options-container'>
-              {navigateEasy.map((item, index) => (
-                <div key={index} className='navigate-easy-single-container'>
-                  <MdKeyboardDoubleArrowRight size={20} color='var(--primary-color)' />
-                  <div className='prime-location-details-container'>
-                    <h3>{item.heading}</h3>
-                    <p>{item.para}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className='page-main-heading-container'>
+          <h3 className='vehicles-main-heading'>Car Rental Auckland</h3>
+          <p>ZM the distance with an affordable car rental</p>
+          <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} textColor={'var(--primary-color)'} primaryButtonText={'Find My Car'} />
         </div>
 
-
-
-
-        {/* <PackageDetails
-          packageHeading={'Reach ZM Rentals in Minutes with Our Shuttle '}
-          data={pickAndDropDetails}
-          flexDirection={'row'}
-          buttonText={'Dawnload App'}
-        /> */}
-
-        {/* <QuickFackts /> */}
-
-        <WhyWithUs />
-
-        <RoadCare />
-
-        <FrequentlyAsked
-          faqData={faqData}
-        />
-
-        {/* <PackageDetails
-          packageHeading={'GO Rentals App for a ridiculously simple pick-up and drop-off'}
-          data={pickAndDropDetails}
-          flexDirection={'row-reverse'}
-          buttonText={'Dawnload App'}
-        /> */}
-
-        {/* <ExclusiveDiscount /> */}
-
-        {/* <InsuranceCoverage /> */}
-
-        {/* <PopularCars /> */}
-
-        <CustomerThoughts />
-
+      <div className='location-page-location-section-container'>
+        <div className='location-page-location-section-width-controller'>
+        <LocationDetails />
+        </div>
       </div>
+      
+        <div className='location-max-width-control-container'>
+
+
+
+          {/* Navigate Easy Section */}
+          <div className='navigate-easy-main-container'>
+            <div className='navigate-easy-inner-container'>
+              <h3 className='section-main-heading'>What Makes Our Mangere Location Prime?</h3>
+
+              <p className='global-content-style'>
+                Our car rental depot, centrally located in the heart of Mangere, is one of the most convenient spots to rent a car in Auckland. Its strategic placement makes it a top choice for both tourists and residents alike. With easy access to key attractions and major routes, it’s the perfect launchpad for your Auckland adventures.
+              </p>
+
+              <div className='navigate-easy-options-container'>
+                {navigateEasy.map((item, index) => (
+                  <div key={index} className='navigate-easy-single-container'>
+                    <MdKeyboardDoubleArrowRight size={20} color='var(--primary-color)' />
+                    <div className='prime-location-details-container'>
+                      <h3>{item.heading}</h3>
+                      <p>{item.para}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+
+          {/* <QuickFackts /> */}
+
+          <WhyWithUs />
+
+          <RoadCare />
+
+          <FrequentlyAsked
+            faqData={faqData}
+          />
+
+
+          <CustomerThoughts />
+
+        </div>
+
     </div>
   )
 }

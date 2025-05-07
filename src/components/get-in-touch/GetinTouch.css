@@ -36,7 +36,7 @@
 
 .contact-form-container {
     display: flex;
-    width: 90%;
+    width: 100%;
     background-color: rgba(255, 139, 64, 0.1);
     padding: 16px;
     gap: 16px;

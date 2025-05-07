@@ -32,13 +32,13 @@ const RollingContent = () => {
         },
         {
             icon: GiMountainCave,
-            heading: 'Exploring Auckland',
+            heading: 'Discover Auckland with ZM',
             content: [
                 `
-                    The best way to explore Auckland is by car, offering you freedom and flexibility to travel at your own pace. With a rental car, you can visit stunning spots, take scenic detours, or chase sunsets - experiences that public transport can’t match. A private car lets you discover hidden gems like Piha and Muriwai beaches or scenic drives around Waitakere Ranges, providing a more authentic and personalized journey.
+                    When exploring the vibrant city of Auckland, there's no better way to navigate it than by car. But with so many car rental services available, selecting the ideal company and vehicle can quickly become exhausting. You're likely to encounter everything from stylish sedans to spacious SUVs, and even luxurious rides with all the bells and whistles. However, the catch often lies in steep prices, especially if you’re looking for sustainable options. Conversely, if you’re searching for budget car hire in Auckland, you may find yourself stuck with older models that lack essential features.
                 `,
                 `
-                    Renting a car in Auckland is one of the best and most cost-effective ways to explore it instead of relying on buses, taxis, or trains, especially for long trips or group travel. Daily fares for public transport can quickly add up, and coordinating multiple people on buses or taxis can be inconvenient. With a self-drive car hire, you and your companions can travel together comfortably, making your Auckland experience much easier and enjoyable.
+                    That’s where ZM Rentals comes to the rescue! We’re redefining the car rental experience in Auckland. With our fresh approach, finding the perfect vehicle for your adventures doesn’t have to be an expensive affair. Our modern and sustainable fleet meets the highest safety and sustainability standards, ensuring a smooth and secure driving experience
                 `,
             ]
         }

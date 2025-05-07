@@ -4,7 +4,7 @@
     align-items: end;
     justify-content: end;
     height: 618px;
-    margin-bottom: 57px;
+    margin-bottom: 25px;
 }
 
 .services-hero-inner-content-container {
@@ -16,6 +16,7 @@
     position: relative;
     overflow: hidden;
     border-bottom-left-radius: 25px;
+
 }
 
 .services-hero-bg-image {
@@ -29,14 +30,15 @@
     justify-content: center;
     width: 100%;
     height: 618px;
-    padding: 0 120px;
+    max-width: 1323px;
+    padding: 25px 56px;
     position: absolute;
 }
 
 .services-hero-detail-container {
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
     height: auto;
     align-items: start;
     justify-content: start;
@@ -80,7 +82,6 @@
         justify-content: start;
         max-height: 100%;
         height: 205px;
-        margin-bottom: 0;
     }
     .services-desktop-button {
         display: none;

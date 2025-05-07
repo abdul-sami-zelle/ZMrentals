@@ -14,6 +14,8 @@
     width: 100%;
     align-items: start;
     justify-content: start;
+    max-width: 1323px;
+    padding: 16;
     gap: 32px;
 }
 
@@ -23,7 +25,22 @@
     width: 100%;
     align-items: start;
     justify-content: start;
+    max-width: 1323px;
     padding: 16px;
+}
+
+.location-page-location-section-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.location-page-location-section-width-controller {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .vehicles-main-heading {
@@ -58,20 +75,13 @@
     gap: 16px;
     width: 100%;
 }
-/* 
-.navigate-easy-inner-container > h3 {
-    font-size: var(--font-body-xl);
-    line-height: var(--line-height-heading);
-    font-weight: var(--font-weight-bold);
-    color: var(--primary-color);
-} */
 
-.navigate-easy-inner-container > p {
+/* .navigate-easy-inner-container > p {
     font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     text-align: start;
-}
+} */
 
 
 .navigate-easy-options-container {
@@ -119,123 +129,34 @@
 }
 
 
-/* .location-page-locations-detail-container {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: start;
-    gap: 16px;
-    width: 50%;
-
-}
-
-.location-addresses-and-map-container {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    height: auto;
-    gap: 16px;
-}
-
-.loation-map-container {
-    width: 50%;
-    background-color: orange;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.location-desc-and-map-container {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    width: 50%;
-    justify-content: start;
-    gap: 16px;
-}
-
-.location-desc-and-map-container > h3 {
-    font-size: var(--font-heading-md);
-    line-height: var(--line-height-heading);
-    font-weight: var(--font-weight-bold);
-}
-
-.location-desc-and-map-container > p {
-    font-size: var(--font-body-lg);
-    line-height: var(--line-height-body);
-    font-weight: var(--font-weight-regular);
-    margin-bottom: 16px;
-}
-
-.location-page-locations-detail-container {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: start;
-    width: 100%;
-    height: auto;
-    padding: 16px;
-    gap: 16px;
-    background-image: url('/assets/images/nzMapBackground.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    background-color: rgba(17, 59, 132, 0.4);
-    color: var(--color-white);
-}
-
-.location-page-locations-detail-container > h3 {
-    font-size: var(--font-heading-md);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-heading);
-}
-
-.location-page-locations-detail-container > p {
-    font-size: var(--font-body-lg);
-    line-height: var(--line-height-body);
-    font-weight: var(--font-weight-regular);
-    text-align: start;
-}
-
-.location-pin-point-container {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    gap: 10px;
-    width: 100%;
-    font-size: var(--font-body-lg);
-    line-height: var(--line-height-body);
-    font-weight: var(--font-weight-bold);
-}
-
-.location-city-heading {
-    font-size: var(--font-body-lg) !important;
-    line-height: var(--line-height-heading) !important;
-    font-weight: var(--font-weight-bold) !important;
-    color: #000000;
-}
-
-.location-details {
-    font-size: var(--font-body-md);
-    line-height: var(--line-height-body);
-    font-weight: var(--font-weight-regular);
-    display: flex;
-    align-items: start;
-    justify-content: start;
-    gap: 10px;
-} */
 
 @media only screen and (min-width: 481px) {
     .locations-main-outer-contaienr {
-        align-items: end;
-        justify-content: end;
+        align-items: center;
+        justify-content: center;
     }
 
     .page-main-heading-container {
+        display: flex;
+        width: 100%;
+        align-items: start;
+        justify-content: start;
+    }
+
+    .location-page-location-section-container {
+        display: flex;
+        align-items: end;
+        justify-content: end;
+        width: 100%;
+    }
+    
+    .location-page-location-section-width-controller {
+        display: flex;
         width: 95%;
-        padding: 16px 0;
+        align-items: start;
+        justify-content: start;
+        border-bottom-left-radius: 25px;
+        overflow: hidden;
     }
 
     .location-max-width-control-container {
@@ -243,15 +164,12 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 95%;
+        width: 100%;
+        padding: 0;
     }
 
-    /* Navigate Easy */
     .navigate-easy-main-container {
-        max-width: 1328px;
-        padding: 0 57px;
+        padding: 25px 56px;
     }
-    .navigate-easy-inner-container {
-        width: 100%;
-    }
+    
 }

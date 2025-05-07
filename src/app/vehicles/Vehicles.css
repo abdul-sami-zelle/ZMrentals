@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 56px;
+    /* padding: 56px; */
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -17,7 +17,6 @@
     justify-content: start;
     height: auto;
     max-width: 1328px;
-    gap: 57px;
 }
 
 .page-main-heading-container {
@@ -27,6 +26,7 @@
     justify-content: start;
     width: 100%;
     gap: 25px;
+    padding: 25px 56px;
 }
 
 .vehicles-main-heading {
@@ -108,6 +108,7 @@
     align-items: start;
     justify-content: start;
     gap: 32px;
+    padding: 25px 56px;
 }
 
 .fleet-detail-desc-heading-and-para {
@@ -170,10 +171,11 @@
 .perfect-ride-zm-main-container {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 32px;
     width: 100%;
     align-items: start;
     justify-content: start;
+    padding: 25px 56px;
 }
 
 /* .perfect-ride-zm-main-container > h3 {
@@ -191,7 +193,7 @@
 
 @media only screen and (max-width: 480px) {
     .page-main-container  {
-        padding: 16px;
+        padding: 0px;
     }
 
     .vehicles-main-heading {
@@ -200,8 +202,46 @@
         font-weight: var(--font-weight-bold);
     }
     .page-max-width-container {
-        gap: 32px;
+        gap: 0px;
     }
 
+    .page-main-heading-container {
+        padding: 25px 16px 0 16px;
+        gap: 16px;
+        margin-bottom: 25px;
+    }
+
+    .fleet-details-derc-main-container {
+        padding: 0 16px;
+        margin-bottom: 25px;
+        gap: 16px;
+    }
+
+    .fleet-detail-desc-items-container {
+        padding-left: 0;
+        padding: 16px;
+        flex-direction: column;
+    }
+
+    .fleet-detail-desc-heading-and-para {
+        gap: 16px;
+    }
+
+    .perfect-ride-zm-main-container {
+        padding: 0 16px;
+        margin-bottom: 25px;
+        gap: 16px;
+    }
+    .fleet-detail-desc-para {
+        font-size: var(--font-body-lg);
+        line-height: var(--line-height-body);
+        font-weight: var(--font-weight-regular);
+    }
+
+    .perfect-ride-zm-main-container > p {
+        font-size: var(--font-body-lg);
+        line-height: var(--line-height-body);
+        font-weight: var(--font-weight-regular);
+    }
     
 }

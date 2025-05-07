@@ -10,6 +10,7 @@
     background-size: cover;
     background-color: rgba(17, 59, 132, 0.4);
     border-bottom-left-radius: 25px;
+    padding: 35px 56px;
 
 }
 
@@ -19,8 +20,8 @@
     flex-direction: column;
     justify-content: start;
     gap: 32px;
-    width: 80%;
-    padding: 56px;
+    width: 100%;
+    max-width: 1323px;
 
 }
 

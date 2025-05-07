@@ -19,7 +19,7 @@ export default function AboutUs() {
         <div className="about-us-max-width-container">
           <WhyChooseZM />
 
-          <h3 className="section-main-heading">Core Principles That Drive Us Forward</h3>
+          <h3 className="global-heading-style">Core Principles That Drive Us Forward</h3>
 
           <ServiceDetail
             serviceImage={`/assets/images/mix/speedy-rentasl-4.jpg`}

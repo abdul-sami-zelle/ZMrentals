@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    padding: 35px 56px;
 }
 
 .customer-thoughts-inner-container {
@@ -12,8 +13,7 @@
     gap: 32px;
     align-items: start;
     justify-content: start;
-    max-width: 1323px;
-    padding: 0 0 56px 0;
+    /* padding: 0 0 56px 0; */
 }
 
 .customer-thoughts-inner-container > h3 {
@@ -86,8 +86,11 @@
 }
 
 @media only screen and (max-width: 480px) {
-    .customer-thoughts-inner-container {
+    .customer-thoughts-main-container {
         padding: 16px;
+    }
+    .customer-thoughts-inner-container {
+        
         gap: 16px;
     }
 

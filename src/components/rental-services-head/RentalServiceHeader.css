@@ -4,16 +4,10 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 24px;
     gap: 32px;
+    padding: 0;
 }
 
-/* .rental-service-head-container > h3 {
-    font-size: var(--font-heading-md);
-    line-height: var(--line-height-heading);
-    font-weight: var(--font-weight-bold);
-    color: var(--primary-color);
-} */
 
 .rental-service-head-container > p {
     font-size: var(--font-body-18);
@@ -30,7 +24,7 @@
     }
     .rental-service-head-container {
         gap: 16px;
-        padding: 16px;
+        padding: 0;
     }
     .rental-service-head-container > h3 {
         font-size: var(--font-body-xl);
@@ -38,6 +32,11 @@
         line-height: var(--line-height-heading);
         font-weight: var(--font-weight-bold);
         color: var(--primary-color);
+    }
+
+    .rental-service-head-container > p {
+        font-size: var(--font-body-lg);
+        text-align: center;
     }
 
     .booking-instruction-cards-container {

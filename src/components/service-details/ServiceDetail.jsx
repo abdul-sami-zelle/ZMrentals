@@ -14,17 +14,17 @@ const ServiceDetail = ({flexDirection, serviceImage, serviceHeading, serviceDesc
         </div>
         <div className='service-detail-description-container'>
             <div className='service-heading-contaienr'>
-                <h3>{serviceHeading}</h3>
-                <div className='service-heading-underline-main-container'>
+                <h3 className='global-heading-style'>{serviceHeading}</h3>
+                {/* <div className='service-heading-underline-main-container'>
                     <div className='service-heading-top-line-container'>
                         <div className='service-heading-right-side-line'></div>
                     </div>
                     <div className='service-heading-bottom-line'>
                         <div className='service-heading-left-line'></div>
                     </div>
-                </div>
+                </div> */}
             </div>
-            <p>{serviceDescription}</p>
+            <p className='global-content-style'>{serviceDescription}</p>
         </div>
     </div>
   )

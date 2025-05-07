@@ -28,7 +28,7 @@ const BookingInstruction = () => {
     ]
   return (
     <div className='booking-instruction-main-container'>
-        <h3>Seamless Procedure</h3>
+        <h3 className='section-main-heading'>Seamless Procedure</h3>
         <span>
             <p>Whether you’re planning or prefer to make a straightforward walk-in reservation, here’s how you can book a car in Auckland with ease:</p>
             {/* <p>Booking a rental car with Speedy Rentals is quick and straightforward.</p>
@@ -37,7 +37,7 @@ const BookingInstruction = () => {
         <div className='booking-instruction-cards-container'>
             {instructionData.map((item, index) => (
                 <div key={index} className='booking-instruction-single-column'>
-                    <h3>{item.heading}</h3>
+                    <h3 className='global-heading-style'>{item.heading}</h3>
                     <BookingInstructionCard 
                         data={item.details}
                     />

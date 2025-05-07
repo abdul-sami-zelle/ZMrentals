@@ -12,21 +12,22 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 57px;
 }
 
 .rental-services-max-width-container {
     display: flex;
     flex-direction: column;
-    gap: 57px;
+    gap: 50px;
     align-items: start;
     justify-content: start;
     max-width: 1323px;
+    padding: 0px 56px 50px 56px;
 }
 
 @media only screen and (max-width: 480px) {
     .rental-services-max-width-container {
-        gap: 16px;
+        gap: 25px;
+        padding: 0 16px;
     }
     .rental-services-content-container {
         gap: 32px;

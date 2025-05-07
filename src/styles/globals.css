@@ -98,10 +98,28 @@ body {
   color: var(--primary-color);
 }
 
+.global-heading-style {
+  font-size: var(--font-heading-sm);
+  line-height: var(--line-height-heading);
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-color);
+}
+
+.global-content-style {
+  font-size: var(--font-body-18);
+  line-height: var(--line-height-body);
+  font-weight: var(--font-weight-regular);
+}
+
 
 @media only screen and (max-width: 480px) {
   .section-main-heading {
     font-size: var(--font-heading-md);
-    padding: 0 16px;
+    /* padding: 0 16px; */
+  }
+  .global-content-style {
+    font-size: var(--font-body-16);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-regular);
   }
 }

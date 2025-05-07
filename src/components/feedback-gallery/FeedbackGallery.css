@@ -6,9 +6,9 @@
     width: 100%;
     height: auto;
     position: relative;
-    gap: 15px;
+    gap: 16px;
     max-width: 1323px;
-    margin-bottom: 32px;
+    margin-bottom: 25px;
 }
 
 .feedback-gallery-images-container {
@@ -44,8 +44,8 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 16px;
-    gap: 32px;
+    padding: 0 16px;
+    gap: 16px;
     align-items: start;
     justify-content: start;
 }
@@ -67,8 +67,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    padding: 16px;
-
+    padding: 0 16px;
 }
 
 .feedback-gallery-customer-comment-card-inner-container {
@@ -137,10 +136,20 @@
     .feedback-gallery-main-container {
         display: flex;
         flex-direction: row-reverse;
-        padding: 35px 65px;
+        padding: 25px 65px;
         width: 100%;
         position: relative;
         margin-bottom: 0px;
+    }
+
+    .feedback-gallery-description-container {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 16px;
+        gap: 32px;
+        align-items: start;
+        justify-content: start;
     }
 
     .feedback-gallery-description-container>h3 {

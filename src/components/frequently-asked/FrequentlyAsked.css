@@ -1,9 +1,8 @@
 .frequently-asked-outer-container {
     display: flex;
     width: 100%;
-    align-items: end;
-    justify-content: end;
-    margin-bottom: 32px;
+    align-items: stretch;
+    justify-content: start;
     max-width: 1323px;
 }
 
@@ -11,7 +10,9 @@
     display: flex;
     align-items: start;
     justify-content: start;
-    width: 95%;
+    width: 100%;
+    max-width: 1323px;
+    padding: 25px 56px;
     flex-direction: column;
     gap: 32px;
 }
@@ -141,12 +142,12 @@
     .frequently-asked-outer-container {
         align-items: start;
         justify-content: start;
-        margin-bottom: 57px;
+        margin-bottom: 25px;
     }
 
     .frequently-asked-inner {
         width: 100%;
-        padding: 16px;
+        padding: 0 16px;
     }
 
     .frequently-asked-inner > h3 {

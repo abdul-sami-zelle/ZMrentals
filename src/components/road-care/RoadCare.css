@@ -3,17 +3,15 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-
+    padding: 35px 56px;
 }
 
 .road-care-inner-container {
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: center;
-    max-width: 1323px;
-    padding: 56px;
     gap: 32px;
 }
 
@@ -77,13 +75,15 @@
 }
 
 @media only screen and (max-width: 480px) {
+    .road-care-main-container {
+        padding: 16px;
+    }
     .road-care-inner-container {
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: start;
         justify-content: center;
-        padding: 16px;
         gap: 16px;
     }
     .road-care-inner-container > h3 {

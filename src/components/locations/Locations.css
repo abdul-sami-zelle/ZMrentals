@@ -3,7 +3,8 @@
     width: 100%;
     align-items: end;
     justify-content: end;
-    margin-bottom: 32px;
+    margin-bottom: 25px;
+    margin-top: 25px;
 }
 
 .locations-main-container {
@@ -103,13 +104,13 @@
     align-items: start;
     justify-content: start;
     padding: 16px;
-    gap: 32px;
+    gap: 16px;
     background-image: url('/assets/images/nzMapBackground.png');
     background-repeat: no-repeat;
     /* background-attachment: fixed; */
     background-position: center;
     background-size: cover;
-    margin-bottom: 57px;
+    margin-bottom: 25px;
     background-color: rgba(17, 59, 132, 0.4);
 }
 

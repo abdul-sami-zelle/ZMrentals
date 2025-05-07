@@ -15,22 +15,15 @@ const CancelationPolicyDetails = ({flexDirection, serviceImage, serviceHeading, 
         </div>
         <div className='service-detail-description-container'>
             <div className='service-heading-contaienr'>
-                <h3>{serviceHeading}</h3>
-                <div className='service-heading-underline-main-container'>
-                    <div className='service-heading-top-line-container'>
-                        <div className='service-heading-right-side-line'></div>
-                    </div>
-                    <div className='service-heading-bottom-line'>
-                        <div className='service-heading-left-line'></div>
-                    </div>
-                </div>
+                <h3 className='section-main-heading'>{serviceHeading}</h3>
+                
             </div>
-            <p>{desc}</p>
+            <p className='global-content-style' style={{textAlign: 'start'}}>{desc}</p>
             <div className='cancelation-booking-policies-points-container'>
                 {points.map((item, index) => (
                     <div className='services-detail-single-point' key={index}> 
                         <MdKeyboardDoubleArrowRight className='points-arrow' color='var(--primary-color)' /> 
-                        <p> {item.title} </p>
+                        <p className='global-content-style' style={{textAlign: 'start'}}> {item.title} </p>
                     </div>
                 ))}
             </div>

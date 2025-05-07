@@ -15,7 +15,7 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 
 import beforeImage from '../../assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg'
 import carImage from '../../assets/images/cars/small_cars_menu_Tablet.jpg'
-import { useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 
 const Navbar = () => {
 
@@ -125,7 +125,20 @@ const Navbar = () => {
     setOpenMenu(false)
   } 
 
-  const [navItem, setNavItem ]= useState(null)
+  const [navItem, setNavItem ]= useState('');
+
+
+  const currentPath = usePathname();
+
+  useEffect(() => {
+    const pathWithoutSlash = currentPath.startsWith('/') ? currentPath.slice(1) : currentPath
+    const splitedPath = pathWithoutSlash.split('-');
+    setNavItem(splitedPath.join(' ').toLowerCase())
+    
+  }, [currentPath])
+
+  
+  
 
 
 
@@ -140,8 +153,8 @@ const Navbar = () => {
             {navData.map((item) => (
               <li
                 key={item.id}
-                className={`navbar-item ${navItem === item.id ? 'active' : ''}`}
-                onClick={() => setNavItem(item.id)}
+                className={`navbar-item ${navItem === item.name.toLowerCase() ? 'active' : ''}`}
+                onClick={() => setNavItem(item.name.toLowerCase())}
                 onMouseOver={() => setCurrentIndex(item.id)}
                 onMouseLeave={() => setCurrentIndex(null)}
               >

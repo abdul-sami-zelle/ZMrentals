@@ -33,8 +33,8 @@ const WhyChooseZM = () => {
                         <div key={index} className='why-we-single-faq'>
                             <MdKeyboardDoubleArrowRight className='why-we-faq-arrow' />
                             <span>
-                                <h3>{item.que}</h3>
-                                <p>{item.ans}</p>
+                                <h3 className='global-heading-style'>{item.que}</h3>
+                                <p className='global-content-style'>{item.ans}</p>
                             </span>
                         </div>
                     ))}

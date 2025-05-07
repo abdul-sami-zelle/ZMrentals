@@ -10,13 +10,13 @@ import serviceImage from '../../assets/images/mix/speedy-rentasl-4.jpg';
 
 const CarRentalServices = () => {
   return (
-    <div className='rental-services-details-main-container'>
+    <div className='rental-services-details-main-container'> 
       <ServicesHero 
         heading={'Drive Auckland Your Way'}
         paraOne={`Discover reliable car rental services & explore Auckland with ease`}
         // paraTwo={'Find out what makes us tick.'}
         buttonText={'What we are about'}
-      />
+      /> 
       <div className='rental-services-content-container'>
         <div className='rental-services-max-width-container'>
           <RentalServiceHeader 
@@ -76,7 +76,7 @@ const CarRentalServices = () => {
         </div>
         <DiscountBanner
           discountImage={discountBannerImage}
-          marginBottom={'57px'}
+          marginBottom={'50px'}
         />
       </div>
     </div>
