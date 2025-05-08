@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import './DropdownInput.css'
 import { MdOutlineArrowDropDown } from "react-icons/md";
 
-const DropdownInput = ({ width, height, defaultValue, placeholder, data, bgColor }) => {
+const DropdownInput = ({ width, setSelectedCity, height, defaultValue, placeholder, data, bgColor }) => {
 
     const [showList, setShowList] = useState(false);
     const [selectedValue, setSelectedValue] = useState('')
@@ -14,6 +14,7 @@ const DropdownInput = ({ width, height, defaultValue, placeholder, data, bgColor
     const handleSelectValue = (value) => {
         setSelectedValue(value);
         setShowList(false);
+        if (setSelectedCity) setSelectedCity(value);
     }
 
     useEffect(() => {

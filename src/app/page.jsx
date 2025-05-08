@@ -66,10 +66,11 @@ export default function Home() {
 
   const faqData = [
     { 
-        question: 'Do I need an international driver’s license to rent a car in New Zealand?', 
-        answer: (<>
+        question : 'Do I need an international driver’s license to rent a car in New Zealand?', 
+        answer : (<>
           While an international driver’s license is not a requirement, your overseas license must be in English. Otherwise, you’ll need an official translation or an International Driving Permit (IDP). 
-        </>)
+        </>),
+        height: '50px'
     },
     {
         question: 'What is the minimum age to rent a car in New Zealand?', 
@@ -77,7 +78,8 @@ export default function Home() {
           <>
             To rent a car in New Zealand, the driver must be at least 21 years old. However, some rental companies may charge a young driver surcharge if you are under 25 years of age.
           </>
-        )
+        ),
+        height: '50px'
     },
 ]
 

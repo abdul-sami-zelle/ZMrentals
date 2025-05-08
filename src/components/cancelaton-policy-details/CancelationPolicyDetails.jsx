@@ -22,7 +22,7 @@ const CancelationPolicyDetails = ({flexDirection, serviceImage, serviceHeading, 
             <div className='cancelation-booking-policies-points-container'>
                 {points.map((item, index) => (
                     <div className='services-detail-single-point' key={index}> 
-                        <MdKeyboardDoubleArrowRight className='points-arrow' color='var(--primary-color)' /> 
+                        <MdKeyboardDoubleArrowRight className='points-arrow' color='var(--secondary-color)' /> 
                         <p className='global-content-style' style={{textAlign: 'start'}}> {item.title} </p>
                     </div>
                 ))}

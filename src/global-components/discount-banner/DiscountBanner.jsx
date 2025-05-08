@@ -15,10 +15,25 @@ const DiscountBanner = ({ discountImage , marginBottom}) => {
         </div>
 
         <div className='discount-banner-details-and-subscribe-button-container'>
-          <div className='discount-banner-detail-container'>
+          <h3 className='discount-banner-heading-content'>Get Exclusive Deals For Your Next Adventure</h3>
+          <span className='discount-banner-slogan-and-button'>
+            <p className='discount-banner-slogan'>Join our ZM newsletter for exclusive deals, travel tips and inspirations</p>
+            <SecondaryButton
+              secondaryButtonClass={'secondary-prop-class'}
+              width={'157px'}
+              height={'44px'}
+              secondaryBgColor={'transparent'}
+              secondaryBorder={'2px solid var(--color-white)'}
+              textColor={'var(--color-white)'}
+              fontSize={'var(--font-body-lg)'}
+              lineHeight={'var(--line-height-body)'}
+              fontWeight={'var(--font-weight-body)'}
+              secondaryText={'Subscribe'}
+            />
+          </span>
+          {/* <div className='discount-banner-detail-container'>
             <span>
-              <h3>Get Exclusive Deals</h3>
-              <h3>For Your Next Adventure</h3>
+              <h3>Get Exclusive Deals For Your Next Adventure</h3>
             </span>
             <h3 className='mobile-view-discount-banner-heading'>Get Exclusive Deals For Your Next Adventure</h3>
             <span>
@@ -29,18 +44,20 @@ const DiscountBanner = ({ discountImage , marginBottom}) => {
               Join our ZM newsletter for exclusive deals, travel tips and inspirations
             </p>
           </div>
-          <SecondaryButton
-            secondaryButtonClass={'secondary-prop-class'}
-            width={'157px'}
-            height={'44px'}
-            secondaryBgColor={'transparent'}
-            secondaryBorder={'2px solid var(--color-white)'}
-            textColor={'var(--color-white)'}
-            fontSize={'var(--font-body-lg)'}
-            lineHeight={'var(--line-height-body)'}
-            fontWeight={'var(--font-weight-body)'}
-            secondaryText={'Subscribe'}
-          />
+          <div className='discount-banner-button-container'>
+            <SecondaryButton
+              secondaryButtonClass={'secondary-prop-class'}
+              width={'157px'}
+              height={'44px'}
+              secondaryBgColor={'transparent'}
+              secondaryBorder={'2px solid var(--color-white)'}
+              textColor={'var(--color-white)'}
+              fontSize={'var(--font-body-lg)'}
+              lineHeight={'var(--line-height-body)'}
+              fontWeight={'var(--font-weight-body)'}
+              secondaryText={'Subscribe'}
+            />
+          </div> */}
         </div>
       </div>
     </div>

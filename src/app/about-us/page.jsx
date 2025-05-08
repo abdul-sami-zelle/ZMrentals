@@ -19,33 +19,33 @@ export default function AboutUs() {
         <div className="about-us-max-width-container">
           <WhyChooseZM />
 
-          <h3 className="global-heading-style">Core Principles That Drive Us Forward</h3>
+          <h3 className="section-main-heading">Core Principles That Drive Us Forward</h3>
 
           <ServiceDetail
             serviceImage={`/assets/images/mix/speedy-rentasl-4.jpg`}
             serviceHeading={'Sustainable Responsibility'}
-            flexDirection={'row-reverse'}
+            flexDirection={'row'}
             serviceDescription={'We’re committed to reducing our environmental footprint. Our fleet of hybrid and fuel-efficient vehicles ensure that you explore Auckland responsibly. With eco-friendly compact cars and spacious 7-seaters, sustainability is embedded in every journey.'}
           />
 
           <ServiceDetail
             serviceImage={`/assets/images/mix/speedy-rentasl-4.jpg`}
             serviceHeading={'Professionalism'}
-            flexDirection={'row'}
+            flexDirection={'row-reverse'}
             serviceDescription={'Professionalism defines our service at every level. Our trained team provides a seamless experience from booking to return. Expect timely, courteous responses to all inquiries, making your car rental experience exceptional every time.'}
           />
 
           <ServiceDetail
             serviceImage={`/assets/images/mix/speedy-rentasl-4.jpg`}
             serviceHeading={'Tech-Driven Innovation'}
-            flexDirection={'row-reverse'}
+            flexDirection={'row'}
             serviceDescription={'Innovation fuels our service. From easy online bookings to digital check-ins, we embrace technology to enhance your Auckland car rental experience. Our vehicles feature modern infotainment, GPS, Bluetooth, app connectivy and much more.'}
           />
 
           <ServiceDetail
             serviceImage={`/assets/images/mix/speedy-rentasl-4.jpg`}
             serviceHeading={'Reliability & Integrity'}
-            flexDirection={'row'}
+            flexDirection={'row-reverse'}
             serviceDescription={'Trust is at the core of our business. We ensure accurate vehicle inspections, honor cancellation policies, and deliver on promises. We strive to be a reliable Auckland car hire service you can count on every time.'}
           />
 
@@ -59,7 +59,8 @@ export default function AboutUs() {
 
           <div className="about-us-why-choose-us-main-container">
             <div className="why-choose-un-content-container">
-              <p>Choosing ZM Rentals means selecting a company that values customer satisfaction, transparency, safety, and sustainability. We’re dedicated to making your time in Auckland as enjoyable and stress-free as possible, with a car rental experience that’s tailored to your needs. Ready to experience the ZM difference?</p>
+              <p>Choosing ZM Rentals means selecting a company that values customer satisfaction, transparency, safety, and sustainability. We’re dedicated to making your time in Auckland as enjoyable and stress-free as possible, with a car rental experience that’s tailored to your needs. </p>
+              <p>Ready to experience the ZM difference?</p>
             </div>
           </div>
 

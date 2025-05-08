@@ -40,11 +40,13 @@
 
 .discount-banner-details-and-subscribe-button-container {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
     width: 60%;
     flex-shrink: 0;
-    padding: 0 160px 0 32px;
+    gap: 10px;
+    padding: 0 30px;
 }
 
 .discount-banner-detail-container {
@@ -71,14 +73,23 @@
     justify-content: start;
 }
 
-.discount-banner-detail-container > span > h3 {
+.discount-banner-heading-content {
     font-size: var(--font-heading-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     color: var(--color-white);
 }
 
-.discount-banner-detail-container > span > p {
+.discount-banner-slogan-and-button {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    width: 100%;
+    padding-right: 56px;
+    gap: 32px;
+}
+
+.discount-banner-slogan {
     font-size: var(--font-body-md);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-medium);
@@ -97,23 +108,26 @@
         gap: 15px;
         width: 100% !important;
         border-top-right-radius: 25px;
-        gap: 40px;
+        gap: 16px;
     }
     .discount-banner-image-container {
         width: 100% !important;
+        height: 90px !important;
         
     }
     .discount-banner-image {
-        min-height: 92px !important;
+        min-height: 90px !important;
     }
+
     .discount-banner-details-and-subscribe-button-container {
         flex-direction: column;
         width: 100%;
         align-items: start;
         justify-content: start;
         padding: 0;
-        gap: 30px;
+        gap: 16px;
     }
+
 
     .discount-banner-detail-container {
         width: 100%;
@@ -152,5 +166,14 @@
         font-weight: var(--font-weight-regular);
         color: var(--color-white);
         text-align: start;
+    }
+
+
+    .discount-banner-slogan-and-button {
+        display: flex;
+        flex-direction: column !important;
+        align-items: start !important;
+        justify-content: start !important;
+        gap: 10px;
     }
 }

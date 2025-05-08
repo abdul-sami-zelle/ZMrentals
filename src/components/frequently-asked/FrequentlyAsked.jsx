@@ -25,10 +25,10 @@ const FrequentlyAsked = ({ faqData }) => {
                     {faqData.map((item, index) => (
                         <div key={index} className='frequently-asked-single-que-ans'>
                             <div className={`faq-desktop-head`} onClick={() => setDesktopIndex((prevIndex) => prevIndex === index ? null : index)}>
-                                <MdKeyboardDoubleArrowRight size={25} color='var(--primary-color)' />
+                                <MdKeyboardDoubleArrowRight size={25} color='var(--secondary-color)' />
                                 <h3>{toTitleCase(item.question)}</h3>
                             </div>
-                            <div className={`faq-desktop-body ${desktopIndex === index ? 'show-desktop-body' : ''}`}>
+                            <div className={`faq-desktop-body ${desktopIndex === index ? 'show-desktop-body' : ''}`} style={{height: desktopIndex === index ? item.height : 0}}>
                                 <p>{item.answer}</p>
                             </div>
                         </div>
@@ -49,7 +49,7 @@ const FrequentlyAsked = ({ faqData }) => {
                     ))}
 
                 </div>
-                <SecondaryButton
+                {/* <SecondaryButton
                     secondaryButtonClass={'secondary-prop-class'}
                     width={'157px'}
                     height={'44px'}
@@ -61,7 +61,7 @@ const FrequentlyAsked = ({ faqData }) => {
                     fontWeight={'var(--font-weight-body)'}
                     secondaryText={'Read More FAQs'}
                     display={'flex'}
-                />
+                /> */}
             </div>
         </div>
     )

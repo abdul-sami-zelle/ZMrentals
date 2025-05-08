@@ -24,6 +24,7 @@
     align-items: start;
     justify-content: start;
     max-width: 1323px;
+    padding: 0 56px;
 }
 
 .about-us-driving-standered-main-container{
@@ -62,6 +63,7 @@
     width: 70%;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .why-choose-un-content-container > p {

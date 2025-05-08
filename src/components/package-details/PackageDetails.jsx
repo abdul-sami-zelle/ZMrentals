@@ -6,7 +6,7 @@ import packageImage from '../../assets/images/mix/carbonClick-home.jpg'
 import Image from 'next/image'
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton'
 
-const PackageDetails = ({ data, sectionImage, packageHeading, flexDirection, buttonText, display }) => {
+const PackageDetails = ({ data, sectionImage, packageHeading, flexDirection, buttonText, display , objectFit}) => {
     
 
   return (

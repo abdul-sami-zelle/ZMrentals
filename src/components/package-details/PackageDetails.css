@@ -18,7 +18,7 @@
 .package-image {
     width: 100%;
     height: auto;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .package-detail-description-container {

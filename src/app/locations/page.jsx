@@ -19,21 +19,6 @@ import FrequentlyAsked from '@/components/frequently-asked/FrequentlyAsked'
 
 const Locations = () => {
 
-  // const pickAndDropDetails = [
-  //   `If you’re arriving in Auckland and want to reach our conveniently located office as quickly as possible, we’ve got you covered with our dedicated shuttle service. Although our Mangere branch is just minutes from Auckland Airport, we understand that navigating taxis or public transport in a new city can feel overwhelming, especially when you are weary from the long flight. `,
-  //   `That’s why we offer a quick and reliable airport shuttle to take the hassle out of your arrival. Our shuttle picks you up from the designated area just outside the airport terminals and brings you straight to our office in Mangere, typically within 5 to 10 minutes.`,
-  //   `No need to worry about walking while jet lagged, dragging heavy luggage, or paying steep taxi fares. With our shuttle, you get a smooth, comfortable transition from the airport to the rental, so you can start your Auckland journey the right way. Just look for the ZM Rentals sign, hop on board, and let us take care of the rest.`,
-  // ]
-
-  // const navigateEasy = [
-  //   `Enter your itinerary details for a quote`,
-  //   `Select an available modern vehicle`,
-  //   `GO with our free basic insurance or upgrade to reduce your excess`,
-  //   `Book your reservation! You can pay now or at arrival.`,
-  //   `The confirmation email will ask for your check-in details including licence. Fill in online or on our app.`,
-  //   `Head to our branch on your pick-up date and you may be on the road quicker than your can say "Kia Ora"`,
-  // ]
-
   const navigateEasy = [
     {
       heading: 'Auckland Airport',
@@ -58,7 +43,8 @@ const Locations = () => {
         <br /> <br />
         Public transport, like the Line 28 bus, takes longer, around 17 to 21 minutes for the ride, plus potential wait time and a walk or rideshare from the bus 
         stop to our office. Altogether, this option could take anywhere between 30 to 50 minutes. 
-      </>)
+      </>),
+      height: '115px'
     },
     {
       question: 'What is the easiest way to reach our Mangere location from the Auckland Airport?',
@@ -68,7 +54,8 @@ const Locations = () => {
           <br /><br />
           However, if you’re in a hurry or prefer not to wait, a taxi or rideshare is another option. Our location is just a few minutes away from the airport, so it’s a quick ride. Taxis typically charge between NZD $27 and $35 due to the high demand for immediate service. If you’re willing to pay a bit extra for speed and comfort, this is your best option.
         </>
-      )
+      ),
+      height: '115px'
     },
     {
       question: 'How can I get a shuttle at the Auckland Airport?',
@@ -78,7 +65,8 @@ const Locations = () => {
           <br /><br />
           When your pick-up is confirmed, head to the appropriate terminal. If you’re an international traveler, go outside Door 11 and look for the “Rental Car Shuttle” signs. For domestic travelers, wait outside Door 4 or 7, depending on your airline. The shuttle will be there shortly, so you can relax while we take care of the rest.
         </>
-      )
+      ),
+      height: '140px'
     },
     {
       question: 'How long will it take to drive from Mangere to Auckland’s central city?',
@@ -88,7 +76,8 @@ const Locations = () => {
           <br /><br />
           During peak hours, morning (7:00 AM - 9:30 AM) and evening (4:00 PM - 6:30 PM), traffic can slow you down, and the drive may take 35-45 minutes or more. For a smoother journey, take Kirkbride Road or George Bolt Memorial Drive to State Highway 20, then merge onto State Highway 1 towards the city center. Avoid peak hours if possible for a quicker trip.
         </>
-      )
+      ),
+      height: '140px'
     },
     {
       question: 'Can I get a shuttle to Auckland Airport on my return?',
@@ -98,7 +87,8 @@ const Locations = () => {
           <br /><br />
           Once you’ve returned the car, completed the vehicle inspection, and received your deposit refund, you can request a shuttle directly from our reception desk. If you have an early or late flight, simply inform our staff in advance, and we’ll prioritize your shuttle service. Our shuttles will drop you off at the designated terminal based on your flight, whether domestic or international.
         </>
-      )
+      ),
+      height: '140px'
     },
   ]
 
@@ -106,9 +96,11 @@ const Locations = () => {
     <div className='locations-main-outer-contaienr'>
 
         <div className='page-main-heading-container'>
-          <h3 className='vehicles-main-heading'>Car Rental Auckland</h3>
-          <p>ZM the distance with an affordable car rental</p>
-          <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} textColor={'var(--primary-color)'} primaryButtonText={'Find My Car'} />
+          <div className='booking-form-inner-shadow-container'>
+            <h3 className='section-main-heading'>Car Rental Auckland</h3>
+            <p>ZM the distance with an affordable car rental</p>
+            <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} textColor={'var(--primary-color)'} primaryButtonText={'Find My Car'} />
+          </div>
         </div>
 
       <div className='location-page-location-section-container'>

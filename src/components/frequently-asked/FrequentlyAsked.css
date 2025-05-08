@@ -71,9 +71,9 @@
     transition: all 0.3s ease-in-out;
 }
 
-.faq-desktop-body.show-desktop-body {
+/* .faq-desktop-body.show-desktop-body {
     height: 160px;
-}
+} */
 
 .faq-desktop-body > p {
     font-size: var(--font-body-md);

@@ -8,6 +8,7 @@ import smallCar from '../../assets/images/cars/small_cars_menu_Tablet.jpg'
 import { HiUserGroup } from "react-icons/hi";
 import PackageDetails from '@/components/package-details/PackageDetails'
 
+
 const Vehicles = () => {
 
 
@@ -39,7 +40,8 @@ const Vehicles = () => {
         `Our economy car rental fleet is also a great budget-friendly option, with lower rental rates and excellent fuel economy. This makes them perfect for long trips or extended stays where you need to manage the expenditure carefully. Despite their affordability, our compact cars come equipped with all the essentials, including air conditioning, comfortable seating, GPS navigation, USB ports, airbags, and anti-lock braking systems (ABS).`,
         `If you're looking for a reliable, cost-effective choice for your Auckland journey, our compact economy fleet has you covered.`,
       ],
-      direction: 'row-reverse'
+      direction: 'row-reverse',
+      img: '/assets/vehicles/vehicle_Compact_Economy_Fleet.jpg'
     },
     {
       heading: 'Sedan Rental Car',
@@ -48,7 +50,8 @@ const Vehicles = () => {
         `The Camry is not only comfortable but also fuel-efficient, achieving 28-39 MPG, making it great for both city drives and long highway trips. It’s equipped with a touchscreen infotainment system, Bluetooth connectivity, USB ports, and a backup camera, enhancing your driving experience.`,
         `Safety is also a priority with this rental vehicle, with features like lane departure alert, adaptive cruise control, and a pre-collision system with pedestrian detection. Whether you're exploring the city or heading on a scenic drive, this Auckland car rental option ensures a safe, smooth, and affordable ride.`
       ],
-      direction: 'row'
+      direction: 'row',
+      img: '/assets/vehicles/vehicle_Sedan_Rental_Car.jpg'
     },
     {
       heading: 'Minivan/MPV Fleet ',
@@ -58,7 +61,8 @@ const Vehicles = () => {
         `Another 7-seater car rental option that we have is the Prius Alpha, a lighter, more fuel-efficient, and cost-effective choice for eco-conscious travelers. Each car rental option in our minivan/MPV fleet offers ample cargo space and legroom, perfect for family or group trips around Auckland.`,
         `No matter your choice, our 7-seater vehicles ensure a comfortable and enjoyable journey.`
       ],
-      direction: 'row-reverse'
+      direction: 'row-reverse',
+      img: '/assets/vehicles/vehicle_Minivan.jpg'
     },
     {
       heading: 'Hybrid Car Fleet',
@@ -67,7 +71,8 @@ const Vehicles = () => {
         `Our hybrid rental vehicle fleet features popular models like the Toyota Prius 2017, Toyota Prius 2015, and Aqua 2015. Hybrid vehicles are designed for a quieter, more peaceful driving experience, making them ideal for driving around Auckland. These vehicles significantly reduce fuel consumption and lower carbon emissions, making them the go-to choice for eco-conscious travelers.`,
         `Whether you're traveling solo or with a group, our hybrid car rental options offer a cost-effective way to explore Auckland without affecting its natural environment. With both compact economy hybrids and spacious 7-seater hybrids available, you can enjoy an affordable, eco-friendly journey in the stunning Auckland.`,
       ],
-      direction: 'row'
+      direction: 'row',
+      img: '/assets/vehicles/vehicle_Hybrid_Car_Fleet.jpg'
     },
   ]
 
@@ -134,6 +139,7 @@ const Vehicles = () => {
             key={index}
             packageHeading={item.heading}
             data={item.details}
+            sectionImage={item.img}
             flexDirection={item.direction}
             // buttonText={'Download App'}
             display={'none'}

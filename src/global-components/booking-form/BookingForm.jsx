@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import 'react-calendar/dist/Calendar.css';
 import './BookingForm.css';
 import DropdownInput from '../dropdown-input/DropdownInput'
@@ -6,6 +6,7 @@ import PrimaryButton from '../primary-button/PrimaryButton';
 import { GoArrowRight } from "react-icons/go";
 import Calendar from 'react-calendar';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 
 const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow }) => {
 
@@ -15,6 +16,10 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
     // const [selectedDate, setSelectedDate] = useState(null);
     const [selectedPickupDate, setSelectedPickupDate] = useState(null);
     const [selectedDropDate, setSelectedDropDate] = useState(null);
+    const [pickupTime, setPickupTime] = useState();
+    const [dropofTime, setDropofTime] = useState()
+
+    const {searchVehiclePayload, setSearchVehiclePayload} = useSearchVehicle()
 
     const citiesList = [
         'Mangere Auckland',
@@ -42,18 +47,68 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
     const togglePickupCalendar = () => {
         setPickupCalender(prev => !prev);
     };
+
     const toggleDropCalendar = () => {
         setDropCalender(prev => !prev);
     };
 
     const handlePickupDateChange = (date) => {
         setSelectedPickupDate(date);
+        console.log("picked date", date)
         setPickupCalender(false); // hide after selection
     };
     const handleDropDateChange = (date) => {
         setSelectedDropDate(date);
         setDropCalender(false); // hide after selection
     };
+
+    const handleLocationChange = () => {
+        setSearchVehiclePayload((prevValue) => ({
+            ...prevValue,
+            pickup_location: 4,
+            drop_location: 4
+        }))
+    }
+
+    const handleSelectPickupTime = (value) => {
+        setPickupTime(value);
+        formatePickupDateAndTime(selectedPickupDate, value)
+        console.log("selected time is", value)
+    }
+
+    const handleDropofTime = (value) => {
+        console.log("dropof time", value)
+        setDropofTime(value);
+        handleDropofTimeAndDate(selectedDropDate, value)
+    }
+
+    const formatePickupDateAndTime = (dateObj, timeObj) => {
+        if(!dateObj || !timeObj) return null;
+        const cleanedTime = timeObj.replace(/\s+/g, '');
+        const dateStr = `${dateObj.toDateString()} ${cleanedTime}`;
+
+        const fullDate = new Date(dateStr)
+        setSearchVehiclePayload((prevValue) => ({
+            ...prevValue,
+            pickup_time: fullDate
+        }))
+    }
+
+    const handleDropofTimeAndDate = (dateObj, timeObj) => {
+        if(!dateObj || !timeObj) return null;
+
+        const cleanedTime = timeObj.replae(/\s+/g, '');
+
+        const dateStr = `${dateObj.toDateString()} ${cleanedTime}`;
+
+        const fullDate = new Date(dateStr);
+
+        setSearchVehiclePayload((prevValue) => ({
+            ...prevValue,
+            drop_time: fullDate
+        }))
+    }
+
 
     return (
         <div className='booking-form-main-container' style={{ boxShadow: boxShadow }}>
@@ -65,6 +120,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                             height={'32px'}
                             defaultValue={'Pick-up Location'}
                             placeholder={'Pick-up Location'}
+                            setSelectedCity={handleLocationChange}
                             data={citiesList}
                             bgColor={bgColor}
                         />
@@ -111,6 +167,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                                 height={'162px'}
                                 defaultValue={'Time'}
                                 data={timeList}
+                                setSelectedCity={handleSelectPickupTime}
                                 bgColor={bgColor}
                             />
                         </div>
@@ -124,6 +181,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                             defaultValue={'Drop-of Location'}
                             placeholder={'Drop-of Location'}
                             data={citiesList}
+                            
                             bgColor={bgColor}
                         />
 
@@ -171,6 +229,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                                 height={'162px'}
                                 defaultValue={'Time'}
                                 data={timeList}
+                                setSelectedCity={handleDropofTime}
                                 bgColor={bgColor}
                             />
                         </div>
