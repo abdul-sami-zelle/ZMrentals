@@ -1,15 +1,40 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Vehicles.css'
 import BookingForm from '@/global-components/booking-form/BookingForm'
 import CarDetails from '../../components/car-details/CarDetails'
 import smallCar from '../../assets/images/cars/small_cars_menu_Tablet.jpg'
 import { HiUserGroup } from "react-icons/hi";
 import PackageDetails from '@/components/package-details/PackageDetails'
+import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext'
+import axios from 'axios'
 
 
 const Vehicles = () => {
+
+  const { searchVehiclePayload, setSearchVehiclePayload, searchedVehicles, setSearchedVehicles } = useSearchVehicle()
+
+  const getAllVehicles = async () => {
+    const api = `https://zm.skyhub.pk/cars/get`;
+    try {
+      const response = await axios.get(api);
+      if(response.status === 200) {
+        setSearchedVehicles(response.data);
+      } else {
+        console.log("Unexpected response from server. Please try again later.")
+      }
+
+    } catch (error) {
+      console.log("UnExpected Server Error", error);
+    }
+  }
+
+  useEffect(() => {
+    if (!searchedVehicles || searchedVehicles.length === 0) {
+      getAllVehicles();
+    }
+  }, []);
 
 
   const carsDetails = [
@@ -21,13 +46,14 @@ const Vehicles = () => {
         Whatever your needs, our car hire fleet in Auckland ensures you'll find the right fit for your journey.
       </>
       ),
-      carsData: [
-        { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
-        { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
-        { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
-        { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
-        { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
-      ],
+      // carsData: [
+      //   { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
+      //   { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
+      //   { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
+      //   { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
+      //   { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
+      // ],
+      // carsData: searchedVehicles,
       viewAll: 'small cars'
     },
   ]
@@ -114,7 +140,7 @@ const Vehicles = () => {
       ]
     },
   ]
- 
+
 
   return (
     <div className='page-main-container '>
@@ -144,7 +170,7 @@ const Vehicles = () => {
             // buttonText={'Download App'}
             display={'none'}
           />
-        ))} 
+        ))}
 
         {fleetFeatures.map((item, index) => (
           <div key={index} className='fleet-details-derc-main-container'>

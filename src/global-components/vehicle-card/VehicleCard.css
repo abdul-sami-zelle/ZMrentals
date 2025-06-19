@@ -17,6 +17,7 @@
     display: flex;
     width: 100%;
     height: auto;
+    max-height: 175px;
 }
 
 .vehicle-card-image-container>img {

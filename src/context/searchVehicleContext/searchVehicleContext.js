@@ -8,14 +8,19 @@ export const SearchVehicleProvider = ({children}) =>  {
     const [searchVehiclePayload, setSearchVehiclePayload] = useState({
         "pickup_location": null,
         "drop_location":  null,
-        "pickup_time": "2025-06-01T17:30:00.000Z",
-        "drop_time": "2025-06-01T18:23:00.000Z"
+        "pickup_time": "",
+        "drop_time": ""
     })
-    useEffect(() => {console.log("searhced value", searchVehiclePayload)}, [searchVehiclePayload])
+
+    const [searchedVehicles, setSearchedVehicles] = useState([])
+
+    useEffect(() => {console.log("searched vehicles on vehicle page from context", searchedVehicles)}, [searchedVehicles])
     return (
         <SearchVehicleContext.Provider value={{
             searchVehiclePayload,
             setSearchVehiclePayload,
+            searchedVehicles,
+            setSearchedVehicles
         }}>
             {children}
         </SearchVehicleContext.Provider>

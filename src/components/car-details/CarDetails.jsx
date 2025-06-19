@@ -3,26 +3,44 @@ import './CarDetails.css';
 import Link from 'next/link';
 import VehicleCard from '../../global-components/vehicle-card/VehicleCard'
 import CarDetailsModal from '@/modals/car-details-modal/CarDetailsModal';
+import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 
 
 
 const CarDetails = ({ data, openModal }) => {
 
+  const { searchedVehicles } = useSearchVehicle()
+  const url = `https://zm.skyhub.pk`
+
+  console.log("searched vehicles on vehicle page from context", searchedVehicles)
+
+  const [modalData, setModalData] = useState([])
   const [showDetalModal, setShowDetailModal] = useState(false);
   const handleOpenDetailsModal = (item) => {
+    
     setShowDetailModal(true);
+    setModalData(item)
   }
   const handleCloseModal = () => {
     setShowDetailModal(false)
   }
 
   useEffect(() => {
-    if(showDetalModal) {
+    if (showDetalModal) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto'
     }
   }, [showDetalModal])
+
+  const getAgeFromYear = (birthYear) => {
+    const currentYear = new Date().getFullYear();
+    if (!birthYear || isNaN(birthYear) || birthYear > currentYear) {
+      return "Invalid year";
+    }
+    return currentYear - birthYear;
+  };
+
   return (
     <div className='car-details-main-container' onClick={openModal}>
       <h3 className='section-main-heading'>{data.heading}</h3>
@@ -31,16 +49,16 @@ const CarDetails = ({ data, openModal }) => {
         <Link href={'/'} className='global-heading-style'>{`Our Fleet`}</Link>
       </div>
       <div className='cars-cars-container'>
-        {data.carsData.map((car, carIndex) => (
+        {searchedVehicles.map((car, carIndex) => (
           <VehicleCard
             key={carIndex}
-            vehicleImage={car.image}
+            vehicleImage={url + car.image}
             vehicleName={car.name}
-            vehicleAge={car.age}
-            seePrice={car.seePrice}
+            vehicleAge={getAgeFromYear(car.details.model)}
+            seePrice={'See Price'}
             transmission={car.transmission}
             fuelType={car.fuelType}
-            handleModalOpen={handleOpenDetailsModal}
+            handleModalOpen={() => handleOpenDetailsModal(car)}
           />
         ))}
       </div>
@@ -52,6 +70,7 @@ const CarDetails = ({ data, openModal }) => {
       <CarDetailsModal
         showModal={showDetalModal}
         handleClose={handleCloseModal}
+        vehicleDetails={modalData}
       />
 
     </div>

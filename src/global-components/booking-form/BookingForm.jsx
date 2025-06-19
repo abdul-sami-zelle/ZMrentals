@@ -7,19 +7,18 @@ import { GoArrowRight } from "react-icons/go";
 import Calendar from 'react-calendar';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow }) => {
 
-    // const [showCalendar, setShowCalendar] = useState(false);
     const [pickupCalender, setPickupCalender] = useState(false);
     const [dropCalender, setDropCalender] = useState(false);
-    // const [selectedDate, setSelectedDate] = useState(null);
     const [selectedPickupDate, setSelectedPickupDate] = useState(null);
     const [selectedDropDate, setSelectedDropDate] = useState(null);
-    const [pickupTime, setPickupTime] = useState();
-    const [dropofTime, setDropofTime] = useState()
+    const router = useRouter()
 
-    const {searchVehiclePayload, setSearchVehiclePayload} = useSearchVehicle()
+    const { searchVehiclePayload, setSearchVehiclePayload, setSearchedVehicles } = useSearchVehicle()
 
     const citiesList = [
         'Mangere Auckland',
@@ -27,23 +26,20 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
     ]
 
     const timeList = [
-        '12: 00 AM',
-        '11: 00 AM',
-        '10: 00 AM',
-        '09: 00 AM',
-        '08: 00 AM',
-        '07: 00 AM',
-        '06: 00 AM',
-        '05: 00 AM',
-        '05: 00 AM',
-        '04: 00 AM',
-        '03: 00 AM',
-        '01: 00 AM',
+        '12:00 AM',
+        '11:00 AM',
+        '10:00 AM',
+        '09:00 AM',
+        '08:00 AM',
+        '07:00 AM',
+        '06:00 AM',
+        '05:00 AM',
+        '05:00 AM',
+        '04:00 AM',
+        '03:00 AM',
+        '01:00 AM',
     ]
 
-    // const toggleCalendar = () => {
-    //     setShowCalendar(prev => !prev);
-    // };
     const togglePickupCalendar = () => {
         setPickupCalender(prev => !prev);
     };
@@ -54,7 +50,6 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
 
     const handlePickupDateChange = (date) => {
         setSelectedPickupDate(date);
-        console.log("picked date", date)
         setPickupCalender(false); // hide after selection
     };
     const handleDropDateChange = (date) => {
@@ -71,43 +66,106 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
     }
 
     const handleSelectPickupTime = (value) => {
-        setPickupTime(value);
         formatePickupDateAndTime(selectedPickupDate, value)
-        console.log("selected time is", value)
     }
 
     const handleDropofTime = (value) => {
-        console.log("dropof time", value)
-        setDropofTime(value);
         handleDropofTimeAndDate(selectedDropDate, value)
     }
 
-    const formatePickupDateAndTime = (dateObj, timeObj) => {
-        if(!dateObj || !timeObj) return null;
-        const cleanedTime = timeObj.replace(/\s+/g, '');
-        const dateStr = `${dateObj.toDateString()} ${cleanedTime}`;
+    const formatePickupDateAndTime = (date, time) => {
+        // Combine selected date and selected time
+        const [hourMin, meridiem] = time.split(" ");
+        let [hour, minute] = hourMin.split(":").map(Number);
 
-        const fullDate = new Date(dateStr)
-        setSearchVehiclePayload((prevValue) => ({
-            ...prevValue,
-            pickup_time: fullDate
-        }))
-    }
+        if (meridiem === "PM" && hour !== 12) hour += 12;
+        if (meridiem === "AM" && hour === 12) hour = 0;
 
-    const handleDropofTimeAndDate = (dateObj, timeObj) => {
-        if(!dateObj || !timeObj) return null;
+        // Create a new Date object in New Zealand Time (NZT)
+        const nzDateTime = new Date(Date.UTC(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            hour,
+            minute
+        ));
 
-        const cleanedTime = timeObj.replae(/\s+/g, '');
+        // Convert the date to ISO string with Z (treated as UTC)
+        const formatted = nzDateTime.toISOString(); // gives: 2025-06-20T11:00:00.000Z
 
-        const dateStr = `${dateObj.toDateString()} ${cleanedTime}`;
+        // Update your payload here:
+        setSearchVehiclePayload(prev => ({
+            ...prev,
+            pickup_time: formatted
+        }));
+    };
 
-        const fullDate = new Date(dateStr);
+    const handleDropofTimeAndDate = (date, time) => {
+        // Combine selected date and selected time
+        const [hourMin, meridiem] = time.split(" ");
+        let [hour, minute] = hourMin.split(":").map(Number);
 
-        setSearchVehiclePayload((prevValue) => ({
-            ...prevValue,
-            drop_time: fullDate
-        }))
-    }
+        if (meridiem === "PM" && hour !== 12) hour += 12;
+        if (meridiem === "AM" && hour === 12) hour = 0;
+
+        // Create a new Date object in New Zealand Time (NZT)
+        const nzDateTime = new Date(Date.UTC(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            hour,
+            minute
+        ));
+
+        // Convert the date to ISO string with Z (treated as UTC)
+        const formatted = nzDateTime.toISOString(); // gives: 2025-06-20T11:00:00.000Z
+
+        // Update your payload here:
+        setSearchVehiclePayload(prev => ({
+            ...prev,
+            drop_time: formatted
+        }));
+    };
+
+    const handleSearchVehicles = async () => {
+        const api = "https://zm.skyhub.pk/cars/available-cars";
+
+        try {
+            const response = await axios.post(api, searchVehiclePayload);
+
+            if (response.status === 200) {
+                console.log("[SUCCESS] Vehicles fetched successfully.");
+                setSearchedVehicles(response.data);
+                router.push("/vehicles");
+            } else {
+                console.warn(`[WARN] Unexpected status code: ${response.status}`);
+                alert("Unexpected response from server. Please try again later.");
+            }
+
+        } catch (error) {
+            if (error.response) {
+                const status = error.response.status;
+
+                if (status === 400) {
+                    alert("Invalid search request. Please check your input and try again.");
+                } else if (status >= 500) {
+                    alert("Server error occurred. Please try again later.");
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
+
+                console.error(`[ERROR] ${status}:`, error.response.data);
+
+            } else if (error.request) {
+                alert("No response from server. Please check your internet connection.");
+                console.error("[NO RESPONSE] Request was made but no response received.");
+            } else {
+                alert("Unexpected error occurred. Please try again.");
+                console.error("[CLIENT ERROR] Something went wrong:", error.message);
+            }
+        }
+    };
+
 
 
     return (
@@ -181,7 +239,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                             defaultValue={'Drop-of Location'}
                             placeholder={'Drop-of Location'}
                             data={citiesList}
-                            
+
                             bgColor={bgColor}
                         />
 
@@ -238,6 +296,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
             </div>
             <div className='booking-form-confirm-button-container'>
                 <PrimaryButton
+                    handleCLick={handleSearchVehicles}
                     primaryMainClass={'primary-button-main-class'}
                     primaryText={primaryButtonText}
                     primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}

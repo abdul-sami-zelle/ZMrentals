@@ -16,7 +16,8 @@ const PrimaryButton = (
     primaryIcon, 
     fontSize, 
     lineHeight, 
-    fontWeight 
+    fontWeight,
+    handleCLick
   }) => {
 
     const router = useRouter();
@@ -36,7 +37,7 @@ const PrimaryButton = (
         lineHeight: lineHeight,
         fontWeight: fontWeight
       }}
-      onClick={() => router.push('/book-now')}
+      onClick={handleCLick}
     >
       {primaryText} {primaryIcon}
     </button>
