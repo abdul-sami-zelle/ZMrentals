@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import './HirerDetails.css'
 import { MdOutlineArrowDropDown } from "react-icons/md";
+import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
 const HirerDetails = () => {
   const countryList = [
@@ -14,6 +15,9 @@ const HirerDetails = () => {
     'Australia',
     'Span',
   ]
+
+  const {bookingPayload , setBookingPayload} = useBookingContext()
+
   const [parentCountryShow, setParentCountryShow] = useState(false);
   const [findUs, setFindUs] = useState(false);
   return (

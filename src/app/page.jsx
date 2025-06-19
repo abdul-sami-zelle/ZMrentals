@@ -10,10 +10,14 @@ import HappySnapGallery from '../components/happy-snap-gallery/HappySnapGallery'
 import Locations from '../components/locations/Locations'
 import FrequentlyAsked from '../components/frequently-asked/FrequentlyAsked'
 import RollingContent from '../components/rolling-content/RollingContent'
+import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
+import SpinningTyreLoader from '../loaders/spinnint-tyre-loader/SpinningTyreLoader'
 
 
 
 export default function Home() {
+
+  const { loader } = useSearchVehicle()
 
   const packageDescription = [
     `
@@ -65,27 +69,42 @@ export default function Home() {
   ]
 
   const faqData = [
-    { 
-        question : 'Do I need an international driver’s license to rent a car in New Zealand?', 
-        answer : (<>
-          While an international driver’s license is not a requirement, your overseas license must be in English. Otherwise, you’ll need an official translation or an International Driving Permit (IDP). 
-        </>),
-        height: '50px'
+    {
+      question: 'Do I need an international driver’s license to rent a car in New Zealand?',
+      answer: (<>
+        While an international driver’s license is not a requirement, your overseas license must be in English. Otherwise, you’ll need an official translation or an International Driving Permit (IDP).
+      </>),
+      height: '50px'
     },
     {
-        question: 'What is the minimum age to rent a car in New Zealand?', 
-        answer: (
-          <>
-            To rent a car in New Zealand, the driver must be at least 21 years old. However, some rental companies may charge a young driver surcharge if you are under 25 years of age.
-          </>
-        ),
-        height: '50px'
+      question: 'What is the minimum age to rent a car in New Zealand?',
+      answer: (
+        <>
+          To rent a car in New Zealand, the driver must be at least 21 years old. However, some rental companies may charge a young driver surcharge if you are under 25 years of age.
+        </>
+      ),
+      height: '50px'
     },
-]
+  ]
+
+  const overlayStyling = {
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backdropFilter: 'blur(5px)',
+    zIndex: 999999999
+  }
+
+
 
   return (
-    <div style={{ display : 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'var(--background)' }}>
-
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'var(--background)' }}>
+      {/* {loader && <div style={{ display: 'flex', position: 'fixed',  width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', top: 0, left: 0, zIndex: 999999999 }}></div>} */}
+      {loader && <div style={overlayStyling}></div>}
       <Hero />
 
       <DiscountBanner
@@ -93,8 +112,8 @@ export default function Home() {
         marginBottom={'25px'}
       />
 
-      <GalleryDetails 
-        flexDirection={'row'} 
+      <GalleryDetails
+        flexDirection={'row'}
       />
 
       <PackageDetails
@@ -138,7 +157,7 @@ export default function Home() {
         display={'none'}
       />
 
-      <FrequentlyAsked 
+      <FrequentlyAsked
         faqData={faqData}
       />
 

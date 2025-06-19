@@ -5,6 +5,7 @@ import { createContext, useContext, useEffect, useState } from "react";;
 const SearchVehicleContext = createContext();
 
 export const SearchVehicleProvider = ({children}) =>  {
+    const [loader, setLoader] = useState(false);
     const [searchVehiclePayload, setSearchVehiclePayload] = useState({
         "pickup_location": null,
         "drop_location":  null,
@@ -20,7 +21,9 @@ export const SearchVehicleProvider = ({children}) =>  {
             searchVehiclePayload,
             setSearchVehiclePayload,
             searchedVehicles,
-            setSearchedVehicles
+            setSearchedVehicles,
+            loader,
+            setLoader
         }}>
             {children}
         </SearchVehicleContext.Provider>

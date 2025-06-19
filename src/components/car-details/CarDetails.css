@@ -5,7 +5,6 @@
     align-items: start;
     justify-content: start;
     gap: 32px;
-    cursor: pointer;
     padding: 25px 56px;
 }
 
@@ -58,6 +57,11 @@
 
 }
 
+
+
+
+
+
 @media only screen and (max-width: 480px) {
     .car-details-main-container {
         padding: 0 16px;
@@ -81,3 +85,7 @@
         line-height: var(--line-height-body);
     }
 }
+
+
+
+

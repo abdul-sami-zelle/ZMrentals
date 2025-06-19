@@ -2,7 +2,7 @@ import React from 'react'
 import './QuantityAdd.css'
 import { FaPlus, FaMinus } from "react-icons/fa6";
 
-const QuantityAdd = ({quantity, onChange}) => {
+const QuantityAdd = ({quantity, onChange, min, max}) => {
   const handleDecrement = () => {
     if (quantity > 0) {
       onChange(quantity - 1);
@@ -28,6 +28,8 @@ const QuantityAdd = ({quantity, onChange}) => {
         type='text'
         name='quantity'
         value={quantity}
+        min={min}
+        max={max}
         onChange={handleInputChange}
         className='quantity-show-input'
         inputMode='numeric'

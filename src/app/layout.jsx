@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import Header from "@/global-components/header/Header";
 import Footer from '@/global-components/footer/Footer';
 import {SearchVehicleProvider} from '../context/searchVehicleContext/searchVehicleContext'
+import {BookingProvider} from '../context/bookingContext/bookingContext'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +26,12 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning style={{ backgroundColor: '#FFFFFF' }} >
         <SearchVehicleProvider>
+          <BookingProvider>
+
           <Header />
           {children}
           <Footer />
+          </BookingProvider>
         </SearchVehicleProvider>
       </body>
     </html>

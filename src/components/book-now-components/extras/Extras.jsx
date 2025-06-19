@@ -4,7 +4,7 @@ import './Extras.css'
 import QuantityAdd from '../quantity-add/QuantityAdd'
 
 
-const Extras = () => {
+const Extras = ({extras}) => {
   const [extraVAlues, setExtraValues] = useState({
     extraDriver: 0,
     childSeats: 0,
@@ -25,19 +25,21 @@ const Extras = () => {
   ]
   return (
     <div className='extras-main-container'>
-      {extraItems.map((item, index) => (
+      {extras.map((item, index) => (
         <div key={index} className='single-extra-item'>
           <div className='add-or-remove-quantity-container'>
             <QuantityAdd 
               quantity={extraVAlues[item.key]} 
+              // min={item.min_qty}
+              // max={max_qty}
               onChange={(newValue) =>
                 setExtraValues(prev => ({ ...prev, [item.key]: newValue }))
               }
             />
           </div>
           <div className='extra-item-and-price-container'>
-            <h3>{item.title}</h3>
-            <p>{item.price}</p>
+            <h3>{item.name}</h3>
+            <p>${item.rate}</p>
           </div>
         </div>
       ))}

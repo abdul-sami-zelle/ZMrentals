@@ -10,7 +10,7 @@ import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleCo
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
-const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow }) => {
+const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow, handleSearchVehicles }) => {
 
     const [pickupCalender, setPickupCalender] = useState(false);
     const [dropCalender, setDropCalender] = useState(false);
@@ -127,44 +127,44 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         }));
     };
 
-    const handleSearchVehicles = async () => {
-        const api = "https://zm.skyhub.pk/cars/available-cars";
+    // const handleSearchVehicles = async () => {
+    //     const api = "https://zm.skyhub.pk/cars/available-cars";
 
-        try {
-            const response = await axios.post(api, searchVehiclePayload);
+    //     try {
+    //         const response = await axios.post(api, searchVehiclePayload);
 
-            if (response.status === 200) {
-                console.log("[SUCCESS] Vehicles fetched successfully.");
-                setSearchedVehicles(response.data);
-                router.push("/vehicles");
-            } else {
-                console.warn(`[WARN] Unexpected status code: ${response.status}`);
-                alert("Unexpected response from server. Please try again later.");
-            }
+    //         if (response.status === 200) {
+    //             console.log("[SUCCESS] Vehicles fetched successfully.");
+    //             setSearchedVehicles(response.data);
+    //             router.push("/vehicles");
+    //         } else {
+    //             console.warn(`[WARN] Unexpected status code: ${response.status}`);
+    //             alert("Unexpected response from server. Please try again later.");
+    //         }
 
-        } catch (error) {
-            if (error.response) {
-                const status = error.response.status;
+    //     } catch (error) {
+    //         if (error.response) {
+    //             const status = error.response.status;
 
-                if (status === 400) {
-                    alert("Invalid search request. Please check your input and try again.");
-                } else if (status >= 500) {
-                    alert("Server error occurred. Please try again later.");
-                } else {
-                    alert("Something went wrong. Please try again.");
-                }
+    //             if (status === 400) {
+    //                 alert("Invalid search request. Please check your input and try again.");
+    //             } else if (status >= 500) {
+    //                 alert("Server error occurred. Please try again later.");
+    //             } else {
+    //                 alert("Something went wrong. Please try again.");
+    //             }
 
-                console.error(`[ERROR] ${status}:`, error.response.data);
+    //             console.error(`[ERROR] ${status}:`, error.response.data);
 
-            } else if (error.request) {
-                alert("No response from server. Please check your internet connection.");
-                console.error("[NO RESPONSE] Request was made but no response received.");
-            } else {
-                alert("Unexpected error occurred. Please try again.");
-                console.error("[CLIENT ERROR] Something went wrong:", error.message);
-            }
-        }
-    };
+    //         } else if (error.request) {
+    //             alert("No response from server. Please check your internet connection.");
+    //             console.error("[NO RESPONSE] Request was made but no response received.");
+    //         } else {
+    //             alert("Unexpected error occurred. Please try again.");
+    //             console.error("[CLIENT ERROR] Something went wrong:", error.message);
+    //         }
+    //     }
+    // };
 
 
 

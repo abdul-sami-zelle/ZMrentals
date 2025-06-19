@@ -4,6 +4,7 @@ import Link from 'next/link';
 import VehicleCard from '../../global-components/vehicle-card/VehicleCard'
 import CarDetailsModal from '@/modals/car-details-modal/CarDetailsModal';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
+import CardShimmer from './CardShimmer'
 
 
 
@@ -17,7 +18,7 @@ const CarDetails = ({ data, openModal }) => {
   const [modalData, setModalData] = useState([])
   const [showDetalModal, setShowDetailModal] = useState(false);
   const handleOpenDetailsModal = (item) => {
-    
+
     setShowDetailModal(true);
     setModalData(item)
   }
@@ -49,9 +50,11 @@ const CarDetails = ({ data, openModal }) => {
         <Link href={'/'} className='global-heading-style'>{`Our Fleet`}</Link>
       </div>
       <div className='cars-cars-container'>
-        {searchedVehicles.map((car, carIndex) => (
+        {searchedVehicles.length !== 0 ? (
+          searchedVehicles.map((car, carIndex) => (
           <VehicleCard
             key={carIndex}
+            vehicleId={car.car_id}
             vehicleImage={url + car.image}
             vehicleName={car.name}
             vehicleAge={getAgeFromYear(car.details.model)}
@@ -60,7 +63,13 @@ const CarDetails = ({ data, openModal }) => {
             fuelType={car.fuelType}
             handleModalOpen={() => handleOpenDetailsModal(car)}
           />
-        ))}
+        ))
+        ) : (
+            Array.from({length: 4}).map((_, index) => (
+              <CardShimmer />
+            ))
+        )}
+        
       </div>
 
       <div className='vehicle-page-cars-details'>

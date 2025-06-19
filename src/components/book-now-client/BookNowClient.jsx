@@ -10,6 +10,7 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { FaEnvelope } from "react-icons/fa";
 import { CgFileDocument } from "react-icons/cg";
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
 const BookNowClient = () => {
 
@@ -17,6 +18,9 @@ const BookNowClient = () => {
   const router = useRouter();
   const step = parseInt(searchParam.get('step')) || 1;
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+
+  const {bookingVehicleData} = useBookingContext()
+
   useEffect(() => {
     if(!step) {
       router.replace(`/book-now?step=1`)
@@ -39,6 +43,8 @@ const BookNowClient = () => {
       goToNewStep(selectedTabIndex + 1);
     }
   }
+
+
 
   return (
     <div className="book-now-page-main-container">
@@ -76,8 +82,8 @@ const BookNowClient = () => {
                 </div>
               </div>
 
-              {selectedTabIndex === 0 ? <InsuranceType />
-                : selectedTabIndex === 1 ? <Extras />
+              {selectedTabIndex === 0 ? <InsuranceType insurances={bookingVehicleData.insurance} />
+                : selectedTabIndex === 1 ? <Extras extras={bookingVehicleData.extras} />
                   : selectedTabIndex === 2 ? <HirerDetails />
                     : <Payments />}
 

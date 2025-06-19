@@ -9,6 +9,7 @@ import { HiUserGroup } from "react-icons/hi";
 import PackageDetails from '@/components/package-details/PackageDetails'
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext'
 import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 
 const Vehicles = () => {
@@ -21,6 +22,7 @@ const Vehicles = () => {
       const response = await axios.get(api);
       if(response.status === 200) {
         setSearchedVehicles(response.data);
+        console.log("vehicle page")
       } else {
         console.log("Unexpected response from server. Please try again later.")
       }
@@ -142,6 +144,48 @@ const Vehicles = () => {
   ]
 
 
+  const router = useRouter()
+    const handleSearchVehicles = async () => {
+        const api = "https://zm.skyhub.pk/cars/available-cars";
+
+        try {
+            setSearchedVehicles([])
+            const response = await axios.post(api, searchVehiclePayload);
+
+            if (response.status === 200) {
+                console.log("[SUCCESS] Vehicles fetched successfully.");
+                setSearchedVehicles(response.data);
+                router.push("/vehicles");
+            } else {
+                console.warn(`[WARN] Unexpected status code: ${response.status}`);
+                alert("Unexpected response from server. Please try again later.");
+            }
+
+        } catch (error) {
+            if (error.response) {
+                const status = error.response.status;
+
+                if (status === 400) {
+                    alert("Invalid search request. Please check your input and try again.");
+                } else if (status >= 500) {
+                    alert("Server error occurred. Please try again later.");
+                } else {
+                    alert("Something went wrong. Please try again.");
+                }
+
+                console.error(`[ERROR] ${status}:`, error.response.data);
+
+            } else if (error.request) {
+                alert("No response from server. Please check your internet connection.");
+                console.error("[NO RESPONSE] Request was made but no response received.");
+            } else {
+                alert("Unexpected error occurred. Please try again.");
+                console.error("[CLIENT ERROR] Something went wrong:", error.message);
+            }
+        }
+    };
+
+
   return (
     <div className='page-main-container '>
       {/* Max wiwdth Container Start */}
@@ -149,7 +193,7 @@ const Vehicles = () => {
         <div className='page-main-heading-container'>
           <div className='page-main-booking-form-container'>
             <h3 className='vehicles-main-heading'>Vehicles for rent in Auckland</h3>
-            <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} textColor={'var(--primary-color)'} primaryButtonText={'Find my car'} />
+            <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} handleSearchVehicles={handleSearchVehicles} textColor={'var(--primary-color)'} primaryButtonText={'Find my car'} />
 
           </div>
         </div>
