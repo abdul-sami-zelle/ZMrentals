@@ -5,6 +5,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 const BookingContext = createContext();
 
 export const BookingProvider = ({ children }) => {
+    const [bookingVehicleData, setBookingVehicleData] = useState({})
+    const [extraQuantities, setExtraQuantities] = useState({});
     const [bookingPayload, setBookingPayload] = useState({
         booking: {
             car_id: null,
@@ -22,10 +24,10 @@ export const BookingProvider = ({ children }) => {
             phone: "",
             country: "",
             how_find_us: "",
-            travel_reason: ""
+            travel_reason: "Leisure"
         }
     });
-    const [bookingVehicleData, setBookingVehicleData] = useState({})
+    
 
     useEffect(() => { console.log("booking details", bookingPayload) }, [bookingPayload])
     useEffect(() => { console.log("booking data", bookingVehicleData) }, [bookingVehicleData])
@@ -35,7 +37,9 @@ export const BookingProvider = ({ children }) => {
             bookingPayload,
             setBookingPayload,
             bookingVehicleData,
-            setBookingVehicleData
+            setBookingVehicleData,
+            extraQuantities,
+            setExtraQuantities
         }}>
             {children}
         </BookingContext.Provider>

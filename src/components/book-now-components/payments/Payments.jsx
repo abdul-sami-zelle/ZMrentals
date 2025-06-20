@@ -4,6 +4,8 @@ import './Payments.css'
 import Image from 'next/image'
 import { FaQuestionCircle } from "react-icons/fa";
 import Link from 'next/link';
+import axios from 'axios';
+import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
 const Payments = () => {
   const payTime = [
@@ -17,6 +19,11 @@ const Payments = () => {
     '/assets/icons/visa.png',
   ]
   const [selectPaymentType, setSelectPaymentType] = useState(0)
+
+  
+  
+
+
   return (
     <div className='payment-main-container'>
 

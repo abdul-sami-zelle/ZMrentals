@@ -20,9 +20,8 @@ const Vehicles = () => {
     const api = `https://zm.skyhub.pk/cars/get`;
     try {
       const response = await axios.get(api);
-      if(response.status === 200) {
+      if (response.status === 200) {
         setSearchedVehicles(response.data);
-        console.log("vehicle page")
       } else {
         console.log("Unexpected response from server. Please try again later.")
       }
@@ -38,6 +37,10 @@ const Vehicles = () => {
     }
   }, []);
 
+  useEffect(() => {
+    getAllVehicles();
+  }, [searchVehiclePayload])
+
 
   const carsDetails = [
     {
@@ -48,14 +51,6 @@ const Vehicles = () => {
         Whatever your needs, our car hire fleet in Auckland ensures you'll find the right fit for your journey.
       </>
       ),
-      // carsData: [
-      //   { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
-      //   { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
-      //   { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
-      //   { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
-      //   { image: '/assets/images/cars/small_cars_menu_Tablet.jpg', name: 'Toyota Yaris', age: '6 Years old', seePrice: 'See Price', transmition: 'Auto', fuelType: 'Petrol' },
-      // ],
-      // carsData: searchedVehicles,
       viewAll: 'small cars'
     },
   ]
@@ -145,45 +140,47 @@ const Vehicles = () => {
 
 
   const router = useRouter()
-    const handleSearchVehicles = async () => {
-        const api = "https://zm.skyhub.pk/cars/available-cars";
+  const handleSearchVehicles = async () => {
+    const api = "https://zm.skyhub.pk/cars/available-cars";
 
-        try {
-            setSearchedVehicles([])
-            const response = await axios.post(api, searchVehiclePayload);
+    try {
+      setSearchedVehicles([])
+      const response = await axios.post(api, searchVehiclePayload);
 
-            if (response.status === 200) {
-                console.log("[SUCCESS] Vehicles fetched successfully.");
-                setSearchedVehicles(response.data);
-                router.push("/vehicles");
-            } else {
-                console.warn(`[WARN] Unexpected status code: ${response.status}`);
-                alert("Unexpected response from server. Please try again later.");
-            }
+      if (response.status === 200) {
+        
+        console.log("[SUCCESS] Vehicles fetched successfully.");
+        setSearchedVehicles(response.data);
 
-        } catch (error) {
-            if (error.response) {
-                const status = error.response.status;
+        sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
+      } else {
+        console.warn(`[WARN] Unexpected status code: ${response.status}`);
+        alert("Unexpected response from server. Please try again later.");
+      }
 
-                if (status === 400) {
-                    alert("Invalid search request. Please check your input and try again.");
-                } else if (status >= 500) {
-                    alert("Server error occurred. Please try again later.");
-                } else {
-                    alert("Something went wrong. Please try again.");
-                }
+    } catch (error) {
+      if (error.response) {
+        const status = error.response.status;
 
-                console.error(`[ERROR] ${status}:`, error.response.data);
-
-            } else if (error.request) {
-                alert("No response from server. Please check your internet connection.");
-                console.error("[NO RESPONSE] Request was made but no response received.");
-            } else {
-                alert("Unexpected error occurred. Please try again.");
-                console.error("[CLIENT ERROR] Something went wrong:", error.message);
-            }
+        if (status === 400) {
+          alert("Invalid search request. Please check your input and try again.");
+        } else if (status >= 500) {
+          alert("Server error occurred. Please try again later.");
+        } else {
+          alert("Something went wrong. Please try again.");
         }
-    };
+
+        console.error(`[ERROR] ${status}:`, error.response.data);
+
+      } else if (error.request) {
+        alert("No response from server. Please check your internet connection.");
+        console.error("[NO RESPONSE] Request was made but no response received.");
+      } else {
+        alert("Unexpected error occurred. Please try again.");
+        console.error("[CLIENT ERROR] Something went wrong:", error.message);
+      }
+    }
+  };
 
 
   return (

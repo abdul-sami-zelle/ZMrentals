@@ -9,6 +9,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
 const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow, handleSearchVehicles }) => {
 
@@ -19,6 +20,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
     const router = useRouter()
 
     const { searchVehiclePayload, setSearchVehiclePayload, setSearchedVehicles } = useSearchVehicle()
+    const { setBookingPayload } = useBookingContext()
 
     const citiesList = [
         'Mangere Auckland',
@@ -53,6 +55,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         setPickupCalender(false); // hide after selection
     };
     const handleDropDateChange = (date) => {
+        console.log("drop date func", date)
         setSelectedDropDate(date);
         setDropCalender(false); // hide after selection
     };
@@ -98,6 +101,14 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
             ...prev,
             pickup_time: formatted
         }));
+
+        // setBookingPayload((prev) => ({
+        //     ...prev,
+        //     booking: {
+        //         ...prev.booking,
+        //         pickup_time: formatted
+        //     }
+        // }))
     };
 
     const handleDropofTimeAndDate = (date, time) => {
@@ -125,6 +136,14 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
             ...prev,
             drop_time: formatted
         }));
+
+        // setBookingPayload((prev) => ({
+        //     ...prev,
+        //     booking: {
+        //         ...prev.booking,
+        //         drop_time: formatted
+        //     }
+        // }))
     };
 
     // const handleSearchVehicles = async () => {
@@ -166,7 +185,53 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
     //     }
     // };
 
+    // const [pickCity, setPickCity] = useState('');
+    // const [dropCity, setDropCity] = useState('');
+    // const [pickDate, setPickDate] = useState();
+    // const [dropDate, setDropDate] = useState('');
+    // useEffect(() => {
+    //     const tempData = JSON.parse(sessionStorage.getItem('pick_and_drop_details'));
+    //     if (Object.keys(tempData).length > 0) {
+    //         setPickCity('Mangere Auckland')
+    //         setDropCity('Mangere Auckland')
+    //         setPickDate(formatTimeInNZ(tempData.pickup_time))
+    //         setDropDate(formatTimeInNZ(tempData.drop_time))
+    //     }
+    // }, [])
 
+    // useEffect(() => {
+    //     const rawData = sessionStorage.getItem('pick_and_drop_details');
+
+    //     if (!rawData) return; // 🔐 If nothing stored, exit early
+
+    //     const tempData = JSON.parse(rawData);
+
+    //     if (tempData && Object.keys(tempData).length > 0) {
+    //         setPickCity('Mangere Auckland');
+    //         setDropCity('Mangere Auckland');
+    //         setPickDate(formatTimeInNZ(tempData.pickup_time));
+    //         setDropDate(formatTimeInNZ(tempData.drop_time));
+    //     }
+    // }, []);
+
+    // const formatTimeInNZ = (isoString) => {
+    //     try {
+    //         const date = new Date(isoString);
+    //         if (isNaN(date)) throw new Error('Invalid date');
+
+    //         return new Intl.DateTimeFormat('en-NZ', {
+    //             hour: '2-digit',
+    //             minute: '2-digit',
+    //             hour12: true,
+    //             timeZone: 'Pacific/Auckland'
+    //         })
+    //             .format(date)
+    //             .replace(/^(\d):/, '0$1')  // pad hour if needed
+    //             .replace(':', ': ');       // format to `HH: MM AM/PM`
+    //     } catch (err) {
+    //         return 'Invalid Time';
+    //     }
+    // };
 
     return (
         <div className='booking-form-main-container' style={{ boxShadow: boxShadow }}>
@@ -181,6 +246,8 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                             setSelectedCity={handleLocationChange}
                             data={citiesList}
                             bgColor={bgColor}
+                            // selectedValue={pickCity}
+                            // setSelectedValue={setPickCity}
                         />
                         <div className='booking-time-container'>
 
@@ -227,6 +294,8 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                                 data={timeList}
                                 setSelectedCity={handleSelectPickupTime}
                                 bgColor={bgColor}
+                                // selectedValue={pickDate}
+                                // setSelectedValue={setPickDate}
                             />
                         </div>
 
@@ -239,7 +308,8 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                             defaultValue={'Drop-of Location'}
                             placeholder={'Drop-of Location'}
                             data={citiesList}
-
+                            // selectedValue={dropCity}
+                            // setSelectedCity={setDropCity}
                             bgColor={bgColor}
                         />
 
@@ -289,6 +359,8 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                                 data={timeList}
                                 setSelectedCity={handleDropofTime}
                                 bgColor={bgColor}
+                                // selectedValue={dropDate}
+                                // setSelectedValue={setDropDate}
                             />
                         </div>
                     </div>

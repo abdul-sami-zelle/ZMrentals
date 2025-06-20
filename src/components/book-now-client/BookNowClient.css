@@ -368,6 +368,31 @@
     display: none;
 }
 
+
+.booking-vehicle-detailsshimmer {
+    display: flex;
+    width: 35%;
+    height: 555px;
+    background: linear-gradient(
+    100deg,
+    #e0e0e0 20%,
+    #f8f8f8 50%,
+    #e0e0e0 80%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite linear;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -100% 0;
+    }
+
+    100% {
+        background-position: 100% 0;
+    }
+}
+
 @media only screen and (max-width: 480px) {
     .book-now-max-width-container {
         padding: 0;

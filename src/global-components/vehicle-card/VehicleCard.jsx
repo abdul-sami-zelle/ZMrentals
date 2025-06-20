@@ -29,7 +29,6 @@ const VehicleCard = (
         if(response.status === 200) {
           setBookingVehicleData(response.data)
           router.push('/book-now')
-          console.log("booking response", response)
 
         }
       } catch (error) {

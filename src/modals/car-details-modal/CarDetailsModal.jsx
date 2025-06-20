@@ -29,7 +29,6 @@ import { BsFillGearFill } from "react-icons/bs";
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 
 const CarDetailsModal = ({ showModal, handleClose, vehicleDetails }) => {
-    console.log("modal open data on Modal", vehicleDetails)
 
     const url = `https://zm.skyhub.pk`
     const { searchedVehicles } = useSearchVehicle()

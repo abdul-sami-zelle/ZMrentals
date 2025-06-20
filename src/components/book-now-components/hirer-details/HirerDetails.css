@@ -177,6 +177,17 @@
     padding: 8px 0;
 }
 
+.travel-reason-radio-container > label {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 400;
+}
+
 .travel-reason-radio-container input[type='radio'] {
     appearance: none;
     -webkit-appearance: none;

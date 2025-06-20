@@ -13,7 +13,6 @@ const CarDetails = ({ data, openModal }) => {
   const { searchedVehicles } = useSearchVehicle()
   const url = `https://zm.skyhub.pk`
 
-  console.log("searched vehicles on vehicle page from context", searchedVehicles)
 
   const [modalData, setModalData] = useState([])
   const [showDetalModal, setShowDetailModal] = useState(false);
@@ -66,7 +65,7 @@ const CarDetails = ({ data, openModal }) => {
         ))
         ) : (
             Array.from({length: 4}).map((_, index) => (
-              <CardShimmer />
+              <CardShimmer key={index} />
             ))
         )}
         
