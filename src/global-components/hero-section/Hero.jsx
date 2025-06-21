@@ -1,33 +1,50 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './Hero.css'
 import BookingForm from '../booking-form/BookingForm'
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import Toust from '../../modals/Toust/Toust'
 
 
 const Hero = () => {
     const { searchVehiclePayload, setSearchedVehicles, setLoader } = useSearchVehicle()
     const router = useRouter()
+    const [toustShow, setTOustShow] = useState(false)
+    const [toustMessage, setToustMessage] = useState('')
+
+    useEffect(() => {
+        console.log("searched vehicle payload", searchVehiclePayload)
+
+    }, [searchVehiclePayload])
+
+
+
     const handleSearchVehicles = async () => {
         const api = "https://zm.skyhub.pk/cars/available-cars";
+        const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
 
         try {
             setLoader(true)
-            const response = await axios.post(api, searchVehiclePayload);
+            if (pickup_location && drop_location && pickup_time && drop_time) {
+                const response = await axios.post(api, searchVehiclePayload);
 
-            if (response.status === 200) {
-                setSearchedVehicles(response.data);
-                sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
-                router.push("/vehicles");
-                setLoader(false)
+                if (response.status === 200) {
+                    setSearchedVehicles(response.data);
+                    console.log("searched vehicle payload", searchVehiclePayload)
+                    sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
+                    router.push("/vehicles");
+                } else {
+                    setLoader(false)
+                    console.warn(`[WARN] Unexpected status code: ${response.status}`);
+                    alert("Unexpected response from server. Please try again later.");
 
+                }
             } else {
-                setLoader(false)
-                console.warn(`[WARN] Unexpected status code: ${response.status}`);
-                alert("Unexpected response from server. Please try again later.");
-
+                setTOustShow(true)
+                setToustMessage("Please Fill All The Fields To Search Vehicle")
             }
+
 
         } catch (error) {
             setLoader(false);
@@ -35,20 +52,20 @@ const Hero = () => {
                 const status = error.response.status;
 
                 if (status === 400) {
-                    alert("Invalid search request. Please check your input and try again.");
+                    setToustMessage("Please Fill All The Fields To Search Vehicle")("Invalid search request. Please check your input and try again.");
                 } else if (status >= 500) {
-                    alert("Server error occurred. Please try again later.");
+                    setToustMessage("Please Fill All The Fields To Search Vehicle")("Server error occurred. Please try again later.");
                 } else {
-                    alert("Something went wrong. Please try again.");
+                    setToustMessage("Please Fill All The Fields To Search Vehicle")("Something went wrong. Please try again.");
                 }
 
                 console.error(`[ERROR] ${status}:`, error.response.data);
 
             } else if (error.request) {
-                alert("No response from server. Please check your internet connection.");
+                setToustMessage("Please Fill All The Fields To Search Vehicle")("No response from server. Please check your internet connection.");
                 console.error("[NO RESPONSE] Request was made but no response received.");
             } else {
-                alert("Unexpected error occurred. Please try again.");
+                setToustMessage("Please Fill All The Fields To Search Vehicle")("Unexpected error occurred. Please try again.");
                 console.error("[CLIENT ERROR] Something went wrong:", error.message);
             }
         } finally {
@@ -80,6 +97,11 @@ const Hero = () => {
                     </div>
                 </div>
             </div>
+            <Toust 
+                showToust={toustShow}
+                setShowToust={setTOustShow}
+                message={toustMessage}
+            />
         </div>
     )
 }

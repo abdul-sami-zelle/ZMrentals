@@ -62,7 +62,7 @@ const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setP
 
               <p>${item.excess}</p>
               <p>${item.bond}</p>
-              <p>{parseInt(item.rate) === 0 ? 'Free' : `${parseInt(item.rate)}/Day`}</p>
+              <p className='insurance-bottom-text'>{parseInt(item.rate) === 0 ? 'Free' : `${parseInt(item.rate)}/Day`}</p>
 
             </div>
           ))}

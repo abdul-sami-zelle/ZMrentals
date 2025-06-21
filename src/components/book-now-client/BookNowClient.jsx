@@ -1,5 +1,5 @@
 'use client'
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './BookNowClient.css';
 import InsuranceType from '../../components/book-now-components/InsuranceType/InsuranceType'
 import Extras from '../../components/book-now-components/extras/Extras'
@@ -24,7 +24,25 @@ const BookNowClient = () => {
   const [insuranceSeleted, setInsuranceSelected] = useState({})
   const [packageSelected, setPackageSelected] = useState(bookingVehicleData && bookingVehicleData?.insurance[0]?.insurance_option_id);
 
-  
+
+  function getTotalDays(startDateStr, endDateStr) {
+    // Parse the date strings
+    const startDate = new Date(startDateStr);
+    const endDate = new Date(endDateStr);
+
+    // Check if both dates are valid
+    if (isNaN(startDate) || isNaN(endDate)) {
+      return 'Invalid date format';
+    }
+
+    // Calculate difference in milliseconds
+    const diffInMs = endDate - startDate;
+
+    // Convert milliseconds to days
+    const totalDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+    return totalDays;
+  }
 
   useEffect(() => {
     if (!step) {
@@ -40,29 +58,53 @@ const BookNowClient = () => {
     param.set('step', (newIndex + 1).toString());
     router.push(`/book-now?${param.toString()}`)
   }
+
+  const [submitBookingMessage, setSubmitBookingMessage] = useState({
+    head: '',
+    para: '',
+    link: ''
+  })
+
   const handleCompleteBooking = async () => {
     const api = `https://zm.skyhub.pk/booking/add-booking`;
 
     try {
       const response = await axios.post(api, bookingPayload);
-      if(response.status === 200) {
+      if (response.status === 201) {
         console.log("complete booking response", response)
+        setShowAvailableModal(true)
+        setSubmitBookingMessage({
+          head: 'Thank You For Booking',
+          para: `We'll monitor your arrival to make sure we have your car ready on time`,
+          link: 'Explore More Options'
+        })
+
       } else {
         console.log("else part")
         setShowAvailableModal(true)
+        setSubmitBookingMessage({
+          head: 'Selected Car Not Availableee',
+          para: `Sorry The selected date is already taken`,
+          link: 'Please Try Another Date'
+        })
       }
-      
+
     } catch (error) {
       console.log("UnExpected Error", error);
-      if(error.response.data.error === "Car already booked for selected time/location.") {
-        setShowAvailableModal(true)
-      }
+      setShowAvailableModal(true)
+        setSubmitBookingMessage({
+          head: 'Selected Car Not Availableee',
+          para: `Sorry The selected date is already taken`,
+          link: 'Please Try Another Date'
+        })
     }
   }
 
   const [pickDropLocation, setPickDropLocation] = useState({});
+  const [totalDays, setTotalDays] = useState(0);
   useEffect(() => {
     const pickDrop = JSON.parse(sessionStorage.getItem('pick_and_drop_details'));
+    setTotalDays(getTotalDays(formatDateInNZ(pickDrop?.pickup_time), formatDateInNZ(pickDrop?.drop_time)))
     setPickDropLocation(pickDrop)
   }, [])
 
@@ -117,6 +159,66 @@ const BookNowClient = () => {
     setShowAvailableModal(false)
   }
 
+  // const getGrandTotal = (values = []) => {
+  //   return values.reduce((sum, item) => sum + item, 0);
+  // };
+
+  // const getGrandTotal = () => {
+  //   let total = 0;
+
+  //   // One Way Fee (based on insurance)
+  //   if (Object.keys(insuranceSeleted).length > 0) {
+  //     const insuranceRate = parseFloat(insuranceSeleted.rate || 0);
+  //     total += insuranceRate === 0 ? 0 : insuranceRate * totalDays;
+  //   }
+
+  //   // Extras
+  //   if (bookingPayload?.booking?.extras && bookingVehicleData?.extras) {
+  //     bookingPayload.booking.extras.forEach((item) => {
+  //       const matchedExtra = bookingVehicleData.extras.find(extra => extra.id === item.extras_option_id);
+  //       if (matchedExtra) {
+  //         const rate = parseFloat(matchedExtra.rate || 0);
+  //         total += rate * item.quantity * totalDays;
+  //       }
+  //     });
+  //   }
+
+  //   // Road Care (always 0 for now)
+  //   total += 0;
+
+  //   return total;
+  // };
+
+  const getGrandTotal = () => {
+    let total = 0;
+
+    // Base Rate (vehicle)
+    const baseRate = parseFloat(bookingVehicleData?.base_rate || 0);
+    total += baseRate * totalDays;
+
+    // Insurance
+    if (insuranceSeleted && Object.keys(insuranceSeleted).length > 0) {
+      const insuranceRate = parseFloat(insuranceSeleted?.rate || 0);
+      total += insuranceRate * totalDays;
+    }
+
+    // Extras
+    if (bookingPayload?.booking?.extras && bookingVehicleData?.extras) {
+      bookingPayload.booking.extras.forEach((item) => {
+        const matchedExtra = bookingVehicleData.extras.find(extra => extra.id === item.extras_option_id);
+        if (matchedExtra) {
+          const rate = parseFloat(matchedExtra.rate || 0);
+          total += rate * item.quantity * totalDays;
+        }
+      });
+    }
+
+    // Road Care (currently $0)
+    total += 0;
+
+    return total.toFixed(2); // format to 2 decimal places if needed
+  };
+
 
 
   return (
@@ -131,9 +233,9 @@ const BookNowClient = () => {
               <div className='insurance-type-head'>
                 <span>
                   {
-                    selectedTabIndex === 1 ? `${selectedTabIndex + 1}. Choose Insurance`
-                      : selectedTabIndex === 2 ? `${selectedTabIndex + 1}. Extras`
-                        : selectedTabIndex === 3 ? `${selectedTabIndex + 1}. Hirer Details`
+                    selectedTabIndex === 0 ? `${selectedTabIndex + 1}. Choose Insurance`
+                      : selectedTabIndex === 1 ? `${selectedTabIndex + 1}. Extras`
+                        : selectedTabIndex === 2 ? `${selectedTabIndex + 1}. Hirer Details`
                           : `${selectedTabIndex + 1}. Payments`
                   }
                 </span>
@@ -158,87 +260,97 @@ const BookNowClient = () => {
               {selectedTabIndex === 0 ? <InsuranceType insurances={bookingVehicleData.insurance} setInsuranceSelected={setInsuranceSelected} packageSelected={packageSelected} setPackageSelected={setPackageSelected} />
                 : selectedTabIndex === 1 ? <Extras extras={bookingVehicleData.extras} />
                   : selectedTabIndex === 2 ? <HirerDetails />
-                    : <Payments />}
+                    : <Payments grandTotal={getGrandTotal()} />}
 
               <button className='payment-continue-button' onClick={() => handleBookNow()}>{selectedTabIndex > 2 ? 'Complete Booking' : 'Continue'}</button>
 
             </div>
-          
-          {bookingVehicleData ? (
-            <div className={`booking-summary-main-container`}>
-              <h3>Booking Summary</h3>
-              <div className='booking-summary-details-container'>
-                <div className='pick-drop-detail-section'>
-                  <div className='pick-up-section'>
-                    <h3>Pick-up</h3>
-                    <h3>Auckland City</h3>
-                    <p>{formatDateInNZ(pickDropLocation.pickup_time)}</p>
-                    <p className='pick-drop-time'>{formatTimeInNZ(pickDropLocation.pickup_time)}</p>
-                    <p className='edit-enquiry'>Edit Enquiry</p>
-                  </div>
-                  <div className='drop-off-section'>
-                    <h3>Drop-off</h3>
-                    <h3>Auckland City</h3>
-                    <p>{formatDateInNZ(pickDropLocation.drop_time)}</p>
-                    <p>{formatTimeInNZ(pickDropLocation.drop_time)}</p>
-                  </div>
-                </div>
-                <div className='vehicle-details-section'>
-                  <div className='vehicle-details'>
-                    <h3>{bookingVehicleData.name}</h3>
-                    <p>${bookingVehicleData.base_rate}/day x 1 day</p>
-                    <span>${bookingVehicleData.base_rate}</span>
-                    <p>Change Vehicle</p>
-                  </div>
-                  <div className='vehicle-image-container'>
-                    <Image src={url + bookingVehicleData.image} alt='vehicle image' width={192} height={96} className='vehicle-image' />
-                  </div>
-                </div>
-                <div className='booking-prices-details-section'>
-                  <span>
-                    <p>Basic Insurance</p>
-                    <h3>{Object.keys(insuranceSeleted).length > 0 ? insuranceSeleted.name : '---'}</h3>
-                  </span>
 
-                  <span>
-                    <p>One Way Fee</p>
-                    <h3>$0</h3>
-                  </span>
+            {bookingVehicleData ? (
+              <div className={`booking-summary-main-container`}>
+                <h3>Booking Summary</h3>
+                <div className='booking-summary-details-container'>
+                  <div className='pick-drop-detail-section'>
+                    <div className='pick-up-section'>
+                      <h3>Pick-up</h3>
+                      <h3>Auckland City</h3>
+                      <p>{formatDateInNZ(pickDropLocation.pickup_time)}</p>
+                      <p className='pick-drop-time'>{formatTimeInNZ(pickDropLocation.pickup_time)}</p>
+                      <p className='edit-enquiry'>Edit Enquiry</p>
+                    </div>
+                    <div className='drop-off-section'>
+                      <h3>Drop-off</h3>
+                      <h3>Auckland City</h3>
+                      <p>{formatDateInNZ(pickDropLocation.drop_time)}</p>
+                      <p>{formatTimeInNZ(pickDropLocation.drop_time)}</p>
+                    </div>
+                  </div>
+                  <div className='vehicle-details-section'>
+                    <div className='vehicle-details'>
+                      <h3>{bookingVehicleData.name}</h3>
+                      <p>${bookingVehicleData.base_rate}/day x {totalDays} day</p>
+                      <span>${bookingVehicleData.base_rate * totalDays}</span>
+                      <p>Change Vehicle</p>
+                    </div>
+                    <div className='vehicle-image-container'>
+                      <Image src={url + bookingVehicleData.image} alt='vehicle image' width={192} height={96} className='vehicle-image' />
+                    </div>
+                  </div>
+                  <div className='booking-prices-details-section'>
+                    <span>
+                      <p>Basic Insurance</p>
+                      <h3>{Object.keys(insuranceSeleted).length > 0 ? insuranceSeleted.name : '---'}</h3>
+                    </span>
 
-                  <span>
-                    <p>Tota Road Care <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' /></p>
-                    <h3>$0</h3>
-                  </span>
-                </div>
-                <div className='grand-total-section'>
-                  <p>Grand Total</p>
-                  <h3>$257</h3>
-                </div>
-                <div className='queries-section'>
-                  <span>
-                    <FaEnvelope size={15} color='var(--primary-color)' />
-                    <p>Email Enquiry</p>
-                  </span>
-                  <span>
-                    <CgFileDocument size={15} color='var(--primary-color)' />
-                    <p>Save Quote</p>
-                  </span>
+                    <span>
+                      <p>One Way Fee</p>
+                      <h3>${Object.keys(insuranceSeleted).length > 0 ? parseInt(insuranceSeleted.rate) === 0 ? 0 : parseInt(insuranceSeleted?.rate) * totalDays : '0'}</h3>
+                    </span>
+
+                    {bookingPayload?.booking?.extras && bookingPayload?.booking?.extras.map((item, index) => (
+                      <span key={index}>
+                        <p> {bookingVehicleData?.extras?.find(extra => extra.id === item.extras_option_id).name} <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' /></p>
+                        <h3>${bookingVehicleData?.extras?.find(extra => extra.id === item.extras_option_id).rate * item.quantity * totalDays}</h3>
+                      </span>
+                    ))}
+
+
+                    <span>
+                      <p>Total Road Care <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' /></p>
+                      <h3>$0</h3>
+                    </span>
+                  </div>
+                  <div className='grand-total-section'>
+                    <p>Grand Total</p>
+                    <h3>{getGrandTotal()}</h3>
+                    {/* <h3>${Object.keys(insuranceSeleted).length > 0 ? bookingVehicleData.base_rate * totalDays + parseInt(insuranceSeleted?.rate) * totalDays : bookingVehicleData.base_rate * totalDays}</h3> */}
+                  </div>
+                  <div className='queries-section'>
+                    <span>
+                      <FaEnvelope size={15} color='var(--primary-color)' />
+                      <p>Email Enquiry</p>
+                    </span>
+                    <span>
+                      <CgFileDocument size={15} color='var(--primary-color)' />
+                      <p>Save Quote</p>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            <div className='booking-vehicle-detailsshimmer'></div>
-          )}
-            
+            ) : (
+              <div className='booking-vehicle-detailsshimmer'></div>
+            )}
+
 
           </div>
 
         </div>
       </div>
 
-      <CarDateNotAvailable 
+      <CarDateNotAvailable
         showModal={showCarAvailableModal}
         handleCloseModal={handleCloseCarNotAvailableModal}
+        modalMessages={submitBookingMessage}
       />
     </div>
   )

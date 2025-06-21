@@ -10,14 +10,18 @@ import PackageDetails from '@/components/package-details/PackageDetails'
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
+import Toust from '../../modals/Toust/Toust'
 
 
 const Vehicles = () => {
 
   const { searchVehiclePayload, setSearchVehiclePayload, searchedVehicles, setSearchedVehicles } = useSearchVehicle()
+  const [toustShow, setTOustShow] = useState(false)
+  const [toustMessage, setToustMessage] = useState('')
 
   const getAllVehicles = async () => {
     const api = `https://zm.skyhub.pk/cars/get`;
+
     try {
       const response = await axios.get(api);
       if (response.status === 200) {
@@ -25,7 +29,6 @@ const Vehicles = () => {
       } else {
         console.log("Unexpected response from server. Please try again later.")
       }
-
     } catch (error) {
       console.log("UnExpected Server Error", error);
     }
@@ -37,9 +40,13 @@ const Vehicles = () => {
     }
   }, []);
 
-  useEffect(() => {
-    getAllVehicles();
-  }, [searchVehiclePayload])
+  // useEffect(() => {
+  //   const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
+
+  //   if (pickup_location && drop_location && pickup_time && drop_time) {
+  //     handleSearchVehicles();
+  //   }
+  // }, [searchVehiclePayload]);
 
 
   const carsDetails = [
@@ -142,21 +149,28 @@ const Vehicles = () => {
   const router = useRouter()
   const handleSearchVehicles = async () => {
     const api = "https://zm.skyhub.pk/cars/available-cars";
+    const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
 
     try {
-      setSearchedVehicles([])
-      const response = await axios.post(api, searchVehiclePayload);
+      if (pickup_location && drop_location && pickup_time && drop_time) {
+        setSearchedVehicles([])
+        const response = await axios.post(api, searchVehiclePayload);
 
-      if (response.status === 200) {
-        
-        console.log("[SUCCESS] Vehicles fetched successfully.");
-        setSearchedVehicles(response.data);
+        if (response.status === 200) {
 
-        sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
+          console.log("[SUCCESS] Vehicles fetched successfully.");
+          setSearchedVehicles(response.data);
+
+          sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
+        } else {
+          console.warn(`[WARN] Unexpected status code: ${response.status}`);
+          alert("Unexpected response from server. Please try again later.");
+        }
       } else {
-        console.warn(`[WARN] Unexpected status code: ${response.status}`);
-        alert("Unexpected response from server. Please try again later.");
+        setTOustShow(true)
+        setToustMessage("Please Fill All The Fields To Search Vehicle")
       }
+
 
     } catch (error) {
       if (error.response) {
@@ -240,7 +254,11 @@ const Vehicles = () => {
       </div>
       {/* Max width Container End */}
 
-
+      <Toust 
+        showToust={toustShow}
+        setShowToust={setTOustShow}
+        message={toustMessage}
+      />
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { IoIosClose } from "react-icons/io";
 import { FaCar } from "react-icons/fa";
 import { useRouter } from 'next/navigation';
 
-const CarDateNotAvailable = ({showModal, handleCloseModal}) => {
+const CarDateNotAvailable = ({showModal, handleCloseModal, modalMessages}) => {
     const router = useRouter();
     const handleNavigateToHome = () => {
         router.push('/')
@@ -18,12 +18,12 @@ const CarDateNotAvailable = ({showModal, handleCloseModal}) => {
             <div className='date-not-available-modal-body'>
                 <FaCar size={50} color='var(--secondary-color)' />
                 <span className='date-not-available-containt'>
-                    <h3>Selected Car Not Available</h3>
-                    <p>Sorry The selected date is already taken</p>
+                    <h3>{modalMessages.head}</h3>
+                    <p>{modalMessages.para}</p>
                 </span>
             </div>
             <div className='date-not-available-modal-footer'>
-                <h3 onClick={handleNavigateToHome}>Please Try Another Date</h3>
+                <h3 onClick={handleNavigateToHome}>{modalMessages.link}</h3>
             </div>
         </div>
     </div>

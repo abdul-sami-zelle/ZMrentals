@@ -4,18 +4,22 @@ import { createContext, useContext, useEffect, useState } from "react";;
 
 const SearchVehicleContext = createContext();
 
-export const SearchVehicleProvider = ({children}) =>  {
+export const SearchVehicleProvider = ({ children }) => {
     const [loader, setLoader] = useState(false);
-    const [sesionLocation, setSesionLocation] = useState({})
-    useEffect(() => {
-        const tempData = JSON.parse(sessionStorage.getItem('pick_and_drop_details'));
-        setSesionLocation(tempData)
-    }, []);
+
+    const [selectedPickupDate, setSelectedPickupDate] = useState(null);
+    const [selectedDropDate, setSelectedDropDate] = useState(null);
+
+    const [pickupCity, setPickupCity] = useState('')
+    const [pickupTime, setPickupTime] = useState('')
+    const [dropupCity, setDropupCity] = useState('')
+    const [dropupTime, setDropupTime] = useState('')
+
     const [searchVehiclePayload, setSearchVehiclePayload] = useState({
         "pickup_location": null,
         "drop_location": null,
-        "pickup_time":  "",
-        "drop_time":  ""
+        "pickup_time": "",
+        "drop_time": ""
     })
 
     const [searchedVehicles, setSearchedVehicles] = useState([])
@@ -28,11 +32,23 @@ export const SearchVehicleProvider = ({children}) =>  {
             searchedVehicles,
             setSearchedVehicles,
             loader,
-            setLoader
+            setLoader,
+            pickupCity, 
+            setPickupCity,
+            pickupTime, 
+            setPickupTime,
+            dropupCity, 
+            setDropupCity,
+            dropupTime, 
+            setDropupTime,
+            selectedPickupDate, 
+            setSelectedPickupDate,
+            selectedDropDate, 
+            setSelectedDropDate,
         }}>
             {children}
         </SearchVehicleContext.Provider>
     )
 }
 
-export const useSearchVehicle = () =>  useContext(SearchVehicleContext);
+export const useSearchVehicle = () => useContext(SearchVehicleContext);

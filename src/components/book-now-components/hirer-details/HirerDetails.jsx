@@ -7,13 +7,21 @@ import { useBookingContext } from '@/context/bookingContext/bookingContext';
 const HirerDetails = () => {
   const countryList = [
     'Pakistan',
-    'Rusia',
+    'Russia',
     'Dubai',
     'Saudi Arabia',
     'Qatar',
     'New Zeeland',
     'Australia',
     'Span',
+  ]
+  const whereFindUs = [
+    'AA TRAVEL WEBSITE',
+    'BING / MSN SEARCH',
+    'BROCHURE',
+    'EMAIL NEWSLETTER',
+    'ENTERTAINMENT BOOK',
+    'FRIENDS REFRREL',
   ]
 
   const { bookingPayload, setBookingPayload } = useBookingContext()
@@ -107,7 +115,7 @@ const HirerDetails = () => {
           <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
         </span>
         <div className={`parent-country-list ${findUs ? 'show-parent-country-list' : ''}`}>
-          {countryList.map((item, index) => (
+          {whereFindUs.map((item, index) => (
             <p key={index} onClick={() => handleFoundTell(item)}>{item}</p>
           ))}
         </div>

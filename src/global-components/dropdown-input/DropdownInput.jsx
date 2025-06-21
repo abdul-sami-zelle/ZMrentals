@@ -2,16 +2,17 @@ import React, { useEffect, useRef, useState } from 'react'
 import './DropdownInput.css'
 import { MdOutlineArrowDropDown } from "react-icons/md";
 
-const DropdownInput = ({ width, setSelectedCity, height, defaultValue, placeholder, data, bgColor }) => {
+const DropdownInput = ({ width, setSelectedCity, height, defaultValue, placeholder, data, bgColor, selectedValue, setSelectedValue }) => {
 
     const [showList, setShowList] = useState(false);
-    const [selectedValue, setSelectedValue] = useState('')
+    // const [selectedValue, setSelectedValue] = useState('')
     const dropdownRef = useRef(null)
     const handleShowList = () => {
         setShowList((prevState) => prevState === true ? false : true)
     }
 
     const handleSelectValue = (value) => {
+        console.log("slected value on input", selectedValue)
         setSelectedValue(value);
         setShowList(false);
         if (setSelectedCity) setSelectedCity(value);
