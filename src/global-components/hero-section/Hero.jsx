@@ -13,13 +13,6 @@ const Hero = () => {
     const [toustShow, setTOustShow] = useState(false)
     const [toustMessage, setToustMessage] = useState('')
 
-    useEffect(() => {
-        console.log("searched vehicle payload", searchVehiclePayload)
-
-    }, [searchVehiclePayload])
-
-
-
     const handleSearchVehicles = async () => {
         const api = "https://zm.skyhub.pk/cars/available-cars";
         const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
@@ -31,13 +24,12 @@ const Hero = () => {
 
                 if (response.status === 200) {
                     setSearchedVehicles(response.data);
-                    console.log("searched vehicle payload", searchVehiclePayload)
                     sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
                     router.push("/vehicles");
                 } else {
                     setLoader(false)
                     console.warn(`[WARN] Unexpected status code: ${response.status}`);
-                    alert("Unexpected response from server. Please try again later.");
+                    console.log("Unexpected response from server. Please try again later.");
 
                 }
             } else {

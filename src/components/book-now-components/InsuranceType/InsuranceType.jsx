@@ -18,9 +18,15 @@ const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setP
     setPickAndDrop(locationData)
   }, [])
 
-  // const [packageSelected, setPackageSelected] = useState(insurances && insurances[0]?.insurance_option_id);
+  const sortInsurances = (array) => {
+    const zeroPriceInsurance = array.filter(item => parseInt(item.rate) === 0);
+    const otherInsurances = array.filter(item => parseInt(item.rate) !== 0).sort((a, b) => a.rate - b.rate);
+    return [...zeroPriceInsurance, ...otherInsurances]
+  }
+
   const { setBookingPayload, bookingVehicleData } = useBookingContext();
   const handleSelectInsurance = (item) => {
+    console.log("selected item", item)
     setInsuranceSelected(item)
     setPackageSelected(item.insurance_option_id);
     setBookingPayload((prev) => ({
@@ -37,18 +43,25 @@ const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setP
     }))
   }
 
+  // console.log("all insu", sortInsurances(insurances))
+  useEffect(() => {
+    setInsuranceSelected(sortInsurances(insurances)[0])
+    setPackageSelected(sortInsurances(insurances)[0]?.insurance_option_id)
+  }, [])
+
   return (
 
     <div className='insurance-type-main-container'>
 
       {insurances.length !== 0 ? (
         <div className='insurance-type-body'>
-          {insurances?.length > 0 && insurances.map((item, index) => (
+          {insurances?.length > 0 && sortInsurances(insurances).map((item, index) => (
             <div
               key={index}
               className={`insurance-single-tab ${packageSelected === index ? 'insurance-single-tab-selected' : ''} `}
               onClick={() => handleSelectInsurance(item)}
             >
+              {console.log("initial item", item)}
               {item.popular && <span className='popular-tag'>{item.popular}</span>}
               <label className='select-insurance-radio-container'>
                 <input

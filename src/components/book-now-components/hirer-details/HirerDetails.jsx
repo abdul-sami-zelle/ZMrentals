@@ -11,9 +11,9 @@ const HirerDetails = () => {
     'Dubai',
     'Saudi Arabia',
     'Qatar',
-    'New Zeeland',
+    'New Zealand',
     'Australia',
-    'Span',
+    'Spain',
   ]
   const whereFindUs = [
     'AA TRAVEL WEBSITE',

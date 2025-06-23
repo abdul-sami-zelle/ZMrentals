@@ -91,6 +91,28 @@
     font-weight: var(--font-weight-regular);
 }
 
+@media only screen and (min-width: 999px) and (max-width: 1250px) {
+    .quantity-add-main-container {
+        height: 40px;
+    }
+
+    .quantity-minus-button,
+    .quantity-show-input,
+    .quantity-add-button {
+        width: 40px;
+        padding: 10px;
+    }
+
+    .single-extra-item {
+        gap: 10px;
+    }
+}
+
+.extra-item-and-price-container > h3 {
+    font-size: 13px;
+    line-height: 1.2;
+}
+
 @media only screen and (max-width: 480px) {
     .extras-main-container {
         display: flex;

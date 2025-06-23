@@ -7,7 +7,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
-const Payments = ({grandTotal}) => {
+const Payments = ({ grandTotal, isChecked, setIsChecked }) => {
   const payTime = [
     { title: 'Pay Later', val: 'pay-leter', disc: 'Pay when you check in or pick-up.', total: `$${grandTotal} NZD` },
     { title: 'Pay Now', val: 'pay-now', disc: 'Pay the full amount now, save time later.', total: `$${grandTotal} NZD` },
@@ -30,7 +30,8 @@ const Payments = ({grandTotal}) => {
       <div className='select-payment-type'>
         {payTime.map((item, index) => {
           const disableOption = item.title === 'Pay Now';
-          return (<div key={index} className={`pay-type-single-sec ${selectPaymentType === index ? 'active-select-payment' : ''}`} style={{ cursor: disableOption ? 'not-allowed' : 'pointer' }} onClick={() => {if(!disableOption) {setSelectPaymentType(index)}}}>
+          return (<div key={index} className={`pay-type-single-sec ${selectPaymentType === index ? 'active-select-payment' : ''}`} style={{ cursor: disableOption ? 'not-allowed' : 'pointer' }} onClick={() => { if (!disableOption) { setSelectPaymentType(index) } }}>
+            {index !== 0 && <div className='pay-option-overlay-container'></div>}
             <input type='radio' name={item.val} checked={selectPaymentType === index} disabled={disableOption} readOnly />
             <div className='selected-pay-type-detail'>
               <h3>{item.title}</h3>
@@ -85,8 +86,16 @@ const Payments = ({grandTotal}) => {
       </span>
 
       <span className='agree-to-terms-and-conditions-highlight'>
-        <input type='checkbox' />
-        <p>I agree to <Link href={'#'}>ZM rentals Terms an Conditions</Link> and all drivers are at least <strong>21</strong> years old</p>
+        <input 
+          type='checkbox' 
+          id='terms-checkbox'
+          checked={isChecked}
+          onChange={(e) => setIsChecked(e.target.checked)} 
+        />
+        <span className="checkmark"></span>
+        <label htmlFor='terms-checkbox'>
+          <p>I agree to <Link href={'#'}>ZM rentals Terms an Conditions</Link> and all drivers are at least <strong>21</strong> years old</p>
+        </label>
       </span>
     </div>
   )

@@ -24,7 +24,81 @@ export const SearchVehicleProvider = ({ children }) => {
 
     const [searchedVehicles, setSearchedVehicles] = useState([])
 
-    // useEffect(() => {console.log("searched vehicles on vehicle page from context", searchedVehicles)}, [searchedVehicles])
+    const getCurrentFormattedHourInAuckland = () => {
+        const formatter = new Intl.DateTimeFormat('en-NZ', {
+            timeZone: 'Pacific/Auckland',
+            hour: '2-digit',
+            hour12: true,
+        });
+
+        const parts = formatter.formatToParts(new Date());
+        const hour = parts.find(p => p.type === 'hour').value;
+        const dayPeriod = parts.find(p => p.type === 'dayPeriod').value;
+
+        setPickupTime(`${hour}:00 ${dayPeriod.toUpperCase()}`);
+        setDropupTime(`${hour}:00 ${dayPeriod.toUpperCase()}`)
+    };
+
+    const getInitialNZDateTimeUTC = () => {
+        const now = new Date();
+
+        // Get NZ parts
+        const formatter = new Intl.DateTimeFormat('en-NZ', {
+            timeZone: 'Pacific/Auckland',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+        });
+
+        const parts = formatter.formatToParts(now);
+
+        const year = parts.find(p => p.type === 'year')?.value;
+        const month = parts.find(p => p.type === 'month')?.value;
+        const day = parts.find(p => p.type === 'day')?.value;
+        const hour = parts.find(p => p.type === 'hour')?.value;
+
+        // Construct a local ISO-like string (but not "Z")
+        const dateTimeLocal = `${year}-${month}-${day}T${hour}:00:00`;
+
+        // Convert this local NZ time to an actual UTC ISO string
+        const nzDate = new Date(`${dateTimeLocal}+12:00`); // +12:00 is common NZ offset (adjusts automatically)
+        const utcISOString = nzDate.toISOString();
+
+        // Save actual UTC string
+        setSearchVehiclePayload((prev) => ({
+            ...prev,
+            pickup_time: utcISOString,
+            drop_time: utcISOString,
+        }));
+
+        // Step 1: Convert to NZ date parts
+        const nzDateStr = new Intl.DateTimeFormat('en-NZ', {
+            timeZone: 'Pacific/Auckland',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }).format(new Date(utcISOString)); // e.g., "24/06/2025"
+
+        // Step 2: Convert back to Date object
+        const [dateDay, dateMonth, dateYear] = nzDateStr.split('/');
+        const nzDateObj = new Date(`${dateYear}-${dateMonth}-${dateDay}`);
+
+        setSelectedPickupDate(nzDateObj);
+        setSelectedDropDate(nzDateObj);
+
+        return utcISOString;
+    };
+
+    useEffect(() => {
+        getCurrentFormattedHourInAuckland()
+        getInitialNZDateTimeUTC()
+    }, [])
+
+
     return (
         <SearchVehicleContext.Provider value={{
             searchVehiclePayload,
@@ -33,17 +107,17 @@ export const SearchVehicleProvider = ({ children }) => {
             setSearchedVehicles,
             loader,
             setLoader,
-            pickupCity, 
+            pickupCity,
             setPickupCity,
-            pickupTime, 
+            pickupTime,
             setPickupTime,
-            dropupCity, 
+            dropupCity,
             setDropupCity,
-            dropupTime, 
+            dropupTime,
             setDropupTime,
-            selectedPickupDate, 
+            selectedPickupDate,
             setSelectedPickupDate,
-            selectedDropDate, 
+            selectedDropDate,
             setSelectedDropDate,
         }}>
             {children}

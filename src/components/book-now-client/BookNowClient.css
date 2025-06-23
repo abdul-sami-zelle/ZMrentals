@@ -7,6 +7,9 @@
 }
 
 
+
+
+
 .book-now-inner-section {
     display: flex;
     width: 100%;
@@ -38,7 +41,7 @@
 
 .booking-steps-main-container {
     display: flex;
-    width: 65%;
+    width: 70%;
     flex-direction: column;
     gap: 32px;
 }
@@ -106,13 +109,19 @@
     background-color: rgba(255, 139, 64, 1);
 }
 
+.payment-continue-button.disable-continue-booking {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /* Booking Summary Section */
 
 .booking-summary-main-container {
     display: flex;
+    flex-shrink: 0;
     flex-direction: column;
-    gap: 32px;
-    width: 35%;
+    gap: 10px;
+    width: 30%;
     border-radius: 5px;
     background-color: #F0F0F0;
     padding: 16px;
@@ -259,7 +268,10 @@
     opacity: 0.5;
 }
 
-.vehicle-details > p:nth-child(4) {
+.vehicle-details > a {
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-regular);
     color: var(--primary-color);
     opacity: 1;
     cursor: pointer;
@@ -390,6 +402,45 @@
 
     100% {
         background-position: 100% 0;
+    }
+}
+
+@media only screen and (min-width: 999px) and (max-width: 1250px) {
+    .book-now-main-container {
+        gap: 15px;
+    }
+    .pick-drop-detail-section {
+        gap: 10px;
+        padding: 10px 0;
+    }
+    .vehicle-details-section {
+        gap: 10px;
+    }
+
+    .booking-prices-details-section > span {
+        gap: 10px;
+    }
+
+    .booking-prices-details-section > span > p {
+        font-size: 10px;
+        line-height: 1.2;
+        flex-shrink: 0;
+    }
+
+    .booking-prices-details-section > span > h3 {
+        font-size: 12px;
+    }
+
+    .grand-total-section > p {
+        font-size: 12px;
+    }
+
+    .queries-section > span {
+        gap: 5px;
+    }
+
+    .queries-section > span > p{
+        font-size: 12px;
     }
 }
 

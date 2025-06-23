@@ -38,20 +38,16 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         'Mangere Auckland',
     ]
 
-    const timeList = [
-        '12:00 AM',
-        '11:00 AM',
-        '10:00 AM',
-        '09:00 AM',
-        '08:00 AM',
-        '07:00 AM',
-        '06:00 AM',
-        '05:00 AM',
-        '05:00 AM',
-        '04:00 AM',
-        '03:00 AM',
-        '01:00 AM',
-    ]
+    //  Generate 24 hours function
+    const generateTimeList = () => {
+        const times = [];
+        for (let hour = 0; hour < 24; hour++) {
+            const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+            const suffix = hour < 12 ? 'AM' : 'PM';
+            times.push(`${displayHour.toString().padStart(2, '0')}:00 ${suffix}`);
+        }
+        return times;
+    };
 
     const togglePickupCalendar = () => {
         setPickupCalender(prev => !prev);
@@ -62,12 +58,10 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
     };
 
     const handlePickupDateChange = (date) => {
-        console.log("pick up date", date)
         setSelectedPickupDate(date);
         setPickupCalender(false); // hide after selection
     };
 
-    useEffect(() => {console.log("effect pick date", selectedPickupDate)})
 
     const handleDropDateChange = (date) => {
         setSelectedDropDate(date);
@@ -205,7 +199,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                                 width={'48%'}
                                 height={'162px'}
                                 defaultValue={'Time'}
-                                data={timeList}
+                                data={generateTimeList()}
                                 setSelectedCity={handleSelectPickupTime}
                                 bgColor={bgColor}
                                 selectedValue={pickupTime}
@@ -270,7 +264,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                                 width={'48%'}
                                 height={'162px'}
                                 defaultValue={'Time'}
-                                data={timeList}
+                                data={generateTimeList()}
                                 setSelectedCity={handleDropofTime}
                                 bgColor={bgColor}
                                 selectedValue={dropupTime}

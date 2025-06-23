@@ -13,36 +13,43 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import CarDateNotAvailable from '../../modals/CarDateNotAvailable/CarDateNotAvailable'
 import axios from 'axios';
+import Toust from '@/modals/Toust/Toust';
+import Link from 'next/link';
+import Spinner from '@/loaders/Spinner/Spinner';
 
 const BookNowClient = () => {
   const url = `https://zm.skyhub.pk`
-  const { bookingVehicleData, bookingPayload } = useBookingContext()
+  const { bookingVehicleData, bookingPayload, setBookingPayload } = useBookingContext()
   const searchParam = useSearchParams();
   const router = useRouter();
   const step = parseInt(searchParam.get('step')) || 1;
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [insuranceSeleted, setInsuranceSelected] = useState({})
-  const [packageSelected, setPackageSelected] = useState(bookingVehicleData && bookingVehicleData?.insurance[0]?.insurance_option_id);
+  // const [packageSelected, setPackageSelected] = useState(bookingVehicleData && bookingVehicleData?.insurance[0]?.insurance_option_id);
+  const [packageSelected, setPackageSelected] = useState();
+  const [isChecked, setIsChecked] = useState(false);
 
+  const [toustShow, setTOustShow] = useState(false)
+  const [toustMessage, setToustMessage] = useState('')
 
-  function getTotalDays(startDateStr, endDateStr) {
-    // Parse the date strings
-    const startDate = new Date(startDateStr);
-    const endDate = new Date(endDateStr);
+  function getTotalDays(pickupISO, dropISO) {
+    const pickupDate = new Date(pickupISO);
+    const dropDate = new Date(dropISO);
 
-    // Check if both dates are valid
-    if (isNaN(startDate) || isNaN(endDate)) {
-      return 'Invalid date format';
-    }
+    // Convert both to date-only strings (UTC)
+    const pickupStr = pickupDate.toISOString().split('T')[0];
+    const dropStr = dropDate.toISOString().split('T')[0];
 
-    // Calculate difference in milliseconds
-    const diffInMs = endDate - startDate;
+    // Convert back to Date objects (midnight UTC)
+    const d1 = new Date(pickupStr);
+    const d2 = new Date(dropStr);
 
-    // Convert milliseconds to days
-    const totalDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+    const diffMs = d2 - d1;
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-    return totalDays;
+    return diffDays === 0 ? 1 : diffDays;
   }
+
 
   useEffect(() => {
     if (!step) {
@@ -51,6 +58,10 @@ const BookNowClient = () => {
       setSelectedTabIndex(step - 1);
     }
   }, [step, searchParam, router]);
+
+  const isUserInfoFilled = () => {
+    return Object.values(bookingPayload.user).every(value => value && value.trim() !== '');
+  }
 
   const goToNewStep = (newIndex) => {
     setSelectedTabIndex(newIndex)
@@ -65,13 +76,15 @@ const BookNowClient = () => {
     link: ''
   })
 
+  const [isLoading, setISloading] = useState(false)
   const handleCompleteBooking = async () => {
     const api = `https://zm.skyhub.pk/booking/add-booking`;
 
     try {
+      setISloading(true)
       const response = await axios.post(api, bookingPayload);
       if (response.status === 201) {
-        console.log("complete booking response", response)
+        setISloading(false);
         setShowAvailableModal(true)
         setSubmitBookingMessage({
           head: 'Thank You For Booking',
@@ -79,8 +92,33 @@ const BookNowClient = () => {
           link: 'Explore More Options'
         })
 
+        setBookingPayload({
+          booking: {
+            car_id: null,
+            pickup_location: "",
+            drop_location: "",
+            pickup_time: "",
+            drop_time: "",
+            extras: [],
+            insurance_id: null,
+          },
+          user: {
+            firstname: "",
+            lastname: "",
+            email: "",
+            phone: "",
+            country: "",
+            how_find_us: "",
+            travel_reason: "Leisure"
+          }
+        })
+
+        sessionStorage.removeItem('pick_and_drop_details');
+
+        
+
       } else {
-        console.log("else part")
+        setISloading(false);
         setShowAvailableModal(true)
         setSubmitBookingMessage({
           head: 'Selected Car Not Availableee',
@@ -90,23 +128,26 @@ const BookNowClient = () => {
       }
 
     } catch (error) {
+      setISloading(false);
       console.log("UnExpected Error", error);
       setShowAvailableModal(true)
-        setSubmitBookingMessage({
-          head: 'Selected Car Not Availableee',
-          para: `Sorry The selected date is already taken`,
-          link: 'Please Try Another Date'
-        })
-    }
+      setSubmitBookingMessage({
+        head: 'Selected Car Not Availableee',
+        para: `Sorry The selected date is already taken`,
+        link: 'Please Try Another Date'
+      })
+    } finally { setISloading(false) }
   }
 
   const [pickDropLocation, setPickDropLocation] = useState({});
   const [totalDays, setTotalDays] = useState(0);
   useEffect(() => {
+
     const pickDrop = JSON.parse(sessionStorage.getItem('pick_and_drop_details'));
-    setTotalDays(getTotalDays(formatDateInNZ(pickDrop?.pickup_time), formatDateInNZ(pickDrop?.drop_time)))
+    setTotalDays(getTotalDays(pickDrop?.pickup_time, pickDrop?.drop_time))
     setPickDropLocation(pickDrop)
   }, [])
+
 
   const formatDateInNZ = (isoString) => {
     try {
@@ -148,58 +189,40 @@ const BookNowClient = () => {
   const handleBookNow = () => {
 
     if (selectedTabIndex < 3) {
-      goToNewStep(selectedTabIndex + 1);
+      if (selectedTabIndex === 2 && !isUserInfoFilled()) {
+        setTOustShow(true)
+        setToustMessage("Please Fill All The Information")
+      } else {
+        goToNewStep(selectedTabIndex + 1);
+      }
     } else {
       handleCompleteBooking()
     }
   }
 
   const [showCarAvailableModal, setShowAvailableModal] = useState(false);
-  const handleCloseCarNotAvailableModal = () => {
-    setShowAvailableModal(false)
+  const handleCloseCarNotAvailableModal = (type) => {
+    if(type === 'SUCCESS') {
+      setShowAvailableModal(false)
+      router.push('/')
+    } else {
+      setShowAvailableModal(false)
+    }
   }
-
-  // const getGrandTotal = (values = []) => {
-  //   return values.reduce((sum, item) => sum + item, 0);
-  // };
-
-  // const getGrandTotal = () => {
-  //   let total = 0;
-
-  //   // One Way Fee (based on insurance)
-  //   if (Object.keys(insuranceSeleted).length > 0) {
-  //     const insuranceRate = parseFloat(insuranceSeleted.rate || 0);
-  //     total += insuranceRate === 0 ? 0 : insuranceRate * totalDays;
-  //   }
-
-  //   // Extras
-  //   if (bookingPayload?.booking?.extras && bookingVehicleData?.extras) {
-  //     bookingPayload.booking.extras.forEach((item) => {
-  //       const matchedExtra = bookingVehicleData.extras.find(extra => extra.id === item.extras_option_id);
-  //       if (matchedExtra) {
-  //         const rate = parseFloat(matchedExtra.rate || 0);
-  //         total += rate * item.quantity * totalDays;
-  //       }
-  //     });
-  //   }
-
-  //   // Road Care (always 0 for now)
-  //   total += 0;
-
-  //   return total;
-  // };
 
   const getGrandTotal = () => {
     let total = 0;
 
+    const safeDays = totalDays > 0 ? totalDays : 1;
     // Base Rate (vehicle)
     const baseRate = parseFloat(bookingVehicleData?.base_rate || 0);
-    total += baseRate * totalDays;
+    total += baseRate * safeDays;
+
 
     // Insurance
     if (insuranceSeleted && Object.keys(insuranceSeleted).length > 0) {
       const insuranceRate = parseFloat(insuranceSeleted?.rate || 0);
-      total += insuranceRate * totalDays;
+      total += insuranceRate * safeDays;
     }
 
     // Extras
@@ -208,14 +231,13 @@ const BookNowClient = () => {
         const matchedExtra = bookingVehicleData.extras.find(extra => extra.id === item.extras_option_id);
         if (matchedExtra) {
           const rate = parseFloat(matchedExtra.rate || 0);
-          total += rate * item.quantity * totalDays;
+          total += rate * item.quantity * safeDays;
         }
       });
     }
 
     // Road Care (currently $0)
     total += 0;
-
     return total.toFixed(2); // format to 2 decimal places if needed
   };
 
@@ -223,6 +245,7 @@ const BookNowClient = () => {
 
   return (
     <div className="book-now-page-main-container">
+      {isLoading && <Spinner />}
       <div className="book-now-inner-section">
         <div className="book-now-max-width-container">
 
@@ -260,9 +283,9 @@ const BookNowClient = () => {
               {selectedTabIndex === 0 ? <InsuranceType insurances={bookingVehicleData.insurance} setInsuranceSelected={setInsuranceSelected} packageSelected={packageSelected} setPackageSelected={setPackageSelected} />
                 : selectedTabIndex === 1 ? <Extras extras={bookingVehicleData.extras} />
                   : selectedTabIndex === 2 ? <HirerDetails />
-                    : <Payments grandTotal={getGrandTotal()} />}
+                    : <Payments grandTotal={getGrandTotal()} isChecked={isChecked} setIsChecked={setIsChecked} />}
 
-              <button className='payment-continue-button' onClick={() => handleBookNow()}>{selectedTabIndex > 2 ? 'Complete Booking' : 'Continue'}</button>
+              <button disabled={selectedTabIndex > 2 && !isChecked} className={`payment-continue-button ${selectedTabIndex > 2 && !isChecked ? 'disable-continue-booking' : ''}`} onClick={() => handleBookNow()}>{selectedTabIndex > 2 ? 'Complete Booking' : 'Continue'}</button>
 
             </div>
 
@@ -290,7 +313,7 @@ const BookNowClient = () => {
                       <h3>{bookingVehicleData.name}</h3>
                       <p>${bookingVehicleData.base_rate}/day x {totalDays} day</p>
                       <span>${bookingVehicleData.base_rate * totalDays}</span>
-                      <p>Change Vehicle</p>
+                      <Link href={'/vehicles'}>Change Vehicle</Link>
                     </div>
                     <div className='vehicle-image-container'>
                       <Image src={url + bookingVehicleData.image} alt='vehicle image' width={192} height={96} className='vehicle-image' />
@@ -299,7 +322,7 @@ const BookNowClient = () => {
                   <div className='booking-prices-details-section'>
                     <span>
                       <p>Basic Insurance</p>
-                      <h3>{Object.keys(insuranceSeleted).length > 0 ? insuranceSeleted.name : '---'}</h3>
+                      <h3>{Object.keys(insuranceSeleted).length > 0 ? insuranceSeleted.name : bookingVehicleData?.insurance[0]?.name}</h3>
                     </span>
 
                     <span>
@@ -351,6 +374,12 @@ const BookNowClient = () => {
         showModal={showCarAvailableModal}
         handleCloseModal={handleCloseCarNotAvailableModal}
         modalMessages={submitBookingMessage}
+      />
+
+      <Toust
+        showToust={toustShow}
+        setShowToust={setTOustShow}
+        message={toustMessage}
       />
     </div>
   )

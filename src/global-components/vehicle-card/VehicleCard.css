@@ -3,7 +3,7 @@
     flex-direction: column;
     width: 100%;
     align-items: start;
-    justify-content: start;
+    justify-content: space-between;
     /* min-width: 320px; */
     gap: 0;
     height: auto;
@@ -61,10 +61,23 @@
     font-weight: var(--font-weight-bold);
 }
 
-.vehicle-name-and-price>span>p {
+.vehicle-age-and-fuel-efficiency-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.vehicle-age-and-fuel-efficiency-container > p {
     font-size: var(--font-body-md);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
+}
+
+.vehicle-age-and-fuel-efficiency-container > img {
+    width: 50px;
+    height: auto;
+    object-fit: cover;
 }
 
 .price-and-book-now {
@@ -102,6 +115,10 @@
 .booking-button:hover {
     background-image: linear-gradient(to right top, #0f3577, #0c3985, #0a3c93, #0a409f, #0d43ac);
 }
+
+/* .booking-button.show-booking-button {
+    display: flex;
+} */
 
 .vehicle-type {
     display: flex;
