@@ -27,6 +27,13 @@ export const BookingProvider = ({ children }) => {
             travel_reason: "Leisure"
         }
     });
+
+    useEffect(() => {
+        const vehicleSessionData = JSON.parse(sessionStorage.getItem('vehicle-details'));
+        if(Object.keys(bookingVehicleData).length === 0) {
+            setBookingVehicleData(vehicleSessionData);
+        }
+    }, [])
     
 
     useEffect(() => { console.log("booking details", bookingPayload) }, [bookingPayload])

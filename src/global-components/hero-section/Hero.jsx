@@ -23,6 +23,7 @@ const Hero = () => {
                 const response = await axios.post(api, searchVehiclePayload);
 
                 if (response.status === 200) {
+                    setLoader(false)
                     setSearchedVehicles(response.data);
                     sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
                     router.push("/vehicles");

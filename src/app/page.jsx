@@ -11,7 +11,7 @@ import Locations from '../components/locations/Locations'
 import FrequentlyAsked from '../components/frequently-asked/FrequentlyAsked'
 import RollingContent from '../components/rolling-content/RollingContent'
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
-import SpinningTyreLoader from '../loaders/spinnint-tyre-loader/SpinningTyreLoader'
+import Spinner from '../loaders/Spinner/Spinner';
 
 
 
@@ -87,24 +87,11 @@ export default function Home() {
     },
   ]
 
-  const overlayStyling = {
-    display: 'flex',
-    width: '100%',
-    height: '100%',
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    backdropFilter: 'blur(5px)',
-    zIndex: 999999999
-  }
-
 
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'var(--background)' }}>
-      {/* {loader && <div style={{ display: 'flex', position: 'fixed',  width: '100%', height: '100%', background: 'rgba(0, 0, 0, 0.5)', top: 0, left: 0, zIndex: 999999999 }}></div>} */}
-      {loader && <div style={overlayStyling}></div>}
+      {loader && <Spinner />}
       <Hero />
 
       <DiscountBanner

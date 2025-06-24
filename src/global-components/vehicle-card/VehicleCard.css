@@ -95,7 +95,7 @@
 }
 
 .booking-button {
-    display: flex;
+    display: none;
     width: max-content;
     align-items: center;
     justify-content: center;
@@ -116,9 +116,9 @@
     background-image: linear-gradient(to right top, #0f3577, #0c3985, #0a3c93, #0a409f, #0d43ac);
 }
 
-/* .booking-button.show-booking-button {
+.booking-button.show-booking-button {
     display: flex;
-} */
+}
 
 .vehicle-type {
     display: flex;

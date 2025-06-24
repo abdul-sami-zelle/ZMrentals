@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './CarDetailsModal.css'
 import { IoClose } from "react-icons/io5";
 import mainImage from '../../assets/images/cars/images.jpg';
@@ -31,7 +31,8 @@ import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleCo
 const CarDetailsModal = ({ showModal, handleClose, vehicleDetails }) => {
 
     const url = `https://zm.skyhub.pk`
-    const { searchedVehicles } = useSearchVehicle()
+    // const { searchedVehicles } = useSearchVehicle()
+    const { searchVehiclePayload, setSearchVehiclePayload, searchedVehicles } = useSearchVehicle()
     useEffect(() => {
         if (showModal) {
             document.body.style.overflow = 'hidden';
@@ -39,6 +40,16 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails }) => {
             document.body.style.overflow = 'auto'
         }
     }, [showModal])
+
+    const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
+      const [showBookingButton, setShowBookingButton] = useState(false);
+      useEffect(() => {
+        if(pickup_location && drop_location && pickup_time && drop_time) {
+          setShowBookingButton(true);
+        } else {
+          setShowBookingButton(false);
+        }
+      }, [searchVehiclePayload])
 
 
 
@@ -147,7 +158,7 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails }) => {
                     </span>
 
                     <span>
-                        Enter your itinerary to show price
+                        {showBookingButton ? 'Book Now' : 'Enter your itinerary to show price'}
                         <BsArrowRight size={20} color='var(--primary-color)' />
                     </span>
                 </div>

@@ -26,7 +26,6 @@ const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setP
 
   const { setBookingPayload, bookingVehicleData } = useBookingContext();
   const handleSelectInsurance = (item) => {
-    console.log("selected item", item)
     setInsuranceSelected(item)
     setPackageSelected(item.insurance_option_id);
     setBookingPayload((prev) => ({
@@ -43,11 +42,12 @@ const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setP
     }))
   }
 
-  // console.log("all insu", sortInsurances(insurances))
   useEffect(() => {
     setInsuranceSelected(sortInsurances(insurances)[0])
     setPackageSelected(sortInsurances(insurances)[0]?.insurance_option_id)
   }, [])
+
+  console.log("insurances data", insurances)
 
   return (
 
@@ -61,7 +61,6 @@ const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setP
               className={`insurance-single-tab ${packageSelected === index ? 'insurance-single-tab-selected' : ''} `}
               onClick={() => handleSelectInsurance(item)}
             >
-              {console.log("initial item", item)}
               {item.popular && <span className='popular-tag'>{item.popular}</span>}
               <label className='select-insurance-radio-container'>
                 <input
@@ -91,23 +90,23 @@ const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setP
 
       {insurances.length !== 0 ? (
         <div className='insurance-type-collapse'>
-        <div className='insurance-types-details-head' onClick={() => setShowDetails((prevState) => prevState === true ? false : true)}>
-          {showDetails ? <FaMinus size={25} color='var(--primary-color)' /> : <FaPlus size={25} color='var(--primary-color)' />}
-          <h3>What are Excess and Bond?</h3>
+          <div className='insurance-types-details-head' onClick={() => setShowDetails((prevState) => prevState === true ? false : true)}>
+            {showDetails ? <FaMinus size={25} color='var(--primary-color)' /> : <FaPlus size={25} color='var(--primary-color)' />}
+            <h3>What are Excess and Bond?</h3>
+          </div>
+          <div className={`insurance-type-details ${showDetails ? 'show-insurance-details' : ''}`}>
+            {excessAndBond.map((item, index) => (
+              <div className='single-insurance-details' key={index}>
+                <h3>{item.heading}</h3>
+                <p>{item.details}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className={`insurance-type-details ${showDetails ? 'show-insurance-details' : ''}`}>
-          {excessAndBond.map((item, index) => (
-            <div className='single-insurance-details' key={index}>
-              <h3>{item.heading}</h3>
-              <p>{item.details}</p>
-            </div>
-          ))}
-        </div>
-      </div>
       ) : (
         <div className='insurance-faq-shimmer'></div>
       )}
-      
+
     </div>
   )
 }

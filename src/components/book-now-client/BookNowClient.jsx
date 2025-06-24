@@ -86,6 +86,7 @@ const BookNowClient = () => {
       if (response.status === 201) {
         setISloading(false);
         setShowAvailableModal(true)
+        setCloseType('success');
         setSubmitBookingMessage({
           head: 'Thank You For Booking',
           para: `We'll monitor your arrival to make sure we have your car ready on time`,
@@ -120,6 +121,7 @@ const BookNowClient = () => {
       } else {
         setISloading(false);
         setShowAvailableModal(true)
+        setCloseType('reject');
         setSubmitBookingMessage({
           head: 'Selected Car Not Availableee',
           para: `Sorry The selected date is already taken`,
@@ -131,6 +133,7 @@ const BookNowClient = () => {
       setISloading(false);
       console.log("UnExpected Error", error);
       setShowAvailableModal(true)
+      setCloseType('reject');
       setSubmitBookingMessage({
         head: 'Selected Car Not Availableee',
         para: `Sorry The selected date is already taken`,
@@ -201,8 +204,9 @@ const BookNowClient = () => {
   }
 
   const [showCarAvailableModal, setShowAvailableModal] = useState(false);
-  const handleCloseCarNotAvailableModal = (type) => {
-    if(type === 'SUCCESS') {
+  const [closeType, setCloseType] = useState('')
+  const handleCloseCarNotAvailableModal = () => {
+    if(closeType === 'success') {
       setShowAvailableModal(false)
       router.push('/')
     } else {
