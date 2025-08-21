@@ -34,7 +34,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(150, 21, 2, 0.5);
     /* background-color: rgba(0, 0, 0, 0.2); */
 
     z-index: 999999;
@@ -58,7 +58,7 @@
     justify-content: center;
     /* padding: 2px; */
     height: 18px;
-    border: 2px solid #FFD0A6;
+    border: 2px solid rgba(150, 21, 2, 0.6);
     /* Light border */
     border-radius: 50%;
     position: relative;
@@ -68,7 +68,7 @@
 }
 
 .pay-type-single-sec input[type='radio']:checked {
-    border-color: #FF8B40;
+    border-color: #961502;
 }
 
 .pay-type-single-sec input[type='radio']:checked::after {
@@ -79,7 +79,7 @@
     left: 0px;
     width: 17px;
     height: 17px;
-    background-color: #FF8B40;
+    background-color: #961502;
     border-radius: 50%;
 }
 
@@ -162,7 +162,7 @@
     justify-content: center;
     /* padding: 2px; */
     height: 18px;
-    border: 2px solid #FFD0A6;
+    border: 2px solid rgba(150, 21, 2, 0.6);
     /* Light border */
     border-radius: 50%;
     margin-right: 15px;
@@ -173,7 +173,7 @@
 }
 
 .payment-cards-type-icons input[type='radio']:checked {
-    border-color: #FF8B40;
+    border-color: #961502;
 }
 
 .payment-cards-type-icons input[type='radio']:checked::after {
@@ -184,7 +184,7 @@
     left: 0px;
     width: 17px;
     height: 17px;
-    background-color: #FF8B40;
+    background-color: #961502;
     border-radius: 50%;
 }
 
@@ -335,33 +335,6 @@
   cursor: pointer;
   z-index: 2; /* Ensure it sits above the checkmark */
 }
-/* 
-.agree-to-terms-and-conditions-highlight .checkmark {
-  width: 20px;
-  height: 20px;
-  background-color: white;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.agree-to-terms-and-conditions-highlight input:checked + .checkmark {
-  background-color: var(--secondary-color); 
-  border-color: var(--secondary-color);
-}
-
-.agree-to-terms-and-conditions-highlight input:checked + .checkmark::after {
-  content: '';
-  position: absolute;
-  left: 6px;
-  top: 2px;
-  width: 5px;
-  height: 10px;
-  border: solid white; 
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-} */
 
 .agree-to-terms-and-conditions-highlight .checkmark {
   width: 20px;

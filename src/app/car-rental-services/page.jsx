@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import './CarRentalServices.css'
 import ServicesHero from '../../components/services-hero/ServicesHero'
 import DiscountBanner from '@/global-components/discount-banner/DiscountBanner'
@@ -7,17 +7,86 @@ import discountBannerImage from '../../assets/images/discount-banners/GO_Rentals
 import RentalServiceHeader from '../../components/rental-services-head/RentalServiceHeader'
 import ServiceDetail from '../../components/service-details/ServiceDetail'
 import serviceImage from '../../assets/images/mix/speedy-rentasl-4.jpg';
+import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext'
+import BookingForm from '@/global-components/booking-form/BookingForm'
 
 const CarRentalServices = () => {
+
+  const { searchVehiclePayload, setSearchVehiclePayload, searchedVehicles, setSearchedVehicles } = useSearchVehicle()
+    const [toustShow, setTOustShow] = useState(false)
+    const [toustMessage, setToustMessage] = useState('')
+
+  const handleSearchVehicles = async () => {
+    const api = "https://zm.skyhub.pk/cars/available-cars";
+    const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
+
+    try {
+      if (pickup_location && drop_location && pickup_time && drop_time) {
+        setSearchedVehicles([])
+        const response = await axios.post(api, searchVehiclePayload);
+
+        if (response.status === 200) {
+
+          console.log("[SUCCESS] Vehicles fetched successfully.");
+          setSearchedVehicles(response.data);
+
+          sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
+        } else {
+          console.warn(`[WARN] Unexpected status code: ${response.status}`);
+          alert("Unexpected response from server. Please try again later.");
+        }
+      } else {
+        setTOustShow(true)
+        setToustMessage("Please Fill All The Fields To Search Vehicle")
+      }
+
+
+    } catch (error) {
+      if (error.response) {
+        const status = error.response.status;
+
+        if (status === 400) {
+          alert("Invalid search request. Please check your input and try again.");
+        } else if (status >= 500) {
+          alert("Server error occurred. Please try again later.");
+        } else {
+          alert("Something went wrong. Please try again.");
+        }
+
+        console.error(`[ERROR] ${status}:`, error.response.data);
+
+      } else if (error.request) {
+        alert("No response from server. Please check your internet connection.");
+        console.error("[NO RESPONSE] Request was made but no response received.");
+      } else {
+        alert("Unexpected error occurred. Please try again.");
+        console.error("[CLIENT ERROR] Something went wrong:", error.message);
+      }
+    }
+  };
   return (
     <div className='rental-services-details-main-container'> 
-      <ServicesHero 
+
+      <div className='page-main-heading-container'>
+          <div className='page-main-booking-form-container'>
+            <h3 className='vehicles-main-heading'>Vehicles for Rent in Auckland</h3>
+            <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} handleSearchVehicles={handleSearchVehicles} textColor={'var(--primary-color)'} primaryButtonText={'Find my car'} />
+
+          </div>
+        </div>
+
+
+      {/* <ServicesHero 
         heading={'Drive Auckland Your Way'}
         paraOne={`Discover reliable car rental services & explore Auckland with ease`}
         // paraTwo={'Find out what makes us tick.'}
         buttonText={'What we are about'}
-      /> 
+      />  */}
       <div className='rental-services-content-container'>
+
+          
+
+
         <div className='rental-services-max-width-container'>
           <RentalServiceHeader 
             heading={'Car Rental Services in Auckland'}

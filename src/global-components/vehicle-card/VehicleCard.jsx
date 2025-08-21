@@ -23,28 +23,10 @@ const VehicleCard = (
   const { searchVehiclePayload, setSearchVehiclePayload } = useSearchVehicle()
   const [toustShow, setTOustShow] = useState(false)
   const [toustMessage, setToustMessage] = useState('');
-  // const validateSearchPayload = (payload) => {
-  //   const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
-  //   return pickup_location && pickup_time && drop_location && drop_time
-  // };
+
   const router = useRouter();
   const { setBookingVehicleData } = useBookingContext()
-  // const handleBookVehicle = async (e) => {
-  //   e.stopPropagation()
-  //   const api = `https://zm.skyhub.pk/cars/get/${vehicleId}`;
-
-  //   try {
-  //     validateSearchPayload(searchVehiclePayload)
-  //     const response = await axios.get(api)
-  //     if (response.status === 200) {
-  //       setBookingVehicleData(response.data)
-  //       router.push('/book-now')
-
-  //     }
-  //   } catch (error) {
-  //     console.log("UnExpected Server Error", error);
-  //   }
-  // }
+  
 
   const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
   const [showBookingButton, setShowBookingButton] = useState(false);

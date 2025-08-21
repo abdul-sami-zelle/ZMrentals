@@ -50,7 +50,7 @@ const Footer = () => {
           <div className='footer-menu-items-main-container'>
 
             <div className='footer-column footer-logo-container'>
-              <Image src={'/assets/white-logo.png'} width={150} height={50} alt='foote-logo' className='footer-logo-image' />
+              <Image src={'/assets/logos/ZM-Rentals-Horizontal-logo-in-white.png'} width={150} height={50} alt='foote-logo' className='footer-logo-image' />
               <p>Providing seamless, sustainable <br /> travel experiences with <br /> Auckland car rentals. <br /> Find out what makes us tick.</p>
             </div>
 

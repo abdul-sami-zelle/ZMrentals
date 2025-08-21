@@ -146,7 +146,7 @@ const Navbar = () => {
     <>
       <div className='navbar-main-container'>
         <Link href={'/'}>
-          <Image src={'/assets/logo.png'} alt="Logo" width={200} height={50} className="navbar-logo" />
+          <Image src={'/assets/logos/ZM-Rentals-Horizontal-logo.png'} alt="Logo" width={200} height={50} className="navbar-logo" />
         </Link>
         <nav className="navbar">
           <ul className="navbar-list">
@@ -171,7 +171,7 @@ const Navbar = () => {
 
       <div className='mobile-view-menu-main-container'>
         <Link href={'/'}>
-          <Image src={'/assets/logo.png'} alt='logo image' width={200} height={50} className='mobile-view-logo' />
+          <Image src={'/assets/logos/ZM-Rentals-Horizontal-logo.png'} alt='logo image' width={200} height={50} className='mobile-view-logo' />
         </Link>
         <button className='mobile-menu-toggler' onClick={handleMenuToggler}>
           <IoMenuSharp size={25} />

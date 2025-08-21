@@ -14,7 +14,20 @@
     justify-content: center;
     border-top-right-radius: 25px;
     border-bottom-left-radius: 25px;
-    background-image: linear-gradient(to right top, #b35100, #c75f14, #db6e27, #ef7d39, #ff8b40);
+    /* background-image: linear-gradient(to right top, #b35100, #c75f14, #db6e27, #ef7d39, #ff8b40); */
+    background-image: linear-gradient(to right top,
+            #961502,
+            /* dark base */
+            #b11a08,
+            /* slightly lighter */
+            #cc200e,
+            /* mid tone */
+            #e72614,
+            /* brighter */
+            #ff2d1a
+            /* highlight */
+        );
+
 }
 
 .footer-width-controller-container {
@@ -49,7 +62,7 @@
 
 .footer-logo-container {
     display: none;
-    
+
 }
 
 .footer-logo-image {
@@ -57,7 +70,7 @@
     height: auto;
 }
 
-.footer-logo-container > p {
+.footer-logo-container>p {
     font-size: var(--font-body-md);
     font-weight: var(--font-weight-regular);
     line-height: 1.2;
@@ -169,14 +182,14 @@
     flex-shrink: 0;
 }
 
-.footer-design-by-container > p {
+.footer-design-by-container>p {
     font-size: var(--font-body-lg);
     line-height: var(--line=height-body);
     font-weight: var(--font-weight-regular);
     color: var(--secondary-color);
 }
 
-.footer-design-by-container > a {
+.footer-design-by-container>a {
     font-size: var(--font-body-lg);
     line-height: var(--line=height-body);
     font-weight: var(--font-weight-semibold);
@@ -228,7 +241,7 @@
         /* background-image: linear-gradient(to right top, #113b84, #0e3f92, #0c43a1, #0c47af, #0f4bbe); */
         border-top-right-radius: 0px;
         border-bottom-left-radius: 25px;
-        align-items: start; 
+        align-items: start;
         padding-right: 101px;
         justify-content: space-between;
     }
@@ -240,7 +253,7 @@
         padding-right: 25px;
     }
 
-    
+
 
 
     /* .footer-social-and-terms-links-section {
@@ -299,14 +312,14 @@
         flex-shrink: 0;
     }
 
-    .footer-design-by-container > p {
+    .footer-design-by-container>p {
         font-size: var(--font-body-lg);
         line-height: var(--line=height-body);
         font-weight: var(--font-weight-regular);
         color: var(--secondary-color);
     }
 
-    .footer-design-by-container > a {
+    .footer-design-by-container>a {
         font-size: var(--font-body-lg);
         line-height: var(--line=height-body);
         font-weight: var(--font-weight-semibold);

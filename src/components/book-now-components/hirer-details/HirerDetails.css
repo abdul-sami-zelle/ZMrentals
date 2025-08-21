@@ -197,7 +197,7 @@
     justify-content: center;
     /* padding: 2px; */
     height: 18px;
-    border: 2px solid #FFD0A6;
+    border: 2px solid rgba(150, 21, 2, 0.6);
     /* Light border */
     border-radius: 50%;
     position: relative;
@@ -207,7 +207,7 @@
 }
 
 .travel-reason-radio-container input[type='radio']:checked {
-    border-color: #FF8B40;
+    border-color: #961502;
 }
 
 .travel-reason-radio-container input[type='radio']:checked::after {
@@ -218,6 +218,6 @@
     left: 0px;
     width: 17px;
     height: 17px;
-    background-color: #FF8B40;
+    background-color: #961502;
     border-radius: 50%;
 }

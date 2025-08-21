@@ -201,13 +201,15 @@ const Vehicles = () => {
     <div className='page-main-container '>
       {/* Max wiwdth Container Start */}
       <div className='page-max-width-container'>
+
         <div className='page-main-heading-container'>
           <div className='page-main-booking-form-container'>
-            <h3 className='vehicles-main-heading'>Vehicles for rent in Auckland</h3>
+            <h3 className='vehicles-main-heading'>Vehicles for Rent in Auckland</h3>
             <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} handleSearchVehicles={handleSearchVehicles} textColor={'var(--primary-color)'} primaryButtonText={'Find my car'} />
 
           </div>
         </div>
+        
         {carsDetails.map((item, index) => (
           <CarDetails
             key={index}
