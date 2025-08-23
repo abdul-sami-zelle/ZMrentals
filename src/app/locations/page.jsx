@@ -16,6 +16,7 @@ import CustomerThoughts from '../../components/customer-thoughts/CustomerThought
 import LocationDetails from '../../components/location-details/LocationDetails'
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import FrequentlyAsked from '@/components/frequently-asked/FrequentlyAsked'
+import Hero from '@/global-components/hero-section/Hero'
 
 const Locations = () => {
 
@@ -95,13 +96,20 @@ const Locations = () => {
   return (
     <div className='locations-main-outer-contaienr'>
 
-        <div className='page-main-heading-container'>
+      <Hero 
+        bgImage={'/assets/vehicles/car-04.jpg'}
+        dualHeading={false}
+        locationHeading={'Car Rental Auckland'}
+        locationPara={'ZM the distance with an affordable car rental'}
+      />
+
+        {/* <div className='page-main-heading-container'>
           <div className='booking-form-inner-shadow-container'>
             <h3 className='section-main-heading'>Car Rental Auckland</h3>
             <p>ZM the distance with an affordable car rental</p>
             <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} textColor={'var(--primary-color)'} primaryButtonText={'Find My Car'} />
           </div>
-        </div>
+        </div> */}
 
       <div className='location-page-location-section-container'>
         <div className='location-page-location-section-width-controller'>

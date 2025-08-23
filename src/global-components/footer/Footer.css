@@ -14,19 +14,15 @@
     justify-content: center;
     border-top-right-radius: 25px;
     border-bottom-left-radius: 25px;
+    background-color: var(--primary-color);
     /* background-image: linear-gradient(to right top, #b35100, #c75f14, #db6e27, #ef7d39, #ff8b40); */
-    background-image: linear-gradient(to right top,
+    /* background-image: linear-gradient(to right top,
             #961502,
-            /* dark base */
             #b11a08,
-            /* slightly lighter */
             #cc200e,
-            /* mid tone */
             #e72614,
-            /* brighter */
             #ff2d1a
-            /* highlight */
-        );
+        ); */
 
 }
 

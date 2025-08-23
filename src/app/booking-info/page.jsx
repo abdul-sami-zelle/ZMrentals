@@ -12,6 +12,7 @@ import insuranceImage from '../../assets/images/mix/Insurance-Coverage12-600x436
 import CancelationPolicyDetails from '../../components/cancelaton-policy-details/CancelationPolicyDetails'
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 import BookingForm from '@/global-components/booking-form/BookingForm';
+import Hero from '@/global-components/hero-section/Hero';
 
 const BookingInfo = () => {
 
@@ -92,14 +93,15 @@ const BookingInfo = () => {
   return (
     <div className='booking-info-main-container'>
 
+      <Hero bgImage={'/assets/vehicles/car-01.jpg'}/>
 
-      <div className='page-main-heading-container'>
+      {/* <div className='page-main-heading-container'>
           <div className='page-main-booking-form-container'>
             <h3 className='vehicles-main-heading'>Vehicles for Rent in Auckland</h3>
             <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} handleSearchVehicles={handleSearchVehicles} textColor={'var(--primary-color)'} primaryButtonText={'Find my car'} />
 
           </div>
-        </div>
+        </div> */}
       
       {/* <ServicesHero
         heading={'Cruise Auckland in Style'}

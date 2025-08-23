@@ -12,6 +12,7 @@ const ContactUs = () => {
         paraOne={`We're a different kind of car rental company.`}
         paraTwo={'Find out what makes us tick.'}
         buttonText={'What We Are About'}
+        servicesHeroBg={'/assets/images/mix/About_Hero_Desktop_Wide.webp'}
       />
  
       <div className="contact-us-inner-section">

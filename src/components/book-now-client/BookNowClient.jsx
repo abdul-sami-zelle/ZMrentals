@@ -123,7 +123,7 @@ const BookNowClient = () => {
         setShowAvailableModal(true)
         setCloseType('reject');
         setSubmitBookingMessage({
-          head: 'Selected Car Not Availableee',
+          head: 'Selected Car Not Available',
           para: `Sorry The selected date is already taken`,
           link: 'Please Try Another Date'
         })
@@ -135,7 +135,7 @@ const BookNowClient = () => {
       setShowAvailableModal(true)
       setCloseType('reject');
       setSubmitBookingMessage({
-        head: 'Selected Car Not Availableee',
+        head: 'Selected Car Not Available',
         para: `Sorry The selected date is already taken`,
         link: 'Please Try Another Date'
       })

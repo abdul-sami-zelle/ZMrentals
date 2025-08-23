@@ -5,6 +5,7 @@ import ServicesHero from "@/components/services-hero/ServicesHero";
 import WhyChooseZM from '../../components/why-choose-zm/WhyChooseZM'
 import ServiceDetail from "@/components/service-details/ServiceDetail";
 
+
 export default function AboutUs() {
   return (
     <div className="about-us-page-main-container">
@@ -13,6 +14,7 @@ export default function AboutUs() {
         paraOne={`Providing seamless, sustainable travel experiences with Auckland car rentals `}
         paraTwo={'Find out what makes us tick.'}
         buttonText={'What We Are About'}
+        servicesHeroBg={'/assets/home/ZM_Home_Page__st_Slider.png'}
       />
 
       <div className="about-us-inner-section">

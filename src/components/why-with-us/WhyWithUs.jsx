@@ -46,7 +46,7 @@ const WhyWithUs = () => {
             title: 'No Hidden Surprises',
             para: (
                 <p className='global-content-style'>
-                    Our transparent car rental process means no hidden fees, just honest pricing.
+                    Our transparent car rental process means zero booking charges, no hidden fees, just honest pricing.
                     {/* Our basic insurance cover is included in the cost of every car hire with two upgraded <strong> insurance options </strong> available! */}
                 </p>
             )
@@ -65,10 +65,10 @@ const WhyWithUs = () => {
         
         {
             icon: SiAdguard, 
-            title: 'Navigate with Ease',
+            title: 'Airport Shuttle',
             para: (
                 <p className='global-content-style'>
-                    Find your way effortlessly with the integrated GPS, guiding you through Auckland.
+                    We have make it easier for you by providing Airport Pick and Drop Complimentary.
                     {/* Our basic insurance cover is included in the cost of every car hire with two upgraded <strong> insurance options </strong> available! */}
                 </p>
             )
@@ -134,7 +134,7 @@ const WhyWithUs = () => {
                 {whyWithUsData.map((item, index) => {
                     let Icon = item.icon;
                     return <div key={index} className='why-with-us-single-card'>
-                        {item.title === '24/7 Peace of Mind' ? <Image src={'/assets/peace.png'} width={30} height={40} className='why-with-us-card-icon' alt='img'/> : <Icon className='why-with-us-card-icon' size={30} color='var(--primary-color)' />}
+                        {item.title === '24/7 Peace of Mind' ? <Image src={'/assets/peace.svg'} width={30} height={40} className='why-with-us-card-icon' alt='img'/> : <Icon className='why-with-us-card-icon' size={30} color='var(--primary-color)' />}
                         
                         <h3 className='global-heading-style'>{item.title}</h3>
                         {item.para}

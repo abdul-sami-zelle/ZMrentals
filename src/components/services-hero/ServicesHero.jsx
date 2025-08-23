@@ -1,11 +1,11 @@
 import React from 'react'
 import './ServicesHero.css'
-import servicesHeroBg from '../../assets/images/mix/About_Hero_Desktop_Wide.webp'
+// import servicesHeroBg from '../../assets/home/ZM_Home_Page__st_Slider.png'
 import Image from 'next/image'
 import PrimaryButton from '@/global-components/primary-button/PrimaryButton'
 import { GoArrowRight } from "react-icons/go";
 
-const ServicesHero = ({ heading, paraOne, paraTwo, buttonText }) => {
+const ServicesHero = ({ heading, paraOne, paraTwo, buttonText, servicesHeroBg }) => {
     return (
         <div className='services-hero-main-container'>
             <div className='services-hero-inner-content-container'>

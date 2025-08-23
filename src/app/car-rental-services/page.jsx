@@ -9,6 +9,7 @@ import ServiceDetail from '../../components/service-details/ServiceDetail'
 import serviceImage from '../../assets/images/mix/speedy-rentasl-4.jpg';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext'
 import BookingForm from '@/global-components/booking-form/BookingForm'
+import Hero from '@/global-components/hero-section/Hero'
 
 const CarRentalServices = () => {
 
@@ -67,13 +68,15 @@ const CarRentalServices = () => {
   return (
     <div className='rental-services-details-main-container'> 
 
-      <div className='page-main-heading-container'>
+      {/* <div className='page-main-heading-container'>
           <div className='page-main-booking-form-container'>
             <h3 className='vehicles-main-heading'>Vehicles for Rent in Auckland</h3>
             <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} handleSearchVehicles={handleSearchVehicles} textColor={'var(--primary-color)'} primaryButtonText={'Find my car'} />
 
           </div>
-        </div>
+        </div> */}
+
+        <Hero bgImage={'/assets/vehicles/car-02.jpg'} />
 
 
       {/* <ServicesHero 

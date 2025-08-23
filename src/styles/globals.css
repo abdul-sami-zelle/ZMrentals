@@ -9,7 +9,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --primary-color: #113b84;
+  /* --primary-color: #113b84; */
+  --primary-color: #961502;
   /* --secondary-color: #FF8B40; */
   --secondary-color: #961502;
   --white-color: #ffffff;

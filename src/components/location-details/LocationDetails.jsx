@@ -25,8 +25,8 @@ const LocationDetails = () => {
                                 <h3>Auckland City</h3>
                                 <div className='city-and-opening-times-contianer'>
                                     <p><strong>Address: </strong> 11 peninsula road Mangere Auckland 2022</p>
-                                    <p><strong>Office open hours: </strong> 08:00 - 17:00, 7 days a week.</p>
-                                    <p><strong>Pick up & Drop off: </strong> 08:00 - 17:00, 7 days a week.</p>
+                                    <p><strong>Office Hours: </strong> 9:00AM TO 5:00PM</p>
+                                    <p><strong>Pick Up & Drop Off : </strong> 6:00AM to 9:00PM</p>
 
                                 </div>
                             </div>

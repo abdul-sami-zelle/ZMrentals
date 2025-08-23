@@ -10,7 +10,7 @@ import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleCo
 import { useRouter } from 'next/navigation';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
-const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow, handleSearchVehicles }) => {
+const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow, handleSearchVehicles, setHeight = false }) => {
 
     const [pickupCalender, setPickupCalender] = useState(false);
     const [dropCalender, setDropCalender] = useState(false);
@@ -156,6 +156,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                             bgColor={bgColor}
                             selectedValue={pickupCity}
                             setSelectedValue={setPickupCity}
+                            setHeight={setHeight}
                         />
                         <div className='booking-time-container'>
 
@@ -219,6 +220,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                             selectedValue={dropupCity}
                             setSelectedValue={setDropupCity}
                             bgColor={bgColor}
+                            setHeight={setHeight}
                         />
 
                         <div className='booking-time-container'>

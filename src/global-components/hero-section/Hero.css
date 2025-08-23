@@ -21,7 +21,7 @@
         linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 30%),
         #113b84; */
 
-    background-image: url('../../assets/home/ZM_Home_Page__st_Slider.png');
+    /* background-image: url('../../assets/home/ZM_Home_Page__st_Slider.png'); */
     /* background-color: rgba(0, 0, 0, 0.2); */
     background-position: center;
     background-size: cover;
@@ -79,7 +79,8 @@
     display: flex;
     align-items: start;
     justify-content: start;
-    width: 100%;
+    /* width: 100%; */
+    width: 75%;
 }
 
 @media only screen and (max-width: 480px) {

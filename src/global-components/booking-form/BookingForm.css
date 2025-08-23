@@ -6,6 +6,7 @@
     width: 100%;
     height: auto;
     z-index: 99999;
+    gap: 30px;
     background-color: rgba(255, 255, 255, 0.3);
     border-top-right-radius: 25px;
     border-bottom-left-radius: 25px;
@@ -17,7 +18,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 70%;
+    /* width: 70%; */
+    width: 100%;
 }
 
 .booking-form-inputs {
@@ -80,11 +82,13 @@
 .booking-form-confirm-button-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     height: 100%;
     gap: 15px;
-    justify-content: space-evenly;
-    width: 30%;
+    justify-content: start;
+    /* width: 30%; */
+    /* width: max-content; */
+    /* flex-shrink: 0; */
 }
 
 .add-promo-option {

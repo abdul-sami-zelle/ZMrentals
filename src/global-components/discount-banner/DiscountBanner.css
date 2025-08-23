@@ -11,7 +11,8 @@
     width: 95%;
     align-items: center;
     justify-content: start;
-    background-image: linear-gradient(to bottom left, #0f4bbe, #0c47af, #0c43a1, #0e3f92, #113b84);
+    /* background-image: linear-gradient(to bottom left, #0f4bbe, #0c47af, #0c43a1, #0e3f92, #113b84); */
+    background-color: var(--primary-color);
     padding: 16px;
     cursor: pointer;
     border-bottom-left-radius: 25px;
@@ -19,9 +20,9 @@
     
 }
 
-.discount-banner-inner-container:hover {
+/* .discount-banner-inner-container:hover {
     background-image: linear-gradient(to right top, #0f3577, #0c3985, #0a3c93, #0a409f, #0d43ac);
-}
+} */
 
 .discount-banner-image-container {
     width: 40% !important;

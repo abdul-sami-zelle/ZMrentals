@@ -5,6 +5,8 @@
     /* width: 100%; */
     flex-shrink: 0;
     padding: 6px;
+    /* min-width: 310px; */
+    /* max-width: 310px; */
     height: 100%;
     max-height: 65px;
     /* background-color: rgba(249, 249, 249, 0.1); */
@@ -16,6 +18,10 @@
 .dropdown-input-main-container.remove-border-radios-bottom {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+}
+
+.dropdown-input-main-container.decrease-height {
+    max-height: 50px !important;
 }
 
 .dropdown-input-selected-value-container {

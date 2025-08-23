@@ -92,7 +92,7 @@ export default function Home() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'var(--background)' }}>
       {loader && <Spinner />}
-      <Hero />
+      <Hero bgImage={'/assets/vehicles/car-5.jpg'}/>
 
       <DiscountBanner
         discountImage={'/assets/images/discount-banners/Go_Rentals_Newsletter.jpg'}
