@@ -122,7 +122,7 @@ const BookingInfo = () => {
 
           <CancelationPolicyDetails
             flexDirection={'row-reverse'}
-            serviceImage={'/assets/images/mix/Insurance-Coverage12-600x436.jpg'}
+            serviceImage={'/assets/booking-info/Insurance-Coverage12-600x436.jpg'}
             serviceHeading={'Insurance Plans to Choose From'}
             desc={`At ZM Rentals, your safety during your Auckland adventure is our priority. While insurance isn’t mandatory with our car rentals, we highly recommend it for extra peace of mind. The right coverage protects you from unexpected costs, ensuring a worry-free experience.
               We offer flexible insurance options to suit different needs and budgets:`}
@@ -131,7 +131,7 @@ const BookingInfo = () => {
 
           <CancelationPolicyDetails
             flexDirection={'row'}
-            serviceImage={'/assets/images/mix/Insurance-Coverage12-600x436.jpg'}
+            serviceImage={'/assets/booking-info/Secure-Payment-Methodes.png'}
             serviceHeading={'Secure & Feasible Payment Methods'}
             desc={`At ZM Rentals, we believe in offering more than just high-quality vehicles. We prioritize customer satisfaction by providing flexible and secure payment options for booking a car rental in Auckland. We accept all major credit and debit cards, ensuring secure, PCI-compliant transactions. Additionally, we support online payment platforms to make your booking even easier and safer.`}
             points={payTypes}
@@ -139,7 +139,7 @@ const BookingInfo = () => {
 
           <CancelationPolicyDetails
             flexDirection={'row-reverse'}
-            serviceImage={'/assets/images/mix/Insurance-Coverage12-600x436.jpg'}
+            serviceImage={'/assets/booking-info/Booking-Cancellation-and-refund.png'}
             serviceHeading={'Booking Cancellation and Refund'}
             desc={`At ZM Rentals, we know travel plans can change, and we aim to make cancellations or modifications as easy and flexible as possible:`}
             points={cancelationPoints}
