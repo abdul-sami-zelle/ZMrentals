@@ -99,6 +99,7 @@ const Locations = () => {
       <Hero 
         bgImage={'/assets/vehicles/car-04.jpg'}
         dualHeading={false}
+        minHeight='473px'
         locationHeading={'Car Rental Auckland'}
         locationPara={'ZM the distance with an affordable car rental'}
       />

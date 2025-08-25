@@ -9,7 +9,7 @@ const ServicesHero = ({ heading, paraOne, paraTwo, buttonText, servicesHeroBg })
     return (
         <div className='services-hero-main-container'>
             <div className='services-hero-inner-content-container'>
-                <Image src={servicesHeroBg} alt='hero bg' width={1323} height={618} className='services-hero-bg-image' />
+                <Image src={servicesHeroBg} alt='hero bg' width={1323} height={473} className='services-hero-bg-image' />
                 <div className='services-hero-container-outer-container'>
                     <div className='services-hero-detail-container'>
                         <h3>{heading}</h3>

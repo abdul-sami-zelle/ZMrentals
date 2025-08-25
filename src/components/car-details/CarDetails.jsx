@@ -5,10 +5,14 @@ import VehicleCard from '../../global-components/vehicle-card/VehicleCard'
 import CarDetailsModal from '@/modals/car-details-modal/CarDetailsModal';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 import CardShimmer from './CardShimmer'
+import { usePathname } from 'next/navigation';
 
 
 
-const CarDetails = ({ data, openModal }) => {
+const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
+
+  const pathname = usePathname()
+  console.log("path name", pathname)
 
   const { searchedVehicles } = useSearchVehicle()
   const url = `https://zm.skyhub.pk`
@@ -42,15 +46,15 @@ const CarDetails = ({ data, openModal }) => {
   };
 
   return (
-    <div className='car-details-main-container' onClick={openModal}>
-      <h3 className='section-main-heading'>{data.heading}</h3>
-      <div className='car-details-description-and-all-vehicles-link-container'>
+    <div className='car-details-main-container' onClick={openModal} style={{maxWidth: maxWidth}}>
+      <h3 className={pathname === '/' ? 'main-page-section-heading' : 'section-main-heading'}>{data?.heading}</h3>
+      <div className='car-details-description-and-all-vehicles-link-container' style={{display: pathname === '/' ? 'none' : 'flex'}}>
         {/* <p>{data.description}</p> */}
         <Link href={'/'} className='global-heading-style'>{`Our Fleet`}</Link>
       </div>
       <div className='cars-cars-container'>
         {searchedVehicles.length !== 0 ? (
-          searchedVehicles.map((car, carIndex) => (
+          searchedVehicles.slice(0, showLength).map((car, carIndex) => (
           <VehicleCard
             key={carIndex}
             vehicleId={car.car_id}
@@ -72,7 +76,7 @@ const CarDetails = ({ data, openModal }) => {
       </div>
 
       <div className='vehicle-page-cars-details'>
-        <p className='global-content-style'>{data.description}</p>
+        <p className='global-content-style'>{data?.description}</p>
       </div>
 
       <CarDetailsModal

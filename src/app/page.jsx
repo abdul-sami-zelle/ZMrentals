@@ -12,6 +12,9 @@ import FrequentlyAsked from '../components/frequently-asked/FrequentlyAsked'
 import RollingContent from '../components/rolling-content/RollingContent'
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 import Spinner from '../loaders/Spinner/Spinner';
+import CarDetails from '@/components/car-details/CarDetails';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 
 
@@ -87,17 +90,57 @@ export default function Home() {
     },
   ]
 
+  const {searchedVehicles, setSearchedVehicles } = useSearchVehicle()
+
+  const carsDetails = [
+    {
+      heading: 'Wide Collection of Rental Cars in Auckland',
+    },
+  ]
+
+  const getAllVehicles = async () => {
+    const api = `https://zm.skyhub.pk/cars/get`;
+
+    try {
+      const response = await axios.get(api);
+      if (response.status === 200) {
+        setSearchedVehicles(response.data);
+      } else {
+        console.log("Unexpected response from server. Please try again later.")
+      }
+    } catch (error) {
+      console.log("UnExpected Server Error", error);
+    }
+  }
+
+  useEffect(() => {
+    
+      getAllVehicles();
+    
+  }, []);
+
 
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'var(--background)' }}>
       {loader && <Spinner />}
-      <Hero bgImage={'/assets/vehicles/car-5.jpg'}/>
+      <Hero marginBottom='20px' bgImage={'/assets/vehicles/car-5.jpg'}/>
+
+      {carsDetails.map((item, index) => (
+          <CarDetails
+            key={index}
+            data={item}
+            showLength={8}
+            maxWidth={'1323px'}
+          />
+        ))}
 
       <DiscountBanner
         discountImage={'/assets/images/discount-banners/Go_Rentals_Newsletter.jpg'}
         marginBottom={'25px'}
       />
+
+      
 
       <GalleryDetails
         flexDirection={'row'}

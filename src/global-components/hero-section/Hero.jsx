@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import Toust from '../../modals/Toust/Toust'
 
 
-const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true }) => {
+const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marginBottom = '50px', minHeight = 'auto' }) => {
     const { searchVehiclePayload, setSearchedVehicles, setLoader } = useSearchVehicle()
     const router = useRouter()
     const [toustShow, setTOustShow] = useState(false)
@@ -67,10 +67,10 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true }) =>
     };
 
     return (
-        <div className='hero-section-main-container'>
+        <div className='hero-section-main-container' style={{marginBottom: marginBottom, }}>
             <div
                 className='hero-section-inner-container'
-                style={{ backgroundImage: `url(${bgImage})` }}
+                style={{ backgroundImage: `url(${bgImage})`, minHeight: minHeight }}
             >
                 <div className='hero-section-content-container'>
                     <div className='hero-section-main-heading-container'>
