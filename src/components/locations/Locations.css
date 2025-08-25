@@ -18,7 +18,8 @@
     /* background-attachment: fixed; */
     background-position: center;
     background-size: cover;
-    background-color: rgba(17, 59, 132, 0.4);
+    /* background-color: rgba(17, 59, 132, 0.4); */
+    background-color: rgba(150, 21, 2, 0.2);
     padding: 56px 120px;
 }
 
@@ -71,6 +72,7 @@
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     color: var(--primary-color);
+    /* color: #fff; */
     text-align: start;
 }
 
@@ -111,7 +113,7 @@
     background-position: center;
     background-size: cover;
     margin-bottom: 25px;
-    background-color: rgba(17, 59, 132, 0.4);
+    background-color: rgba(150, 21, 2, 0.2);
 }
 
 .mobile-location-main-heading {
@@ -126,6 +128,7 @@
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     text-align: start;
+    color: var(--primary-color);
 }
 
 .mobile-locations-list-main-container {

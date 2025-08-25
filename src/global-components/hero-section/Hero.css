@@ -14,7 +14,7 @@
     align-items: center;
     justify-content: center;
     width: 95%;
-    border-top-right-radius: 25px;
+    border-top-right-radius: 0px;
     border-bottom-left-radius: 25px;
     /* background:
         linear-gradient(90deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 60%),

@@ -121,7 +121,7 @@ export default function Home() {
 
       <Benefits />
 
-      <Locations />
+      <Locations /> 
 
       <PackageDetails
         packageHeading={'Smooth Pick-Up and Drop-Off with ZM Car Rentals'}

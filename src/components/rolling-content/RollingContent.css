@@ -44,7 +44,8 @@
     font-size: var(--font-body-lg);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 @media only screen and (max-width: 480px) {
