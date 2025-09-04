@@ -4,9 +4,15 @@ import './GalleryDetails.css'
 import PrimaryButton from '@/global-components/primary-button/PrimaryButton'
 import { GoArrowRight } from "react-icons/go";
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 
 const GalleryDetails = ({ flexDirection }) => {
+
+    const router = useRouter()
+    const handleNavigate = () => {
+        router.push('/vehicles')
+    }
 
     const descriptionsData = [
         `
@@ -43,6 +49,7 @@ const GalleryDetails = ({ flexDirection }) => {
                         width={'192px'}
                         height={'52px'}
                         gap={'20px'}
+                        handleCLick={handleNavigate}
                         fontSize={'var(--font-body-lg)'}
                         lineHeight={'var(--line-height-body)'}
                         fontWeight={'var(--font-weight-bold)'}

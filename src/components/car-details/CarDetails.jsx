@@ -6,28 +6,41 @@ import CarDetailsModal from '@/modals/car-details-modal/CarDetailsModal';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 import CardShimmer from './CardShimmer'
 import { usePathname } from 'next/navigation';
+import EmailEnquiryModal from '../../modals/EmailEnquiryModal/EmailEnquiryModal'
 
 
 
 const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
 
   const pathname = usePathname()
-  console.log("path name", pathname)
 
-  const { searchedVehicles } = useSearchVehicle()
+
+  const { searchedVehicles, isVehicleSearched, setIsVehicleSearched } = useSearchVehicle()
   const url = `https://zm.skyhub.pk`
 
 
   const [modalData, setModalData] = useState([])
   const [showDetalModal, setShowDetailModal] = useState(false);
-  const handleOpenDetailsModal = (item) => {
 
+  const [emailModal, setEmailModal] = useState(false);
+
+  const handleOpenDetailsModal = (item) => {
+    console.log("item item ", item)
     setShowDetailModal(true);
     setModalData(item)
   }
   const handleCloseModal = () => {
     setShowDetailModal(false)
   }
+
+  const [modalType, setModalType] = useState('')
+  const handleOpenEmailEnquiry = (type) => {
+    console.log("modal type", type)
+    setModalType(type)
+    setEmailModal(true);
+    setShowDetailModal(false)
+  }
+
 
   useEffect(() => {
     if (showDetalModal) {
@@ -57,13 +70,14 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
           searchedVehicles.slice(0, showLength).map((car, carIndex) => (
           <VehicleCard
             key={carIndex}
+            vehicleData={car}
             vehicleId={car.car_id}
             vehicleImage={url + car.image}
             vehicleName={car.name}
             vehicleAge={getAgeFromYear(car.details.model)}
             seePrice={'See Price'}
-            transmission={car.transmission}
-            fuelType={car.fuelType}
+            transmission={car.details.transmission}
+            fuelType={car.details.fuel_type}
             handleModalOpen={() => handleOpenDetailsModal(car)}
           />
         ))
@@ -83,6 +97,16 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
         showModal={showDetalModal}
         handleClose={handleCloseModal}
         vehicleDetails={modalData}
+        isVehicleSearched={isVehicleSearched}
+        emailModal={handleOpenEmailEnquiry}
+      />
+
+      <EmailEnquiryModal 
+        showEmailEnquiry={emailModal}
+        setShowEmailEnquiry={setEmailModal}
+        carObj={modalData}
+        modalType={modalType}
+
       />
 
     </div>

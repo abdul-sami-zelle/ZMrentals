@@ -28,16 +28,31 @@ export const BookingProvider = ({ children }) => {
         }
     });
 
+    const [errors, setErrors] = useState({});
+
+    const validateForm = () => {
+        const newErrors = {};
+
+        Object.entries(bookingPayload.user).forEach(([key, value]) => {
+            if (!value || value.trim() === "") {
+                newErrors[key] = "Required"; // mark field as missing
+            }
+        });
+
+        setErrors(newErrors);
+
+        // Return true if no errors
+        return Object.keys(newErrors).length === 0;
+    };
+
     useEffect(() => {
         const vehicleSessionData = JSON.parse(sessionStorage.getItem('vehicle-details'));
-        if(Object.keys(bookingVehicleData).length === 0) {
+        if (Object.keys(bookingVehicleData).length === 0) {
             setBookingVehicleData(vehicleSessionData);
         }
     }, [])
-    
 
-    useEffect(() => { console.log("booking details", bookingPayload) }, [bookingPayload])
-    useEffect(() => { console.log("booking data", bookingVehicleData) }, [bookingVehicleData])
+
 
     return (
         <BookingContext.Provider value={{
@@ -46,7 +61,10 @@ export const BookingProvider = ({ children }) => {
             bookingVehicleData,
             setBookingVehicleData,
             extraQuantities,
-            setExtraQuantities
+            setExtraQuantities,
+            validateForm,
+            errors, 
+            setErrors,
         }}>
             {children}
         </BookingContext.Provider>

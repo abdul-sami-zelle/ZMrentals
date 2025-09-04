@@ -36,12 +36,12 @@
     width: 100%;
     align-items: start;
     justify-content: start;
-    gap: 32px;
+    gap: 20px;
 }
 
 .booking-steps-main-container {
     display: flex;
-    width: 70%;
+    width: 60%;
     flex-direction: column;
     gap: 32px;
 }
@@ -121,7 +121,7 @@
     flex-shrink: 0;
     flex-direction: column;
     gap: 10px;
-    width: 30%;
+    width: 40%;
     border-radius: 5px;
     background-color: #F0F0F0;
     padding: 16px;
@@ -169,7 +169,8 @@
 }
 
 .pick-up-section > h3:nth-child(2) {
-    color: red;
+    color: #595959;
+    opacity: 0.7;
 }
 
 .pick-up-section > p {
@@ -210,7 +211,8 @@
 }
 
 .drop-off-section > h3:nth-child(2) {
-    color: green;
+    color: #595959;
+    opacity: 0.7;
 }
 
 .drop-off-section > p {
@@ -338,13 +340,14 @@
     width: 100%;
     padding: 16px 0;
     border-top: 1px solid var(--primary-color);
+    border-bottom:1px solid var(--primary-color);
 }
 
 .grand-total-section > p {
     font-size: var(--font-body-md);
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-heading);
-    color: var(--primary-color);
+    color: #000;
 }
 
 .grand-total-section > h3 {
@@ -359,6 +362,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    padding-top: 15px;
 }
 
 .queries-section > span {

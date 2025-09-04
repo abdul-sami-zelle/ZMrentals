@@ -53,7 +53,7 @@
 }
 
 .vehicle-name-and-price>span {
-    display: flex;
+    display: flex; 
     flex-direction: column;
     align-items: start;
     justify-content: start;
@@ -93,6 +93,47 @@
     width: 100%;
     align-items: center;
     justify-content: space-between;
+}
+
+.price-and-book-now-ammount {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: max-content;
+    height: max-content;
+    gap: 5px;
+}
+
+.price-and-book-now-ammount > span {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: max-content;
+    gap: 5px;
+}
+
+.price-and-book-now-ammount > span > h3 {
+    font-size: var(--font-body-18);
+    line-height: 1;
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary-color);
+}
+
+.price-and-book-now-ammount > span:nth-child(2) > h3 {
+    font-size: var(--font-body-lg);
+    line-height: 1;
+    font-weight: var(--font-weight-regular);
+    color: #000;
+}
+
+
+.price-and-book-now-ammount > span > p {
+    font-size: 12px;
+    line-height: 1;
+    font-weight: var(--font-weight-regular);
+    color: #595959;
+    opacity: 0.7;
 }
 
 .vehicle-price-heading {
@@ -153,7 +194,7 @@
     justify-content: center;
     width: max-content;
     gap: 5px;
-    font-size: var(--font-body-md);
+    font-size: var(--font-body-sm);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
 }

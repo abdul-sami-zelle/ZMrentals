@@ -16,10 +16,11 @@ import axios from 'axios';
 import Toust from '@/modals/Toust/Toust';
 import Link from 'next/link';
 import Spinner from '@/loaders/Spinner/Spinner';
+import EmailEnquiryModal from '@/modals/EmailEnquiryModal/EmailEnquiryModal';
 
 const BookNowClient = () => {
   const url = `https://zm.skyhub.pk`
-  const { bookingVehicleData, bookingPayload, setBookingPayload } = useBookingContext()
+  const { bookingVehicleData, bookingPayload, setBookingPayload, validateForm } = useBookingContext()
   const searchParam = useSearchParams();
   const router = useRouter();
   const step = parseInt(searchParam.get('step')) || 1;
@@ -131,7 +132,7 @@ const BookNowClient = () => {
 
     } catch (error) {
       setISloading(false);
-      console.log("UnExpected Error", error);
+      console.error("UnExpected Error", error);
       setShowAvailableModal(true)
       setCloseType('reject');
       setSubmitBookingMessage({
@@ -193,8 +194,9 @@ const BookNowClient = () => {
 
     if (selectedTabIndex < 3) {
       if (selectedTabIndex === 2 && !isUserInfoFilled()) {
-        setTOustShow(true)
-        setToustMessage("Please Fill All The Information")
+        validateForm()
+        // setTOustShow(true)
+        // setToustMessage("Please Fill All The Information")
       } else {
         goToNewStep(selectedTabIndex + 1);
       }
@@ -244,6 +246,13 @@ const BookNowClient = () => {
     total += 0;
     return total.toFixed(2); // format to 2 decimal places if needed
   };
+
+  const [emailModal, setEmailModal] = useState(false);
+  const [modalType, setModalType] = useState('')
+  const handleOpenEmailEnquiry = (type) => {
+    setModalType(type)
+    setEmailModal(true);
+  }
 
 
 
@@ -303,7 +312,7 @@ const BookNowClient = () => {
                       <h3>Auckland City</h3>
                       <p>{formatDateInNZ(pickDropLocation.pickup_time)}</p>
                       <p className='pick-drop-time'>{formatTimeInNZ(pickDropLocation.pickup_time)}</p>
-                      <p className='edit-enquiry'>Edit Enquiry</p>
+                      <p className='edit-enquiry'>Edit Itinerary</p>
                     </div>
                     <div className='drop-off-section'>
                       <h3>Drop-off</h3>
@@ -329,10 +338,10 @@ const BookNowClient = () => {
                       <h3>{Object.keys(insuranceSeleted).length > 0 ? insuranceSeleted.name : bookingVehicleData?.insurance[0]?.name}</h3>
                     </span>
 
-                    <span>
+                    {/* <span>
                       <p>One Way Fee</p>
                       <h3>${Object.keys(insuranceSeleted).length > 0 ? parseInt(insuranceSeleted.rate) === 0 ? 0 : parseInt(insuranceSeleted?.rate) * totalDays : '0'}</h3>
-                    </span>
+                    </span> */}
 
                     {bookingPayload?.booking?.extras && bookingPayload?.booking?.extras.map((item, index) => (
                       <span key={index}>
@@ -342,10 +351,10 @@ const BookNowClient = () => {
                     ))}
 
 
-                    <span>
+                    {/* <span>
                       <p>Total Road Care <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' /></p>
                       <h3>$0</h3>
-                    </span>
+                    </span> */}
                   </div>
                   <div className='grand-total-section'>
                     <p>Grand Total</p>
@@ -353,11 +362,11 @@ const BookNowClient = () => {
                     {/* <h3>${Object.keys(insuranceSeleted).length > 0 ? bookingVehicleData.base_rate * totalDays + parseInt(insuranceSeleted?.rate) * totalDays : bookingVehicleData.base_rate * totalDays}</h3> */}
                   </div>
                   <div className='queries-section'>
-                    <span>
+                    <span onClick={() => handleOpenEmailEnquiry('email-qoute')}>
                       <FaEnvelope size={15} color='var(--primary-color)' />
                       <p>Email Enquiry</p>
                     </span>
-                    <span>
+                    <span onClick={() => handleOpenEmailEnquiry('qoute')}>
                       <CgFileDocument size={15} color='var(--primary-color)' />
                       <p>Save Quote</p>
                     </span>
@@ -385,6 +394,15 @@ const BookNowClient = () => {
         setShowToust={setTOustShow}
         message={toustMessage}
       />
+
+          <EmailEnquiryModal 
+        showEmailEnquiry={emailModal}
+        setShowEmailEnquiry={setEmailModal}
+        carObj={bookingVehicleData}
+        modalType={modalType}
+
+      />
+
     </div>
   )
 }

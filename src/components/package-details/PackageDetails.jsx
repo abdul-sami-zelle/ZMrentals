@@ -5,9 +5,14 @@ import './PackageDetails.css'
 import packageImage from '../../assets/images/mix/carbonClick-home.jpg'
 import Image from 'next/image'
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton'
+import { useRouter } from 'next/navigation'
 
 const PackageDetails = ({ data, sectionImage, packageHeading, flexDirection, buttonText, display , objectFit}) => {
     
+  const router = useRouter()
+  const handleNavigate = () => {
+    router.push('/locations')
+  }
 
   return (
     <div className='package-details-main-container' style={{flexDirection: flexDirection}}>
@@ -20,6 +25,7 @@ const PackageDetails = ({ data, sectionImage, packageHeading, flexDirection, but
                 <p key={index} className={index === 0 ? 'mobile-package-description-one' : 'mobile-package-description-after-first'}>{item}</p>
               ))}
               <SecondaryButton
+                  handleSecondaryButtonClick={handleNavigate}
                   secondaryButtonClass={'secondary-prop-class'}
                   width={'157px'}
                   height={'44px'}

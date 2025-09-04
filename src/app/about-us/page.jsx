@@ -14,7 +14,7 @@ export default function AboutUs() {
         paraOne={`Providing seamless, sustainable travel experiences with Auckland car rentals `}
         paraTwo={'Find out what makes us tick.'}
         buttonText={'What We Are About'}
-        servicesHeroBg={'/assets/About-us.jpg'}
+        servicesHeroBg={'/assets/main-banners/About-us.jpg'}
       />
 
       <div className="about-us-inner-section">

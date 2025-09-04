@@ -18,6 +18,8 @@ const Payments = ({ grandTotal, isChecked, setIsChecked }) => {
     '/assets/icons/master.png',
     '/assets/icons/visa.png',
   ]
+
+  
   const [selectPaymentType, setSelectPaymentType] = useState(0)
 
 

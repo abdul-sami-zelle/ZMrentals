@@ -2,10 +2,11 @@
 import React from 'react'
 import './SecondaryButton.css'
 
-const SecondaryButton = ({display, secondaryButtonClass, width, height, secondaryBorder, fontSize, lineHeight, fontWeight, textColor, secondaryBgColor, secondaryText}) => {
+const SecondaryButton = ({display, secondaryButtonClass, width, height, secondaryBorder, fontSize, lineHeight, fontWeight, textColor, secondaryBgColor, secondaryText, handleSecondaryButtonClick}) => {
   return (
     <button
       className={`secondary-button-main ${secondaryButtonClass}`}
+      onClick={handleSecondaryButtonClick}
       style={{
         display: display,
         width: width,

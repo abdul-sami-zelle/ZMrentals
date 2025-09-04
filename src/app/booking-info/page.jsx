@@ -52,7 +52,6 @@ const BookingInfo = () => {
 
         if (response.status === 200) {
 
-          console.log("[SUCCESS] Vehicles fetched successfully.");
           setSearchedVehicles(response.data);
 
           sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));

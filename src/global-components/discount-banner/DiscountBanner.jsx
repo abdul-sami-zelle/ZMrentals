@@ -1,11 +1,16 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import './DiscountBanner.css';
 import Image from 'next/image';
 import SecondaryButton from '../secondary-button/SecondaryButton';
+import SubscriptionModal from '../../modals/SubscriptionModal/SubscriptionModal'
 
 const DiscountBanner = ({ discountImage , marginBottom}) => {
+  const [showSubscribeModal, setShowSubscribeModal] = useState(false);
+  const handleSubscribeModal = () => {
+    setShowSubscribeModal(true)
+  }
   return (
     <div className='discount-banner-main-container' style={{marginBottom: marginBottom}}>
       <div className='discount-banner-inner-container'>
@@ -19,6 +24,7 @@ const DiscountBanner = ({ discountImage , marginBottom}) => {
           <span className='discount-banner-slogan-and-button'>
             <p className='discount-banner-slogan'>Join our ZM newsletter for exclusive deals, travel tips and inspirations</p>
             <SecondaryButton
+            handleSecondaryButtonClick={handleSubscribeModal}
               secondaryButtonClass={'secondary-prop-class'}
               width={'157px'}
               height={'44px'}
@@ -31,35 +37,14 @@ const DiscountBanner = ({ discountImage , marginBottom}) => {
               secondaryText={'Subscribe'}
             />
           </span>
-          {/* <div className='discount-banner-detail-container'>
-            <span>
-              <h3>Get Exclusive Deals For Your Next Adventure</h3>
-            </span>
-            <h3 className='mobile-view-discount-banner-heading'>Get Exclusive Deals For Your Next Adventure</h3>
-            <span>
-              <p>Join our ZM newsletter for exclusive deals, travel tips</p>
-              <p>and inspirations</p>
-            </span>
-            <p className='mobile-view-paragraph'>
-              Join our ZM newsletter for exclusive deals, travel tips and inspirations
-            </p>
-          </div>
-          <div className='discount-banner-button-container'>
-            <SecondaryButton
-              secondaryButtonClass={'secondary-prop-class'}
-              width={'157px'}
-              height={'44px'}
-              secondaryBgColor={'transparent'}
-              secondaryBorder={'2px solid var(--color-white)'}
-              textColor={'var(--color-white)'}
-              fontSize={'var(--font-body-lg)'}
-              lineHeight={'var(--line-height-body)'}
-              fontWeight={'var(--font-weight-body)'}
-              secondaryText={'Subscribe'}
-            />
-          </div> */}
         </div>
       </div>
+
+      {/* <SubscriptionModal 
+        showSubscription={showSubscribeModal}
+        setShowSubscription={setShowSubscribeModal}
+        imgUrl={'/assets/home/home_get_exclusive_image.jpg'}
+      /> */}
     </div>
   )
 }

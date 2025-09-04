@@ -32,12 +32,13 @@
   --font-body-18: 1.125rem;
   --font-body-lg: 1rem;
   --font-body-md: 0.875rem;
+  --font-body-sm: 0.675rem;
 
   
 
   /* Line Heights*/
   --line-height-heading: 1.2;
-  --line-height-body: 1.6;
+  --line-height-body: 1.5;
 
   /* Font Weight */
   --font-weight-light: 300;

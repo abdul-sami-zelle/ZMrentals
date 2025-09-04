@@ -47,7 +47,6 @@ const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setP
     setPackageSelected(sortInsurances(insurances)[0]?.insurance_option_id)
   }, [])
 
-  console.log("insurances data", insurances)
 
   return (
 

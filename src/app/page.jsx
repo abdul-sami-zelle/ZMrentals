@@ -106,10 +106,10 @@ export default function Home() {
       if (response.status === 200) {
         setSearchedVehicles(response.data);
       } else {
-        console.log("Unexpected response from server. Please try again later.")
+        console.error("Unexpected response from server. Please try again later.")
       }
     } catch (error) {
-      console.log("UnExpected Server Error", error);
+      console.error("UnExpected Server Error", error);
     }
   }
 

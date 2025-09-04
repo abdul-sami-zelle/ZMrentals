@@ -2,18 +2,22 @@ import React, { useEffect, useRef, useState } from 'react'
 import './DropdownInput.css'
 import { MdOutlineArrowDropDown } from "react-icons/md";
 
-const DropdownInput = ({ width, setSelectedCity, height, defaultValue, placeholder, data, bgColor, selectedValue, setSelectedValue , setHeight = false }) => {
+const DropdownInput = ({ width, setSelectedCity, type, setClicktype, height, defaultValue, placeholder, data, bgColor, selectedValue, setSelectedValue , setHeight = false }) => {
 
     const [showList, setShowList] = useState(false);
     // const [selectedValue, setSelectedValue] = useState('')
     const dropdownRef = useRef(null)
     const handleShowList = () => {
+        if(type === 'pick') {
+            setClicktype('pickup')
+        } else {
+            setClicktype('drop')
+        }
         setShowList((prevState) => prevState === true ? false : true)
     }
 
     const handleSelectValue = (value) => {
-        console.log("slected value on input", selectedValue)
-        setSelectedValue(value);
+        setSelectedValue(value.name);
         setShowList(false);
         if (setSelectedCity) setSelectedCity(value);
     }
@@ -47,7 +51,7 @@ const DropdownInput = ({ width, setSelectedCity, height, defaultValue, placehold
         </div>
         <div className={`dropdown-list-container ${showList ? 'show-drop-down-list' : ''}`} style={{height: showList ? height : 0}}>
             {data.map((item, index) => (
-                <p key={index} onClick={() => handleSelectValue(item)}>{item}</p>
+                <p key={index} onClick={() => handleSelectValue(item)}>{item.name}</p>
             ))}
         </div>
     </div>

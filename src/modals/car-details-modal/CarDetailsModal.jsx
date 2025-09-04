@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import './CarDetailsModal.css'
 import { IoClose } from "react-icons/io5";
-import mainImage from '../../assets/images/cars/images.jpg';
-import imageTwo from '../../assets/images/cars/images (1).jpg';
-import imageThree from '../../assets/images/cars/download.jpg';
-import imageFour from '../../assets/images/cars/download (1).jpg';
-import imageFive from '../../assets/images/cars/download (2).jpg';
-import imageSix from '../../assets/images/cars/download (3).jpg';
-import imageSeven from '../../assets/images/cars/download (4).jpg';
 import Image from 'next/image';
 import { TbAirConditioning } from "react-icons/tb";
 import { FaBluetoothB } from "react-icons/fa6";
-import { FaOilCan } from 'react-icons/fa';
-import { FaCar, FaTachometerAlt } from 'react-icons/fa';
+import { FaCar} from 'react-icons/fa';
 import { FaGasPump } from 'react-icons/fa';
 
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { WiTime3 } from "react-icons/wi";
-import { TbLuggage } from "react-icons/tb";
 import { PiEngine } from "react-icons/pi";
 import { FaUser } from "react-icons/fa";
 import { IoSpeedometerOutline } from "react-icons/io5";
@@ -27,11 +17,16 @@ import { BsFillFuelPumpFill } from "react-icons/bs";
 import { MdLuggage } from "react-icons/md";
 import { BsFillGearFill } from "react-icons/bs";
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
+import { handleScrolllTop } from '../../utils/midlewares'
 
-const CarDetailsModal = ({ showModal, handleClose, vehicleDetails }) => {
+import { CgFileDocument } from "react-icons/cg";
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { useBookingContext } from '@/context/bookingContext/bookingContext';
+
+const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSearched, emailModal }) => {
 
     const url = `https://zm.skyhub.pk`
-    // const { searchedVehicles } = useSearchVehicle()
     const { searchVehiclePayload, setSearchVehiclePayload, searchedVehicles } = useSearchVehicle()
     useEffect(() => {
         if (showModal) {
@@ -42,16 +37,14 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails }) => {
     }, [showModal])
 
     const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
-      const [showBookingButton, setShowBookingButton] = useState(false);
-      useEffect(() => {
-        if(pickup_location && drop_location && pickup_time && drop_time) {
-          setShowBookingButton(true);
+    const [showBookingButton, setShowBookingButton] = useState(false);
+    useEffect(() => {
+        if (pickup_location && drop_location && pickup_time && drop_time) {
+            setShowBookingButton(true);
         } else {
-          setShowBookingButton(false);
+            setShowBookingButton(false);
         }
-      }, [searchVehiclePayload])
-
-
+    }, [searchVehiclePayload])
 
     const isNullOrNA = (val) =>
         val === null ||
@@ -116,6 +109,54 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails }) => {
         },
     ]
 
+    const router = useRouter()
+    const { setBookingVehicleData } = useBookingContext()
+    const handleBookNow = async (e) => {
+        e.stopPropagation();
+        const api = `https://zm.skyhub.pk/cars/get/${vehicleDetails?.car_id}`;
+
+        try {
+
+            const response = await axios.get(api);
+            if (response.status === 200) {
+                // setShowBookingButton(validateSearchPayload(searchVehiclePayload))
+                setBookingVehicleData(response.data);
+                sessionStorage.setItem('vehicle-details', JSON.stringify(response.data));
+                router.push('/book-now');
+                handleClose()
+            }
+        } catch (error) {
+            console.error("Validation or Server Error:", error.message);
+            return;
+        }
+    }
+
+
+    const [bookingDays, setBookingDays] = useState({})
+
+    useEffect(() => {
+        const bookingDetails = JSON.parse(sessionStorage.getItem('pick_and_drop_details'));
+        setBookingDays(bookingDetails)
+    }, [])
+
+    function countDays(startDate, endDate) {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        // Convert both to UTC midnight (ignore local timezone)
+        const utcStart = Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate());
+        const utcEnd = Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate());
+
+        // Difference in days
+        const diffDays = Math.floor((utcEnd - utcStart) / (1000 * 60 * 60 * 24));
+
+        // Always include the start day
+        return diffDays + 1;
+    }
+
+
+
+
     return (
         <div className={`car-detail-modal-main-container ${showModal ? 'show-details-modal' : ''} `} onClick={handleClose}>
             <div className={`car-details-modal-inner-content-container ${showModal ? 'show-inner-modal-on-mobile-view' : ''}`}>
@@ -151,17 +192,48 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails }) => {
 
                     </div>
                 </div>
-                <div className='car-detail-modal-enquiry-section'>
-                    <span>
-                        <FaRegEnvelope size={20} color='var(--primary-color)' />
-                        Email Enquiry
-                    </span>
+                {!isVehicleSearched ? (
+                    <div className='car-detail-modal-enquiry-section'>
+                        <span onClick={(() => emailModal('email-qoute'))}>
+                            <FaRegEnvelope size={20} color='var(--primary-color)' />
+                            Email Enquiry
+                        </span>
 
-                    <span>
-                        {showBookingButton ? 'Book Now' : 'Enter your itinerary to show price'}
-                        <BsArrowRight size={20} color='var(--primary-color)' />
-                    </span>
-                </div>
+                        <span onClick={handleScrolllTop}>
+                            {showBookingButton ? 'Book Now' : 'Enter your itinerary to show price'}
+                            <BsArrowRight size={20} color='var(--primary-color)' />
+                        </span>
+                    </div>
+                ) : (
+                    <div className='car-detail-modal-footer-after-vehicle-searched'>
+                        <div className='car-detail-modal-footer-after-vehicle-searched-details'>
+                            <span onClick={() => emailModal('email-qoute')}>
+                                <FaRegEnvelope size={20} color='var(--primary-color)' />
+                                Email Enquiry
+                            </span>
+
+                            <div className='car-detail-modal-footer-after-vehicle-searched-total-and-per-day'>
+                                <span>
+                                    <h3>${vehicleDetails?.base_rate}</h3>
+                                    <p>NZD/Day</p>
+                                </span>
+
+                                <span>
+                                    {/* <h3>${vehicleDetails?.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> */}
+                                    <h3>${vehicleDetails.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3>
+                                    <p>Total</p>
+                                </span>
+                            </div>
+
+                            <span onClick={() => emailModal('qoute')}>
+                                <CgFileDocument size={20} />
+                                Save Qoute
+                            </span>
+                        </div>
+                        <button className='car-details-modal-book-now-button' onClick={handleBookNow}>Book Now</button>
+                    </div>
+                )}
+
             </div>
         </div>
     )

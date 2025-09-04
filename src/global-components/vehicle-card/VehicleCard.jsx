@@ -2,6 +2,8 @@ import React, { use, useEffect, useState } from 'react'
 import './VehicleCard.css';
 import Image from 'next/image';
 import { BsFillFuelPumpFill, BsFillGearFill } from "react-icons/bs";
+import { FaDroplet } from "react-icons/fa6";
+import { handleScrolllTop } from '../../utils/midlewares'
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
@@ -17,8 +19,11 @@ const VehicleCard = (
     transmission,
     fuelType,
     handleModalOpen,
-    vehicleId
+    vehicleId,
+    vehicleData
   }) => {
+
+  console.log("vehicle data", vehicleData)
 
   const { searchVehiclePayload, setSearchVehiclePayload } = useSearchVehicle()
   const [toustShow, setTOustShow] = useState(false)
@@ -26,12 +31,14 @@ const VehicleCard = (
 
   const router = useRouter();
   const { setBookingVehicleData } = useBookingContext()
-  
+
+  const { isVehicleSearched } = useSearchVehicle()
+
 
   const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
   const [showBookingButton, setShowBookingButton] = useState(false);
   useEffect(() => {
-    if(pickup_location && drop_location && pickup_time && drop_time) {
+    if (pickup_location && drop_location && pickup_time && drop_time) {
       setShowBookingButton(true);
     } else {
       setShowBookingButton(false);
@@ -47,7 +54,6 @@ const VehicleCard = (
       const response = await axios.get(api);
       if (response.status === 200) {
         setShowBookingButton(true);
-        // setShowBookingButton(validateSearchPayload(searchVehiclePayload))
         setBookingVehicleData(response.data);
         sessionStorage.setItem('vehicle-details', JSON.stringify(response.data));
         router.push('/book-now');
@@ -57,14 +63,34 @@ const VehicleCard = (
     } catch (error) {
       console.error("Validation or Server Error:", error.message);
       setShowBookingButton(false);
-      // ⛔️ Important: Stop further code if validation fails
       return;
     }
   };
 
+  const [bookingDays, setBookingDays] = useState({})
+
+  useEffect(() => {
+    const bookingDetails = JSON.parse(sessionStorage.getItem('pick_and_drop_details'));
+    setBookingDays(bookingDetails)
+  }, [])
+
+  function countDays(startDate, endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Convert both to UTC midnight (ignore local timezone)
+    const utcStart = Date.UTC(start.getUTCFullYear(), start.getUTCMonth(), start.getUTCDate());
+    const utcEnd = Date.UTC(end.getUTCFullYear(), end.getUTCMonth(), end.getUTCDate());
+
+    // Difference in days
+    const diffDays = Math.floor((utcEnd - utcStart) / (1000 * 60 * 60 * 24));
+
+    // Always include the start day
+    return diffDays + 1;
+  }
 
   return (
-    <div className='vehicle-card-main-container'>
+    <div className='vehicle-card-main-container' onClick={handleModalOpen}>
       <div className='vehicle-card-image-container'>
         <Image src={vehicleImage} alt='small car' width={315} height={160} />
       </div>
@@ -78,12 +104,19 @@ const VehicleCard = (
             </div>
           </span>
           <div className='price-and-book-now'>
-            <h3 className='vehicle-price-heading'>{seePrice}</h3>
+            {isVehicleSearched ? (
+              <div className='price-and-book-now-ammount'>
+                <span> <h3>${vehicleData.base_rate}</h3> <p>NZD/Day</p> </span>
+                <span> <h3>${vehicleData.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> <p>Total</p> </span>
+              </div>
+            ) : (
+              <h3 className='vehicle-price-heading' onClick={(e) => { e.stopPropagation(); handleScrolllTop() }}>{seePrice}</h3>
+            )}
             {/* <button className={`booking-button`} onClick={handleBookVehicle}>Book Now</button> */}
             <button className={`booking-button ${showBookingButton ? 'show-booking-button' : ''}`} onClick={handleBookVehicle}>Book Now</button>
           </div>
         </div>
-        <div className='vehicle-type' onClick={handleModalOpen}>
+        <div className='vehicle-type' >
           <div className='vehicle-fuel-type-and-gear-container'>
             <span>
               <BsFillGearFill size={20} color='var(--primary-color)' />
@@ -91,7 +124,7 @@ const VehicleCard = (
             </span>
 
             <span>
-              <BsFillFuelPumpFill size={20} color='var(--primary-color)' />
+              <FaDroplet size={20} color='var(--primary-color)' />
               {fuelType}
             </span>
           </div>

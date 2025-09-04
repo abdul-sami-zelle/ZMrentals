@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react'
 import './Vehicles.css'
 import BookingForm from '@/global-components/booking-form/BookingForm'
 import CarDetails from '../../components/car-details/CarDetails'
-import smallCar from '../../assets/images/cars/small_cars_menu_Tablet.jpg'
-import { HiUserGroup } from "react-icons/hi";
 import PackageDetails from '@/components/package-details/PackageDetails'
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext'
 import axios from 'axios'
@@ -15,7 +13,7 @@ import Toust from '../../modals/Toust/Toust'
 
 const Vehicles = () => {
 
-  const { searchVehiclePayload, setSearchVehiclePayload, searchedVehicles, setSearchedVehicles } = useSearchVehicle()
+  const { searchVehiclePayload, setSearchVehiclePayload, searchedVehicles, setSearchedVehicles, isVehicleSearched, setIsVehicleSearched } = useSearchVehicle()
   const [toustShow, setTOustShow] = useState(false)
   const [toustMessage, setToustMessage] = useState('')
 
@@ -27,10 +25,10 @@ const Vehicles = () => {
       if (response.status === 200) {
         setSearchedVehicles(response.data);
       } else {
-        console.log("Unexpected response from server. Please try again later.")
+        console.warn("Unexpected response from server. Please try again later.")
       }
     } catch (error) {
-      console.log("UnExpected Server Error", error);
+      console.error("UnExpected Server Error", error);
     }
   }
 
@@ -39,15 +37,6 @@ const Vehicles = () => {
       getAllVehicles();
     }
   }, []);
-
-  // useEffect(() => {
-  //   const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
-
-  //   if (pickup_location && drop_location && pickup_time && drop_time) {
-  //     handleSearchVehicles();
-  //   }
-  // }, [searchVehiclePayload]);
-
 
   const carsDetails = [
     {
@@ -151,20 +140,21 @@ const Vehicles = () => {
     const api = "https://zm.skyhub.pk/cars/available-cars";
     const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
 
+
     try {
       if (pickup_location && drop_location && pickup_time && drop_time) {
         setSearchedVehicles([])
         const response = await axios.post(api, searchVehiclePayload);
 
         if (response.status === 200) {
-
-          console.log("[SUCCESS] Vehicles fetched successfully.");
+          setIsVehicleSearched(true)
           setSearchedVehicles(response.data);
 
           sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
         } else {
           console.warn(`[WARN] Unexpected status code: ${response.status}`);
           alert("Unexpected response from server. Please try again later.");
+          setIsVehicleSearched(false)
         }
       } else {
         setTOustShow(true)
@@ -173,6 +163,7 @@ const Vehicles = () => {
 
 
     } catch (error) {
+      setIsVehicleSearched(false)
       if (error.response) {
         const status = error.response.status;
 

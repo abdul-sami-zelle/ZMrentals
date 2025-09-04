@@ -30,7 +30,7 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
                 } else {
                     setLoader(false)
                     console.warn(`[WARN] Unexpected status code: ${response.status}`);
-                    console.log("Unexpected response from server. Please try again later.");
+                    console.error("Unexpected response from server. Please try again later.");
 
                 }
             } else {

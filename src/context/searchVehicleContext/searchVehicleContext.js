@@ -14,6 +14,7 @@ export const SearchVehicleProvider = ({ children }) => {
     const [pickupTime, setPickupTime] = useState('')
     const [dropupCity, setDropupCity] = useState('')
     const [dropupTime, setDropupTime] = useState('')
+    const [isVehicleSearched, setIsVehicleSearched] = useState(false)
 
     const [searchVehiclePayload, setSearchVehiclePayload] = useState({
         "pickup_location": null,
@@ -119,6 +120,8 @@ export const SearchVehicleProvider = ({ children }) => {
             setSelectedPickupDate,
             selectedDropDate,
             setSelectedDropDate,
+            isVehicleSearched, 
+            setIsVehicleSearched,
         }}>
             {children}
         </SearchVehicleContext.Provider>

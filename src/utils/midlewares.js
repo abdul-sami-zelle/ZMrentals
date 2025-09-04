@@ -5,3 +5,7 @@ export const useDisableBodyScroll = (...states) => {
   }, [...states]);
 };
 
+export const handleScrolllTop = () => {
+  window.scrollTo({top: 0, behavior: 'smooth'})
+}
+

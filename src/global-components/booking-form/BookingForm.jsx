@@ -9,6 +9,7 @@ import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 import { useRouter } from 'next/navigation';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
+import axios from 'axios';
 
 const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow, handleSearchVehicles, setHeight = false }) => {
 
@@ -38,13 +39,39 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         'Mangere Auckland',
     ]
 
+    const [locations, setLocations] = useState([])
+    const getApi = async () => {
+        try {
+            const response = await axios.get(`https://zm.skyhub.pk/locations/get`);
+            setLocations(response.data.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+
+    useEffect(() => {
+        getApi();
+    }, []);
+
     //  Generate 24 hours function
+    // const generateTimeList = () => {
+    //     const times = [];
+    //     for (let hour = 0; hour < 24; hour++) {
+    //         const displayHour = hour % 12 === 0 ? 12 : hour % 12;
+    //         const suffix = hour < 12 ? 'AM' : 'PM';
+    //         times.push(`${displayHour.toString().padStart(2, '0')}:00 ${suffix}`);
+    //     }
+    //     return times;
+    // };
+
     const generateTimeList = () => {
         const times = [];
         for (let hour = 0; hour < 24; hour++) {
             const displayHour = hour % 12 === 0 ? 12 : hour % 12;
-            const suffix = hour < 12 ? 'AM' : 'PM';
-            times.push(`${displayHour.toString().padStart(2, '0')}:00 ${suffix}`);
+            const suffix = hour < 12 ? "AM" : "PM";
+            const formattedTime = `${displayHour.toString().padStart(2, "0")}:00 ${suffix}`;
+            times.push({ name: formattedTime });
         }
         return times;
     };
@@ -68,27 +95,36 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         setDropCalender(false); // hide after selection
     };
 
-    const handleLocationChange = () => {
-        setSearchVehiclePayload((prevValue) => ({
-            ...prevValue,
-            pickup_location: 4,
-            drop_location: 4
-        }))
+    const [clickType, setClicktype] = useState('')
+    const handleLocationChange = (item) => {
+
+        if (clickType === 'pickup') {
+            setSearchVehiclePayload((prevValue) => ({
+                ...prevValue,
+                pickup_location: item.id,
+            }))
+        } else {
+            setSearchVehiclePayload((prevValue) => ({
+                ...prevValue,
+                drop_location: item.id
+            }))
+        }
     }
 
+
     const handleSelectPickupTime = (value) => {
-        formatePickupDateAndTime(selectedPickupDate, value)
-        setPickupTime(value)
+        formatePickupDateAndTime(selectedPickupDate, value.name)
+        setPickupTime(value.name)
     }
 
     const handleDropofTime = (value) => {
-        setDropupTime(value);
-        handleDropofTimeAndDate(selectedDropDate, value)
+        setDropupTime(value.name);
+        handleDropofTimeAndDate(selectedDropDate, value.name)
     }
 
     const formatePickupDateAndTime = (date, time) => {
         // Combine selected date and selected time
-        const [hourMin, meridiem] = time.split(" ");
+        const [hourMin, meridiem] = time?.split(" ");
         let [hour, minute] = hourMin.split(":").map(Number);
 
         if (meridiem === "PM" && hour !== 12) hour += 12;
@@ -105,7 +141,6 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
 
         // Convert the date to ISO string with Z (treated as UTC)
         const formatted = nzDateTime.toISOString(); // gives: 2025-06-20T11:00:00.000Z
-        console.log("formated date", formatted)
         // Update your payload here:
         setSearchVehiclePayload(prev => ({
             ...prev,
@@ -148,12 +183,14 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                     <div className='booking-form-input-single-col'>
                         <DropdownInput
                             width={'100%'}
-                            height={'32px'}
+                            height={'64px'}
                             defaultValue={'Pick-up Location'}
                             placeholder={'Pick-up Location'}
                             setSelectedCity={handleLocationChange}
-                            data={citiesList}
+                            data={locations}
+                            type={'pick'}
                             bgColor={bgColor}
+                            setClicktype={setClicktype}
                             selectedValue={pickupCity}
                             setSelectedValue={setPickupCity}
                             setHeight={setHeight}
@@ -203,6 +240,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                                 data={generateTimeList()}
                                 setSelectedCity={handleSelectPickupTime}
                                 bgColor={bgColor}
+                                setClicktype={setClicktype}
                                 selectedValue={pickupTime}
                                 setSelectedValue={setPickupTime}
                             />
@@ -213,10 +251,13 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                     <div className='booking-form-input-single-col'>
                         <DropdownInput
                             width={'100%'}
-                            height={'32px'}
+                            height={'64px'}
                             defaultValue={'Drop-of Location'}
                             placeholder={'Drop-of Location'}
-                            data={citiesList}
+                            data={locations}
+                            type={'drop'}
+                            setSelectedCity={handleLocationChange}
+                            setClicktype={setClicktype}
                             selectedValue={dropupCity}
                             setSelectedValue={setDropupCity}
                             bgColor={bgColor}
@@ -267,6 +308,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                                 height={'162px'}
                                 defaultValue={'Time'}
                                 data={generateTimeList()}
+                                setClicktype={setClicktype}
                                 setSelectedCity={handleDropofTime}
                                 bgColor={bgColor}
                                 selectedValue={dropupTime}
