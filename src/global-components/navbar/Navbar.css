@@ -231,6 +231,21 @@
     color: var(--color-white);
 }
 
+
+.mobile-menu-other-options-top > a{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 12px 0px;
+    width: 100%;
+    height: max-content;
+    gap: 10px;
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-white);
+}
+
 .mobile-menu-other-options-bottom {
     display: flex;
     align-items: center;

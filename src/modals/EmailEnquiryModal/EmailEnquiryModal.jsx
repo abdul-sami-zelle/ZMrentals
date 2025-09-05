@@ -7,18 +7,6 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
 
     const [countries, setCountries] = useState([]);
 
-    const foundUs = [
-        "AA TRAVELS WEBSITE",
-        "BING / MNS SEARCH",
-        "BROUCHUR",
-        "EMAIL NEWSLETTER",
-        "ENTERTAINMENT BOOK",
-        "FRIENDS REFRRAL",
-        "GOOGLE SEARCH",
-        "GRAMMER TECH",
-        "NEWZEALAND.COM",
-    ]
-
     useEffect(() => {
         const fetchCountries = async () => {
             try {
@@ -37,6 +25,18 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
 
         fetchCountries();
     }, []);
+
+    const foundUs = [
+        "AA TRAVELS WEBSITE",
+        "BING / MNS SEARCH",
+        "BROUCHUR",
+        "EMAIL NEWSLETTER",
+        "ENTERTAINMENT BOOK",
+        "FRIENDS REFRRAL",
+        "GOOGLE SEARCH",
+        "GRAMMER TECH",
+        "NEWZEALAND.COM",
+    ]
 
     const [showCountry, setShowCountry] = useState(false);
     const handleOpenCountryList = () => {
@@ -194,7 +194,7 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                                 </span>
 
                                 <span className='email-qoute-price-total'>
-                                    <h3>${carObj.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3>
+                                    <h3>${carObj?.base_rate * countDays(bookingDays?.pickup_time, bookingDays?.drop_time)}</h3>
                                     <p>NZD Total</p>
                                 </span>
                             </span>

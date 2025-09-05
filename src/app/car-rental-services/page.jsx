@@ -75,7 +75,7 @@ const CarRentalServices = () => {
           </div>
         </div> */}
 
-        <Hero bgImage={'/assets/vehicles/car-02.jpg'} />
+        <Hero bgImage={'/assets/main-banners/car-rental.jpg'} />
 
 
       {/* <ServicesHero 

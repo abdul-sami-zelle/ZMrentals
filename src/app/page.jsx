@@ -11,7 +11,7 @@ import Locations from '../components/locations/Locations'
 import FrequentlyAsked from '../components/frequently-asked/FrequentlyAsked'
 import RollingContent from '../components/rolling-content/RollingContent'
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
-import Spinner from '../loaders/Spinner/Spinner';
+import MainLoader from '../loaders/MainLoader/MainLoader'
 import CarDetails from '@/components/car-details/CarDetails';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -123,8 +123,8 @@ export default function Home() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', backgroundColor: 'var(--background)' }}>
-      {loader && <Spinner />}
-      <Hero marginBottom='20px' bgImage={'/assets/vehicles/car-5.jpg'}/>
+      {loader && <MainLoader />}
+      <Hero marginBottom='20px' bgImage={'/assets/main-banners/home-page.jpg'}/>
 
       {carsDetails.map((item, index) => (
           <CarDetails

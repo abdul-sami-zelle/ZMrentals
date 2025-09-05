@@ -15,8 +15,8 @@ import CarDateNotAvailable from '../../modals/CarDateNotAvailable/CarDateNotAvai
 import axios from 'axios';
 import Toust from '@/modals/Toust/Toust';
 import Link from 'next/link';
-import Spinner from '@/loaders/Spinner/Spinner';
 import EmailEnquiryModal from '@/modals/EmailEnquiryModal/EmailEnquiryModal';
+import MainLoader from '@/loaders/MainLoader/MainLoader';
 
 const BookNowClient = () => {
   const url = `https://zm.skyhub.pk`
@@ -258,7 +258,7 @@ const BookNowClient = () => {
 
   return (
     <div className="book-now-page-main-container">
-      {isLoading && <Spinner />}
+      {isLoading && <MainLoader />}
       <div className="book-now-inner-section">
         <div className="book-now-max-width-container">
 
@@ -345,8 +345,8 @@ const BookNowClient = () => {
 
                     {bookingPayload?.booking?.extras && bookingPayload?.booking?.extras.map((item, index) => (
                       <span key={index}>
-                        <p> {bookingVehicleData?.extras?.find(extra => extra.id === item.extras_option_id).name} <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' /></p>
-                        <h3>${bookingVehicleData?.extras?.find(extra => extra.id === item.extras_option_id).rate * item.quantity * totalDays}</h3>
+                        <p> {bookingVehicleData?.extras?.find(extra => extra.id === item?.extras_option_id)?.name} <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' /></p>
+                        <h3>${bookingVehicleData?.extras?.find(extra => extra.id === item.extras_option_id)?.rate * item.quantity * totalDays}</h3>
                       </span>
                     ))}
 

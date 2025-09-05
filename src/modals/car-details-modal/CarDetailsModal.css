@@ -244,6 +244,68 @@
     cursor: pointer;
 }
 
+.mob-view-car-details-modal-price-and-qoute {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+}
+
+.mob-view-car-price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 25px;
+    border-bottom: 1px solid rgba(89, 89, 89, 0.5);
+}
+
+.mob-view-car-price > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    gap: 5px;
+    padding: 10px;
+    
+}
+
+.mob-view-car-price > span > h3 {
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.mob-view-car-price > span > p {
+    font-size: 13px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #535353;
+    opacity: 0.7;
+}
+
+.mob-view-email-and-qoute {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.mob-view-email-and-qoute > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    gap: 5px;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
 @media only screen and (max-width: 480px) {
     .car-details-modal-inner-content-container {
         width: 100%;
@@ -256,8 +318,8 @@
         flex-direction: column;
         gap: 0;
         /* border: 1px solid #f9f9f9; */
-        border-top-right-radius: 25px;
-        border-top-left-radius: 25px;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
         position: absolute;
         bottom: -50%;
         /* padding: 16px 0; */
@@ -266,7 +328,7 @@
 
     .car-details-modal-inner-content-container.show-inner-modal-on-mobile-view {
         bottom: 0;
-        height: 80vh;
+        height: 88vh;
     }
     .car-details--image-slide > img {
         width: 310px;
@@ -306,5 +368,12 @@
         gap: 16px;
         padding: 16px;
         width: 100%;
+    }
+
+    .car-detail-modal-footer-after-vehicle-searched-details {
+        display: none;
+    }
+    .mob-view-car-details-modal-price-and-qoute {
+        display: flex;
     }
 }

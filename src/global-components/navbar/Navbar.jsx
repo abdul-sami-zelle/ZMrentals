@@ -202,10 +202,10 @@ const Navbar = () => {
         <div className='mobile-menu-footer'>
 
           <div className='mobile-menu-other-options-top'>
-            <span>
+            <Link href={'/sign-up'} onClick={() => setOpenMenu(false)}>
               <HiOutlineUserCircle size={20} color='var(--color-white)' />
               Sign in
-            </span>
+            </Link>
 
             <span>
               <FaRegCheckCircle size={20} color='var(--color-white)' />

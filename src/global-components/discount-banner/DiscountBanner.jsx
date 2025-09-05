@@ -40,11 +40,11 @@ const DiscountBanner = ({ discountImage , marginBottom}) => {
         </div>
       </div>
 
-      {/* <SubscriptionModal 
+      <SubscriptionModal 
         showSubscription={showSubscribeModal}
         setShowSubscription={setShowSubscribeModal}
         imgUrl={'/assets/home/home_get_exclusive_image.jpg'}
-      /> */}
+      />
     </div>
   )
 }

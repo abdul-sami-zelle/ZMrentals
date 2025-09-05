@@ -92,7 +92,7 @@ const BookingInfo = () => {
   return (
     <div className='booking-info-main-container'>
 
-      <Hero bgImage={'/assets/vehicles/car-01.jpg'}/>
+      <Hero bgImage={'/assets/main-banners/booking-info.jpg'}/>
 
       {/* <div className='page-main-heading-container'>
           <div className='page-main-booking-form-container'>

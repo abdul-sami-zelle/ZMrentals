@@ -261,7 +261,8 @@
     height: auto;
     max-height: 180px;
     overflow-y: auto;
-    background-color: #a0a0a0;
+    background-color: #FFF;
+    border: 1px solid #afafaf;
 }
 
 .email-enquiry-country-select-body::-webkit-scrollbar {
@@ -381,4 +382,13 @@
 
 .active-booking-button {
     background-color: var(--primary-color);
+}
+
+@media only screen and (max-width: 480px) {
+    .email-enquiry-modal-main-container {
+        padding: 15px;
+    }
+    .emaill-enquiry-inner {
+        width: 100%;
+    }
 }

@@ -1,13 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "./Header.css";
-import PromotionalHeader from "../promotional-header/PromotionalHeader";
 
 import { MdOutlinePhoneIphone } from "react-icons/md";
 import { IoMailOutline } from "react-icons/io5";
-import { FaRegCheckCircle } from "react-icons/fa";
-import { HiOutlineUserCircle } from "react-icons/hi2";
-import { MdOutlineArrowDropDown } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
 import Navbar from "../navbar/Navbar";
 import Link from "next/link";
 
@@ -25,9 +22,7 @@ const Header = () => {
   const headerData = [
     { name: "+6421467261",  tel: "tel:+6421467261", icon: MdOutlinePhoneIphone },
     { name: "Email Us", tel: "mailto:info@zmrentals.co.nz", icon: IoMailOutline },
-    // { name: 'Manage Booking', icon: FaRegCheckCircle},
-    // { name: 'Check-in', icon: FaRegCheckCircle},
-    // { name: 'Sign in', icon: HiOutlineUserCircle},
+    { name: "Sing In", tel: "/sign-up", icon: FaRegUser },
   ];
 
   return (
@@ -44,31 +39,18 @@ const Header = () => {
                 </a>
               </span>
 
-            {/* {currentIndex === 1 ? (
-              <span>
-                Need help ordering?{" "}
-                <a className="toll-free-ancor" href="tel:2153521600">
-                  Call 215 352 1600
-                </a>
-              </span>
-            ) : currentIndex === 2 ? (
-              <span>
-                Learn about my{" "}
-                <Link href="/financing" className="toll-free-ancor">
-                  Financing Options
-                </Link>
-              </span>
-            ) : (
-              <span>Shop everyday low prices!</span>
-            )} */}
           </div>
 
           <ul className="header-list">
             {headerData.map((item, index) => (
               <li key={index} className="header-list-item">
                 {item.icon && <item.icon size={20} />}
-                <a href={item.tel} className="header-list-item-name">{item.name}</a>
-                {/* {item.down && <item.down size={20} className='header-icon' />} */}
+                {item.tel.startsWith('/sign-up') ? (
+                  <Link href={item.tel} className="header-list-item-name">{item.name}</Link>
+                ) : (
+                  <a href={item.tel} className="header-list-item-name">{item.name}</a>
+                )}
+                
               </li>
             ))}
           </ul>

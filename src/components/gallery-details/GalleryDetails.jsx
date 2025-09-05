@@ -82,11 +82,12 @@ const GalleryDetails = ({ flexDirection }) => {
                     ))}
                     <PrimaryButton
                         primaryMainClass={'primary-button-main-class'}
-                        primaryText={'Subscribe'}
+                        primaryText={'Search Cars'}
                         primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}
                         width={'160px'}
                         height={'40px'}
                         gap={'20px'}
+                        handleCLick={handleNavigate}
                         fontSize={'var(--font-body-sm)'}
                         lineHeight={'var(--line-height-body)'}
                         fontWeight={'var(--font-weight-medium)'}

@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 import Image from 'next/image';
 import { TbAirConditioning } from "react-icons/tb";
 import { FaBluetoothB } from "react-icons/fa6";
-import { FaCar} from 'react-icons/fa';
+import { FaCar } from 'react-icons/fa';
 import { FaGasPump } from 'react-icons/fa';
 
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
@@ -229,6 +229,34 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                                 <CgFileDocument size={20} />
                                 Save Qoute
                             </span>
+                        </div>
+
+                        <div className='mob-view-car-details-modal-price-and-qoute'>
+                            <div className='mob-view-car-price'>
+                                <span>
+                                    <h3>${vehicleDetails?.base_rate}</h3>
+                                    <p>NZD/Day</p>
+                                </span>
+
+                                <span>
+                                    {/* <h3>${vehicleDetails?.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> */}
+                                    <h3>${vehicleDetails.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3>
+                                    <p>Total</p>
+                                </span>
+                            </div>
+                            <div className='mob-view-email-and-qoute'>
+
+                                <span onClick={() => emailModal('email-qoute')}>
+                                    <FaRegEnvelope size={20} color='var(--primary-color)' />
+                                    Email Enquiry
+                                </span>
+
+                                <span onClick={() => emailModal('qoute')}>
+                                    <CgFileDocument size={20} />
+                                    Save Qoute
+                                </span>
+
+                            </div>
                         </div>
                         <button className='car-details-modal-book-now-button' onClick={handleBookNow}>Book Now</button>
                     </div>

@@ -58,35 +58,48 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
     return currentYear - birthYear;
   };
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768); // mobile breakpoint
+    };
+
+    handleResize(); // run on mount
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <div className='car-details-main-container' onClick={openModal} style={{maxWidth: maxWidth}}>
+    <div className='car-details-main-container' onClick={openModal} style={{ maxWidth: maxWidth }}>
       <h3 className={pathname === '/' ? 'main-page-section-heading' : 'section-main-heading'}>{data?.heading}</h3>
-      <div className='car-details-description-and-all-vehicles-link-container' style={{display: pathname === '/' ? 'none' : 'flex'}}>
+      <div className='car-details-description-and-all-vehicles-link-container' style={{ display: pathname === '/' ? 'none' : 'flex' }}>
         {/* <p>{data.description}</p> */}
         <Link href={'/'} className='global-heading-style'>{`Our Fleet`}</Link>
       </div>
       <div className='cars-cars-container'>
         {searchedVehicles.length !== 0 ? (
           searchedVehicles.slice(0, showLength).map((car, carIndex) => (
-          <VehicleCard
-            key={carIndex}
-            vehicleData={car}
-            vehicleId={car.car_id}
-            vehicleImage={url + car.image}
-            vehicleName={car.name}
-            vehicleAge={getAgeFromYear(car.details.model)}
-            seePrice={'See Price'}
-            transmission={car.details.transmission}
-            fuelType={car.details.fuel_type}
-            handleModalOpen={() => handleOpenDetailsModal(car)}
-          />
-        ))
+            <VehicleCard
+              key={carIndex}
+              vehicleData={car}
+              vehicleId={car.car_id}
+              vehicleImage={url + car.image}
+              vehicleName={car.name}
+              vehicleAge={getAgeFromYear(car.details.model)}
+              seePrice={'See Price'}
+              transmission={car.details.transmission}
+              fuelType={car.details.fuel_type}
+              handleModalOpen={() => handleOpenDetailsModal(car)}
+            />
+          ))
         ) : (
-            Array.from({length: 4}).map((_, index) => (
-              <CardShimmer key={index} />
-            ))
+          Array.from({ length: isMobile ? 1 : 4 }).map((_, index) => (
+            <CardShimmer key={index} />
+          ))
         )}
-        
+
       </div>
 
       <div className='vehicle-page-cars-details'>
@@ -101,7 +114,7 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
         emailModal={handleOpenEmailEnquiry}
       />
 
-      <EmailEnquiryModal 
+      <EmailEnquiryModal
         showEmailEnquiry={emailModal}
         setShowEmailEnquiry={setEmailModal}
         carObj={modalData}
