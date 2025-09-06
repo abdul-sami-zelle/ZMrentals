@@ -224,7 +224,7 @@
 }
 
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
     .location-details-desktop-main-container {
         display: none;
     }

@@ -79,7 +79,7 @@
     display: none;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
     .services-hero-main-container {
         align-items: start;
         justify-content: start;

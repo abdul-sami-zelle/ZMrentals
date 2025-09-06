@@ -6,8 +6,10 @@ import { FaQuestionCircle } from "react-icons/fa";
 import Link from 'next/link';
 import axios from 'axios';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
+import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 
-const Payments = ({ grandTotal, isChecked, setIsChecked }) => {
+
+const Payments = ({ grandTotal, isChecked, setIsChecked, selectPaymentType, setSelectPaymentType }) => {
   const payTime = [
     { title: 'Pay Later', val: 'pay-leter', disc: 'Pay when you check in or pick-up.', total: `$${grandTotal} NZD` },
     { title: 'Pay Now', val: 'pay-now', disc: 'Pay the full amount now, save time later.', total: `$${grandTotal} NZD` },
@@ -19,8 +21,6 @@ const Payments = ({ grandTotal, isChecked, setIsChecked }) => {
     '/assets/icons/visa.png',
   ]
 
-  
-  const [selectPaymentType, setSelectPaymentType] = useState(0)
 
 
 
@@ -31,10 +31,10 @@ const Payments = ({ grandTotal, isChecked, setIsChecked }) => {
 
       <div className='select-payment-type'>
         {payTime.map((item, index) => {
-          const disableOption = item.title === 'Pay Now';
+          const disableOption = item.title === 'Pay Noww';
           return (<div key={index} className={`pay-type-single-sec ${selectPaymentType === index ? 'active-select-payment' : ''}`} style={{ cursor: disableOption ? 'not-allowed' : 'pointer' }} onClick={() => { if (!disableOption) { setSelectPaymentType(index) } }}>
-            {index !== 0 && <div className='pay-option-overlay-container'></div>}
-            <input type='radio' name={item.val} checked={selectPaymentType === index} disabled={disableOption} readOnly />
+            {/* {index !== 0 && <div className='pay-option-overlay-container'></div>} */}
+            <input type='radio' name={item.val} checked={selectPaymentType === index} readOnly />
             <div className='selected-pay-type-detail'>
               <h3>{item.title}</h3>
               <p>{item.disc}</p>
@@ -82,17 +82,31 @@ const Payments = ({ grandTotal, isChecked, setIsChecked }) => {
         <p className={`processing-fee-text ${selectPaymentType !== 0 ? 'hide-payment-proccessing-fee' : ''}`}>Payment processing fee</p>
       </div> */}
 
+      {/* Stripe Card Input */}
+      {selectPaymentType === 1 && (
+        <div className={`payment-input-details`}>
+          <CardElement
+            options={{
+              style: {
+                base: { fontSize: '16px', color: '#000' },
+                invalid: { color: 'red' },
+              },
+            }}
+          />
+        </div>
+      )}
+
       <span className='payment-policy-hightlight'>
         <p>Heads up, all online payments are subject to a non-refundable payment processing fee. </p>
         <FaQuestionCircle size={15} color='var(--primary-color)' className='payment-policy-icon' />
       </span>
 
       <span className='agree-to-terms-and-conditions-highlight'>
-        <input 
-          type='checkbox' 
+        <input
+          type='checkbox'
           id='terms-checkbox'
           checked={isChecked}
-          onChange={(e) => setIsChecked(e.target.checked)} 
+          onChange={(e) => setIsChecked(e.target.checked)}
         />
         <span className="checkmark"></span>
         <label htmlFor='terms-checkbox'>

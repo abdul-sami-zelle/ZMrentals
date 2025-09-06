@@ -109,7 +109,7 @@
     font-weight: var(--font-weight-regular);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
     .popular-cars-inner-container {
         display: flex;
         flex-direction: column;

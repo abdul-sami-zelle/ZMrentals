@@ -98,7 +98,7 @@
     color: var(--secondary-color);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
     .rental-policies-container {
         display: flex;
         align-items: center;

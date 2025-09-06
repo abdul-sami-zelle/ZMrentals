@@ -102,7 +102,7 @@
     font-weight: var(--font-weight-regular);
 } */
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
     .why-choose-us-inner-container {
         padding: 16px;
         gap: 16px;

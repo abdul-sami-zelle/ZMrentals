@@ -71,7 +71,7 @@
     height: 30px;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
     .why-with-us-main-container {
         padding: 0px;
     }

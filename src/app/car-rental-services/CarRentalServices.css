@@ -52,7 +52,7 @@
     padding: 0px 56px 50px 56px;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
     .rental-services-max-width-container {
         gap: 25px;
         padding: 0 16px;

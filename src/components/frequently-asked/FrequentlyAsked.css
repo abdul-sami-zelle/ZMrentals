@@ -138,7 +138,7 @@
     font-weight: var(--font-weight-regular);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
     .frequently-asked-outer-container {
         align-items: start;
         justify-content: start;

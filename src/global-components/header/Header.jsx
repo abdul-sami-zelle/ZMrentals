@@ -22,7 +22,7 @@ const Header = () => {
   const headerData = [
     { name: "+6421467261",  tel: "tel:+6421467261", icon: MdOutlinePhoneIphone },
     { name: "Email Us", tel: "mailto:info@zmrentals.co.nz", icon: IoMailOutline },
-    { name: "Sing In", tel: "/sign-up", icon: FaRegUser },
+    { name: "Sign In", tel: "/sign-up", icon: FaRegUser },
   ];
 
   return (

@@ -17,8 +17,11 @@ import Toust from '@/modals/Toust/Toust';
 import Link from 'next/link';
 import EmailEnquiryModal from '@/modals/EmailEnquiryModal/EmailEnquiryModal';
 import MainLoader from '@/loaders/MainLoader/MainLoader';
+import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 
 const BookNowClient = () => {
+  const stripe = useStripe();
+  const elements = useElements();
   const url = `https://zm.skyhub.pk`
   const { bookingVehicleData, bookingPayload, setBookingPayload, validateForm } = useBookingContext()
   const searchParam = useSearchParams();
@@ -32,6 +35,8 @@ const BookNowClient = () => {
 
   const [toustShow, setTOustShow] = useState(false)
   const [toustMessage, setToustMessage] = useState('')
+
+  const [selectPaymentType, setSelectPaymentType] = useState(0)
 
   function getTotalDays(pickupISO, dropISO) {
     const pickupDate = new Date(pickupISO);
@@ -78,6 +83,7 @@ const BookNowClient = () => {
   })
 
   const [isLoading, setISloading] = useState(false)
+  const [paymentError, setPaymentError] = useState("");
   const handleCompleteBooking = async () => {
     const api = `https://zm.skyhub.pk/booking/add-booking`;
 
@@ -117,7 +123,7 @@ const BookNowClient = () => {
 
         sessionStorage.removeItem('pick_and_drop_details');
 
-        
+
 
       } else {
         setISloading(false);
@@ -132,7 +138,7 @@ const BookNowClient = () => {
 
     } catch (error) {
       setISloading(false);
-      console.error("UnExpected Error", error);
+      console.log("UnExpected Error", error);
       setShowAvailableModal(true)
       setCloseType('reject');
       setSubmitBookingMessage({
@@ -142,6 +148,181 @@ const BookNowClient = () => {
       })
     } finally { setISloading(false) }
   }
+
+  // Handle Pay Now
+const handlePayNowAndBook = async () => {
+  try {
+    setISloading(true);
+    setPaymentError('');
+
+    // 1️⃣ Create booking first
+    const bookingResponse = await axios.post(
+      `https://zm.skyhub.pk/booking/add-booking`,
+      bookingPayload
+    );
+
+    if (bookingResponse.status !== 201) {
+      setShowAvailableModal(true);
+      setCloseType('reject');
+      setSubmitBookingMessage({
+        head: 'Selected Car Not Available',
+        para: `Sorry, the selected date is already taken`,
+        link: 'Please Try Another Date',
+      });
+      return;
+    }
+
+    console.log("Booking created successfully:", bookingResponse.data);
+
+    // 2️⃣ Proceed with Stripe Payment
+    if (!stripe || !elements) throw new Error("Stripe not initialized");
+
+    const { data } = await axios.post(
+      'https://zm.skyhub.pk/create-payment-intent',
+      {
+        amount: getGrandTotal() * 100, // convert to cents
+        currency: 'NZD',
+        booking_id: bookingResponse.data.booking_id, // send booking id
+      }
+    );
+
+    const clientSecret = data.clientSecret;
+
+    // 3️⃣ Confirm card payment
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: `${bookingPayload.user.firstname || 'Guest'} ${bookingPayload.user.lastname || ''}`.trim(),
+        },
+      },
+    });
+
+    // 4️⃣ Handle payment result
+    if (result.error) {
+      setPaymentError(result.error.message);
+      console.error("Payment error:", result.error.message);
+
+      setShowAvailableModal(true);
+      setCloseType('reject');
+      setSubmitBookingMessage({
+        head: 'Payment Failed',
+        para: result.error.message,
+        link: 'Try Again',
+      });
+
+    } else {
+      const status = result.paymentIntent.status;
+
+      if (status === 'succeeded') {
+        // ✅ Payment successful
+        setShowAvailableModal(true);
+        setCloseType('success');
+        setSubmitBookingMessage({
+          head: 'Paid Successfully!',
+          para: `Your Booking has been Confirmed. We'll monitor your arrival to make sure we have your car ready on time`,
+          link: 'Explore More Options',
+        });
+
+        // Reset booking form
+        setBookingPayload({
+          booking: {
+            car_id: null,
+            pickup_location: "",
+            drop_location: "",
+            pickup_time: "",
+            drop_time: "",
+            extras: [],
+            insurance_id: null,
+          },
+          user: {
+            firstname: "",
+            lastname: "",
+            email: "",
+            phone: "",
+            country: "",
+            how_find_us: "",
+            travel_reason: "Leisure",
+          },
+        });
+
+        sessionStorage.removeItem('pick_and_drop_details');
+
+      } else if (status === 'requires_action' || status === 'requires_source_action') {
+        // Handle 3D Secure
+        const confirmResult = await stripe.confirmCardPayment(clientSecret);
+        if (confirmResult.error) {
+          setPaymentError(confirmResult.error.message);
+          setShowAvailableModal(true);
+          setCloseType('reject');
+          setSubmitBookingMessage({
+            head: 'Payment Failed',
+            para: confirmResult.error.message,
+            link: 'Try Again',
+          });
+        } else if (confirmResult.paymentIntent.status === 'succeeded') {
+          setCloseType('success');
+          setSubmitBookingMessage({
+            head: 'Paid Successfully!',
+            para: `Your Booking has been Confirmed. We'll monitor your arrival to make sure we have your car ready on time`,
+            link: 'Explore More Options',
+          });
+
+          // Reset booking form
+          setBookingPayload({
+            booking: {
+              car_id: null,
+              pickup_location: "",
+              drop_location: "",
+              pickup_time: "",
+              drop_time: "",
+              extras: [],
+              insurance_id: null,
+            },
+            user: {
+              firstname: "",
+              lastname: "",
+              email: "",
+              phone: "",
+              country: "",
+              how_find_us: "",
+              travel_reason: "Leisure",
+            },
+          });
+
+          sessionStorage.removeItem('pick_and_drop_details');
+        }
+      } else {
+        // Other failure
+        setPaymentError('Payment could not be completed.');
+        setShowAvailableModal(true);
+        setCloseType('reject');
+        setSubmitBookingMessage({
+          head: 'Payment Failed',
+          para: 'Your payment could not be completed. Please try again.',
+          link: 'Try Again',
+        });
+      }
+    }
+
+  } catch (error) {
+    console.error("Error in booking/payment:", error);
+    setPaymentError(error.message);
+
+    setShowAvailableModal(true);
+    setCloseType('reject');
+    setSubmitBookingMessage({
+      head: 'Something went wrong',
+      para: `Please try again later`,
+      link: 'Try Again',
+    });
+
+  } finally {
+    setISloading(false);
+  }
+};
+
+
 
   const [pickDropLocation, setPickDropLocation] = useState({});
   const [totalDays, setTotalDays] = useState(0);
@@ -194,21 +375,27 @@ const BookNowClient = () => {
 
     if (selectedTabIndex < 3) {
       if (selectedTabIndex === 2 && !isUserInfoFilled()) {
-        validateForm()
-        // setTOustShow(true)
-        // setToustMessage("Please Fill All The Information")
+        setTOustShow(true)
+        setToustMessage("Please Fill All The Information")
       } else {
         goToNewStep(selectedTabIndex + 1);
       }
     } else {
-      handleCompleteBooking()
+      if (selectPaymentType === 0) {
+        handleCompleteBooking()
+      } else if (selectPaymentType === 1) {
+        handlePayNowAndBook()
+      } else {
+
+      }
+
     }
   }
 
   const [showCarAvailableModal, setShowAvailableModal] = useState(false);
   const [closeType, setCloseType] = useState('')
   const handleCloseCarNotAvailableModal = () => {
-    if(closeType === 'success') {
+    if (closeType === 'success') {
       setShowAvailableModal(false)
       router.push('/')
     } else {
@@ -296,7 +483,7 @@ const BookNowClient = () => {
               {selectedTabIndex === 0 ? <InsuranceType insurances={bookingVehicleData.insurance} setInsuranceSelected={setInsuranceSelected} packageSelected={packageSelected} setPackageSelected={setPackageSelected} />
                 : selectedTabIndex === 1 ? <Extras extras={bookingVehicleData.extras} />
                   : selectedTabIndex === 2 ? <HirerDetails />
-                    : <Payments grandTotal={getGrandTotal()} isChecked={isChecked} setIsChecked={setIsChecked} />}
+                    : <Payments grandTotal={getGrandTotal()} isChecked={isChecked} setIsChecked={setIsChecked} selectPaymentType={selectPaymentType} setSelectPaymentType={setSelectPaymentType} />}
 
               <button disabled={selectedTabIndex > 2 && !isChecked} className={`payment-continue-button ${selectedTabIndex > 2 && !isChecked ? 'disable-continue-booking' : ''}`} onClick={() => handleBookNow()}>{selectedTabIndex > 2 ? 'Complete Booking' : 'Continue'}</button>
 
@@ -395,7 +582,7 @@ const BookNowClient = () => {
         message={toustMessage}
       />
 
-          <EmailEnquiryModal 
+      <EmailEnquiryModal
         showEmailEnquiry={emailModal}
         setShowEmailEnquiry={setEmailModal}
         carObj={bookingVehicleData}

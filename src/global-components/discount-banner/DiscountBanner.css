@@ -103,7 +103,7 @@
     color: var(--primary-color) !important;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
     .discount-banner-inner-container {
         flex-direction: column;
         gap: 15px;

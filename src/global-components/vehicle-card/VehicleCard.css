@@ -206,7 +206,7 @@
     color: var(--primary-color);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 580px) {
     .vehicle-card-main-container {
         flex: 0 0 auto !important;
         min-width: 250px !important; /* You can adjust this based on your design */

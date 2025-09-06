@@ -5,6 +5,7 @@ import Header from "@/global-components/header/Header";
 import Footer from '@/global-components/footer/Footer';
 import {SearchVehicleProvider} from '../context/searchVehicleContext/searchVehicleContext'
 import {BookingProvider} from '../context/bookingContext/bookingContext'
+import StripeProvider from '../context/stripeProvider/stripeProvider'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,21 +42,19 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        
         <link rel="icon" href="/favicon.png" sizes="any" />
-        
       </head>
-
-      <body suppressHydrationWarning style={{ backgroundColor: '#FFFFFF' }} >
+      <body suppressHydrationWarning style={{ backgroundColor: '#FFFFFF' }}>
         <SearchVehicleProvider>
           <BookingProvider>
-
-          <Header />
-          {children}
-          <Footer />
+            <StripeProvider>
+              <Header />
+              {children}
+              <Footer />
+            </StripeProvider>
           </BookingProvider>
         </SearchVehicleProvider>
       </body>
     </html>
-  );
+  )
 }

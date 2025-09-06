@@ -124,4 +124,12 @@
     .date-not-available-modal-footer > h3 {
         font-size: 15px;
     }
+
+
+}
+
+@media only screen and (max-width: 580px){
+    .date-not-available-modal-inner-container{
+        width: 90%;
+    }
 }
