@@ -71,7 +71,7 @@
     font-size: var(--font-body-18);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    color: #000;
     /* color: #fff; */
     text-align: start;
 }
@@ -128,7 +128,7 @@
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     text-align: start;
-    color: var(--primary-color);
+    color: #000;
 }
 
 .mobile-locations-list-main-container {
@@ -146,13 +146,13 @@
     gap: 10px;
     align-items: center;
     justify-content: start;
-    color: var(--primary-color);
+    color: #000;
     font-size: var(--font-body-md);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-medium);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
     .location-outer-main-container {
         display: none;
     }

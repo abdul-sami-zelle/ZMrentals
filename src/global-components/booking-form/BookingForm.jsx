@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import axios from 'axios';
 
-const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow, handleSearchVehicles, setHeight = false }) => {
+const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow, handleSearchVehicles, setHeight = false, isPickupSelected, setIsPickupSelected }) => {
 
     const [pickupCalender, setPickupCalender] = useState(false);
     const [dropCalender, setDropCalender] = useState(false);
@@ -33,10 +33,16 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         setSelectedPickupDate,
         selectedDropDate,
         setSelectedDropDate,
+        driverAge, 
+        setDriverAge,
     } = useSearchVehicle();
 
     const citiesList = [
         'Mangere Auckland',
+    ]
+
+    const driverAgeList = [
+        {name: '18'}, {name: '19'}, {name: '20'}, {name: '21'}, {name: '22'}, {name: '23'}, {name :'24'}, {name :'25+'}
     ]
 
     const [locations, setLocations] = useState([])
@@ -49,21 +55,9 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         }
     };
 
-
     useEffect(() => {
         getApi();
     }, []);
-
-    //  Generate 24 hours function
-    // const generateTimeList = () => {
-    //     const times = [];
-    //     for (let hour = 0; hour < 24; hour++) {
-    //         const displayHour = hour % 12 === 0 ? 12 : hour % 12;
-    //         const suffix = hour < 12 ? 'AM' : 'PM';
-    //         times.push(`${displayHour.toString().padStart(2, '0')}:00 ${suffix}`);
-    //     }
-    //     return times;
-    // };
 
     const generateTimeList = () => {
         const times = [];
@@ -89,7 +83,6 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         setPickupCalender(false); // hide after selection
     };
 
-
     const handleDropDateChange = (date) => {
         setSelectedDropDate(date);
         setDropCalender(false); // hide after selection
@@ -103,6 +96,10 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                 ...prevValue,
                 pickup_location: item.id,
             }))
+            if (searchVehiclePayload.pickup_location !== '') {
+                setIsPickupSelected(true)
+            }
+
         } else {
             setSearchVehiclePayload((prevValue) => ({
                 ...prevValue,
@@ -110,7 +107,6 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
             }))
         }
     }
-
 
     const handleSelectPickupTime = (value) => {
         formatePickupDateAndTime(selectedPickupDate, value.name)
@@ -176,11 +172,20 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         }));
     };
 
+    
+    const handleDriverAge = (age) => {
+        setSearchVehiclePayload((prev) => ({
+            ...prev,
+            driver_age: age.name
+        }))
+        setDriverAge(age.name)
+    }
+
     return (
-        <div className='booking-form-main-container' style={{ boxShadow: boxShadow }}>
+        <div className={`booking-form-main-container ${isPickupSelected ? 'control-booking-location-contianer' : ''}`} style={{ boxShadow: boxShadow }}>
             <div className='booking-form-inputs-container'>
                 <div className='booking-form-inputs'>
-                    <div className='booking-form-input-single-col'>
+                    <div className='booking-form-input-single-col-pick-up'>
                         <DropdownInput
                             width={'100%'}
                             height={'64px'}
@@ -248,7 +253,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
 
                     </div>
 
-                    <div className='booking-form-input-single-col'>
+                    <div className={`booking-form-input-single-col-drop-off ${isPickupSelected ? 'show-drop-location' : ''}`}>
                         <DropdownInput
                             width={'100%'}
                             height={'64px'}
@@ -325,13 +330,27 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                     primaryText={primaryButtonText}
                     primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}
                     width={'192px'}
-                    height={'52px'}
+                    height={'45px'}
                     gap={'20px'}
                     fontSize={'var(--font-body-lg)'}
                     lineHeight={'var(--line-height-body)'}
                     fontWeight={'var(--font-weight-bold)'}
                 />
-                <p className='add-promo-option' style={{ color: textColor, fontWeight: 700, }}> Add a promo code</p>
+                <DropdownInput
+                    width={'100%'}
+                    height={'120px'}
+                    defaultValue={'Driver Age'}
+                    placeholder={'Driver Age'}
+                    setSelectedCity={handleDriverAge}
+                    data={driverAgeList}
+                    // type={'pick'}
+                    bgColor={bgColor}
+                    setClicktype={setClicktype}
+                    selectedValue={driverAge}
+                    setSelectedValue={setDriverAge}
+                    setHeight={setHeight}
+                />
+                {/* <p className='add-promo-option' style={{ color: textColor, fontWeight: 700, }}> Add a promo code</p> */}
             </div>
         </div>
     )

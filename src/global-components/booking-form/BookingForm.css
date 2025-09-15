@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px;
-    width: 100%;
+    width: 700px;
     height: auto;
     z-index: 99999;
     gap: 30px;
@@ -11,6 +11,11 @@
     border-top-right-radius: 25px;
     border-bottom-left-radius: 25px;
     backdrop-filter: blur(5px);
+    transition: all 0.3s ease-in-out;
+}
+
+.booking-form-main-container.control-booking-location-contianer {
+    width: 100%;
 }
 
 .booking-form-inputs-container {
@@ -30,13 +35,30 @@
     width: 100%;
 }
 
-.booking-form-input-single-col {
+
+
+.booking-form-input-single-col-pick-up {
     width: 100%;
     align-items: center;
     justify-content: center;
     display: flex;
     flex-direction: column;
     gap: 8px;
+}
+
+.booking-form-input-single-col-drop-off {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    display: none;
+    transition: all0.3s ease-in-out;
+}
+
+.booking-form-input-single-col-drop-off.show-drop-location {
+    display: flex;
 }
 
 .booking-time-container {
@@ -81,10 +103,10 @@
 
 .booking-form-confirm-button-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     align-items: start;
     height: 100%;
-    gap: 15px;
+    gap: 8px;
     justify-content: start;
     /* width: 30%; */
     /* width: max-content; */
@@ -119,6 +141,10 @@
     background-color: var(--color-white);
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 15px;
+}
+.react-calendar {
+    width: 100%;
+    min-width: 280px;
 }
 
 .booking-pickup-calender-container .react-calendar,
@@ -278,13 +304,36 @@
     border-radius: 15px;
 }
 
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+    .booking-form-main-container {
+        flex-direction: column;
+        width: 100%;
+        align-items: start;
+        justify-content: start;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .booking-form-main-container.control-booking-location-contianer {
+        width: 100%;
+    }
+    .booking-form-inputs {
+        flex-direction: column;
+    }
+}
+
 @media only screen and (max-width: 480px) {
     .booking-form-main-container {
         flex-direction: column;
         align-items: start;
+        width: 100%;
         justify-content: start;
         padding: 10px;
-        gap: 15px;
+        gap: 10px;
+    }
+
+    .booking-form-main-container.control-booking-location-contianer {
+        width: 100%;
     }
 
     .booking-form-inputs-container {
@@ -299,5 +348,6 @@
         width: 100%;
         align-items: start;
         justify-content: start;
+        
     }
 }

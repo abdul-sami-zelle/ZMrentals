@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     /* width: 100%; */
-    flex-shrink: 0;
+    /* flex-shrink: 0; */
     padding: 6px;
     /* min-width: 310px; */
     /* max-width: 310px; */

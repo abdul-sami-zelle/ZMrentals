@@ -14,7 +14,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     height: 56px;
 }
 
@@ -32,6 +32,7 @@
     width: max-content;
     height: 100%;
     gap: 10px;
+    padding: 0 15px;
     list-style: none;
 }
 
@@ -60,6 +61,25 @@
     background-color: var(--primary-color);
     color: var(--color-white);
     border-radius: 25px;
+}
+
+.nav-login-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: max-content; cursor: pointer;
+    display: flex;
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-bold);
+    height: max-content;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 20px;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
 }
 
 /* Drop down */
@@ -267,7 +287,7 @@
     color: var(--color-white);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
     .navbar-main-container {
         display: none;
     }

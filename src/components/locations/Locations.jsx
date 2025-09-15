@@ -13,7 +13,7 @@ const Locations = () => {
         <div className='locations-main-container'>
           <div className='nz-map-locations'>
             <span>
-              <TfiLocationPin size={40} color='var(--primary-color)' />
+              <TfiLocationPin size={40} color='#000' />
               Auckland City
             </span>
           </div>
@@ -28,7 +28,7 @@ const Locations = () => {
             <div className='locations-list-main-container'>
               {locationsData.map((item, index) => (
                 <Link key={index} href={item.link}>
-                  <TfiLocationPin size={30} color='var(--primary-color)' />
+                  <TfiLocationPin size={30} color='#000' />
                   {item.branchName}
                 </Link>
               ))}
@@ -48,7 +48,7 @@ const Locations = () => {
             <div className='mobile-locations-list-main-container'>
               {locationsData.map((item, index) => (
                 <Link key={index} href={item.link}>
-                  <TfiLocationPin size={20} color='var(--primary-color)' />
+                  <TfiLocationPin size={20} color='#000' />
                   {item.branchName}
                 </Link>
               ))}

@@ -12,6 +12,7 @@ import { IoMailOutline } from "react-icons/io5";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { HiOutlineUserCircle } from "react-icons/hi2";
 import { MdOutlineArrowDropDown } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
 
 import beforeImage from '../../assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg'
 import carImage from '../../assets/images/cars/small_cars_menu_Tablet.jpg'
@@ -37,10 +38,6 @@ const Navbar = () => {
         { name: 'Small Cars', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
         { name: 'Electric Vehicles', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
         { name: 'Hybrid Cars', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
-        // { name: 'Large Cars / SUVs', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
-        // { name: '4 Wheel Drive', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
-        // { name: 'Van or People Carrier', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
-        // { name: 'Car Rental Accessories', image: '/assets/images/explore-nz/Travel_Guides_menu_Tablet.jpg', link: '#', width: '144px', height: '72px' },
       ]
     },
     {
@@ -123,9 +120,9 @@ const Navbar = () => {
   const handleNavigate = (link) => {
     router.push(link)
     setOpenMenu(false)
-  } 
+  }
 
-  const [navItem, setNavItem ]= useState('');
+  const [navItem, setNavItem] = useState('');
 
 
   const currentPath = usePathname();
@@ -134,11 +131,11 @@ const Navbar = () => {
     const pathWithoutSlash = currentPath.startsWith('/') ? currentPath.slice(1) : currentPath
     const splitedPath = pathWithoutSlash.split('-');
     setNavItem(splitedPath.join(' ').toLowerCase())
-    
+
   }, [currentPath])
 
-  
-  
+
+
 
 
 
@@ -166,6 +163,17 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
+
+            
+            <Link
+              className='nav-login-item'
+              href={'/sign-up'}
+            >
+              <FaRegUser />
+              Login
+            </Link>
+
+
         </nav>
       </div>
 
@@ -237,30 +245,30 @@ const Navbar = () => {
       {/* Drop down  */}
       {/* {
         currentIndex !== null && navData.find((item) => item.id === currentIndex)?.dropdown && ( */}
-          
-          <div
-            className={`nav-drop-down-main-container ${currentIndex !== null && navData.find((item) => item.id === currentIndex)?.dropdown ? 'show-drop-down' : ''} `}
-            onMouseEnter={() => setCurrentIndex(currentIndex)}
-            // Close the dropdown when the cursor leaves
-            onMouseLeave={() => setCurrentIndex(null)}
-          >
-            {
-              // Dynamically render dropdown content based on the current item
-              getDropdownData()?.data.map((dataItem, index) => {
-                return <div key={index} style={{ width: dataItem.width }}>
-                  <NavCard
-                    name={dataItem.name}
-                    image={dataItem.image}
-                    navLink={dataItem.link}
-                    width={dataItem.width}
-                    selectedIndex={index}
-                    height={dataItem.height}
-                  />
-                </div>
-            })
-            }
-          </div>
-        {/* )
+
+      <div
+        className={`nav-drop-down-main-container ${currentIndex !== null && navData.find((item) => item.id === currentIndex)?.dropdown ? 'show-drop-down' : ''} `}
+        onMouseEnter={() => setCurrentIndex(currentIndex)}
+        // Close the dropdown when the cursor leaves
+        onMouseLeave={() => setCurrentIndex(null)}
+      >
+        {
+          // Dynamically render dropdown content based on the current item
+          getDropdownData()?.data.map((dataItem, index) => {
+            return <div key={index} style={{ width: dataItem.width }}>
+              <NavCard
+                name={dataItem.name}
+                image={dataItem.image}
+                navLink={dataItem.link}
+                width={dataItem.width}
+                selectedIndex={index}
+                height={dataItem.height}
+              />
+            </div>
+          })
+        }
+      </div>
+      {/* )
       } */}
 
 

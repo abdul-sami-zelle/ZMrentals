@@ -85,7 +85,7 @@
     font-weight: var(--font-weight-regular);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
     .customer-thoughts-main-container {
         padding: 16px;
     }

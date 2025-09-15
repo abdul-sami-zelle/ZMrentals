@@ -54,7 +54,7 @@
     padding: 25px 56px 0 56px;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
     .bookinng-info-content-container {
         gap: 25px;
     }

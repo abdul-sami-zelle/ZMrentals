@@ -206,6 +206,19 @@
     color: var(--primary-color);
 }
 
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+    .vehicle-card-main-container{
+        min-width: 320px;
+    }
+    .vehicle-name-and-price>span>h3 {
+        height: 48px;
+    }
+
+    .vehicle-card-image-container {
+        min-height: 215px;
+    }
+}
+
 @media only screen and (max-width: 480px) {
     .vehicle-card-main-container {
         flex: 0 0 auto !important;

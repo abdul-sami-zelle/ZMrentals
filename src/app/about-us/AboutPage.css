@@ -73,7 +73,7 @@
     text-align: center;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
     .about-us-driving-standered-para-sec {
         padding: 0 16px;
     }

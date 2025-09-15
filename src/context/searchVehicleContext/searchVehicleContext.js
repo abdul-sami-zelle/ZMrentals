@@ -14,13 +14,15 @@ export const SearchVehicleProvider = ({ children }) => {
     const [pickupTime, setPickupTime] = useState('')
     const [dropupCity, setDropupCity] = useState('')
     const [dropupTime, setDropupTime] = useState('')
+    const [driverAge, setDriverAge] = useState('')
     const [isVehicleSearched, setIsVehicleSearched] = useState(false)
 
     const [searchVehiclePayload, setSearchVehiclePayload] = useState({
         "pickup_location": null,
         "drop_location": null,
         "pickup_time": "",
-        "drop_time": ""
+        "drop_time": "",
+        "driver_age": ''
     })
 
     const [searchedVehicles, setSearchedVehicles] = useState([])
@@ -122,6 +124,8 @@ export const SearchVehicleProvider = ({ children }) => {
             setSelectedDropDate,
             isVehicleSearched, 
             setIsVehicleSearched,
+            driverAge, 
+            setDriverAge,
         }}>
             {children}
         </SearchVehicleContext.Provider>

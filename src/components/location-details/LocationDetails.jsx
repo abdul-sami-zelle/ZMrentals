@@ -10,7 +10,7 @@ const LocationDetails = () => {
                     <div className='location-details-row-container'>
                         <div className='location-detain-desktop-map-section'>
                             <span>
-                                <TfiLocationPin size={20} color='var(--primary-color)' />
+                                <TfiLocationPin size={20} color='#000' />
                                 Aukland City
                             </span>
                         </div>
@@ -49,7 +49,7 @@ const LocationDetails = () => {
                     <h3>Prime  Auckland Location for Convenient Car Rentals </h3>
                     <p>At ZM Rentals, we prioritize your convenience, which is why we’ve chosen the perfect location for both travelers and locals. Our South Auckland Car Rental Depot, located in Mangere, is just minutes from the Auckland Airport, making it easy for tourists to pick up their pre-booked car or make a walk-in reservation upon arrival. For locals, our depot is the ideal spot for renting a car, whether it's for occasional use or a long-term car rental in Auckland. With our strategic location, we ensure a smooth, hassle-free experience, whether you’re a visitor or live here and need to rent a car in Auckland.</p>
                     <span>
-                        <TfiLocationPin size={20} color='var(--primary-color)' />
+                        <TfiLocationPin size={20} color='#000' />
                         Aukland City
                     </span>
                 </div>

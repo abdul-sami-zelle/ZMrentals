@@ -106,8 +106,8 @@ const VehicleCard = (
           <div className='price-and-book-now'>
             {isVehicleSearched ? (
               <div className='price-and-book-now-ammount'>
-                <span> <h3>${vehicleData.base_rate}</h3> <p>NZD/Day</p> </span>
-                <span> <h3>${vehicleData.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> <p>Total</p> </span>
+                <span> <h3>{vehicleData.base_rate}</h3> <p>NZD/Day</p> </span>
+                <span> <h3>{vehicleData.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> <p>Total</p> </span>
               </div>
             ) : (
               <h3 className='vehicle-price-heading' onClick={(e) => { e.stopPropagation(); handleScrolllTop() }}>{seePrice}</h3>
@@ -123,10 +123,10 @@ const VehicleCard = (
               {transmission}
             </span>
 
-            <span>
+            {/* <span>
               <FaDroplet size={20} color='var(--primary-color)' />
               {fuelType}
-            </span>
+            </span> */}
           </div>
 
           <p className='vehicle-type-info'>+info</p>

@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Hero.css'
 import BookingForm from '../booking-form/BookingForm'
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import Toust from '../../modals/Toust/Toust'
+import DropdownInput from '../dropdown-input/DropdownInput'
+import StickySection from '../../global-components/sticky-section/StickySection'
 
 
 const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marginBottom = '50px', minHeight = 'auto' }) => {
@@ -12,6 +14,7 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
     const router = useRouter()
     const [toustShow, setTOustShow] = useState(false)
     const [toustMessage, setToustMessage] = useState('')
+    const [isPickupSelected, setIsPickupSelected] = useState(false);
 
     const handleSearchVehicles = async () => {
         const api = "https://zm.skyhub.pk/cars/available-cars";
@@ -66,6 +69,25 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
         }
     };
 
+    const [isSticky, setIsSticky] = useState(false);
+    const bookingFormRef = useRef(null)
+    useEffect(() => {
+        if(!bookingFormRef.current) return
+
+        const handleScroll = () => {
+            const rect = bookingFormRef.current.getBoundingClientRect();
+            if(rect.bottom <= 93) {
+                setIsSticky(true);
+            } else {
+                setIsSticky(false);
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll)
+
+        return () =>  window.removeEventListener('scroll', handleScroll)
+    }, []);
+
     return (
         <div className='hero-section-main-container' style={{marginBottom: marginBottom, }}>
             <div
@@ -97,9 +119,9 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
                         )}
 
                     </div>
-                    <div className='booking-form-container-parent'>
-                        <div className='booking-form-width-control-container'>
-                            <BookingForm bgColor={'var(--color-white)'} setHeight={true} handleSearchVehicles={handleSearchVehicles} boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px'} textColor={'var(--color-white)'} textShadow={'1px 1px 2px #961502;'} primaryButtonText={'Search Cars'} />
+                    <div ref={bookingFormRef} className={`booking-form-container-parent`}>
+                        <div className={`booking-form-width-control-container ${isPickupSelected ? 'control-booking-form-width' : ''}`}>
+                            <BookingForm bgColor={'var(--color-white)'} isPickupSelected={isPickupSelected} setIsPickupSelected={setIsPickupSelected} setHeight={true} handleSearchVehicles={handleSearchVehicles} boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px'} textColor={'var(--color-white)'} textShadow={'1px 1px 2px #961502;'} primaryButtonText={'Search Cars'} />
                         </div>
                     </div>
                 </div>
@@ -109,6 +131,10 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
                 setShowToust={setTOustShow}
                 message={toustMessage}
             />
+
+            <div className={`booking-sticky-form ${isSticky ? 'show-sticky-booking-form' : ''}`}>
+                <StickySection bgColor={'var(--color-white)'} isPickupSelected={true} setIsPickupSelected={setIsPickupSelected} setHeight={true} handleSearchVehicles={handleSearchVehicles} boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px'} textColor={'var(--color-white)'} textShadow={'1px 1px 2px #961502;'} primaryButtonText={'Search Cars'} />
+            </div>
         </div>
     )
 }

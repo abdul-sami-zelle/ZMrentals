@@ -28,6 +28,8 @@ const Header = () => {
   return (
     <div className="header-main-container">
       {/* <PromotionalHeader /> */}
+
+      <Navbar />
       <div className="header-section-container">
         <div className="header-inner-section-container">
           <div className="rotating-message">
@@ -41,7 +43,7 @@ const Header = () => {
 
           </div>
 
-          <ul className="header-list">
+          {/* <ul className="header-list">
             {headerData.map((item, index) => (
               <li key={index} className="header-list-item">
                 {item.icon && <item.icon size={20} />}
@@ -53,10 +55,10 @@ const Header = () => {
                 
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </div>
-      <Navbar />
+      
     </div>
   );
 };

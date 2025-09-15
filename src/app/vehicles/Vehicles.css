@@ -35,6 +35,15 @@
     flex-direction: column;
     align-items: start;
     justify-content: start;
+    overflow: hidden;
+    background-image: url('/assets/main-banners/home-page.jpg');
+    object-fit: cover;
+    object-position: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-top-left-radius: 0px;
+    border-bottom-right-radius: 0px;
     width: 100%;
     gap: 25px;
     padding: 16px;
@@ -45,6 +54,7 @@
     font-size: var(--font-heading-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
+    color: #FFF;
 }
 
 .group-car-rental-main-container {
@@ -203,7 +213,7 @@
     font-weight: var(--font-weight-regular);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
     .page-main-container  {
         padding: 0px;
     }
@@ -220,6 +230,7 @@
     .page-main-heading-container {
         padding: 25px 16px 0 16px;
         gap: 16px;
+        margin-top: 0px;
         margin-bottom: 25px;
     }
 
@@ -254,6 +265,10 @@
         font-size: var(--font-body-lg);
         line-height: var(--line-height-body);
         font-weight: var(--font-weight-regular);
+    }
+
+    .page-main-booking-form-container {
+        margin-top: 0;
     }
     
 }

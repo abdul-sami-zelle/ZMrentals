@@ -17,6 +17,8 @@ const Vehicles = () => {
   const [toustShow, setTOustShow] = useState(false)
   const [toustMessage, setToustMessage] = useState('')
 
+  const [isPickupSelected, setIsPickupSelected] = useState(false)
+
   const getAllVehicles = async () => {
     const api = `https://zm.skyhub.pk/cars/get`;
 
@@ -196,7 +198,7 @@ const Vehicles = () => {
         <div className='page-main-heading-container'>
           <div className='page-main-booking-form-container'>
             <h3 className='vehicles-main-heading'>Vehicles for Rent in Auckland</h3>
-            <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} handleSearchVehicles={handleSearchVehicles} textColor={'var(--primary-color)'} primaryButtonText={'Find my car'} />
+            <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} isPickupSelected={isPickupSelected} setIsPickupSelected={setIsPickupSelected} handleSearchVehicles={handleSearchVehicles} textColor={'var(--primary-color)'} primaryButtonText={'Search Car'} />
 
           </div>
         </div>

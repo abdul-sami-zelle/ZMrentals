@@ -60,7 +60,7 @@
     color: #000;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
     .package-details-main-container {
         flex-direction: column !important;
         padding: 0px;

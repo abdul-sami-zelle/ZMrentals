@@ -5,6 +5,7 @@ import Header from "@/global-components/header/Header";
 import Footer from '@/global-components/footer/Footer';
 import {SearchVehicleProvider} from '../context/searchVehicleContext/searchVehicleContext'
 import {BookingProvider} from '../context/bookingContext/bookingContext'
+import WhatsappButton from '../global-components/WhatsappButton/WhatsappButton'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,6 +54,7 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
           <Footer />
+          <WhatsappButton />
           </BookingProvider>
         </SearchVehicleProvider>
       </body>

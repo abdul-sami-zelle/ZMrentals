@@ -122,13 +122,15 @@
     width: 100%;
     padding: 5px;
     height: 0;
+    max-height: 0;
     overflow: hidden;
     opacity: 0;
     transition: all 0.3s ease-in-out;
 }
 
 .mobile-faq-ans.show-ans-drawer {
-    height: 310px;
+    max-height: 310px;
+    height: auto;
     opacity: 1;
 }
 
@@ -138,7 +140,7 @@
     font-weight: var(--font-weight-regular);
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 767px) {
     .frequently-asked-outer-container {
         align-items: start;
         justify-content: start;

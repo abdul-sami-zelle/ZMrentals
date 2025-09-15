@@ -132,7 +132,7 @@
     font-weight: var(--font-weight-regular);
 }
 
-@media only screen and (min-width: 481px) {
+@media only screen and (min-width: 768px) {
     .feedback-gallery-main-container {
         display: flex;
         flex-direction: row-reverse;

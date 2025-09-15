@@ -214,13 +214,13 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
 
                             <div className='car-detail-modal-footer-after-vehicle-searched-total-and-per-day'>
                                 <span>
-                                    <h3>${vehicleDetails?.base_rate}</h3>
+                                    <h3>{vehicleDetails?.base_rate}</h3>
                                     <p>NZD/Day</p>
                                 </span>
 
                                 <span>
                                     {/* <h3>${vehicleDetails?.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> */}
-                                    <h3>${vehicleDetails.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3>
+                                    <h3>{vehicleDetails.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3>
                                     <p>Total</p>
                                 </span>
                             </div>
@@ -234,13 +234,13 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                         <div className='mob-view-car-details-modal-price-and-qoute'>
                             <div className='mob-view-car-price'>
                                 <span>
-                                    <h3>${vehicleDetails?.base_rate}</h3>
+                                    <h3>{vehicleDetails?.base_rate}</h3>
                                     <p>NZD/Day</p>
                                 </span>
 
                                 <span>
                                     {/* <h3>${vehicleDetails?.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> */}
-                                    <h3>${vehicleDetails.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3>
+                                    <h3>{vehicleDetails.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3>
                                     <p>Total</p>
                                 </span>
                             </div>
