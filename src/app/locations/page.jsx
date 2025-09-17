@@ -157,7 +157,7 @@ const Locations = () => {
           />
 
 
-          <CustomerThoughts />
+          {/* <CustomerThoughts /> */}
 
         </div>
 

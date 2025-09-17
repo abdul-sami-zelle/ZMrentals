@@ -25,7 +25,6 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
   const [emailModal, setEmailModal] = useState(false);
 
   const handleOpenDetailsModal = (item) => {
-    console.log("item item ", item)
     setShowDetailModal(true);
     setModalData(item)
   }
@@ -35,7 +34,6 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
 
   const [modalType, setModalType] = useState('')
   const handleOpenEmailEnquiry = (type) => {
-    console.log("modal type", type)
     setModalType(type)
     setEmailModal(true);
     setShowDetailModal(false)
@@ -59,6 +57,8 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
   };
 
   const [isMobile, setIsMobile] = useState(false);
+
+  
 
   useEffect(() => {
     const handleResize = () => {

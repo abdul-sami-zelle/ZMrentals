@@ -6,6 +6,7 @@ import Footer from '@/global-components/footer/Footer';
 import {SearchVehicleProvider} from '../context/searchVehicleContext/searchVehicleContext'
 import {BookingProvider} from '../context/bookingContext/bookingContext'
 import WhatsappButton from '../global-components/WhatsappButton/WhatsappButton'
+import StripeProvider from '../context/stripeProvider/stripeProvider'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -50,11 +51,12 @@ export default function RootLayout({ children }) {
       <body suppressHydrationWarning style={{ backgroundColor: '#FFFFFF' }} >
         <SearchVehicleProvider>
           <BookingProvider>
-
+          <StripeProvider>
           <Header />
           {children}
           <Footer />
           <WhatsappButton />
+          </StripeProvider>
           </BookingProvider>
         </SearchVehicleProvider>
       </body>

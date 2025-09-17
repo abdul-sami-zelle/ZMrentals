@@ -10,7 +10,7 @@ import StickySection from '../../global-components/sticky-section/StickySection'
 
 
 const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marginBottom = '50px', minHeight = 'auto' }) => {
-    const { searchVehiclePayload, setSearchedVehicles, setLoader } = useSearchVehicle()
+    const { searchVehiclePayload, setSearchedVehicles, setLoader, setIsVehicleSearched } = useSearchVehicle()
     const router = useRouter()
     const [toustShow, setTOustShow] = useState(false)
     const [toustMessage, setToustMessage] = useState('')
@@ -28,6 +28,7 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
                 if (response.status === 200) {
                     setLoader(false)
                     setSearchedVehicles(response.data);
+                    setIsVehicleSearched(true)
                     sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
                     router.push("/vehicles");
                 } else {
@@ -75,8 +76,8 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
         if(!bookingFormRef.current) return
 
         const handleScroll = () => {
-            const rect = bookingFormRef.current.getBoundingClientRect();
-            if(rect.bottom <= 93) {
+            const rect = bookingFormRef?.current?.getBoundingClientRect();
+            if(rect.bottom <= 57) {
                 setIsSticky(true);
             } else {
                 setIsSticky(false);
@@ -120,7 +121,7 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
 
                     </div>
                     <div ref={bookingFormRef} className={`booking-form-container-parent`}>
-                        <div className={`booking-form-width-control-container ${isPickupSelected ? 'control-booking-form-width' : ''}`}>
+                        <div className={`booking-form-width-control-container ${searchVehiclePayload.pickup_location !== null ? 'control-booking-form-width' : ''}`}>
                             <BookingForm bgColor={'var(--color-white)'} isPickupSelected={isPickupSelected} setIsPickupSelected={setIsPickupSelected} setHeight={true} handleSearchVehicles={handleSearchVehicles} boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px'} textColor={'var(--color-white)'} textShadow={'1px 1px 2px #961502;'} primaryButtonText={'Search Cars'} />
                         </div>
                     </div>

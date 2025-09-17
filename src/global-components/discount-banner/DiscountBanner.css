@@ -8,14 +8,14 @@
 
 .discount-banner-inner-container {
     display: flex;
-    width: 95%;
+    width: 100%;
     align-items: center;
     justify-content: start;
     /* background-image: linear-gradient(to bottom left, #0f4bbe, #0c47af, #0c43a1, #0e3f92, #113b84); */
     background-color: var(--primary-color);
     padding: 16px;
     cursor: pointer;
-    border-bottom-left-radius: 25px;
+    border-bottom-left-radius: 0px;
     transition: all 0.3s ease-in-out;
     
 }

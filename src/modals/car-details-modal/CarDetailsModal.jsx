@@ -24,6 +24,10 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
+import {formatPrice} from '../../utils/fotmateValues.js'
+import VehicleCard from '@/global-components/vehicle-card/VehicleCard';
+
+
 const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSearched, emailModal }) => {
 
     const url = `https://zm.skyhub.pk`
@@ -161,7 +165,7 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
         <div className={`car-detail-modal-main-container ${showModal ? 'show-details-modal' : ''} `} onClick={handleClose}>
             <div className={`car-details-modal-inner-content-container ${showModal ? 'show-inner-modal-on-mobile-view' : ''}`}>
                 <div className='car-detail-heading-and-close-section' onClick={() => e.stopPropagation()}>
-                    <h3>Small Cars</h3>
+                    <h3>{vehicleDetails?.name}</h3>
                     <button onClick={(e) => { e.stopPropagation(); handleClose() }}>
                         <IoClose size={30} color='#595959' />
                     </button>
@@ -214,13 +218,14 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
 
                             <div className='car-detail-modal-footer-after-vehicle-searched-total-and-per-day'>
                                 <span>
-                                    <h3>{vehicleDetails?.base_rate}</h3>
-                                    <p>NZD/Day</p>
+                                    <h3>NZD {vehicleDetails?.base_rate}</h3>
+                                    <p>/day</p>
                                 </span>
 
                                 <span>
                                     {/* <h3>${vehicleDetails?.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> */}
-                                    <h3>{vehicleDetails.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3>
+                                    <del>{formatPrice(vehicleDetails.was_price)}</del>
+                                    <h3>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
                                     <p>Total</p>
                                 </span>
                             </div>
@@ -234,13 +239,13 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                         <div className='mob-view-car-details-modal-price-and-qoute'>
                             <div className='mob-view-car-price'>
                                 <span>
-                                    <h3>{vehicleDetails?.base_rate}</h3>
-                                    <p>NZD/Day</p>
+                                    <h3>NZD {vehicleDetails?.base_rate}</h3>
+                                    <p>/day</p>
                                 </span>
 
                                 <span>
-                                    {/* <h3>${vehicleDetails?.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> */}
-                                    <h3>{vehicleDetails.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3>
+                                    <del>{formatPrice(vehicleDetails.was_price)}</del>
+                                    <h3>{formatPrice(vehicleDetails.sub_total)}</h3>
                                     <p>Total</p>
                                 </span>
                             </div>

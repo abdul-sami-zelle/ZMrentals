@@ -6,7 +6,10 @@ const BookingContext = createContext();
 
 export const BookingProvider = ({ children }) => {
     const [bookingVehicleData, setBookingVehicleData] = useState({})
+    const [vehicleSesionData, setVehicleSesionData] = useState({})
     const [extraQuantities, setExtraQuantities] = useState({});
+    const [userType, setUserType] = useState('guest')
+    const [userData, setUserData] = useState({})
     const [bookingPayload, setBookingPayload] = useState({
         booking: {
             car_id: null,
@@ -23,6 +26,7 @@ export const BookingProvider = ({ children }) => {
             email: "",
             phone: "",
             country: "",
+            driver_age: '24',
             how_find_us: "",
             travel_reason: "Leisure"
         }
@@ -46,13 +50,60 @@ export const BookingProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        const vehicleSessionData = JSON.parse(sessionStorage.getItem('vehicle-details'));
+        const sellectedVehicleSessionData = JSON.parse(sessionStorage.getItem('selected-vehicle-details'));
         if (Object.keys(bookingVehicleData).length === 0) {
-            setBookingVehicleData(vehicleSessionData);
+            setBookingVehicleData(sellectedVehicleSessionData);
         }
+
     }, [])
 
+    useEffect(() => {
+        const handleStorageChange = () => {
+            const storedData = sessionStorage.getItem("vehicle-details");
+            if (storedData) {
+                setVehicleSesionData(JSON.parse(storedData));
+            }
+        };
 
+        // Run once on mount
+        handleStorageChange();
+
+        // Listen to storage changes (cross-tab)
+        window.addEventListener("storage", handleStorageChange);
+
+        return () => {
+            window.removeEventListener("storage", handleStorageChange);
+        };
+    }, []);
+
+    useEffect(() => {
+        const handleStorageChange = () => {
+            const storedData = sessionStorage.getItem("user-data");
+            if (storedData) {
+                setUserType('Member')
+                setUserData(JSON.parse(storedData));
+            } else {
+                setUserType('guest')
+            }
+        };
+
+        handleStorageChange()
+
+        // // Run once on mount
+        // handleStorageChange();
+
+        // // Listen to storage changes (cross-tab)
+        // window.addEventListener("storage", handleStorageChange);
+
+        // return () => {
+        //     window.removeEventListener("storage", handleStorageChange);
+        // };
+    }, []);
+
+
+
+
+    useEffect(() => { console.log("selected carsesion data", vehicleSesionData) }, [vehicleSesionData])
 
     return (
         <BookingContext.Provider value={{
@@ -63,8 +114,14 @@ export const BookingProvider = ({ children }) => {
             extraQuantities,
             setExtraQuantities,
             validateForm,
-            errors, 
+            errors,
             setErrors,
+            vehicleSesionData,
+            setVehicleSesionData,
+            userType, 
+            setUserType, 
+            userData, 
+            setUserData,
         }}>
             {children}
         </BookingContext.Provider>

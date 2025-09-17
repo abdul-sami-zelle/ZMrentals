@@ -34,7 +34,7 @@
 .book-now-main-container {
     display: flex;
     width: 100%;
-    align-items: start;
+    align-items: stretch;
     justify-content: start;
     gap: 20px;
 }
@@ -43,6 +43,27 @@
     display: flex;
     width: 60%;
     flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.booking-steper-and-tab {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 32px;
+}
+
+.booking-steper-and-tabs {
+    display: flex;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
     gap: 32px;
 }
 
@@ -263,7 +284,7 @@
     color: var(--primary-color);
 }
 
-.vehicle-details > p {
+.vehicle-details > del {
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './Signup.css'
 import Link from 'next/link'
 import { IoIosEye, IoMdEyeOff } from "react-icons/io";
+import {url} from '../../../utils/services'
+import axios from 'axios';
 
 const Signup = () => {
 
@@ -32,7 +34,7 @@ const Signup = () => {
     }))
   }
 
-  const handleRegisterUser = (e) => {
+  const handleRegisterUser = async (e) => {
     e.preventDefault()
 
     const newError = {}
@@ -51,6 +53,31 @@ const Signup = () => {
     }
 
     setShowError(false)
+
+    const api = `${url}/customer/create`;
+
+    try {
+      const response = await axios.post(api, signupData);
+      console.log("sign up response", response)
+      if(response.data.success) {
+        const {token, user} = response.data;
+
+        // Cookies.set('authToken', token, {expires: 1, secure: true})
+        sessionStorage.setItem('user', JSON.stringify({
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email
+
+        }))
+
+        return {success: true, user};
+      } else {
+        return {success: false, message: response.data.message}
+      }
+      console.log("signup successfull")
+    } catch (error) {
+      return { success: false, message: error.response?.data?.message || "Sign up failed" };
+    }
 
     alert(" You are good to go")
 

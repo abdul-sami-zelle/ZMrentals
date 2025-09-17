@@ -16,7 +16,6 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                 // Extract only country names
                 const countryNames = data.map((country) => country.name.common).sort();
 
-                console.log("countries", countryNames)
                 setCountries(countryNames);
             } catch (error) {
                 console.error("Error fetching countries:", error);
@@ -27,15 +26,12 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
     }, []);
 
     const foundUs = [
-        "AA TRAVELS WEBSITE",
-        "BING / MNS SEARCH",
-        "BROUCHUR",
-        "EMAIL NEWSLETTER",
-        "ENTERTAINMENT BOOK",
-        "FRIENDS REFRRAL",
-        "GOOGLE SEARCH",
-        "GRAMMER TECH",
-        "NEWZEALAND.COM",
+        'Google',
+        'Facebook',
+        'Instagram',
+        'Tiktok',
+        'Friends Refral',
+        'Other',
     ]
 
     const [showCountry, setShowCountry] = useState(false);
@@ -193,10 +189,13 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                                     </p>
                                 </span>
 
-                                <span className='email-qoute-price-total'>
-                                    <h3>${carObj?.base_rate * countDays(bookingDays?.pickup_time, bookingDays?.drop_time)}</h3>
-                                    <p>NZD Total</p>
-                                </span>
+                                {Object.keys(carObj).length > 0 && (
+                                    <span className='email-qoute-price-total'>
+                                        
+                                        <h3>NZD {carObj?.base_rate * countDays(bookingDays?.pickup_time, bookingDays?.drop_time)}</h3>
+                                        <p>Total</p>
+                                    </span>
+                                ) }
                             </span>
 
                             <div className='email-qoute-ask-for-qoute-right'>
@@ -215,11 +214,11 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                     {modalType !== 'email-qoute' ? (<p className='email-ask-for-qoute'>Your quoted price will be locked in for 3 days or while supplies last. </p>) : (<></>)}
 
                     <div className='email-enquiry-first-and-last-name'>
-                        <div 
+                        <div
                             className='email-enquiry-input-box'
                             style={{
-                                    border: errors.first_name ? "1px solid red" : "transparant"
-                                }}
+                                border: errors.first_name ? "1px solid red" : "transparant"
+                            }}
                         >
                             <p>First Name</p>
                             <input
@@ -227,7 +226,7 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                                 name="first_name"
                                 value={qoutePayload.first_name}
                                 onChange={handleInputChange}
-                                
+
                             />
                         </div>
                         <div className='email-enquiry-input-box'>

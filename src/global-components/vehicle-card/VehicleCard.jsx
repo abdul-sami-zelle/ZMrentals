@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 import Toust from '@/modals/Toust/Toust';
+import {formatPrice} from '../../utils/fotmateValues.js'
 
 const VehicleCard = (
   {
@@ -23,9 +24,9 @@ const VehicleCard = (
     vehicleData
   }) => {
 
-  console.log("vehicle data", vehicleData)
 
   const { searchVehiclePayload, setSearchVehiclePayload } = useSearchVehicle()
+  const {setVehicleSesionData} = useBookingContext();
   const [toustShow, setTOustShow] = useState(false)
   const [toustMessage, setToustMessage] = useState('');
 
@@ -55,7 +56,9 @@ const VehicleCard = (
       if (response.status === 200) {
         setShowBookingButton(true);
         setBookingVehicleData(response.data);
-        sessionStorage.setItem('vehicle-details', JSON.stringify(response.data));
+        setVehicleSesionData(vehicleData)
+        sessionStorage.setItem('selected-vehicle-details', JSON.stringify(response.data));
+        sessionStorage.setItem('vehicle-details', JSON.stringify(vehicleData));
         router.push('/book-now');
       } else {
         setShowBookingButton(false);
@@ -106,8 +109,13 @@ const VehicleCard = (
           <div className='price-and-book-now'>
             {isVehicleSearched ? (
               <div className='price-and-book-now-ammount'>
-                <span> <h3>{vehicleData.base_rate}</h3> <p>NZD/Day</p> </span>
-                <span> <h3>{vehicleData.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> <p>Total</p> </span>
+                <span> <h3>NZD {vehicleData.base_rate}</h3> <p>/day</p> </span>
+                {/* {isDiscountable(vehicleData.was_price, vehicleData.sub_total) ? (
+                  <span> <del>NZD {vehicleData.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</del>  <span className='total-price-after-discount'> <h3>NZD {vehicleData.sub_total}</h3> <p>Total</p> </span> </span>
+                ) : (
+                  <span></span>
+                ))} */}
+                <span> <del>NZD {formatPrice(vehicleData.base_rate * countDays(bookingDays?.pickup_time, bookingDays?.drop_time))}</del>  <span className='total-price-after-discount'> <h3>NZD {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
               </div>
             ) : (
               <h3 className='vehicle-price-heading' onClick={(e) => { e.stopPropagation(); handleScrolllTop() }}>{seePrice}</h3>

@@ -14,7 +14,7 @@ export const SearchVehicleProvider = ({ children }) => {
     const [pickupTime, setPickupTime] = useState('')
     const [dropupCity, setDropupCity] = useState('')
     const [dropupTime, setDropupTime] = useState('')
-    const [driverAge, setDriverAge] = useState('')
+    const [driverAge, setDriverAge] = useState('24')
     const [isVehicleSearched, setIsVehicleSearched] = useState(false)
 
     const [searchVehiclePayload, setSearchVehiclePayload] = useState({
@@ -22,7 +22,7 @@ export const SearchVehicleProvider = ({ children }) => {
         "drop_location": null,
         "pickup_time": "",
         "drop_time": "",
-        "driver_age": ''
+        "driver_age": '24'
     })
 
     const [searchedVehicles, setSearchedVehicles] = useState([])
@@ -34,12 +34,14 @@ export const SearchVehicleProvider = ({ children }) => {
             hour12: true,
         });
 
-        const parts = formatter.formatToParts(new Date());
-        const hour = parts.find(p => p.type === 'hour').value;
-        const dayPeriod = parts.find(p => p.type === 'dayPeriod').value;
+        // Just to keep the formatter in use if you want future adjustments
+        formatter.formatToParts(new Date());
 
-        setPickupTime(`${hour}:00 ${dayPeriod.toUpperCase()}`);
-        setDropupTime(`${hour}:00 ${dayPeriod.toUpperCase()}`)
+        const hour = "10";
+        const dayPeriod = "AM";
+
+        setPickupTime(`${hour}:00 ${dayPeriod}`);
+        setDropupTime(`${hour}:00 ${dayPeriod}`);
     };
 
     const getInitialNZDateTimeUTC = () => {
@@ -90,8 +92,8 @@ export const SearchVehicleProvider = ({ children }) => {
         const [dateDay, dateMonth, dateYear] = nzDateStr.split('/');
         const nzDateObj = new Date(`${dateYear}-${dateMonth}-${dateDay}`);
 
-        setSelectedPickupDate(nzDateObj);
-        setSelectedDropDate(nzDateObj);
+        // setSelectedPickupDate(nzDateObj);
+        // setSelectedDropDate(nzDateObj);
 
         return utcISOString;
     };
@@ -100,6 +102,7 @@ export const SearchVehicleProvider = ({ children }) => {
         getCurrentFormattedHourInAuckland()
         getInitialNZDateTimeUTC()
     }, [])
+
 
 
     return (
@@ -122,9 +125,9 @@ export const SearchVehicleProvider = ({ children }) => {
             setSelectedPickupDate,
             selectedDropDate,
             setSelectedDropDate,
-            isVehicleSearched, 
+            isVehicleSearched,
             setIsVehicleSearched,
-            driverAge, 
+            driverAge,
             setDriverAge,
         }}>
             {children}

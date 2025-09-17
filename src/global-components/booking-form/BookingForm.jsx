@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import 'react-calendar/dist/Calendar.css';
 import './BookingForm.css';
 import DropdownInput from '../dropdown-input/DropdownInput'
@@ -33,7 +33,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         setSelectedPickupDate,
         selectedDropDate,
         setSelectedDropDate,
-        driverAge, 
+        driverAge,
         setDriverAge,
     } = useSearchVehicle();
 
@@ -42,7 +42,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
     ]
 
     const driverAgeList = [
-        {name: '18'}, {name: '19'}, {name: '20'}, {name: '21'}, {name: '22'}, {name: '23'}, {name :'24'}, {name :'25+'}
+        { name: '18' }, { name: '19' }, { name: '20' }, { name: '21' }, { name: '22' }, { name: '23' }, { name: '24' }, { name: '25+' }
     ]
 
     const [locations, setLocations] = useState([])
@@ -61,7 +61,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
 
     const generateTimeList = () => {
         const times = [];
-        for (let hour = 0; hour < 24; hour++) {
+        for (let hour = 6; hour <= 21; hour++) {  // 6 AM (6) to 9 PM (21)
             const displayHour = hour % 12 === 0 ? 12 : hour % 12;
             const suffix = hour < 12 ? "AM" : "PM";
             const formattedTime = `${displayHour.toString().padStart(2, "0")}:00 ${suffix}`;
@@ -172,7 +172,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         }));
     };
 
-    
+
     const handleDriverAge = (age) => {
         setSearchVehiclePayload((prev) => ({
             ...prev,
@@ -181,8 +181,71 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         setDriverAge(age.name)
     }
 
+    const selectPickDate = (daysAhead) => {
+        const today = new Date();
+        const futureDate = new Date(today);
+        futureDate.setDate(today.getDate() + daysAhead);
+
+        setSelectedPickupDate(futureDate); // Update selected date
+
+    };
+
+    const selectDropDate = (daysAhead) => {
+        const today = new Date();
+        const futureDate = new Date(today);
+        futureDate.setDate(today.getDate() + daysAhead);
+
+        setSelectedDropDate(futureDate); // Update selected date
+
+    };
+
+    const selectFutureDate = (date) => {
+        const current = new Date(date);
+        const futureDate = new Date(current);
+        futureDate.setDate(current.getDate() + 4)
+        setSelectedDropDate(futureDate)
+    }
+
+
+    useEffect(() => {
+        selectFutureDate(selectedPickupDate)
+    }, [selectedPickupDate])
+
+
+    useEffect(() => {
+        // handleLocations();
+        selectPickDate(4);
+        selectDropDate(8)
+    }, [])
+
+    const pickupCalanderRef = useRef();
+    useEffect(() => {
+        const handleCalanderClose = (event) => {
+            if(pickupCalanderRef.current && !pickupCalanderRef.current.contains(event.target)) {
+                setPickupCalender(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleCalanderClose);
+
+        return () => {document.removeEventListener('mousedown', handleCalanderClose)}
+    }, [pickupCalender])
+
+    const dropCalandrRef = useRef();
+    useEffect(() => {
+        const handleCalanderClose = (event) => {
+            if(dropCalandrRef.current && !dropCalandrRef.current.contains(event.target)) {
+                setDropCalender(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleCalanderClose);
+
+        return () => {document.removeEventListener('mousedown', handleCalanderClose)}
+    }, [dropCalender])
+
     return (
-        <div className={`booking-form-main-container ${isPickupSelected ? 'control-booking-location-contianer' : ''}`} style={{ boxShadow: boxShadow }}>
+        <div className={`booking-form-main-container ${searchVehiclePayload.pickup_location !== null ? 'control-booking-location-contianer' : ''}`} style={{ boxShadow: boxShadow }}>
             <div className='booking-form-inputs-container'>
                 <div className='booking-form-inputs'>
                     <div className='booking-form-input-single-col-pick-up'>
@@ -202,7 +265,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                         />
                         <div className='booking-time-container'>
 
-                            <div className='select-pickup-date-button'>
+                            <div ref={pickupCalanderRef} className='select-pickup-date-button'>
 
                                 <button className="select-date-button" onClick={togglePickupCalendar} style={{ backgroundColor: bgColor }}>
                                     {selectedPickupDate ? selectedPickupDate.toDateString() : 'Date'}
@@ -219,7 +282,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                                             prev2Label={null}
                                             minDate={new Date()}
                                             formatShortWeekday={(locale, date) =>
-                                                date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
+                                                date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)
                                             }
                                             nextLabel={<IoIosArrowForward />}
                                             prevLabel={<IoIosArrowBack />}
@@ -239,7 +302,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                             </div>
 
                             <DropdownInput
-                                width={'48%'}
+                                width={'65%'}
                                 height={'162px'}
                                 defaultValue={'Time'}
                                 data={generateTimeList()}
@@ -253,7 +316,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
 
                     </div>
 
-                    <div className={`booking-form-input-single-col-drop-off ${isPickupSelected ? 'show-drop-location' : ''}`}>
+                    <div className={`booking-form-input-single-col-drop-off ${searchVehiclePayload.pickup_location !== null ? 'show-drop-location' : ''}`}>
                         <DropdownInput
                             width={'100%'}
                             height={'64px'}
@@ -281,7 +344,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                                 </button>
 
                                 {dropCalender && (
-                                    <div className='booking-drop-calender-container'>
+                                    <div ref={dropCalandrRef} className='booking-drop-calender-container'>
                                         <Calendar
                                             onChange={handleDropDateChange}
                                             value={selectedDropDate}
@@ -290,7 +353,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                                             minDetail="month"       // prevent navigating to years
                                             next2Label={null}       // hides double right arrow (>>)
                                             prev2Label={null}
-                                            formatShortWeekday={(locale, date) => date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)}
+                                            formatShortWeekday={(locale, date) => date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)}
                                             minDate={new Date()}
                                             tileDisabled={({ date }) => {
                                                 if (!selectedPickupDate) return true; // disable everything if no pickup date selected
@@ -309,7 +372,7 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
 
                             </div>
                             <DropdownInput
-                                width={'48%'}
+                                width={'65%'}
                                 height={'162px'}
                                 defaultValue={'Time'}
                                 data={generateTimeList()}

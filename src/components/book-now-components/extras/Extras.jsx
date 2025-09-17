@@ -100,7 +100,7 @@ const Extras = ({ extras }) => {
           </div>
           <div className='extra-item-and-price-container'>
             <h3>{item.name}</h3>
-            <p>${item.rate}</p>
+            <p>NZD {item.rate}</p>
           </div>
         </div>
       ))}

@@ -43,9 +43,26 @@ const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setP
   }
 
   useEffect(() => {
+
+    
     setInsuranceSelected(sortInsurances(insurances)[0])
-    setPackageSelected(sortInsurances(insurances)[0]?.insurance_option_id)
-  }, [])
+    if(!packageSelected) {
+      setPackageSelected(sortInsurances(insurances)[0]?.insurance_option_id)
+    }
+    setBookingPayload((prev) => ({
+      ...prev, 
+      booking: {
+        ...prev.booking,
+        insurance_id: sortInsurances(insurances)[0]?.id
+      }
+    }))
+  }, []);
+
+  console.log("selected insurance", packageSelected);
+
+  
+
+  
 
 
   return (
@@ -71,9 +88,9 @@ const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setP
                 {item.name}
               </label>
 
-              <p>${item.excess}</p>
-              <p>${item.bond}</p>
-              <p className='insurance-bottom-text'>{parseInt(item.rate) === 0 ? 'Free' : `${parseInt(item.rate)}/Day`}</p>
+              <p>NZD {item.excess}</p>
+              <p>NZD {item.bond}</p>
+              <p className='insurance-bottom-text'>{parseInt(item.rate) === 0 ? 'Free' : `NZD ${parseInt(item.rate)}/Day`}</p>
 
             </div>
           ))}

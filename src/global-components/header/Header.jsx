@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Header.css";
 
 import { MdOutlinePhoneIphone } from "react-icons/md";
@@ -20,28 +20,58 @@ const Header = () => {
   }, [])
 
   const headerData = [
-    { name: "+6421467261",  tel: "tel:+6421467261", icon: MdOutlinePhoneIphone },
+    { name: "+6421467261", tel: "tel:+6421467261", icon: MdOutlinePhoneIphone },
     { name: "Email Us", tel: "mailto:info@zmrentals.co.nz", icon: IoMailOutline },
     { name: "Sing In", tel: "/sign-up", icon: FaRegUser },
   ];
+
+  const [promotionBanner, setPromotionBanner] = useState(false);
+  useEffect(() => {
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+
+      if (scrollPosition > 90) {
+        setPromotionBanner(true); // hide
+      } else if (scrollPosition < 60) {
+        setPromotionBanner(false); // show again when back up
+      }
+    };
+
+
+
+    document.addEventListener('scroll', handleScroll);
+
+    return () => { document.removeEventListener('scroll', handleScroll) }
+  }, [])
 
   return (
     <div className="header-main-container">
       {/* <PromotionalHeader /> */}
 
       <Navbar />
-      <div className="header-section-container">
+      <div className={`header-section-container ${promotionBanner ? 'hide-promotion-banner' : ''}`}>
         <div className="header-inner-section-container">
           <div className="rotating-message">
 
-          <span>
-                Need help?{" "}
-                <a className="toll-free-ancor" href="tel:+6421467261">
-                  Call +6421467261
-                </a>
-              </span>
+            <span>
+              Need help?{" "}
+              <a className="toll-free-ancor" href="tel:+6421467261">
+                Call +6421467261
+              </a>
+            </span>
 
           </div>
+
+          <Link
+            className='promotion-login-item'
+            href={'/sign-up'}
+          >
+            <FaRegUser />
+            Login
+          </Link>
+
+
 
           {/* <ul className="header-list">
             {headerData.map((item, index) => (
@@ -58,7 +88,7 @@ const Header = () => {
           </ul> */}
         </div>
       </div>
-      
+
     </div>
   );
 };

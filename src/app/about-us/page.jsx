@@ -24,28 +24,28 @@ export default function AboutUs() {
           <h3 className="section-main-heading">Core Principles That Drive Us Forward</h3>
 
           <ServiceDetail
-            serviceImage={`/assets/about-us/sustainable.jpg`}
+            serviceImage={`/assets/About-us/sustainable.jpg`}
             serviceHeading={'Sustainable Responsibility'}
             flexDirection={'row'}
             serviceDescription={'We’re committed to reducing our environmental footprint. Our fleet of hybrid and fuel-efficient vehicles ensure that you explore Auckland responsibly. With eco-friendly compact cars and spacious 7-seaters, sustainability is embedded in every journey.'}
           />
 
           <ServiceDetail
-            serviceImage={`/assets/about-us/professional.jpg`}
+            serviceImage={`/assets/About-us/professional.jpg`}
             serviceHeading={'Professionalism'}
             flexDirection={'row-reverse'}
             serviceDescription={'Professionalism defines our service at every level. Our trained team provides a seamless experience from booking to return. Expect timely, courteous responses to all inquiries, making your car rental experience exceptional every time.'}
           />
 
           <ServiceDetail
-            serviceImage={`/assets/about-us/tech-driven.jpg`}
+            serviceImage={`/assets/About-us/tech-driven.jpg`}
             serviceHeading={'Tech-Driven Innovation'}
             flexDirection={'row'}
             serviceDescription={'Innovation fuels our service. From easy online bookings to digital check-ins, we embrace technology to enhance your Auckland car rental experience. Our vehicles feature modern infotainment, GPS, Bluetooth, app connectivy and much more.'}
           />
 
           <ServiceDetail
-            serviceImage={`/assets/about-us/reliability.jpg`}
+            serviceImage={`/assets/About-us/reliability.jpg`}
             serviceHeading={'Reliability & Integrity'}
             flexDirection={'row-reverse'}
             serviceDescription={'Trust is at the core of our business. We ensure accurate vehicle inspections, honor cancellation policies, and deliver on promises. We strive to be a reliable Auckland car hire service you can count on every time.'}

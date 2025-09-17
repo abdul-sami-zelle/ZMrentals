@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import 'react-calendar/dist/Calendar.css';
 import './StickySection.css'
 // import DropdownInput from '../dropdown-input/DropdownInput'
@@ -65,7 +65,7 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
 
     const generateTimeList = () => {
         const times = [];
-        for (let hour = 0; hour < 24; hour++) {
+        for (let hour = 6; hour <= 21; hour++) {  // 6 AM (6) to 9 PM (21)
             const displayHour = hour % 12 === 0 ? 12 : hour % 12;
             const suffix = hour < 12 ? "AM" : "PM";
             const formattedTime = `${displayHour.toString().padStart(2, "0")}:00 ${suffix}`;
@@ -183,6 +183,28 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
         setDriverAge(age.name)
     }
 
+    const pickupCalanderRef = useRef();
+    const dropupCalanderRef = useRef();
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if(pickupCalanderRef.current && !pickupCalanderRef.current.contains(event.target)) {
+                setPickupCalender(false);
+            }
+        }
+        document.addEventListener('mousedown' , handleOutsideClick)
+        return () => {document.removeEventListener('mousedown', handleOutsideClick)}
+    }, [])
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if(dropupCalanderRef.current && !dropupCalanderRef.current.contains(event.target)) {
+                setDropCalender(false);
+            }
+        }
+        document.addEventListener('mousedown' , handleOutsideClick)
+        return () => {document.removeEventListener('mousedown', handleOutsideClick)}
+    }, [])
+
     return (
         <div className='sticky-booking-form-main-contianer'>
 
@@ -206,13 +228,13 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
                     />
                     <div className='sticky-booking-time-container'>
 
-                        <div className='sticky-select-pickup-date-button'>
+                        <div ref={pickupCalanderRef} className='sticky-select-pickup-date-button'>
 
                             <button className="select-date-button" onClick={togglePickupCalendar} style={{ backgroundColor: bgColor }}>
                                 {selectedPickupDate ? selectedPickupDate.toDateString() : 'Date'}
                             </button>
                             {pickupCalender && (
-                                <div className='booking-pickup-calender-container'>
+                                <div className='sticky-booking-pickup-calender-container'>
                                     <Calendar
                                         onChange={handlePickupDateChange}
                                         value={selectedPickupDate}
@@ -223,7 +245,7 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
                                         prev2Label={null}
                                         minDate={new Date()}
                                         formatShortWeekday={(locale, date) =>
-                                            date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
+                                            date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)
                                         }
                                         nextLabel={<IoIosArrowForward />}
                                         prevLabel={<IoIosArrowBack />}
@@ -274,7 +296,7 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
                         setHeight={setHeight}
                     />
 
-                    <div className='sticky-booking-time-container'>
+                    <div ref={dropupCalanderRef} className='sticky-booking-time-container'>
 
                         <div className='sticky-select-drop-up-date-button'>
                             <button
@@ -286,7 +308,7 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
                             </button>
 
                             {dropCalender && (
-                                <div className='booking-drop-calender-container'>
+                                <div className='sticky-booking-drop-calender-container'>
                                     <Calendar
                                         onChange={handleDropDateChange}
                                         value={selectedDropDate}
@@ -295,7 +317,7 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
                                         minDetail="month"       // prevent navigating to years
                                         next2Label={null}       // hides double right arrow (>>)
                                         prev2Label={null}
-                                        formatShortWeekday={(locale, date) => date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)}
+                                        formatShortWeekday={(locale, date) => date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)}
                                         minDate={new Date()}
                                         tileDisabled={({ date }) => {
                                             if (!selectedPickupDate) return true; // disable everything if no pickup date selected
@@ -330,7 +352,7 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
 
                 <div className='driver-detail-aligned-with-all-inputs'>
                     <DropdownInput
-                        width={'100%'}
+                        width={'70%'}
                         height={'120px'}
                         defaultValue={'Driver Age'}
                         placeholder={'Driver Age'}
@@ -343,6 +365,10 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
                         setSelectedValue={setDriverAge}
                         setHeight={setHeight}
                     />
+
+                    <button className='sticky-search-vehilce-rounded-btn' onClick={handleSearchVehicles}>
+                        <GoArrowRight size={25} color='#fff' className='primary-icon' />
+                    </button>
                 </div>
             </div>
 

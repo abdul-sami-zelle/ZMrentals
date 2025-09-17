@@ -5,52 +5,75 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
 const HirerDetails = () => {
-  const countryList = [
-    'Pakistan',
-    'Russia',
-    'Dubai',
-    'Saudi Arabia',
-    'Qatar',
-    'New Zealand',
-    'Australia',
-    'Spain',
-  ]
+
+  // const countryList = [
+  //   'Pakistan',
+  //   'Russia',
+  //   'Dubai',
+  //   'Saudi Arabia',
+  //   'Qatar',
+  //   'New Zealand',
+  //   'Australia',
+  //   'Spain',
+  // ]
   const whereFindUs = [
-    'AA TRAVEL WEBSITE',
-    'BING / MSN SEARCH',
-    'BROCHURE',
-    'EMAIL NEWSLETTER',
-    'ENTERTAINMENT BOOK',
-    'FRIENDS REFRREL',
+    'Google',
+    'Facebook',
+    'Instagram',
+    'Tiktok',
+    'Friends Refral',
+    'Other',
   ]
 
   const { bookingPayload, setBookingPayload, errors, setErrors, validateForm } = useBookingContext()
 
   const [parentCountryShow, setParentCountryShow] = useState(false);
+  const [driverAgeShow, setDriverAgeShow] = useState(false);
   const [findUs, setFindUs] = useState(false);
+  const [countryList, setCountryList] = useState([]);
 
-  // const handleHirerDetailsAdd = (e) => {
-  //   const { name, value } = e.target;
+  
 
-  //   setBookingPayload((prev) => ({
-  //     ...prev,
-  //     user: {
-  //       ...prev.user,
-  //       [name]: value
-  //     }
-  //   }))
+  useEffect(() => {
+    const handleGetAllCountries = async () => {
+      try {
+        const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
+        const data = await res.json();
 
+        const formatted = data.map((item) => {
+          const root = item.idd?.root || "";
+          const suffix = item.idd?.suffixes?.[0] || "";
+          return {
+            country: item.name.common,
+            code: root + suffix, // e.g. +92
+          };
+        });
+        setCountryList(formatted);
+      } catch (err) {
+        console.error("Error fetching countries:", err);
+      }
+    };
 
-  //   // Clear error for the current field dynamically
-  //   setErrors((prev) => {
-  //     const newErrors = { ...prev };
-  //     if (value.trim() !== "") {
-  //       delete newErrors[name]; // ✅ remove the error for the current field
-  //     }
-  //     return newErrors;
-  //   });
+    handleGetAllCountries();
+  }, []);
 
-  // }
+  useEffect(() => {
+    setBookingPayload((prev) => {
+      const defaultCountry = countryList.find(
+        (item) => item.country === "New Zealand"
+      );
+
+      return {
+        ...prev,
+        user: {
+          ...prev.user,
+          country: defaultCountry?.country || "", // fallback empty string if not found
+        },
+      };
+    });
+  }, [])
+
+  console.log("booking form", bookingPayload)
 
   const handleHirerDetailsAdd = (e) => {
     const { name, value } = e.target;
@@ -75,26 +98,37 @@ const HirerDetails = () => {
     });
   };
 
-  useEffect(() => { console.log("error obje", errors) }, [errors])
-
-  // const handleSelectLivingCountry = (item) => {
-  //   setBookingPayload((prev) => ({
-  //     ...prev,
-  //     user: {
-  //       ...prev.user,
-  //       country: item
-  //     }
-  //   }))
-
-  //   setParentCountryShow(false)
-  // }
-
   const handleSelectLivingCountry = (item) => {
     setBookingPayload((prev) => ({
       ...prev,
       user: {
         ...prev.user,
-        country: item
+        country: item.country
+      }
+    }));
+
+    // ✅ Clear error for country when a valid value is selected
+    setErrors((prev) => {
+      const newErrors = { ...prev };
+      if (item && item.country.trim() !== "") {
+        delete newErrors.country;  // remove error
+      } else {
+        newErrors.country = "Required"; // keep error if empty
+      }
+      return newErrors;
+    });
+
+    setParentCountryShow(false);
+  };
+
+  const driverAgeList = ['18', '19', '20', '21', '22', '23', '24', '25+']
+
+  const handleSellectDriverAge = (item) => {
+    setBookingPayload((prev) => ({
+      ...prev,
+      user: {
+        ...prev.user,
+        driver_age: item
       }
     }));
 
@@ -109,7 +143,7 @@ const HirerDetails = () => {
       return newErrors;
     });
 
-    setParentCountryShow(false);
+    setDriverAgeShow(false);
   };
 
   const handleFoundTell = (item) => {
@@ -134,12 +168,12 @@ const HirerDetails = () => {
     setFindUs(false)
   }
 
-  useEffect(() => { console.log("user booking payload", bookingPayload) }, [bookingPayload])
 
 
   return (
     <div className='hirer-details-main-container'>
       <p>The Hirer's name must match the name of the person collecting the vehicle as shown on their driver licence and credit/debit card</p>
+
       <div className='hirer-first-and-last-name' >
         <label style={{ border: errors.firstname ? '1px solid red' : '1px solid transparent' }}>
           First name
@@ -162,40 +196,64 @@ const HirerDetails = () => {
           />
         </label>
       </div>
-      <div className='hirer-parent-country' style={{ border: errors.country ? '1px solid red' : '1px solid transparent' }}>
-        <p>Which country do you live in?</p>
-        <span onClick={() => setParentCountryShow((prevState) => prevState === true ? false : true)}>
-          <h3>{bookingPayload.user.country.length > 0 ? bookingPayload.user.country : 'Please Select'}</h3>
-          <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
-        </span>
-        <div className={`parent-country-list ${parentCountryShow ? 'show-parent-country-list' : ''}`}>
-          {countryList.map((item, index) => (
-            <p key={index} onClick={() => handleSelectLivingCountry(item)}>{item}</p>
-          ))}
+
+      <div className='hirer-living-country-and-age-container'>
+
+        <div className='hirer-parent-country' style={{ border: errors.country ? '1px solid red' : '1px solid transparent' }}>
+          <p>Which country do you live in?</p>
+          <span onClick={() => setParentCountryShow((prevState) => prevState === true ? false : true)}>
+            <h3>{bookingPayload.user.country ? bookingPayload.user.country : 'Please Select'}</h3>
+            <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
+          </span>
+          <div className={`parent-country-list ${parentCountryShow ? 'show-parent-country-list' : ''}`}>
+            {countryList.map((item, index) => (
+              <p key={index} onClick={() => handleSelectLivingCountry(item)}>{item.country}</p>
+            ))}
+          </div>
         </div>
+
+        <div className='hirer-age' style={{ border: errors.driver_age ? '1px solid red' : '1px solid transparent' }}>
+          <p>Driver Age</p>
+          <span onClick={() => setDriverAgeShow((prevState) => prevState === true ? false : true)}>
+            <h3>{bookingPayload.user.driver_age ? bookingPayload.user.driver_age : 'Please Select'}</h3>
+            <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
+          </span>
+          <div className={`hirer-age-list ${driverAgeShow ? 'show-hirer-age-list' : ''}`}>
+            {driverAgeList.map((item, index) => (
+              <p key={index} onClick={() => handleSellectDriverAge(item)}>{item}</p>
+            ))}
+          </div>
+        </div>
+
       </div>
 
-      <label className='hirer-input-label' style={{ border: errors.email ? '1px solid red' : '1px solid transparent' }}>
-        Email Address
-        <input
-          type='text'
-          name='email'
-          value={bookingPayload.user.email}
-          onChange={handleHirerDetailsAdd}
-        // onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, email: e.target.value } }))}
-        />
-      </label>
 
-      <label className='hirer-input-label' style={{ border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
-        Phone Number
-        <input
-          type='text'
-          name='phone'
-          value={bookingPayload.user.phone}
-          onChange={handleHirerDetailsAdd}
-        // onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, phone: e.target.value } }))}
-        />
-      </label>
+
+      <div className='hirer-first-and-last-name'>
+        <label style={{ border: errors.email ? '1px solid red' : '1px solid transparent' }}>
+          Email Address
+          <input
+            type='text'
+            name='email'
+            value={bookingPayload.user.email}
+            onChange={handleHirerDetailsAdd}
+          // onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, email: e.target.value } }))}
+          />
+        </label>
+
+        <label style={{ border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
+          Phone Number
+          <input
+            type='text'
+            name='phone'
+            value={bookingPayload.user.phone}
+            onChange={handleHirerDetailsAdd}
+          // onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, phone: e.target.value } }))}
+          />
+        </label>
+      </div>
+
+
 
       <div className='hirer-parent-country' style={{ border: errors.how_find_us ? '1px solid red' : '1px solid transparent' }}>
         <p>how did you find us?</p>
@@ -231,6 +289,16 @@ const HirerDetails = () => {
               name='Business'
               value={'Business'}
               checked={bookingPayload.user.travel_reason === 'Business'}
+              onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, travel_reason: e.target.value } }))}
+            />
+          </label>
+          <label>
+            Other
+            <input
+              type='radio'
+              name='Other'
+              value={'Other'}
+              checked={bookingPayload.user.travel_reason === 'Other'}
               onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, travel_reason: e.target.value } }))}
             />
           </label>

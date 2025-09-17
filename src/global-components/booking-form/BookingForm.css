@@ -91,9 +91,11 @@
     justify-content: start;
     height: 47px;
     max-height: 60px;
+
     font-size: var(--font-body-lg);
-    line-height: var(--line-height-body);
-    font-weight: var(--font-weight-bold);
+    line-height: var(--font-body-lg);
+    font-weight: var(--font-weight-medium);
+
     color: var(--primary-color);
     padding: 8px;
     border-radius: 5px;
@@ -124,6 +126,7 @@
 .booking-pickup-calender-container {
     width: 100% !important;
     position: absolute;
+    /* max-width: 280px; */
     top: 100%;
     left: 0px;
     z-index: 99999;
@@ -135,6 +138,7 @@
 .booking-drop-calender-container {
     width: 100% !important;
     position: absolute;
+    /* max-width: 280px; */
     top: 85%;
     left: 25px;
     z-index: 9999;

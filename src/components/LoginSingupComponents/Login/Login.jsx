@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import './Login.css'
 import { IoIosEye, IoMdEyeOff } from "react-icons/io";
+import {url} from '../../../utils/services' 
+import axios from 'axios';
 
 const Login = ({ showInput }) => {
     const [showPass, setShowPass] = useState()
@@ -27,7 +29,7 @@ const Login = ({ showInput }) => {
 
     }
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
         let newError = {}
 
@@ -37,6 +39,14 @@ const Login = ({ showInput }) => {
         if(Object.keys(newError).length > 0) {
             setErrors(newError);
             return
+        }
+
+        const api = `${url}/customer/login`;
+        try {
+            const response = await axios.post(api, userDetail)
+            console.log("login response", response)
+        } catch (error) {
+            return { success: false, message: error.response?.data?.message || "Login failed" };
         }
 
         alert("User Loged in Successfully");
