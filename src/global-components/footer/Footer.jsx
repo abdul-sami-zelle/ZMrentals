@@ -37,7 +37,7 @@ const Footer = () => {
   ]
 
   const socialLinks = [
-    { icon: <FaFacebookF size={25} color='var(--secondary-color)' />, link: '#' },
+    { icon: <FaFacebookF size={25} color='var(--secondary-color)' />, link: 'https://www.facebook.com/ZmRentalCars' },
     { icon: <FaTiktok size={25} color='var(--secondary-color)' />, link: '#' },
     { icon: <FaInstagram size={25} color='var(--secondary-color)' />, link: '#' },
   ]

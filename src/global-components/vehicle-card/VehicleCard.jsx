@@ -103,7 +103,7 @@ const VehicleCard = (
             <h3>{vehicleName}</h3>
             <div className='vehicle-age-and-fuel-efficiency-container'>
               <p>{vehicleAge} Year Old</p>
-              <Image src={'/Assets/icons/fuel-efficiency-4-stars.png'} width={100} height={30} alt='img' />
+              <Image src={'/assets/icons/fuel-efficiency-4-stars.png'} width={100} height={30} alt='img' />
             </div>
           </span>
           <div className='price-and-book-now'>

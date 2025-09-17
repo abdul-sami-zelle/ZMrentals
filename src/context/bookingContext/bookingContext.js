@@ -25,7 +25,7 @@ export const BookingProvider = ({ children }) => {
             lastname: "",
             email: "",
             phone: "",
-            country: "",
+            country: "New Zealand",
             driver_age: '24',
             how_find_us: "",
             travel_reason: "Leisure"

@@ -9,12 +9,14 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --black: #000000;
   /* --primary-color: #113b84; */
   --primary-color: #961502;
   /* --secondary-color: #FF8B40; */
   --secondary-color: #961502;
   --white-color: #ffffff;
   --header-bg: #F7F7F7;
+
 
   
 
@@ -90,7 +92,7 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: #000;
   font-family: 'Euclid Circular A', sans-serif;
   overflow: hidden;
 }

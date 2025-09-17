@@ -96,6 +96,13 @@
     width: 100%;
 }
 
+.forgot-password > p {
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #000;
+}
+
 .login-form-inputs > label > span > p {
     font-size: 12px;
     line-height: 1.5;

@@ -78,7 +78,7 @@
         font-size: var(--font-body-md);
         line-height: var(--line-height-body);
         font-weight: var(--font-weight-regular);
-        color: var(--primary-color);
+        color: #000;
     }
     .rolling-empty-container {
         display: none;

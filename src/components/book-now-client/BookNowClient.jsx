@@ -31,6 +31,7 @@ const BookNowClient = () => {
     validateForm,
     vehicleSesionData,
     setVehicleSesionData,
+    errors,
     userType,
     setUserType,
     userData,
@@ -113,7 +114,18 @@ const BookNowClient = () => {
   }, [step, searchParam, router]);
 
   const isUserInfoFilled = () => {
-    return Object.values(bookingPayload.user).every(value => value && value.trim() !== '');
+    // return Object.values(bookingPayload.user).every(value => value && value.trim() !== '');
+
+    // 1. Check if all fields have some value
+    const allFilled = Object.values(bookingPayload.user).every(
+      (value) => value && value.trim() !== ""
+    );
+
+    // 2. Check if there are any errors (like invalid email/phone etc.)
+    const noErrors = Object.keys(errors).length === 0;
+
+    // ✅ Only allow if both conditions are true
+    return allFilled && noErrors;
   }
 
   const goToNewStep = (newIndex) => {
@@ -131,7 +143,7 @@ const BookNowClient = () => {
 
   const [isLoading, setISloading] = useState(false)
   const [paymentError, setPaymentError] = useState("");
-  
+
   const handleCompleteBooking = async () => {
     const api = `https://zm.skyhub.pk/booking/add-booking`;
 
@@ -605,7 +617,7 @@ const BookNowClient = () => {
                       <h3>Auckland City</h3>
                       <p>{formatDateInNZ(pickDropLocation.pickup_time)}</p>
                       <p className='pick-drop-time'>{formatTimeInNZ(pickDropLocation.pickup_time)}</p>
-                      <p className='edit-enquiry'>Edit Itinerary</p>
+                      <Link href={'/vehicles'} className='edit-enquiry'>Edit Itinerary</Link>
                     </div>
                     <div className='drop-off-section'>
                       <h3>Drop-off</h3>
@@ -671,7 +683,10 @@ const BookNowClient = () => {
                   </div>
                   <div className='grand-total-section'>
                     <p>Grand Total</p>
-                    <h3>NZD {applyDiscount(getGrandTotal(), userDiscount)}</h3>
+                    <span>
+                      <h3>NZD {applyDiscount(getGrandTotal(), userDiscount)}</h3>
+                      <p>(Inclusive of GST)</p>
+                    </span>
                     {/* <h3>${Object.keys(insuranceSeleted).length > 0 ? bookingVehicleData.base_rate * totalDays + parseInt(insuranceSeleted?.rate) * totalDays : bookingVehicleData.base_rate * totalDays}</h3> */}
                   </div>
                   <div className='queries-section'>

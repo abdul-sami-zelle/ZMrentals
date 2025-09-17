@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import './DropdownInput.css'
 import { MdOutlineArrowDropDown } from "react-icons/md";
 
-const DropdownInput = ({ width, setSelectedCity, type, setClicktype, height, defaultValue, placeholder, data, bgColor, selectedValue, setSelectedValue , setHeight = false }) => {
+const DropdownInput = ({ width, setSelectedCity, type, setClicktype, mobilePlaceholder, height, defaultValue, placeholder, data, bgColor, selectedValue, setSelectedValue , setHeight = false }) => {
 
     const [showList, setShowList] = useState(false);
     // const [selectedValue, setSelectedValue] = useState('')
@@ -43,9 +43,11 @@ const DropdownInput = ({ width, setSelectedCity, type, setClicktype, height, def
         <div className='dropdown-input-selected-value-container' onClick={handleShowList}>
             <div className={`dropdown-placeholder ${selectedValue !== '' ? 'show-place-holder' : ''}`}>
                   <p>{placeholder}</p>
+                  <p>{mobilePlaceholder}</p>
             </div>
             <div className='dropdown-option-select-head'>
                 <p>{selectedValue !== '' ? selectedValue : defaultValue}</p>
+                {/* <p>{selectedValue !== '' ? selectedValue : mobilePlaceholder}</p> */}
                 <MdOutlineArrowDropDown size={15} color='var(--primary-color)' className='dropdown-arrow-icon' />
             </div>
         </div>

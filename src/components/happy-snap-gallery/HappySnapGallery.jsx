@@ -15,7 +15,7 @@ const HappySnapGallery = () => {
             </div>
 
             <div className='happy-snap-description-main-container'>
-                <Image src={mainLogo} alt='logo' className='happy-snap-logo' />
+                <Image src={'/assets/logos/ZM-Rentals-Horizontal-logo.png'} width={200} height={50} alt='logo' className='happy-snap-logo' />
                 <h3 className='section-main-heading'>Beyond Rentals: Comprehensive On-Road Support</h3>
                 <p>
                     We are more than just a reliable car rental service in Auckland, we’re your partner throughout your adventures and exploration. 

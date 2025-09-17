@@ -367,7 +367,7 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
                     />
 
                     <button className='sticky-search-vehilce-rounded-btn' onClick={handleSearchVehicles}>
-                        <GoArrowRight size={25} color='#fff' className='primary-icon' />
+                        <GoArrowRight size={20} color='#fff' className='primary-icon' />
                     </button>
                 </div>
             </div>

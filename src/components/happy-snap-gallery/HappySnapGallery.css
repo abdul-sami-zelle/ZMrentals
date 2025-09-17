@@ -50,6 +50,7 @@
     font-size: var(--font-body-lg);
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
+    color: #000;
 }
 
 .happy-snap-gallery-container {

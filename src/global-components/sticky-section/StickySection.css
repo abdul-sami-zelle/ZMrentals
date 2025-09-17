@@ -105,8 +105,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    /* width: 40px;
+    height: 40px; */
+    width: max-content;
+    height: max-content;
+    padding: 5px;
     border-radius: 50%;
     background-color: var(--primary-color);
     border: 1px solid var(--primary-color);

@@ -1,8 +1,9 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './HirerDetails.css'
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
+import {useOutsideClick} from '../../../utils/DetectClickOutside'
 
 const HirerDetails = () => {
 
@@ -32,7 +33,7 @@ const HirerDetails = () => {
   const [findUs, setFindUs] = useState(false);
   const [countryList, setCountryList] = useState([]);
 
-  
+
 
   useEffect(() => {
     const handleGetAllCountries = async () => {
@@ -40,14 +41,18 @@ const HirerDetails = () => {
         const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
         const data = await res.json();
 
-        const formatted = data.map((item) => {
-          const root = item.idd?.root || "";
-          const suffix = item.idd?.suffixes?.[0] || "";
-          return {
-            country: item.name.common,
-            code: root + suffix, // e.g. +92
-          };
-        });
+        const formatted = data
+          .map((item) => {
+            const root = item.idd?.root || "";
+            const suffix = item.idd?.suffixes?.[0] || "";
+            return {
+              country: item.name.common,
+              code: root + suffix, // e.g. +92
+            };
+          })
+          // sort alphabetically by country name
+          .sort((a, b) => a.country.localeCompare(b.country));
+
         setCountryList(formatted);
       } catch (err) {
         console.error("Error fetching countries:", err);
@@ -57,53 +62,151 @@ const HirerDetails = () => {
     handleGetAllCountries();
   }, []);
 
+
+
+
   useEffect(() => {
+    const defaultCountry = bookingPayload.user.country; // or however you set it
+    const countryObj = countryList.find(
+      (c) => c.country.toLowerCase() === defaultCountry.toLowerCase()
+    );
+
+    if (countryObj) {
+      setBookingPayload((prev) => ({
+        ...prev,
+        user: {
+          ...prev.user,
+          country: defaultCountry,
+          phone: countryObj.code, // ✅ set code initially
+        },
+      }));
+    }
+  }, [countryList]);
+
+
+
+
+  const handleHirerDetailsAdd = (e) => {
+    const { name, value } = e.target;
+
     setBookingPayload((prev) => {
-      const defaultCountry = countryList.find(
-        (item) => item.country === "New Zealand"
-      );
+      let newValue = value;
+
+      // 📧 Email validation
+      if (name === "email") {
+        const trimmed = value.trim();
+        setErrors((prevErrors) => {
+          const newErrors = { ...prevErrors };
+
+          if (trimmed === "") {
+            newErrors[name] = "Required";
+          } else {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(trimmed)) {
+              newErrors[name] = "Invalid email format";
+            } else {
+              delete newErrors[name];
+            }
+          }
+
+          return newErrors;
+        });
+
+        return {
+          ...prev,
+          user: {
+            ...prev.user,
+            [name]: value,
+          },
+        };
+      }
+
+      // 📱 Phone validation
+      if (name === "phone") {
+        const selectedCountry = prev.user.country;
+        const countryObj = countryList.find(
+          (item) => item.country.toLowerCase() === selectedCountry?.toLowerCase()
+        );
+
+        if (countryObj) {
+          const countryCode = countryObj.code; // e.g. +92
+
+          // Remove all characters except digits and +
+          newValue = value.replace(/[^0-9+]/g, "");
+
+          // Ensure it starts with country code
+          if (!newValue.startsWith(countryCode)) {
+            // If user typed leading 0, replace with country code
+            if (newValue.startsWith("0")) {
+              newValue = countryCode + newValue.slice(1);
+            } else {
+              newValue = countryCode + newValue.replace(/^\+/, "");
+            }
+          }
+
+          // Prevent duplicate codes (like +92+92)
+          if (newValue.startsWith(countryCode + countryCode)) {
+            newValue = countryCode + newValue.slice(countryCode.length * 2);
+          }
+
+          // Simple phone length validation (at least 8 digits after code)
+          const digits = newValue.replace(/\D/g, "");
+          if (digits.length < countryCode.replace(/\D/g, "").length + 8) {
+            setErrors((prevErrors) => ({
+              ...prevErrors,
+              phone: "Invalid phone number",
+            }));
+          } else {
+            setErrors((prevErrors) => {
+              const newErrors = { ...prevErrors };
+              delete newErrors.phone;
+              return newErrors;
+            });
+          }
+        }
+
+        return {
+          ...prev,
+          user: {
+            ...prev.user,
+            [name]: newValue,
+          },
+        };
+      }
+
+      // Default required check for other fields
+      setErrors((prevErrors) => {
+        const newErrors = { ...prevErrors };
+        if (value.trim() !== "") {
+          delete newErrors[name];
+        } else {
+          newErrors[name] = "Required";
+        }
+        return newErrors;
+      });
 
       return {
         ...prev,
         user: {
           ...prev.user,
-          country: defaultCountry?.country || "", // fallback empty string if not found
+          [name]: value,
         },
       };
     });
-  }, [])
-
-  console.log("booking form", bookingPayload)
-
-  const handleHirerDetailsAdd = (e) => {
-    const { name, value } = e.target;
-
-    setBookingPayload((prev) => ({
-      ...prev,
-      user: {
-        ...prev.user,
-        [name]: value
-      }
-    }));
-
-    // Clear error immediately as user types
-    setErrors((prev) => {
-      const newErrors = { ...prev };
-      if (value.trim() !== "") {
-        delete newErrors[name]; // remove only this field’s error
-      } else {
-        newErrors[name] = "Required"; // if user deletes everything, keep error
-      }
-      return newErrors;
-    });
   };
+
+
+
+
+
 
   const handleSelectLivingCountry = (item) => {
     setBookingPayload((prev) => ({
       ...prev,
       user: {
         ...prev.user,
-        country: item.country
+        country: item.country,
+        phone: item.code
       }
     }));
 
@@ -169,6 +272,15 @@ const HirerDetails = () => {
   }
 
 
+  const livingCountryRef = useRef();
+  const driverAgeRef = useRef();
+  const foundUsRef = useRef();
+
+  useOutsideClick(livingCountryRef, () => setParentCountryShow(false))
+  useOutsideClick(driverAgeRef, () => setDriverAgeShow(false))
+  useOutsideClick(foundUsRef, () => setFindUs(false))
+
+
 
   return (
     <div className='hirer-details-main-container'>
@@ -199,7 +311,7 @@ const HirerDetails = () => {
 
       <div className='hirer-living-country-and-age-container'>
 
-        <div className='hirer-parent-country' style={{ border: errors.country ? '1px solid red' : '1px solid transparent' }}>
+        <div className='hirer-parent-country' ref={livingCountryRef} style={{ border: errors.country ? '1px solid red' : '1px solid transparent' }}>
           <p>Which country do you live in?</p>
           <span onClick={() => setParentCountryShow((prevState) => prevState === true ? false : true)}>
             <h3>{bookingPayload.user.country ? bookingPayload.user.country : 'Please Select'}</h3>
@@ -212,7 +324,7 @@ const HirerDetails = () => {
           </div>
         </div>
 
-        <div className='hirer-age' style={{ border: errors.driver_age ? '1px solid red' : '1px solid transparent' }}>
+        <div className='hirer-age' ref={driverAgeRef} style={{ border: errors.driver_age ? '1px solid red' : '1px solid transparent' }}>
           <p>Driver Age</p>
           <span onClick={() => setDriverAgeShow((prevState) => prevState === true ? false : true)}>
             <h3>{bookingPayload.user.driver_age ? bookingPayload.user.driver_age : 'Please Select'}</h3>
@@ -255,7 +367,7 @@ const HirerDetails = () => {
 
 
 
-      <div className='hirer-parent-country' style={{ border: errors.how_find_us ? '1px solid red' : '1px solid transparent' }}>
+      <div className='hirer-parent-country' ref={foundUsRef} style={{ border: errors.how_find_us ? '1px solid red' : '1px solid transparent' }}>
         <p>how did you find us?</p>
         <span onClick={() => setFindUs((prevState) => prevState === true ? false : true)}>
           <h3>{bookingPayload.user.how_find_us.length > 0 ? bookingPayload.user.how_find_us : 'Please Select'}</h3>
