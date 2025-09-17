@@ -284,8 +284,8 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
                     <DropdownInput
                         width={'100%'}
                         height={'64px'}
-                        defaultValue={'Drop-of Location'}
-                        placeholder={'Drop-of Location'}
+                        defaultValue={'Drop-off Location'}
+                        placeholder={'Drop-off Location'}
                         data={locations}
                         type={'drop'}
                         setSelectedCity={handleLocationChange}

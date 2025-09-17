@@ -321,8 +321,8 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
                         <DropdownInput
                             width={'100%'}
                             height={'64px'}
-                            defaultValue={'Drop-of Location'}
-                            placeholder={'Drop-of Location'}
+                            defaultValue={'Drop-off Location'}
+                            placeholder={'Drop-off Location'}
                             mobilePlaceholder={"Drop-Off"}
                             data={locations}
                             type={'drop'}
