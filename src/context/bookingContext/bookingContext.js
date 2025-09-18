@@ -100,9 +100,6 @@ export const BookingProvider = ({ children }) => {
         // };
     }, []);
 
-
-
-
     useEffect(() => { console.log("selected carsesion data", vehicleSesionData) }, [vehicleSesionData])
 
     return (

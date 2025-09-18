@@ -414,6 +414,7 @@
     justify-content: center;
     width: max-content;
     gap: 7px;
+    cursor: pointer;
 }
 
 .queries-section > span > p {

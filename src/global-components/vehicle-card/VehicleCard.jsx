@@ -110,17 +110,18 @@ const VehicleCard = (
             {isVehicleSearched ? (
               <div className='price-and-book-now-ammount'>
                 <span> <h3>NZD {vehicleData.base_rate}</h3> <p>/day</p> </span>
-                {/* {isDiscountable(vehicleData.was_price, vehicleData.sub_total) ? (
-                  <span> <del>NZD {vehicleData.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</del>  <span className='total-price-after-discount'> <h3>NZD {vehicleData.sub_total}</h3> <p>Total</p> </span> </span>
+                {vehicleData.duration_discount !== 0 ? (
+                  <span> <del>NZD {formatPrice(vehicleData.base_rate * countDays(bookingDays?.pickup_time, bookingDays?.drop_time))}</del>  <span className='total-price-after-discount'> <h3>NZD {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
                 ) : (
-                  <span></span>
-                ))} */}
-                <span> <del>NZD {formatPrice(vehicleData.base_rate * countDays(bookingDays?.pickup_time, bookingDays?.drop_time))}</del>  <span className='total-price-after-discount'> <h3>NZD {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
+                  <span> <span className='total-price-after-discount'> <h3>NZD {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
+                )}
+                
+                
+                
               </div>
             ) : (
               <h3 className='vehicle-price-heading' onClick={(e) => { e.stopPropagation(); handleScrolllTop() }}>{seePrice}</h3>
             )}
-            {/* <button className={`booking-button`} onClick={handleBookVehicle}>Book Now</button> */}
             <button className={`booking-button ${showBookingButton ? 'show-booking-button' : ''}`} onClick={handleBookVehicle}>Book Now</button>
           </div>
         </div>
@@ -131,10 +132,6 @@ const VehicleCard = (
               {transmission}
             </span>
 
-            {/* <span>
-              <FaDroplet size={20} color='var(--primary-color)' />
-              {fuelType}
-            </span> */}
           </div>
 
           <p className='vehicle-type-info'>+info</p>

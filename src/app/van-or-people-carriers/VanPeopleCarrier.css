@@ -7,15 +7,3 @@
     width: 100%;
     height: auto;
 }
-
-.van-people-carrier-width-controler {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: start;
-    justify-content: start;
-    max-width: 1323px;
-    padding: 25px 56px;
-    gap: 32px;
-}
-

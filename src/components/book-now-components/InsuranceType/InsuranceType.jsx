@@ -4,7 +4,7 @@ import './InsuranceType.css';
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
-const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setPackageSelected }) => {
+const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, packageSelected, setPackageSelected }) => {
 
   const excessAndBond = [
     { heading: 'Excess', details: `This amount will be charged to your credit card in the event of any damage to the car. If the cost of the damage is lower than the excess, the difference will be refunded to you once the claim has been processed.` },
@@ -44,25 +44,30 @@ const InsuranceType = ({ insurances, setInsuranceSelected, packageSelected, setP
 
   useEffect(() => {
 
-    
-    setInsuranceSelected(sortInsurances(insurances)[0])
-    if(!packageSelected) {
-      setPackageSelected(sortInsurances(insurances)[0]?.insurance_option_id)
+    const firstInsurance = sortInsurances(insurances)[0];
+    if(!Object.keys(insuranceSeleted).length > 0) {
+      setInsuranceSelected(firstInsurance)
     }
+    if (!packageSelected) {
+      setPackageSelected(firstInsurance?.insurance_option_id)
+    }
+
+    
     setBookingPayload((prev) => ({
-      ...prev, 
+      ...prev,
       booking: {
         ...prev.booking,
-        insurance_id: sortInsurances(insurances)[0]?.id
+        insurance_id: prev.booking.insurance_id ?? firstInsurance?.id
       }
     }))
+
   }, []);
 
   console.log("selected insurance", packageSelected);
 
-  
 
-  
+
+
 
 
   return (

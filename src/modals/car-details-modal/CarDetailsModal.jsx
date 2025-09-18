@@ -224,7 +224,7 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
 
                                 <span>
                                     {/* <h3>${vehicleDetails?.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> */}
-                                    <del>{formatPrice(vehicleDetails.was_price)}</del>
+                                    <del>NZD {formatPrice(vehicleDetails.was_price)}</del>
                                     <h3>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
                                     <p>Total</p>
                                 </span>
@@ -244,8 +244,8 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                                 </span>
 
                                 <span>
-                                    <del>{formatPrice(vehicleDetails.was_price)}</del>
-                                    <h3>{formatPrice(vehicleDetails.sub_total)}</h3>
+                                    <del>NZD {formatPrice(vehicleDetails.was_price)}</del>
+                                    <h3>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
                                     <p>Total</p>
                                 </span>
                             </div>

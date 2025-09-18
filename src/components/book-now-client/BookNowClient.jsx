@@ -476,6 +476,8 @@ const BookNowClient = () => {
     }
   }
 
+  useEffect(() => {console.log("insurance selected", insuranceSeleted)}, [insuranceSeleted])
+
   const [showCarAvailableModal, setShowAvailableModal] = useState(false);
   const [closeType, setCloseType] = useState('')
   const handleCloseCarNotAvailableModal = () => {
@@ -596,7 +598,7 @@ const BookNowClient = () => {
                   </div>
                 </div>
 
-                {selectedTabIndex === 0 ? <InsuranceType insurances={bookingVehicleData.insurance} setInsuranceSelected={setInsuranceSelected} packageSelected={packageSelected} setPackageSelected={setPackageSelected} />
+                {selectedTabIndex === 0 ? <InsuranceType insurances={bookingVehicleData.insurance} insuranceSeleted={insuranceSeleted}  setInsuranceSelected={setInsuranceSelected} packageSelected={packageSelected} setPackageSelected={setPackageSelected} />
                   : selectedTabIndex === 1 ? <Extras extras={bookingVehicleData.extras} />
                     : selectedTabIndex === 2 ? <HirerDetails />
                       : <Payments grandTotal={applyDiscount(getGrandTotal(), userDiscount)} isChecked={isChecked} setIsChecked={setIsChecked} selectPaymentType={selectPaymentType} setSelectPaymentType={setSelectPaymentType} />}
@@ -675,11 +677,6 @@ const BookNowClient = () => {
                       <h3>NZD {getDiscountAmount(getGrandTotal(), userDiscount)}</h3>
                     </span>
 
-
-                    {/* <span>
-                      <p>Total Road Care <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' /></p>
-                      <h3>$0</h3>
-                    </span> */}
                   </div>
                   <div className='grand-total-section'>
                     <p>Grand Total</p>
