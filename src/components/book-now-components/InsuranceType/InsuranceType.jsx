@@ -63,13 +63,6 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
 
   }, []);
 
-  console.log("selected insurance", packageSelected);
-
-
-
-
-
-
   return (
 
     <div className='insurance-type-main-container'>

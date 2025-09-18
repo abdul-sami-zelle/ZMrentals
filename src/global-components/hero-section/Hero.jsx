@@ -16,68 +16,83 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
     const [toustMessage, setToustMessage] = useState('')
     const [isPickupSelected, setIsPickupSelected] = useState(false);
 
+    const isValidDropDate = (pickup, drop) => {
+        if (!pickup || !drop) return false; // both must exist
+        return new Date(drop) >= new Date(pickup);
+    };
+
     const handleSearchVehicles = async () => {
         const api = "https://zm.skyhub.pk/cars/available-cars";
         const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
 
-        try {
-            setLoader(true)
-            if (pickup_location && drop_location && pickup_time && drop_time) {
-                const response = await axios.post(api, searchVehiclePayload);
 
-                if (response.status === 200) {
-                    setLoader(false)
-                    setSearchedVehicles(response.data);
-                    setIsVehicleSearched(true)
-                    sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
-                    router.push("/vehicles");
+        if (isValidDropDate(searchVehiclePayload.pickup_time, searchVehiclePayload.drop_time)) {
+                try {
+                setLoader(true)
+                if (pickup_location && drop_location && pickup_time && drop_time) {
+                    const response = await axios.post(api, searchVehiclePayload);
+
+                    if (response.status === 200) {
+                        setLoader(false)
+                        setSearchedVehicles(response.data);
+                        setIsVehicleSearched(true)
+                        sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
+                        router.push("/vehicles");
+                    } else {
+                        setLoader(false)
+                        console.warn(`[WARN] Unexpected status code: ${response.status}`);
+                        console.error("Unexpected response from server. Please try again later.");
+
+                    }
                 } else {
-                    setLoader(false)
-                    console.warn(`[WARN] Unexpected status code: ${response.status}`);
-                    console.error("Unexpected response from server. Please try again later.");
-
-                }
-            } else {
-                setTOustShow(true)
-                setToustMessage("Please Fill All The Fields To Search Vehicle")
-            }
-
-
-        } catch (error) {
-            setLoader(false);
-            if (error.response) {
-                const status = error.response.status;
-
-                if (status === 400) {
-                    setToustMessage("Please Fill All The Fields To Search Vehicle")("Invalid search request. Please check your input and try again.");
-                } else if (status >= 500) {
-                    setToustMessage("Please Fill All The Fields To Search Vehicle")("Server error occurred. Please try again later.");
-                } else {
-                    setToustMessage("Please Fill All The Fields To Search Vehicle")("Something went wrong. Please try again.");
+                    setTOustShow(true)
+                    setToustMessage("Please Fill All The Fields To Search Vehicle")
                 }
 
-                console.error(`[ERROR] ${status}:`, error.response.data);
 
-            } else if (error.request) {
-                setToustMessage("Please Fill All The Fields To Search Vehicle")("No response from server. Please check your internet connection.");
-                console.error("[NO RESPONSE] Request was made but no response received.");
-            } else {
-                setToustMessage("Please Fill All The Fields To Search Vehicle")("Unexpected error occurred. Please try again.");
-                console.error("[CLIENT ERROR] Something went wrong:", error.message);
+            } catch (error) {
+                setLoader(false);
+                if (error.response) {
+                    const status = error.response.status;
+
+                    if (status === 400) {
+                        setToustMessage("Please Fill All The Fields To Search Vehicle")("Invalid search request. Please check your input and try again.");
+                    } else if (status >= 500) {
+                        setToustMessage("Please Fill All The Fields To Search Vehicle")("Server error occurred. Please try again later.");
+                    } else {
+                        setToustMessage("Please Fill All The Fields To Search Vehicle")("Something went wrong. Please try again.");
+                    }
+
+                    console.error(`[ERROR] ${status}:`, error.response.data);
+
+                } else if (error.request) {
+                    setToustMessage("Please Fill All The Fields To Search Vehicle")("No response from server. Please check your internet connection.");
+                    console.error("[NO RESPONSE] Request was made but no response received.");
+                } else {
+                    setToustMessage("Please Fill All The Fields To Search Vehicle")("Unexpected error occurred. Please try again.");
+                    console.error("[CLIENT ERROR] Something went wrong:", error.message);
+                }
+            } finally {
+                setLoader(false)
             }
-        } finally {
-            setLoader(false)
+        } else {
+            setTOustShow(true)
+            setToustMessage("Please Select Valid Drop Off Date")
         }
+
+            
     };
+
+
 
     const [isSticky, setIsSticky] = useState(false);
     const bookingFormRef = useRef(null)
     useEffect(() => {
-        if(!bookingFormRef.current) return
+        if (!bookingFormRef.current) return
 
         const handleScroll = () => {
             const rect = bookingFormRef?.current?.getBoundingClientRect();
-            if(rect.bottom <= 57) {
+            if (rect.bottom <= 57) {
                 setIsSticky(true);
             } else {
                 setIsSticky(false);
@@ -86,11 +101,11 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
 
         window.addEventListener('scroll', handleScroll)
 
-        return () =>  window.removeEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
     }, []);
 
     return (
-        <div className='hero-section-main-container' style={{marginBottom: marginBottom, }}>
+        <div className='hero-section-main-container' style={{ marginBottom: marginBottom, }}>
             <div
                 className='hero-section-inner-container'
                 style={{ backgroundImage: `url(${bgImage})`, minHeight: minHeight }}

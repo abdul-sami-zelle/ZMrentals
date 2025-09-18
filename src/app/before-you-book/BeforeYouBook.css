@@ -1,4 +1,4 @@
-.small-car-main-contianer {
+.before-you-book-main {
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -8,7 +8,7 @@
     height: auto;
 }
 
-.smal-car-width-controlar {
+.before-you-book-width-controller {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -19,23 +19,33 @@
     gap: 32px;
 }
 
-.small-cars-list-contianer {
+.before-you-book-head {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+}
+
+.before-you-book-requirments {
+    display: flex;
+    flex-direction: column;
     align-items: start;
     justify-content: start;
-    flex-direction: column;
-    gap: 32px;
     width: 100%;
+    gap: 16px;
     
 }
 
-.small-cars-list {
+.before-you-book-requirments > ul {
     display: flex;
+    flex-direction: column;
     align-items: start;
     justify-content: start;
-    padding: 0 25px;
     width: 100%;
     gap: 16px;
-    flex-direction: column;
+    padding: 0 25px;
     list-style: disc;
 }

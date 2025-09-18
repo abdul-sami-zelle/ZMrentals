@@ -45,13 +45,12 @@ const BookNowClient = () => {
   const [insuranceSeleted, setInsuranceSelected] = useState({})
   const [packageSelected, setPackageSelected] = useState(null);
   const [isChecked, setIsChecked] = useState(false);
-
   const [toustShow, setTOustShow] = useState(false)
   const [toustMessage, setToustMessage] = useState('')
-
   const [selectPaymentType, setSelectPaymentType] = useState(2)
-
   const [userDiscount, setUserDiscount] = useState('');
+  const [isLoading, setISloading] = useState(false)
+  const [paymentError, setPaymentError] = useState("");
 
   const getUserDiscount = async () => {
     const guesApi = `${url}/discounts/get/1`
@@ -140,9 +139,6 @@ const BookNowClient = () => {
     para: '',
     link: ''
   })
-
-  const [isLoading, setISloading] = useState(false)
-  const [paymentError, setPaymentError] = useState("");
 
   const handleCompleteBooking = async () => {
     const api = `https://zm.skyhub.pk/booking/add-booking`;
@@ -408,7 +404,9 @@ const BookNowClient = () => {
     }
   };
 
-  const [pickDropLocation, setPickDropLocation] = useState({});
+  const [pickDropLocation, setPickDropLocation] = useState({
+
+  });
   const [totalDays, setTotalDays] = useState(0);
   useEffect(() => {
 
@@ -417,43 +415,53 @@ const BookNowClient = () => {
     setPickDropLocation(pickDrop)
   }, [])
 
+  const [locations, setLocations] = useState([])
+  useEffect(() => {
 
-  const formatDateInNZ = (isoString) => {
+    const getApi = async () => {
+      try {
+        const response = await axios.get(`https://zm.skyhub.pk/locations/get`);
+        setLocations(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getApi()
+  }, [pickDropLocation])
+
+  const formatDateFromISO = (isoString) => {
     try {
-      const date = new Date(isoString);
-      if (isNaN(date)) throw new Error('Invalid date');
+      const [year, month, day] = isoString.split("T")[0].split("-");
+      const date = new Date(`${year}-${month}-${day}T00:00:00`); // force local parsing
 
-      return new Intl.DateTimeFormat('en-NZ', {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric',
-        timeZone: 'Pacific/Auckland'
+      return new Intl.DateTimeFormat("en-NZ", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
       }).format(date);
     } catch (err) {
-      return 'Invalid Date';
+      return "Invalid Date";
     }
   };
 
-
-  const formatTimeInNZ = (isoString) => {
+  const formatTimeFromISO = (isoString) => {
     try {
-      const date = new Date(isoString);
-      if (isNaN(date)) throw new Error('Invalid date');
+      // Extract HH:MM:SS from the ISO string
+      const timePart = isoString.split("T")[1].substring(0, 5); // "07:00"
 
-      return new Intl.DateTimeFormat('en-NZ', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: true,
-        timeZone: 'Pacific/Auckland'
-      })
-        .format(date)
-        .replace(/^(\d):/, '0$1')  // pad hour if needed
-        .replace(':', ': ');       // format to `HH: MM AM/PM`
+      let [hours, minutes] = timePart.split(":").map(Number);
+
+      // Convert to 12-hour format
+      const ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12 || 12;
+
+      return `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")} ${ampm}`;
     } catch (err) {
-      return 'Invalid Time';
+      return "Invalid Time";
     }
   };
-
 
   const handleBookNow = () => {
 
@@ -475,8 +483,6 @@ const BookNowClient = () => {
 
     }
   }
-
-  useEffect(() => {console.log("insurance selected", insuranceSeleted)}, [insuranceSeleted])
 
   const [showCarAvailableModal, setShowAvailableModal] = useState(false);
   const [closeType, setCloseType] = useState('')
@@ -500,7 +506,6 @@ const BookNowClient = () => {
     // Insurance
     if (insuranceSeleted && Object.keys(insuranceSeleted).length > 0) {
       const insuranceRate = parseFloat(insuranceSeleted?.rate || 0);
-      // console.log("insurance price", insuranceRate * safeDays)
       total += insuranceRate * safeDays;
     }
 
@@ -534,7 +539,6 @@ const BookNowClient = () => {
     setEmailModal(true);
   }
 
-
   const applyDiscount = (price, discountPercent) => {
     const numPrice = parseFloat(price);
     const discount = parseFloat(discountPercent);
@@ -553,12 +557,6 @@ const BookNowClient = () => {
 
     return (numPrice * (discount / 100)).toFixed(2); // discount amount
   };
-
-
-
-
-
-
 
   return (
     <div className="book-now-page-main-container">
@@ -598,7 +596,7 @@ const BookNowClient = () => {
                   </div>
                 </div>
 
-                {selectedTabIndex === 0 ? <InsuranceType insurances={bookingVehicleData.insurance} insuranceSeleted={insuranceSeleted}  setInsuranceSelected={setInsuranceSelected} packageSelected={packageSelected} setPackageSelected={setPackageSelected} />
+                {selectedTabIndex === 0 ? <InsuranceType insurances={bookingVehicleData.insurance} insuranceSeleted={insuranceSeleted} setInsuranceSelected={setInsuranceSelected} packageSelected={packageSelected} setPackageSelected={setPackageSelected} />
                   : selectedTabIndex === 1 ? <Extras extras={bookingVehicleData.extras} />
                     : selectedTabIndex === 2 ? <HirerDetails />
                       : <Payments grandTotal={applyDiscount(getGrandTotal(), userDiscount)} isChecked={isChecked} setIsChecked={setIsChecked} selectPaymentType={selectPaymentType} setSelectPaymentType={setSelectPaymentType} />}
@@ -609,6 +607,7 @@ const BookNowClient = () => {
 
             </div>
 
+              {/*Booking Summary*/}
             {bookingVehicleData ? (
               <div className={`booking-summary-main-container`}>
                 <h3>Booking Summary</h3>
@@ -616,16 +615,16 @@ const BookNowClient = () => {
                   <div className='pick-drop-detail-section'>
                     <div className='pick-up-section'>
                       <h3>Pick-up</h3>
-                      <h3>Auckland City</h3>
-                      <p>{formatDateInNZ(pickDropLocation.pickup_time)}</p>
-                      <p className='pick-drop-time'>{formatTimeInNZ(pickDropLocation.pickup_time)}</p>
+                      <h3>{locations.find((item) => item.id === pickDropLocation.pickup_location)?.name}</h3>
+                      <p>{formatDateFromISO(pickDropLocation.pickup_time)}</p>
+                      <p className='pick-drop-time'>{formatTimeFromISO(pickDropLocation.pickup_time)}</p>
                       <Link href={'/vehicles'} className='edit-enquiry'>Edit Itinerary</Link>
                     </div>
                     <div className='drop-off-section'>
                       <h3>Drop-off</h3>
-                      <h3>Auckland City</h3>
-                      <p>{formatDateInNZ(pickDropLocation.drop_time)}</p>
-                      <p>{formatTimeInNZ(pickDropLocation.drop_time)}</p>
+                      <h3>{locations.find((item) => item.id === pickDropLocation.drop_location)?.name}</h3>
+                      <p>{formatDateFromISO(pickDropLocation.drop_time)}</p>
+                      <p>{formatTimeFromISO(pickDropLocation.drop_time)}</p>
                     </div>
                   </div>
                   <div className='vehicle-details-section'>

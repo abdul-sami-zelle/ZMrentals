@@ -58,7 +58,6 @@ const Signup = () => {
 
     try {
       const response = await axios.post(api, signupData);
-      console.log("sign up response", response)
       if(response.data.success) {
         const {token, user} = response.data;
 
@@ -74,7 +73,6 @@ const Signup = () => {
       } else {
         return {success: false, message: response.data.message}
       }
-      console.log("signup successfull")
     } catch (error) {
       return { success: false, message: error.response?.data?.message || "Sign up failed" };
     }

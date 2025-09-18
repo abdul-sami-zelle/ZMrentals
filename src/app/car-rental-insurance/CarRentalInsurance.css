@@ -1,4 +1,4 @@
-.small-car-main-contianer {
+.car-rental-insurance-main-page {
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -8,7 +8,7 @@
     height: auto;
 }
 
-.smal-car-width-controlar {
+.car-rental-insurance-page-width-control {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -19,23 +19,22 @@
     gap: 32px;
 }
 
-.small-cars-list-contianer {
+.car-rental-insurance-inner-para {
     display: flex;
+    flex-direction: column;
     align-items: start;
     justify-content: start;
-    flex-direction: column;
-    gap: 32px;
     width: 100%;
-    
+    gap: 32px;
 }
 
-.small-cars-list {
+.car-rental-insurance-list-contianer {
     display: flex;
     align-items: start;
     justify-content: start;
-    padding: 0 25px;
+    flex-direction: column;
     width: 100%;
     gap: 16px;
-    flex-direction: column;
+    padding: 0 25px;
     list-style: disc;
 }

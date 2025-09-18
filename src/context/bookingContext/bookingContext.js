@@ -100,7 +100,8 @@ export const BookingProvider = ({ children }) => {
         // };
     }, []);
 
-    useEffect(() => { console.log("selected carsesion data", vehicleSesionData) }, [vehicleSesionData])
+    useEffect(() => {console.log("Booking Payload", bookingPayload)}, [bookingPayload])
+
 
     return (
         <BookingContext.Provider value={{

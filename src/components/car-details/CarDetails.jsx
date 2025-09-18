@@ -58,7 +58,6 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
 
   const [isMobile, setIsMobile] = useState(false);
 
-  console.log("searched vehilcle payload", searchedVehicles)
 
   
 

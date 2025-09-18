@@ -24,7 +24,7 @@ const Footer = () => {
         { itemName: 'Before You Book', itemLink: '/before-you-book' },
         { itemName: 'After Your Journey', itemLink: '/after-journey' },
         { itemName: 'Contact Us', itemLink: '/contact-us' },
-        { itemName: 'News & Events', itemLink: '/news-and-events' },
+        // { itemName: 'News & Events', itemLink: '/news-and-events' },
       ]
     },
     {

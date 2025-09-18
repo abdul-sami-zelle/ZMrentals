@@ -11,7 +11,18 @@ import { useRouter } from 'next/navigation';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import axios from 'axios';
 
-const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow, handleSearchVehicles, setHeight = false, isPickupSelected, setIsPickupSelected }) => {
+const BookingForm = (
+    {
+        bgColor,
+        textColor,
+        textShadow,
+        primaryButtonText,
+        boxShadow,
+        handleSearchVehicles,
+        setHeight = false,
+        isPickupSelected,
+        setIsPickupSelected
+    }) => {
 
     const [pickupCalender, setPickupCalender] = useState(false);
     const [dropCalender, setDropCalender] = useState(false);
@@ -36,10 +47,6 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         driverAge,
         setDriverAge,
     } = useSearchVehicle();
-
-    const citiesList = [
-        'Mangere Auckland',
-    ]
 
     const driverAgeList = [
         { name: '18' }, { name: '19' }, { name: '20' }, { name: '21' }, { name: '22' }, { name: '23' }, { name: '24' }, { name: '25+' }
@@ -181,11 +188,43 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         setDriverAge(age.name)
     }
 
+    // Reusable formatter (keeps calendar date, ignores timezone)
+    const formatDateAt10AM = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+
+        // Always fix to 10 AM
+        return `${year}-${month}-${day}T10:00:00.000Z`;
+    };
+
+    const getPickupDateAt10AM = (dateString) => {
+        const date = new Date(dateString);
+        const formattedDate = formatDateAt10AM(date);
+
+        setSearchVehiclePayload((prev) => ({
+            ...prev,
+            pickup_time: formattedDate,
+        }));
+    };
+
+    const getDropOffDateAt10AM = (dateString) => {
+        const date = new Date(dateString);
+        const formattedDate = formatDateAt10AM(date);
+
+        console.log("drop time change", formattedDate)
+        setSearchVehiclePayload((prev) => ({
+            ...prev,
+            drop_time: formattedDate,
+        }));
+    };
+
     const selectPickDate = (daysAhead) => {
         const today = new Date();
         const futureDate = new Date(today);
         futureDate.setDate(today.getDate() + daysAhead);
-
+        getPickupDateAt10AM(futureDate)
+        console.log("selected pick date", futureDate)
         setSelectedPickupDate(futureDate); // Update selected date
 
     };
@@ -194,7 +233,8 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         const today = new Date();
         const futureDate = new Date(today);
         futureDate.setDate(today.getDate() + daysAhead);
-
+        getDropOffDateAt10AM(futureDate)
+        console.log("drop date", futureDate)
         setSelectedDropDate(futureDate); // Update selected date
 
     };
@@ -203,45 +243,50 @@ const BookingForm = ({ bgColor, textColor, textShadow, primaryButtonText, boxSha
         const current = new Date(date);
         const futureDate = new Date(current);
         futureDate.setDate(current.getDate() + 4)
+        getDropOffDateAt10AM(futureDate)
+        console.log(" future date", futureDate)
         setSelectedDropDate(futureDate)
     }
 
-
     useEffect(() => {
-        selectFutureDate(selectedPickupDate)
+        if(!selectedDropDate) {
+            selectFutureDate(selectedPickupDate)
+        }
     }, [selectedPickupDate])
 
 
+    // 🔹 Set default dates only if empty
     useEffect(() => {
-        // handleLocations();
-        selectPickDate(4);
-        selectDropDate(8)
-    }, [])
+        if (!searchVehiclePayload.pickup_time && !searchVehiclePayload.drop_time) {
+            selectPickDate(4);
+            selectDropDate(8);
+        }
+    }, []);
 
     const pickupCalanderRef = useRef();
     useEffect(() => {
         const handleCalanderClose = (event) => {
-            if(pickupCalanderRef.current && !pickupCalanderRef.current.contains(event.target)) {
+            if (pickupCalanderRef.current && !pickupCalanderRef.current.contains(event.target)) {
                 setPickupCalender(false)
             }
         }
 
         document.addEventListener('mousedown', handleCalanderClose);
 
-        return () => {document.removeEventListener('mousedown', handleCalanderClose)}
+        return () => { document.removeEventListener('mousedown', handleCalanderClose) }
     }, [pickupCalender])
 
     const dropCalandrRef = useRef();
     useEffect(() => {
         const handleCalanderClose = (event) => {
-            if(dropCalandrRef.current && !dropCalandrRef.current.contains(event.target)) {
+            if (dropCalandrRef.current && !dropCalandrRef.current.contains(event.target)) {
                 setDropCalender(false)
             }
         }
 
         document.addEventListener('mousedown', handleCalanderClose);
 
-        return () => {document.removeEventListener('mousedown', handleCalanderClose)}
+        return () => { document.removeEventListener('mousedown', handleCalanderClose) }
     }, [dropCalender])
 
     return (

@@ -1,4 +1,4 @@
-.small-car-main-contianer {
+.after-journey-main {
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -8,7 +8,7 @@
     height: auto;
 }
 
-.smal-car-width-controlar {
+.after-journey-width {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -19,23 +19,41 @@
     gap: 32px;
 }
 
-.small-cars-list-contianer {
+.after-journey-head {
     display: flex;
-    align-items: start;
-    justify-content: start;
-    flex-direction: column;
-    gap: 32px;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
 }
 
-.small-cars-list {
+.after-journey-list-container {
     display: flex;
     align-items: start;
     justify-content: start;
-    padding: 0 25px;
+    gap: 16px;
+    width: 100%;
+    flex-direction: column;
+}
+
+.after-journey-list-container > ul {
+    display: flex;
+    align-items: start;
+    justify-content: start;
     width: 100%;
     gap: 16px;
     flex-direction: column;
     list-style: disc;
+    padding: 0 25px;
+}
+
+.understanding-bills-contianer {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 16px;
+    flex-direction: column;
 }

@@ -381,7 +381,7 @@
 .grand-total-section > span {
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: end;
     justify-content: start;
     width: max-content;
 }

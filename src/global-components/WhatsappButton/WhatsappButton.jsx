@@ -6,7 +6,7 @@ import { TbBrandWhatsappFilled } from "react-icons/tb";
 
 
 const WhatsappButton = () => {
-  const phoneNumber = "923001234567"; // ✅ Your WhatsApp number without + or leading zeros
+  const phoneNumber = "+6421467261"; // ✅ Your WhatsApp number without + or leading zeros
   const message = "Hello, I need assistance!"; // optional default message
 
   const handleWhatsAppClick = () => {

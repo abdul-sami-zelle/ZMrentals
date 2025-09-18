@@ -44,7 +44,6 @@ const Login = ({ showInput }) => {
         const api = `${url}/customer/login`;
         try {
             const response = await axios.post(api, userDetail)
-            console.log("login response", response)
         } catch (error) {
             return { success: false, message: error.response?.data?.message || "Login failed" };
         }

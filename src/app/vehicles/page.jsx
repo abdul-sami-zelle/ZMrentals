@@ -138,55 +138,67 @@ const Vehicles = () => {
 
 
   const router = useRouter()
+
+  const isValidDropDate = (pickup, drop) => {
+    if (!pickup || !drop) return false; // both must exist
+    return new Date(drop) >= new Date(pickup);
+  };
+
   const handleSearchVehicles = async () => {
     const api = "https://zm.skyhub.pk/cars/available-cars";
     const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
 
+    if (isValidDropDate(searchVehiclePayload.pickup_time, searchVehiclePayload.drop_time)) {
+      try {
+        if (pickup_location && drop_location && pickup_time && drop_time) {
+          setSearchedVehicles([])
+          const response = await axios.post(api, searchVehiclePayload);
 
-    try {
-      if (pickup_location && drop_location && pickup_time && drop_time) {
-        setSearchedVehicles([])
-        const response = await axios.post(api, searchVehiclePayload);
+          if (response.status === 200) {
+            setIsVehicleSearched(true)
+            setSearchedVehicles(response.data);
 
-        if (response.status === 200) {
-          setIsVehicleSearched(true)
-          setSearchedVehicles(response.data);
-
-          sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
+            sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
+          } else {
+            console.warn(`[WARN] Unexpected status code: ${response.status}`);
+            alert("Unexpected response from server. Please try again later.");
+            setIsVehicleSearched(false)
+          }
         } else {
-          console.warn(`[WARN] Unexpected status code: ${response.status}`);
-          alert("Unexpected response from server. Please try again later.");
-          setIsVehicleSearched(false)
-        }
-      } else {
-        setTOustShow(true)
-        setToustMessage("Please Fill All The Fields To Search Vehicle")
-      }
-
-
-    } catch (error) {
-      setIsVehicleSearched(false)
-      if (error.response) {
-        const status = error.response.status;
-
-        if (status === 400) {
-          alert("Invalid search request. Please check your input and try again.");
-        } else if (status >= 500) {
-          alert("Server error occurred. Please try again later.");
-        } else {
-          alert("Something went wrong. Please try again.");
+          setTOustShow(true)
+          setToustMessage("Please Fill All The Fields To Search Vehicle")
         }
 
-        console.error(`[ERROR] ${status}:`, error.response.data);
 
-      } else if (error.request) {
-        alert("No response from server. Please check your internet connection.");
-        console.error("[NO RESPONSE] Request was made but no response received.");
-      } else {
-        alert("Unexpected error occurred. Please try again.");
-        console.error("[CLIENT ERROR] Something went wrong:", error.message);
+      } catch (error) {
+        setIsVehicleSearched(false)
+        if (error.response) {
+          const status = error.response.status;
+
+          if (status === 400) {
+            alert("Invalid search request. Please check your input and try again.");
+          } else if (status >= 500) {
+            alert("Server error occurred. Please try again later.");
+          } else {
+            alert("Something went wrong. Please try again.");
+          }
+
+          console.error(`[ERROR] ${status}:`, error.response.data);
+
+        } else if (error.request) {
+          alert("No response from server. Please check your internet connection.");
+          console.error("[NO RESPONSE] Request was made but no response received.");
+        } else {
+          alert("Unexpected error occurred. Please try again.");
+          console.error("[CLIENT ERROR] Something went wrong:", error.message);
+        }
       }
+    } else {
+      setTOustShow(true)
+      setToustMessage("Please Fill All The Fields To Search Vehicle")
     }
+
+
   };
 
 
@@ -202,7 +214,7 @@ const Vehicles = () => {
 
           </div>
         </div>
-        
+
         {carsDetails.map((item, index) => (
           <CarDetails
             key={index}
@@ -249,7 +261,7 @@ const Vehicles = () => {
       </div>
       {/* Max width Container End */}
 
-      <Toust 
+      <Toust
         showToust={toustShow}
         setShowToust={setTOustShow}
         message={toustMessage}
