@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './EmailEnquiryModal.css'
 import { IoIosClose, IoMdArrowDropdown } from 'react-icons/io'
 import { url } from '../../utils/services'
+import axios from 'axios'
 
 const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, modalType }) => {
 
@@ -30,7 +31,7 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
         'Facebook',
         'Instagram',
         'Tiktok',
-        'Friends Refral',
+        'Friends Referral',
         'Other',
     ]
 
@@ -134,10 +135,15 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (validateForm()) {
-            // ✅ All fields filled, proceed
-            console.log("Form submitted:", qoutePayload);
+            const api = `${url}/mail-enquiry/add`;
+            try {
+                const response = await axios.post(api, qoutePayload);
+                console.log("enquiry response", response)
+            } catch (error) {
+                console.log("UnExpected Server Error", error)
+            }
         } else {
             // ❌ Some fields missing
             console.log("Please fill all required fields");

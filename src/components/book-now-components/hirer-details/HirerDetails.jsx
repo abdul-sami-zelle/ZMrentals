@@ -22,7 +22,7 @@ const HirerDetails = () => {
     'Facebook',
     'Instagram',
     'Tiktok',
-    'Friends Refral',
+    'Friends referral',
     'Other',
   ]
 

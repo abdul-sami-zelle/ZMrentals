@@ -5,16 +5,19 @@ import './Signup.css'
 import Login from '../../components/LoginSingupComponents/Login/Login'
 import Signup from '../../components/LoginSingupComponents/Signup/Signup'
 import Link from 'next/link'
+import MainLoader from '@/loaders/MainLoader/MainLoader'
 
 const SignUp = () => {
     const [showLogin, setShowLogin] = useState(true);
     const [inputShow, setInputShow] = useState()
+    const [loading, setLoading] = useState(false);
     return (
         <div className='login-signup-main-contianer'>
+            {loading && <MainLoader />}
             <div className={`signup-login-max-width`}>
                 <div className={`login-sec-contianer ${showLogin ? 'swipe-to-input' : ''}`}>
                     {showLogin ? (
-                        <Login showInput={showLogin} />
+                        <Login showInput={showLogin} loading={loading} setLoading={setLoading} />
                     ) : (
                         <div className='login-sec-content-contianer'>
                             <img src='/assets/logos/ZM-Rentals-Horizontal-logo.png' alt='logo' />
@@ -50,9 +53,9 @@ const SignUp = () => {
                 </div>
 
                 {showLogin ? (
-                    <Login />
+                    <Login loading={loading} setLoading={setLoading} />
                 ) : (
-                    <Signup />
+                    <Signup loading={loading} setLoading={setLoading} />
                 )}
             </div>
 

@@ -5,7 +5,7 @@ import { IoIosEye, IoMdEyeOff } from "react-icons/io";
 import {url} from '../../../utils/services'
 import axios from 'axios';
 
-const Signup = () => {
+const Signup = ({loading, setLoading}) => {
 
   const [showPassword, setShowPassword] = useState(false)
   const [showError, setShowError] = useState(false)

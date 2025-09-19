@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px;
-    width: 700px;
+    width: 100%;
     height: auto;
     z-index: 99999;
     gap: 30px;
@@ -14,9 +14,9 @@
     transition: all 0.3s ease-in-out;
 }
 
-.booking-form-main-container.control-booking-location-contianer {
+/* .booking-form-main-container.control-booking-location-contianer {
     width: 100%;
-}
+} */
 
 .booking-form-inputs-container {
     display: flex;
@@ -29,6 +29,7 @@
 
 .booking-form-inputs {
     display: flex;
+    flex-direction: column;
     align-items: stretch;
     justify-content: center;
     gap: 8px;
@@ -42,7 +43,7 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 8px;
 }
 
@@ -51,15 +52,12 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 8px;
-    display: none;
     transition: all0.3s ease-in-out;
 }
 
-.booking-form-input-single-col-drop-off.show-drop-location {
-    display: flex;
-}
+
 
 .booking-time-container {
     display: flex;
@@ -308,20 +306,45 @@
     border-radius: 15px;
 }
 
+@media only screen and (min-width: 786px) and (max-width: 1310px) {
+    .select-pickup-date-button  {
+        width: 95%;
+    }
+    .select-drop-up-date-button {
+        width: 95%;
+    }
+}
+
 @media only screen and (min-width: 481px) and (max-width: 767px) {
     .booking-form-main-container {
         flex-direction: column;
         width: 100%;
         align-items: start;
         justify-content: start;
-        padding: 10px;
+        padding: 20px 10px;
         gap: 10px;
     }
 
-    .booking-form-main-container.control-booking-location-contianer {
+    .booking-form-confirm-button-container {
         width: 100%;
+        align-items: center;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        gap: 10px;
+        
     }
+
+    /* .booking-form-main-container.control-booking-location-contianer {
+        width: 100%;
+    } */
     .booking-form-inputs {
+        flex-direction: column;
+    }
+    .booking-form-input-single-col-pick-up {
+        flex-direction: column;
+    }
+
+    .booking-form-input-single-col-drop-off {
         flex-direction: column;
     }
 }
@@ -336,9 +359,9 @@
         gap: 10px;
     }
 
-    .booking-form-main-container.control-booking-location-contianer {
+    /* .booking-form-main-container.control-booking-location-contianer {
         width: 100%;
-    }
+    } */
 
     .booking-form-inputs-container {
         width: 100%;
@@ -350,8 +373,16 @@
 
     .booking-form-confirm-button-container {
         width: 100%;
-        align-items: start;
-        justify-content: start;
+        align-items: center;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        gap: 10px;
         
+    }
+    .booking-form-input-single-col-pick-up {
+        flex-direction: column;
+    }
+    .booking-form-input-single-col-drop-off {
+        flex-direction: column;
     }
 }

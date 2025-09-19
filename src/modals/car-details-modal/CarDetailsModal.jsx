@@ -24,7 +24,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
-import {formatPrice} from '../../utils/fotmateValues.js'
+import { formatPrice } from '../../utils/fotmateValues.js'
 import VehicleCard from '@/global-components/vehicle-card/VehicleCard';
 
 
@@ -39,6 +39,8 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
             document.body.style.overflow = 'auto'
         }
     }, [showModal])
+
+    const {setVehicleSesionData} = useBookingContext()
 
     const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
     const [showBookingButton, setShowBookingButton] = useState(false);
@@ -113,6 +115,8 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
         },
     ]
 
+    console.log("vehicle details", vehicleDetails)
+
     const router = useRouter()
     const { setBookingVehicleData } = useBookingContext()
     const handleBookNow = async (e) => {
@@ -125,7 +129,10 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
             if (response.status === 200) {
                 // setShowBookingButton(validateSearchPayload(searchVehiclePayload))
                 setBookingVehicleData(response.data);
-                sessionStorage.setItem('vehicle-details', JSON.stringify(response.data));
+                setVehicleSesionData(vehicleDetails)
+                // sessionStorage.setItem('vehicle-details', JSON.stringify(response.data));
+                sessionStorage.setItem('selected-vehicle-details', JSON.stringify(response.data));
+                sessionStorage.setItem('vehicle-details', JSON.stringify(vehicleDetails));
                 router.push('/book-now');
                 handleClose()
             }
@@ -263,7 +270,12 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
 
                             </div>
                         </div>
-                        <button className='car-details-modal-book-now-button' onClick={handleBookNow}>Book Now</button>
+                        {vehicleDetails.available !== 0 ? (
+                            <button className='car-details-modal-book-now-button' onClick={handleBookNow}>Book Now</button>
+                        ) : (
+                            <button className='car-details-modal-book-sold'>Sold</button>
+                        )}
+                        
                     </div>
                 )}
 

@@ -6,10 +6,14 @@ import { IoArrowDown } from "react-icons/io5";
 import { FaLocationArrow, FaPhone, FaClock, FaEnvelope, FaMapLocation, FaMinus } from "react-icons/fa6";
 import Image from 'next/image';
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton';
+import { url } from '@/utils/services';
+import axios from 'axios';
+import MainLoader from '@/loaders/MainLoader/MainLoader';
 
 
 const GetInTouch = () => {
 
+    const [loading, setLoading] = useState(false);
     const [showAddrss, setShowAddress] = useState(false);
     const addresses = [
         {
@@ -23,10 +27,12 @@ const GetInTouch = () => {
 
     const [contactData, setContactData] = useState({
         name: '',
-        phone: '',
         email: '',
+        contact: '',
         message: ''
     })
+
+    const [errors, setErrors] = useState({})
 
     const handleContactData = (e) => {
         const { name, value } = e.target;
@@ -34,10 +40,45 @@ const GetInTouch = () => {
             ...prevData,
             [name]: value
         }))
+
+        setErrors((prev) => ({ ...prev, [name]: "" }));
     }
+
+    const handleSubmitContact = async () => {
+        let newErrors = {};
+
+        if (!contactData.name) newErrors.name = "Name is required";
+        if (!contactData.email) newErrors.email = "Email is required";
+        if (!contactData.contact) newErrors.contact = "Phone is required";
+        if (!contactData.message) newErrors.message = "Message is required";
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return; // stop here if errors exist
+        }
+
+        const api = `${url}/contact/add-contact`;
+        setLoading(true);
+        try {
+            const response = await axios.post(api, contactData);
+            if (response.status === 201) {
+                setLoading(false);
+                setContactData({ name: "", email: "", contact: "", message: "" }); // clear form
+                setErrors({}); // clear errors
+            }
+            console.log("contact response", response);
+        } catch (error) {
+            setLoading(false);
+            console.log("Unexpected Server Error", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     return (
         <div className='get-in-touch-main-container'>
+            {loading && <MainLoader />}
             <h3>Get in Touch with ZM Rentals</h3>
             <p>Thank you for choosing ZM Rentals as your car hire service in Auckland.</p>
             <p>We are here to assist you with any inquiries or support you may need.</p>
@@ -79,33 +120,33 @@ const GetInTouch = () => {
 
                     <div className='contact-form-inputs-container'>
                         <div className='contact-input-name-and-last-name'>
-                            <label className={`contact-input-label ${contactData.name ? 'filled' : ''}`}>
+                            <label className={`contact-input-label ${contactData.name ? 'filled' : ''}`} style={{borderBottom: errors.name ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)'}}>
                                 <p>Your Name</p>
                                 <input type='text' className='contact-form-input' name='name' value={contactData.name} onChange={(e) => handleContactData(e)} />
                             </label>
 
-                            <label className={`contact-input-label ${contactData.phone ? 'filled' : ''}`}>
+                            <label className={`contact-input-label ${contactData.contact ? 'filled' : ''}`} style={{borderBottom: errors.contact ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)'}}>
                                 <p>Your Phone</p>
-                                <input type='text' className='contact-form-input' name='phone' value={contactData.phone} onChange={(e) => handleContactData(e)} />
+                                <input type='text' className='contact-form-input' name='contact' value={contactData.contact} onChange={(e) => handleContactData(e)} />
                             </label>
                         </div>
 
-                        <label className={`contact-input-label ${contactData.email ? 'filled' : ''}`}>
+                        <label className={`contact-input-label ${contactData.email ? 'filled' : ''}`} style={{borderBottom: errors.email ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)'}}>
                             <p>Your Email</p>
                             <input type='text' className='contact-form-input' name='email' value={contactData.email} onChange={(e) => handleContactData(e)} />
                         </label>
 
-                        <label className={`contact-input-label ${contactData.message ? 'filled' : ''}`}>
+                        <label className={`contact-input-label ${contactData.message ? 'filled' : ''}`} style={{borderBottom: errors.message ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)'}}>
                             <p>Message</p>
                             {/* message */}
-                            <textarea rows={3}  className='contact-form-input' name='message' value={contactData.message} onChange={(e) => handleContactData(e)} />
+                            <textarea rows={3} className='contact-form-input' name='message' value={contactData.message} onChange={(e) => handleContactData(e)} />
                         </label>
-                        <div className='contact-form-inputs-submit-button-container'>
+                        <div className='contact-form-inputs-submit-button-container' onClick={handleSubmitContact}>
                             <button>Submit</button>
 
                         </div>
                     </div>
-                    
+
                     <div className='mobile-view-contact-details'>
                         <span>
                             <h3>Phone</h3>
@@ -122,7 +163,7 @@ const GetInTouch = () => {
                     </div>
 
 
-                    
+
                 </div>
 
             </div>

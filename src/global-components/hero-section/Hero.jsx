@@ -136,7 +136,7 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
 
                     </div>
                     <div ref={bookingFormRef} className={`booking-form-container-parent`}>
-                        <div className={`booking-form-width-control-container ${searchVehiclePayload.pickup_location !== null ? 'control-booking-form-width' : ''}`}>
+                        <div className={`booking-form-width-control-container`}>
                             <BookingForm bgColor={'var(--color-white)'} isPickupSelected={isPickupSelected} setIsPickupSelected={setIsPickupSelected} setHeight={true} handleSearchVehicles={handleSearchVehicles} boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px'} textColor={'var(--color-white)'} textShadow={'1px 1px 2px #961502;'} primaryButtonText={'Search Cars'} />
                         </div>
                     </div>

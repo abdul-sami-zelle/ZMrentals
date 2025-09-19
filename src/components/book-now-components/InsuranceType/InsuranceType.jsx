@@ -4,7 +4,7 @@ import './InsuranceType.css';
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
-const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, packageSelected, setPackageSelected }) => {
+const InsuranceType = ({ insurances, selectedTabIndex, insuranceSeleted, setInsuranceSelected, packageSelected, setPackageSelected }) => {
 
   const excessAndBond = [
     { heading: 'Excess', details: `This amount will be charged to your credit card in the event of any damage to the car. If the cost of the damage is lower than the excess, the difference will be refunded to you once the claim has been processed.` },
@@ -28,6 +28,7 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
   const handleSelectInsurance = (item) => {
     setInsuranceSelected(item)
     setPackageSelected(item.insurance_option_id);
+    console.log("Clicked vehicle data", bookingVehicleData)
     setBookingPayload((prev) => ({
       ...prev,
       booking: {
@@ -40,7 +41,9 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
         pickup_time: pickAndDrop.pickup_time
       }
     }))
+
   }
+
 
   useEffect(() => {
 
@@ -52,7 +55,6 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
       setPackageSelected(firstInsurance?.insurance_option_id)
     }
 
-    
     setBookingPayload((prev) => ({
       ...prev,
       booking: {
@@ -62,6 +64,21 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
     }))
 
   }, []);
+
+  useEffect(() => {
+    setBookingPayload((prev) => ({
+      ...prev,
+      booking: {
+        ...prev.booking,
+        car_id: bookingVehicleData.car_id,
+        // insurance_id: prev.booking.insurance_id ?? firstInsurance?.id,
+        drop_location: pickAndDrop.drop_location,
+        drop_time: pickAndDrop.drop_time,
+        pickup_location: pickAndDrop.pickup_location,
+        pickup_time: pickAndDrop.pickup_time
+      }
+    }))
+  }, [pickAndDrop])
 
   return (
 

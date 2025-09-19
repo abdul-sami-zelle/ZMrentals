@@ -3,9 +3,14 @@ import './Login.css'
 import { IoIosEye, IoMdEyeOff } from "react-icons/io";
 import {url} from '../../../utils/services' 
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
-const Login = ({ showInput }) => {
+const Login = ({ showInput, loading, setLoading }) => {
+
+    const router = useRouter();
+
     const [showPass, setShowPass] = useState()
+    
     const [wrongPass, setWrongPass] = useState(false);
     const [userDetail, setUserDetails] = useState({
         email: '',
@@ -41,14 +46,24 @@ const Login = ({ showInput }) => {
             return
         }
 
+        setLoading(true)
         const api = `${url}/customer/login`;
         try {
             const response = await axios.post(api, userDetail)
+            if(response.status === 200) {
+                sessionStorage.setItem('user-data', JSON.stringify(response.data.data))
+                router.push('/user-dashboard')
+                setLoading(false);
+            }
+            console.log("login response", response)
         } catch (error) {
+            setLoading(false);
             return { success: false, message: error.response?.data?.message || "Login failed" };
+        } finally {
+            setLoading(false)
         }
 
-        alert("User Loged in Successfully");
+        // alert("User Loged in Successfully");
     }
     return (
 

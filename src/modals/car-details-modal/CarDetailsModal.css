@@ -244,6 +244,24 @@
     cursor: pointer;
 }
 
+.car-details-modal-book-sold {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-semibold);
+    border: none;
+    outline: none;
+    cursor: not-allowed;
+    opacity: 0.6;
+
+}
+
 .mob-view-car-details-modal-price-and-qoute {
     display: none;
     flex-direction: column;

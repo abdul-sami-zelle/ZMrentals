@@ -37,6 +37,8 @@ const BookNowClient = () => {
     userData,
     setUserData,
   } = useBookingContext()
+
+  console.log("sesion data", vehicleSesionData)
   const { setSearchVehiclePayload } = useSearchVehicle()
   const searchParam = useSearchParams();
   const router = useRouter();
@@ -596,7 +598,7 @@ const BookNowClient = () => {
                   </div>
                 </div>
 
-                {selectedTabIndex === 0 ? <InsuranceType insurances={bookingVehicleData.insurance} insuranceSeleted={insuranceSeleted} setInsuranceSelected={setInsuranceSelected} packageSelected={packageSelected} setPackageSelected={setPackageSelected} />
+                {selectedTabIndex === 0 ? <InsuranceType insurances={bookingVehicleData.insurance} selectedTabIndex={selectedTabIndex} insuranceSeleted={insuranceSeleted} setInsuranceSelected={setInsuranceSelected} packageSelected={packageSelected} setPackageSelected={setPackageSelected} />
                   : selectedTabIndex === 1 ? <Extras extras={bookingVehicleData.extras} />
                     : selectedTabIndex === 2 ? <HirerDetails />
                       : <Payments grandTotal={applyDiscount(getGrandTotal(), userDiscount)} isChecked={isChecked} setIsChecked={setIsChecked} selectPaymentType={selectPaymentType} setSelectPaymentType={setSelectPaymentType} />}
@@ -631,8 +633,15 @@ const BookNowClient = () => {
                     <div className='vehicle-details'>
                       <h3>{bookingVehicleData.name}</h3>
                       {/* <p>${bookingVehicleData.base_rate}/day x {totalDays} day</p> */}
-                      <del>NZD {vehicleSesionData?.was_price}</del>
-                      <span>NZD {vehicleSesionData?.sub_total}</span>
+                      {vehicleSesionData?.duration_discount !== 0 ? (
+                          <div style={{display: 'flex', alignItems: 'start', justifyContent: 'start', width: 'auto', flexDirection: 'column'}}>
+                            <del>NZD {vehicleSesionData?.was_price}</del>
+                            <span>NZD {vehicleSesionData?.sub_total}</span>
+                          </div>
+                      ) : (
+                          <span>NZD {vehicleSesionData?.sub_total}</span>
+                      )}
+                      
                       <Link href={'/vehicles'}>Change Vehicle</Link>
                     </div>
                     <div className='vehicle-image-container'>

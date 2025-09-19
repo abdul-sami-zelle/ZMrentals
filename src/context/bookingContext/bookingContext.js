@@ -55,14 +55,17 @@ export const BookingProvider = ({ children }) => {
             setBookingVehicleData(sellectedVehicleSessionData);
         }
 
+
     }, [])
 
     useEffect(() => {
         const handleStorageChange = () => {
-            const storedData = sessionStorage.getItem("vehicle-details");
+            const storedData = sessionStorage.getItem("selected-vehicle-details");
             if (storedData) {
                 setVehicleSesionData(JSON.parse(storedData));
             }
+
+            
         };
 
         // Run once on mount

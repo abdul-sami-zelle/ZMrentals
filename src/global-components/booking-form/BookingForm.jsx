@@ -10,6 +10,7 @@ import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleCo
 import { useRouter } from 'next/navigation';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import axios from 'axios';
+import ScreenResize from '../../utils/screenSize'
 
 const BookingForm = (
     {
@@ -27,6 +28,8 @@ const BookingForm = (
     const [pickupCalender, setPickupCalender] = useState(false);
     const [dropCalender, setDropCalender] = useState(false);
     const router = useRouter()
+    const { isInRange, width } = ScreenResize(768, 1310)
+    const { isMobile, mobWidth } = ScreenResize(0, 767)
 
     const {
         searchVehiclePayload,
@@ -87,11 +90,13 @@ const BookingForm = (
 
     const handlePickupDateChange = (date) => {
         setSelectedPickupDate(date);
+        formatePickupDateAndTime(date, pickupTime)
         setPickupCalender(false); // hide after selection
     };
 
     const handleDropDateChange = (date) => {
         setSelectedDropDate(date);
+        handleDropofTimeAndDate(date, dropupTime)
         setDropCalender(false); // hide after selection
     };
 
@@ -179,7 +184,6 @@ const BookingForm = (
         }));
     };
 
-
     const handleDriverAge = (age) => {
         setSearchVehiclePayload((prev) => ({
             ...prev,
@@ -254,7 +258,6 @@ const BookingForm = (
         }
     }, [selectedPickupDate])
 
-
     // 🔹 Set default dates only if empty
     useEffect(() => {
         if (!searchVehiclePayload.pickup_time && !searchVehiclePayload.drop_time) {
@@ -291,11 +294,14 @@ const BookingForm = (
 
     return (
         <div className={`booking-form-main-container ${searchVehiclePayload.pickup_location !== null ? 'control-booking-location-contianer' : ''}`} style={{ boxShadow: boxShadow }}>
+            
+            
             <div className='booking-form-inputs-container'>
                 <div className='booking-form-inputs'>
+
                     <div className='booking-form-input-single-col-pick-up'>
                         <DropdownInput
-                            width={'100%'}
+                            width={isInRange ? '70%' : '100%'}
                             height={'64px'}
                             defaultValue={'Pick-up Location'}
                             placeholder={'Pick-up'}
@@ -348,7 +354,7 @@ const BookingForm = (
                             </div>
 
                             <DropdownInput
-                                width={'65%'}
+                                width={isInRange ? '75%' : '65%'}
                                 height={'162px'}
                                 defaultValue={'Time'}
                                 data={generateTimeList()}
@@ -362,9 +368,9 @@ const BookingForm = (
 
                     </div>
 
-                    <div className={`booking-form-input-single-col-drop-off ${searchVehiclePayload.pickup_location !== null ? 'show-drop-location' : ''}`}>
+                    <div className={`booking-form-input-single-col-drop-off`}>
                         <DropdownInput
-                            width={'100%'}
+                            width={isInRange ? '70%' : '100%'}
                             height={'64px'}
                             defaultValue={'Drop-off Location'}
                             placeholder={'Drop-off'}
@@ -419,7 +425,7 @@ const BookingForm = (
 
                             </div>
                             <DropdownInput
-                                width={'65%'}
+                                width={isInRange ? '75%' : '65%'}
                                 height={'162px'}
                                 defaultValue={'Time'}
                                 data={generateTimeList()}
@@ -431,23 +437,27 @@ const BookingForm = (
                             />
                         </div>
                     </div>
+
                 </div>
             </div>
+
+
             <div className='booking-form-confirm-button-container'>
                 <PrimaryButton
                     handleCLick={handleSearchVehicles}
                     primaryMainClass={'primary-button-main-class'}
                     primaryText={primaryButtonText}
                     primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}
-                    width={'192px'}
+                    width={isMobile ? '50%' : '192px'}
                     height={'45px'}
                     gap={'20px'}
-                    fontSize={'var(--font-body-lg)'}
+
+                    fontSize={isMobile ? '13px' : 'var(--font-body-lg)'}
                     lineHeight={'var(--line-height-body)'}
                     fontWeight={'var(--font-weight-bold)'}
                 />
                 <DropdownInput
-                    width={'100%'}
+                    width={isMobile ? '40%' : '100%'}
                     height={'120px'}
                     defaultValue={'Driver Age'}
                     placeholder={'Driver Age'}

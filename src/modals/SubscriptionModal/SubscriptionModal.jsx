@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import './SubscriptionModal.css'
 import { IoIosClose, IoMdArrowDropdown } from 'react-icons/io'
+import { url } from '@/utils/services';
+import axios from 'axios';
+import MainLoader from '@/loaders/MainLoader/MainLoader';
 
 const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) => {
 
     const [showCountry, setShowCountry] = useState(false);
+    const [isSubscriptionSubmit, setIsSubscriptionSubmit] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const [countries, setCountries] = useState([]);
 
@@ -30,13 +35,13 @@ const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) =>
         first_name: '',
         last_name: '',
         email: '',
-        country: '', 
+        country: '',
     })
 
     const [errors, setErrors] = useState({})
 
     const handleInputChange = (e) => {
-        const {name, value} = e.target;
+        const { name, value } = e.target;
 
         setSubscribePayload((prev) => ({
             ...prev,
@@ -50,6 +55,7 @@ const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) =>
     }
 
     const handleCountrySelect = (item) => {
+        console.log("country", item)
         setSubscribePayload((prev) => ({
             ...prev,
             country: item
@@ -62,31 +68,51 @@ const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) =>
         setShowCountry(false)
     }
 
-    const handleSubmitSubscription = (e) => {
-         e.preventDefault(); 
+    const handleSubmitSubscription = async (e) => {
+        e.preventDefault();
 
         let newError = {};
         Object.keys(subscribePayload).forEach((key) => {
-            if(!subscribePayload[key]) {
+            if (!subscribePayload[key]) {
                 newError[key] = "Field Required"
             }
         })
 
         setErrors(newError);
-
-        if(Object.keys(newError).length === 0) {
-            alert("you are good to go")
+        const api = `${url}/subscriptions/add-subscription`
+        if (Object.keys(newError).length === 0) {
+            setLoading(true)
+            try {
+                const response = await axios.post(api, subscribePayload)
+                if (response.status === 201) {
+                    setLoading(false);
+                    setIsSubscriptionSubmit(true)
+                    setSubscribePayload({
+                        first_name: '',
+                        last_name: '',
+                        email: '',
+                        country: ''
+                    })
+                }
+                console.log("subscription response", response);
+            } catch (error) {
+                setLoading(false)
+                console.error("UnExpected Server Error", error)
+            } finally {
+                setLoading(false);
+            }
         }
     }
 
 
     return (
-        <div className={`subscription-main-container ${showSubscription ? 'show-subscription' : ''}`} onClick={() => setShowSubscription(false)}>
+        <div className={`subscription-main-container ${showSubscription ? 'show-subscription' : ''}`} onClick={() => {setShowSubscription(false); setIsSubscriptionSubmit(false)}}>
             <div className={`subscription-inner-modal ${showSubscription ? 'show-subscription-inner' : ''}`} onClick={(e) => e.stopPropagation()}>
+                {loading && <MainLoader />}
                 <div className='subscription-head-container'>
                     <div className='subscription-close-and-heading-contianer'>
                         <h3>Join our ZM Newsletter</h3>
-                        <IoIosClose size={20} color='#595959' onClick={() => setShowSubscription(false)} style={{cursor: 'pointer'}} />
+                        <IoIosClose size={20} color='#595959' onClick={() => {setShowSubscription(false); setIsSubscriptionSubmit(false)}} style={{ cursor: 'pointer' }} />
                     </div>
                     <h3 className='subscription-main-heading'>Save 10% off your next adventure</h3>
                 </div>
@@ -98,41 +124,57 @@ const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) =>
                 <div className='subscription-terms-and-inputs'>
                     <p className='subscribe-modal-promotional-text'>Receive exclusive deals, exciting updates, travel tips, and inspiration!</p>
 
-                    <div className='subscrive-modal-inputs'>
-                        <div className='subscribe-modal-first-and-last-name'>
-                            <label style={{border: errors.first_name ? '1px solid var(--primary-color)' : '1px solid transparent'}}>
-                                First Name
-                                <input type='text' name='first_name' value={subscribePayload.first_name} onChange={handleInputChange} />
-                            </label>
-                            <label style={{border: errors.last_name ? '1px solid var(--primary-color)' : '1px solid transparent'}}>
-                                Last Name
-                                <input type='text' name='last_name' value={subscribePayload.last_name} onChange={handleInputChange}  />
-                            </label>
-                        </div>
-                        <div className='subscribe-modal-email-and-country'>
-                            <label style={{border: errors.email ? '1px solid var(--primary-color)' : '1px solid transparent'}}>
-                                Email
-                                <input type='text' name='email' value={subscribePayload.email} onChange={handleInputChange}  />
-                            </label>
-
-                            <div className='subscribe-modal-country-select-main-contianer' style={{border: errors.country ? '1px solid var(--primary-color)' : '1px solid transparent'}}>
-                                <p>Which country do you live?</p>
-                                <div className='subscribe-modal-country-select-head' onClick={() => setShowCountry(!showCountry)}>
-                                    <h3>{subscribePayload.country !== '' ? subscribePayload.country : 'Select Your Country'}</h3>
-                                    <IoMdArrowDropdown size={15} color='#000' />
+                    {
+                        isSubscriptionSubmit ? (
+                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '125px'}}>
+                                <h3 style={{fontSize: '20px', fontWeight: 600, color: '#961502', lineHeight: '25px'}}>Your Request Submit Successfully</h3>
+                            </div>
+                        ) : (
+                            <div className='subscrive-modal-inputs'>
+                                <div className='subscribe-modal-first-and-last-name'>
+                                    <label style={{ border: errors.first_name ? '1px solid var(--primary-color)' : '1px solid transparent' }}>
+                                        First Name
+                                        <input type='text' name='first_name' value={subscribePayload.first_name} onChange={handleInputChange} />
+                                    </label>
+                                    <label style={{ border: errors.last_name ? '1px solid var(--primary-color)' : '1px solid transparent' }}>
+                                        Last Name
+                                        <input type='text' name='last_name' value={subscribePayload.last_name} onChange={handleInputChange} />
+                                    </label>
                                 </div>
-                                <div className={`subscribe-modal-country-select-list ${showCountry ? 'show-countries-list' : ''}`}>
-                                    {countries.map((item, index) => (
-                                        <p key={index} onClick={() => handleCountrySelect(item)}>{item}</p>
-                                    ))}
+                                <div className='subscribe-modal-email-and-country'>
+                                    <label style={{ border: errors.email ? '1px solid var(--primary-color)' : '1px solid transparent' }}>
+                                        Email
+                                        <input type='text' name='email' value={subscribePayload.email} onChange={handleInputChange} />
+                                    </label>
+
+                                    <div className='subscribe-modal-country-select-main-contianer' style={{ border: errors.country ? '1px solid var(--primary-color)' : '1px solid transparent' }}>
+                                        <p>Which country do you live?</p>
+                                        <div className='subscribe-modal-country-select-head' onClick={() => setShowCountry(!showCountry)}>
+                                            <h3>{subscribePayload.country !== '' ? subscribePayload.country : 'Select Your Country'}</h3>
+                                            <IoMdArrowDropdown size={15} color='#000' />
+                                        </div>
+                                        <div className={`subscribe-modal-country-select-list ${showCountry ? 'show-countries-list' : ''}`}>
+                                            {countries.map((item, index) => (
+                                                <p key={index} onClick={() => handleCountrySelect(item)}>{item}</p>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        )
+                    }
+
 
                     <p className='subscribe-modal-terms-and-conditions'>Read Terms & Conditions</p>
                 </div>
-                <button className='submit-subscribe-modal-button' onClick={handleSubmitSubscription}>Subscribe</button>
+                {
+                    isSubscriptionSubmit ? (
+                        <button className='submit-subscribe-modal-button' onClick={() => {setShowSubscription(false); setIsSubscriptionSubmit(false)}}>Explore More</button>
+                    ) : (
+                        <button className='submit-subscribe-modal-button' onClick={handleSubmitSubscription}>Subscribe</button>
+                    )
+                }
+                
             </div>
         </div>
     )
