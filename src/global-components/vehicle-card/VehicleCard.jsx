@@ -94,7 +94,7 @@ const VehicleCard = (
 
   return (
     <div className='vehicle-card-main-container' onClick={handleModalOpen}>
-      <div className='vehicle-card-image-container'>
+      <div className={`vehicle-card-image-container ${vehicleData.available === 0 ? 'sold-out-car' : ''}`}>
         <Image src={vehicleImage} alt='small car' width={315} height={160} />
       </div>
       <div className='vehicle-details-container'>
@@ -103,11 +103,25 @@ const VehicleCard = (
             <h3>{vehicleName}</h3>
             <div className='vehicle-age-and-fuel-efficiency-container'>
               <p>{vehicleAge} Year Old</p>
-              <Image src={'/assets/icons/fuel-efficiency-4-stars.png'} width={100} height={30} alt='img' />
+              {
+                vehicleData.details.fuel_efficiency === 1 ? (
+                    <Image src={'/assets/Meter-Chart/red.png'} width={100} height={30} alt='img' />
+                ) : vehicleData.details.fuel_efficiency === 2 ? (
+                  <Image src={'/assets/Meter-Chart/orange.png'} width={100} height={30} alt='img' />
+                ) : vehicleData.details.fuel_efficiency === 3 ? (
+                  <Image src={'/assets/Meter-Chart/yellow.png'} width={100} height={30} alt='img' />
+                ) : vehicleData.details.fuel_efficiency === 4 ? (
+                  <Image src={'/assets/Meter-Chart/light-green.png'} width={100} height={30} alt='img' />
+                ) : (
+                  <Image src={'/assets/Meter-Chart/dark-green.png'} width={100} height={30} alt='img' />
+                )
+              }
             </div>
           </span>
-          <div className='price-and-book-now'>
-            {isVehicleSearched ? (
+          <div className={`price-and-book-now ${vehicleData.available === 0 ? 'items-align-end' : ''}`}>
+            {
+              vehicleData.available !== 0 ? (
+                isVehicleSearched ? (
               <div className='price-and-book-now-ammount'>
                 <span> <h3>NZD {vehicleData.base_rate}</h3> <p>/day</p> </span>
                 {vehicleData.duration_discount !== 0 ? (
@@ -121,8 +135,18 @@ const VehicleCard = (
               </div>
             ) : (
               <h3 className='vehicle-price-heading' onClick={(e) => { e.stopPropagation(); handleScrolllTop() }}>{seePrice}</h3>
+            )
+              ) : (
+                <></>
+              )
+            }
+            
+            {vehicleData.available === 0 ? (
+              <button disabled className={`sold-button ${showBookingButton ? 'show-booking-button' : ''}`}>Sold</button>
+            ) : (
+              <button className={`booking-button ${showBookingButton ? 'show-booking-button' : ''}`} onClick={handleBookVehicle}>Book Now</button>
             )}
-            <button className={`booking-button ${showBookingButton ? 'show-booking-button' : ''}`} onClick={handleBookVehicle}>Book Now</button>
+            
           </div>
         </div>
         <div className='vehicle-type' >

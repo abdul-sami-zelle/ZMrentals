@@ -26,7 +26,12 @@
     border-right: 1px solid #f9f9f9;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
+    opacity: 1;
     border-bottom: none;
+}
+
+.vehicle-card-image-container.sold-out-car {
+    opacity: 0.4;
 }
 
 .vehicle-card-image-container>img {
@@ -58,8 +63,8 @@
     align-items: start;
     justify-content: start;
     width: 100%;
-    padding-bottom: 16px;
-    margin-bottom: 16px;
+    padding-bottom: 0px;
+    margin-bottom: 10px;
     border-bottom: 1px solid var(--primary-color);
 }
 
@@ -94,6 +99,11 @@
     width: 100%;
     align-items: center;
     justify-content: space-between;
+}
+
+.price-and-book-now.items-align-end {
+    justify-content: end;
+    height: 40px;
 }
 
 .price-and-book-now-ammount {
@@ -181,11 +191,33 @@
     transition: all 0.3s ease-in-out;
 }
 
-/* .booking-button:hover {
-    background-image: linear-gradient(to right top, #0f3577, #0c3985, #0a3c93, #0a409f, #0d43ac);
-} */
 
 .booking-button.show-booking-button {
+    display: flex;
+}
+
+
+.sold-button {
+    display: none;
+    width: 80px;
+    align-items: center;
+    justify-content: center;
+    height: max-content;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.2;
+    color: #FFF;
+    font-weight: 400;
+    background-color: var(--primary-color);
+    /* background-image: linear-gradient(to right top, #113b84, #0e3f92, #0c43a1, #0c47af, #0f4bbe); */
+    color: var(--color-white);
+    border-radius: 25px;
+    cursor: not-allowed;
+    opacity: 0.4;
+    transition: all 0.3s ease-in-out;
+}
+
+.sold-button.show-booking-button {
     display: flex;
 }
 
