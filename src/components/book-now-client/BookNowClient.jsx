@@ -39,7 +39,7 @@ const BookNowClient = () => {
   } = useBookingContext()
 
   console.log("sesion data", vehicleSesionData)
-  const { setSearchVehiclePayload } = useSearchVehicle()
+  const { setSearchVehiclePayload, setIsVehicleSearched, setPickupCity, setDropupCity, setPickupTime, setDropupTime } = useSearchVehicle()
   const searchParam = useSearchParams();
   const router = useRouter();
   const step = parseInt(searchParam.get('step')) || 1;
@@ -186,6 +186,11 @@ const BookNowClient = () => {
           "drop_time": "",
           "driver_age": '24'
         })
+        setIsVehicleSearched(false)
+        setPickupCity('')
+        setDropupCity('')
+        setPickupTime('')
+        setDropupTime('')
 
         sessionStorage.removeItem('pick_and_drop_details');
         sessionStorage.removeItem('selected-vehicle-details');
@@ -320,6 +325,11 @@ const BookNowClient = () => {
             "drop_time": "",
             "driver_age": '24'
           })
+          setIsVehicleSearched(false)
+          setPickupCity('')
+          setDropupCity('')
+          setPickupTime('')
+          setDropupTime('')
 
           sessionStorage.removeItem('pick_and_drop_details');
           sessionStorage.removeItem('selected-vehicle-details');
@@ -374,6 +384,12 @@ const BookNowClient = () => {
               "drop_time": "",
               "driver_age": '24'
             })
+            setIsVehicleSearched(false)
+            setPickupCity('')
+            setDropupCity('')
+            setPickupTime('')
+            setDropupTime('')
+
             sessionStorage.removeItem('pick_and_drop_details');
           }
         } else {
@@ -609,7 +625,7 @@ const BookNowClient = () => {
 
             </div>
 
-              {/*Booking Summary*/}
+            {/*Booking Summary*/}
             {bookingVehicleData ? (
               <div className={`booking-summary-main-container`}>
                 <h3>Booking Summary</h3>
@@ -634,14 +650,14 @@ const BookNowClient = () => {
                       <h3>{bookingVehicleData.name}</h3>
                       {/* <p>${bookingVehicleData.base_rate}/day x {totalDays} day</p> */}
                       {vehicleSesionData?.duration_discount !== 0 ? (
-                          <div style={{display: 'flex', alignItems: 'start', justifyContent: 'start', width: 'auto', flexDirection: 'column'}}>
-                            <del>NZD {vehicleSesionData?.was_price}</del>
-                            <span>NZD {vehicleSesionData?.sub_total}</span>
-                          </div>
-                      ) : (
+                        <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'start', width: 'auto', flexDirection: 'column' }}>
+                          <del>NZD {vehicleSesionData?.was_price}</del>
                           <span>NZD {vehicleSesionData?.sub_total}</span>
+                        </div>
+                      ) : (
+                        <span>NZD {vehicleSesionData?.sub_total}</span>
                       )}
-                      
+
                       <Link href={'/vehicles'}>Change Vehicle</Link>
                     </div>
                     <div className='vehicle-image-container'>

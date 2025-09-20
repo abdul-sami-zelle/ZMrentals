@@ -4,6 +4,7 @@ import { IoIosClose, IoMdArrowDropdown } from 'react-icons/io'
 import { url } from '@/utils/services';
 import axios from 'axios';
 import MainLoader from '@/loaders/MainLoader/MainLoader';
+import Link from 'next/link';
 
 const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) => {
 
@@ -165,7 +166,7 @@ const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) =>
                     }
 
 
-                    <p className='subscribe-modal-terms-and-conditions'>Read Terms & Conditions</p>
+                    <Link href={'/terms-and-conditions'} className='subscribe-modal-terms-and-conditions'>Read Terms & Conditions</Link>
                 </div>
                 {
                     isSubscriptionSubmit ? (

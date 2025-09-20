@@ -40,7 +40,7 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
         }
     }, [showModal])
 
-    const {setVehicleSesionData} = useBookingContext()
+    const { setVehicleSesionData } = useBookingContext()
 
     const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
     const [showBookingButton, setShowBookingButton] = useState(false);
@@ -165,6 +165,14 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
         return diffDays + 1;
     }
 
+    const handleScrollContainer = () => {
+        document.getElementById("imagesScrollContainer").scrollLeft += 0
+    }
+
+    useEffect(() => {
+        handleScrollContainer()
+    }, [showModal])
+
 
 
 
@@ -177,7 +185,7 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                         <IoClose size={30} color='#595959' />
                     </button>
                 </div>
-                <div className='car-details--image-slide'>
+                <div id='imagesScrollContainer' className='car-details--image-slide'>
                     {vehicleDetails?.images?.length > 0 && vehicleDetails.images.map((item, index) => (
                         <Image key={index} src={url + item.image_url} width={250} height={250} alt='car' />
                     ))}
@@ -223,39 +231,67 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                                 Email Enquiry
                             </span>
 
-                            <div className='car-detail-modal-footer-after-vehicle-searched-total-and-per-day'>
-                                <span>
-                                    <h3>NZD {vehicleDetails?.base_rate}</h3>
-                                    <p>/day</p>
-                                </span>
+                            {vehicleDetails.available !== 0 && (
+                                <div className='car-detail-modal-footer-after-vehicle-searched-total-and-per-day'>
+                                    <span>
+                                        <h3>NZD {vehicleDetails?.base_rate}</h3><p>/day</p>
+                                    </span>
 
-                                <span>
-                                    {/* <h3>${vehicleDetails?.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> */}
-                                    <del>NZD {formatPrice(vehicleDetails.was_price)}</del>
-                                    <h3>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
-                                    <p>Total</p>
-                                </span>
-                            </div>
+                                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 'max-content', gap: '5px' }}>
+                                        {/* <h3>${vehicleDetails?.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> */}
+                                        {
+                                            vehicleDetails.duration_discount === 0 ? (
+                                                <h3>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
+                                            ) : (
+                                                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 'max-content', gap: '10px', }}>
+                                                    <del >NZD {formatPrice(vehicleDetails.was_price)}</del>
+                                                    <h3>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
+                                                </span>
+                                            )
+                                        }
+                                        <p>Total</p>
+                                    </span>
+                                </div>
+                            )}
 
-                            <span onClick={() => emailModal('qoute')}>
-                                <CgFileDocument size={20} />
-                                Save Qoute
-                            </span>
+
+                            {vehicleDetails?.available !== 0 && (
+                                <span onClick={() => emailModal('qoute')}>
+                                    <CgFileDocument size={20} />
+                                    Save Qoute
+                                </span>
+                            )}
+
                         </div>
 
                         <div className='mob-view-car-details-modal-price-and-qoute'>
-                            <div className='mob-view-car-price'>
-                                <span>
-                                    <h3>NZD {vehicleDetails?.base_rate}</h3>
-                                    <p>/day</p>
-                                </span>
+                            {
+                                vehicleDetails.available !== 0 && (
+                                    <div className='mob-view-car-price'>
+                                        <span>
+                                            <h3>NZD {vehicleDetails?.base_rate}</h3>
+                                            <p>/day</p>
+                                        </span>
 
-                                <span>
-                                    <del>NZD {formatPrice(vehicleDetails.was_price)}</del>
-                                    <h3>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
-                                    <p>Total</p>
-                                </span>
-                            </div>
+                                        {
+                                            vehicleDetails.duration_discount === 0 ? (
+                                                <span>
+                                                    {/* <del>NZD {formatPrice(vehicleDetails.was_price)}</del> */}
+                                                    <h3 style={{marginRight: '5px'}}>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
+                                                    <p>Total</p>
+                                                </span>
+                                            ) : (
+                                                <span>
+                                                    <del style={{marginRight: '5px'}}>NZD {formatPrice(vehicleDetails.was_price)}</del>
+                                                    <h3 style={{marginRight: '5px'}}>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
+                                                    <p>Total</p>
+                                                </span>
+                                            )
+                                        }
+                                    </div>
+                                )
+                            }
+
                             <div className='mob-view-email-and-qoute'>
 
                                 <span onClick={() => emailModal('email-qoute')}>
@@ -263,10 +299,12 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                                     Email Enquiry
                                 </span>
 
-                                <span onClick={() => emailModal('qoute')}>
-                                    <CgFileDocument size={20} />
-                                    Save Qoute
-                                </span>
+                                {vehicleDetails.available !== 0 && (
+                                    <span onClick={() => emailModal('qoute')}>
+                                        <CgFileDocument size={20} />
+                                        Save Qoute
+                                    </span>
+                                )}
 
                             </div>
                         </div>
@@ -275,7 +313,7 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                         ) : (
                             <button className='car-details-modal-book-sold'>Sold</button>
                         )}
-                        
+
                     </div>
                 )}
 

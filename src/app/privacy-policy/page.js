@@ -88,7 +88,7 @@ const PrivacyAndPolicy = () => {
             Website cookies may be employed on our platform. Cookies are small data files stored on devices with web browsers (computers, tablets) containing information about devices, IP addresses, sessions, and online activity from device users. Most browsers provide options to disable or reject cookies. Cookie disabling or rejection may limit website functionality or increase loading times.
           </p>
           <p className='global-content-style'>
-            Third-party advertising network partnerships enable advertising display on our website or advertisement management on external platforms. Network partners utilize cookies and web beacons to collect non-personally identifiable activity information across websites for targeted advertising based on interests. Individuals preferring to opt out of targeted advertising information usage may do so by clicking here: <Link href={'http://preferences-mgr.trustarc.com/'} className='anchor-inside-para'> http://preferences-mgr.trustarc.com/. </Link> Please note this does not eliminate all advertising; generic advertisements will continue. EU residents receive targeted advertising only after providing consent for customized online advertising.
+            Third-party advertising network partnerships enable advertising display on our website or advertisement management on external platforms. Network partners utilize cookies and web beacons to collect non-personally identifiable activity information across websites for targeted advertising based on interests. Individuals preferring to opt out of targeted advertising information usage may do so by clicking here: <Link href={'http://preferences-mgr.trustarc.com/'} target='_blank' className='anchor-inside-para'> http://preferences-mgr.trustarc.com/. </Link> Please note this does not eliminate all advertising; generic advertisements will continue. EU residents receive targeted advertising only after providing consent for customized online advertising.
           </p>
           <p className='global-content-style'>
             Additional cookie usage may occur as specified in our cookie policy sections.
@@ -198,7 +198,7 @@ const PrivacyAndPolicy = () => {
           </span>
 
           <p className='global-content-style'>Contact requires identity verification and specific Personal Information access requirements.</p>
-          <p className='global-content-style'>Disputes arising between parties that cannot be resolved may be directed to the Office of the Privacy Commissioner at <Link href={'https://www.privacy.org.nz/.'} className='anchor-inside-para'> https://www.privacy.org.nz/.</Link></p>
+          <p className='global-content-style'>Disputes arising between parties that cannot be resolved may be directed to the Office of the Privacy Commissioner at <Link target='_blank' href={'https://www.privacy.org.nz/.'} className='anchor-inside-para'> https://www.privacy.org.nz/.</Link></p>
           <p className='global-content-style'>EU residents under GDPR jurisdiction possess rights to processing restriction, processing objection, and data portability as GDPR specified by GDPR. Supervisory authority complaint lodging is also available.</p>
           
 
@@ -240,7 +240,7 @@ const PrivacyAndPolicy = () => {
 
 
         <h2 className='global-heading-style'>Cookie Management and Opt-Out Procedures</h2>
-        <p className='global-content-style'>Cookie restriction, blocking, or deletion from <Link href={'https://zmrentals.co.nz/'} className='anchor-inside-para'> zmrentals.co.nz</Link> is achievable through browser settings. Full cookie management details for different web browser types are available at <Link href={'www.aboutcookies.org'} className='anchor-inside-para'>www.aboutcookies.org.</Link> www.aboutcookies.org.</p>
+        <p className='global-content-style'>Cookie restriction, blocking, or deletion from <Link href={'https://zmrentals.co.nz/'} className='anchor-inside-para'> zmrentals.co.nz</Link> is achievable through browser settings. Full cookie management details for different web browser types are available at <Link target='_blank' href={'https://www.aboutcookies.org/'} className='anchor-inside-para'>www.aboutcookies.org.</Link></p>
         <p className='global-content-style'>Choosing not to allow <Link href={'https://zmrentals.co.nz/'} className='anchor-inside-para'> zmrentals.co.nz</Link> as a "trusted site" will prevent website usage; call center contact will be necessary for reservation proceedings.</p>
       
       

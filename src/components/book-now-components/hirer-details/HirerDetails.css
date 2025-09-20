@@ -5,7 +5,7 @@
     width: 100%;
 }
 
-.hirer-details-main-container > p {
+.hirer-details-main-container>p {
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
@@ -17,7 +17,7 @@
     gap: 16px;
 }
 
-.hirer-first-and-last-name > label {
+.hirer-first-and-last-name>label {
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -30,7 +30,7 @@
     color: var(--primary-color);
 }
 
-.hirer-first-and-last-name > label > input {
+.hirer-first-and-last-name>label>input {
     width: 100%;
     height: 100%;
     border: none;
@@ -38,7 +38,7 @@
     color: var(--primary-color);
 }
 
-.hirer-first-and-last-name > label > input::placeholder {
+.hirer-first-and-last-name>label>input::placeholder {
     color: var(--primary-color);
 }
 
@@ -56,14 +56,14 @@
 
 }
 
-.hirer-parent-country > p {
+.hirer-parent-country>p {
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
     color: var(--primary-color);
 }
 
-.hirer-parent-country > span {
+.hirer-parent-country>span {
     display: flex;
     width: 100%;
     align-items: center;
@@ -71,7 +71,7 @@
     cursor: pointer;
 }
 
-.hirer-parent-country > span  > h3 {
+.hirer-parent-country>span>h3 {
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
@@ -92,14 +92,14 @@
     position: relative;
 }
 
-.hirer-age > p {
+.hirer-age>p {
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
     color: var(--primary-color);
 }
 
-.hirer-age > span {
+.hirer-age>span {
     display: flex;
     width: 100%;
     align-items: center;
@@ -107,7 +107,7 @@
     cursor: pointer;
 }
 
-.hirer-age > span  > h3 {
+.hirer-age>span>h3 {
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
@@ -132,7 +132,7 @@
     visibility: hidden;
     background-color: #FFFFFF;
     z-index: 999;
-    top:100%;
+    top: 100%;
     left: 0;
     overflow-x: hidden;
     overflow-y: auto;
@@ -149,7 +149,7 @@
     visibility: visible;
 }
 
-.parent-country-list > p {
+.parent-country-list>p {
     width: 100%;
     padding: 7px;
     font-size: var(--font-body-md);
@@ -159,9 +159,9 @@
     cursor: pointer;
 }
 
-.parent-country-list > p:hover {
+.parent-country-list>p:hover {
     background-color: rgba(255, 139, 64, 0.1);
-    
+
 }
 
 .hirer-age-list {
@@ -173,7 +173,7 @@
     visibility: hidden;
     background-color: #FFFFFF;
     z-index: 999;
-    top:100%;
+    top: 100%;
     left: 0;
     overflow-x: hidden;
     overflow-y: auto;
@@ -190,7 +190,7 @@
     visibility: visible;
 }
 
-.hirer-age-list > p {
+.hirer-age-list>p {
     width: 100%;
     padding: 7px;
     font-size: var(--font-body-md);
@@ -200,9 +200,9 @@
     cursor: pointer;
 }
 
-.hirer-age-list > p:hover {
+.hirer-age-list>p:hover {
     background-color: rgba(255, 139, 64, 0.1);
-    
+
 }
 
 .hirer-input-label {
@@ -220,7 +220,7 @@
     color: var(--primary-color);
 }
 
-.hirer-input-label > input {
+.hirer-input-label>input {
     width: 100%;
     height: 100%;
     background-color: transparent;
@@ -232,7 +232,7 @@
     color: var(--primary-color);
 }
 
-.hirer-input-label > input::placeholder {
+.hirer-input-label>input::placeholder {
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
@@ -263,7 +263,7 @@
     padding: 8px 0;
 }
 
-.travel-reason-radio-container > label {
+.travel-reason-radio-container>label {
     display: flex;
     width: max-content;
     align-items: center;
@@ -306,4 +306,35 @@
     height: 17px;
     background-color: #961502;
     border-radius: 50%;
+}
+
+@media only screen and (max-width: 767px) {
+    .hirer-age {
+        width: 120px;
+    }
+
+    .hirer-first-and-last-name>label {
+        font-size: 12px;
+    }
+
+    .hirer-parent-country>p {
+        font-size: 12px;
+    }
+
+    .hirer-age>p {
+        font-size: 12px;
+    }
+
+    .hirer-age-list>p {
+        font-size: 12px;
+    }
+    .parent-country-list > p {
+        font-size: 12px;
+    }
+    .hirer-parent-country>span>h3 {
+        font-size: 12px;
+    }
+    .hirer-age>span>h3 {
+        font-size: 12px;
+    }
 }

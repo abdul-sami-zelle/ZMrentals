@@ -123,9 +123,9 @@ const VehicleCard = (
               vehicleData.available !== 0 ? (
                 isVehicleSearched ? (
               <div className='price-and-book-now-ammount'>
-                <span> <h3>NZD {vehicleData.base_rate}</h3> <p>/day</p> </span>
+                <span> <h3>NZD {vehicleData.base_rate}</h3><p>/day</p> </span>
                 {vehicleData.duration_discount !== 0 ? (
-                  <span> <del>NZD {formatPrice(vehicleData?.was_price)}</del>  <span className='total-price-after-discount'> <h3>NZD {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
+                  <span> <del style={{marginRight: '10px'}}>NZD {formatPrice(vehicleData?.was_price)}</del>  <span className='total-price-after-discount'> <h3>NZD {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
                 ) : (
                   <span> <span className='total-price-after-discount'> <h3>NZD {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
                 )}

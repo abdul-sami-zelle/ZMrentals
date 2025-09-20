@@ -26,7 +26,7 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
         const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
 
 
-        if (isValidDropDate(searchVehiclePayload.pickup_time, searchVehiclePayload.drop_time)) {
+        if (isValidDropDate(searchVehiclePayload?.pickup_time, searchVehiclePayload?.drop_time)) {
                 try {
                 setLoader(true)
                 if (pickup_location && drop_location && pickup_time && drop_time) {

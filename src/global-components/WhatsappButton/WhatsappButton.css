@@ -13,8 +13,31 @@
     cursor: pointer;
     z-index: 999999999;
 
-    box-shadow: 
-        0px 4px 10px rgba(0, 0, 0, 0.2),  /* soft dark shadow */
-        inset 0px 2px 4px rgba(0, 0, 0, 0.05), /* subtle inner shadow */
-        inset 0px -2px 4px rgba(37, 211, 102, 0.2); /* inner green glow */
+    box-shadow:
+        0px 4px 10px rgba(0, 0, 0, 0.2),
+        /* soft dark shadow */
+        inset 0px 2px 4px rgba(0, 0, 0, 0.05),
+        /* subtle inner shadow */
+        inset 0px -2px 4px rgba(37, 211, 102, 0.2);
+    /* inner green glow */
+}
+
+
+
+
+
+@media only screen and (max-width: 767px) {
+    .whatsapp-button-sticky {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid #25D366;
+        background-color: #25D366;
+        position: fixed;
+        bottom: 15px;
+        right: 25px;
+    }
 }
