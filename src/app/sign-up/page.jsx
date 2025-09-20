@@ -20,7 +20,7 @@ const SignUp = () => {
                         <Login showInput={showLogin} loading={loading} setLoading={setLoading} />
                     ) : (
                         <div className='login-sec-content-contianer'>
-                            <img src='/assets/logos/ZM-Rentals-Horizontal-logo.png' alt='logo' />
+                            <img src='/assets/icons/car-icon.svg' alt='logo' />
                             <h3>Create Your Free Account Today</h3>
                             <p>start your journey with rewards, <br />convenience, and unbeatable offers</p>
                             <button onClick={() => setShowLogin(!showLogin)} className='login-and-signup-button'>Login</button>
@@ -30,7 +30,7 @@ const SignUp = () => {
                 <div className={`signup-sec-contianer ${showLogin ? 'swipe-to-content' : ''}`}>
                     {showLogin ? (
                         <div className='login-sec-content-contianer'>
-                            <img src='/assets/logos/ZM-Rentals-Horizontal-logo.png' alt='logo' />
+                            <img src='/assets/icons/car-icon.svg' alt='logo' />
                             <h3>Welcome Back!</h3>
                             <span>
                                 <p> <strong> Secure & Fast </strong> – Your information is safe with us.</p>

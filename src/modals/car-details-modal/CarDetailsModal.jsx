@@ -115,7 +115,6 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
         },
     ]
 
-    console.log("vehicle details", vehicleDetails)
 
     const router = useRouter()
     const { setBookingVehicleData } = useBookingContext()
@@ -243,7 +242,7 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                                             vehicleDetails.duration_discount === 0 ? (
                                                 <h3>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
                                             ) : (
-                                                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 'max-content', gap: '10px', }}>
+                                                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 'max-content', gap: '10px',}}>
                                                     <del >NZD {formatPrice(vehicleDetails.was_price)}</del>
                                                     <h3>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
                                                 </span>

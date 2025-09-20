@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './DropdownInput.css'
 import { MdOutlineArrowDropDown } from "react-icons/md";
+import useDropdownNavigation from '../../utils/keyPress'
 
 const DropdownInput = ({ width, setSelectedCity, type, setClicktype, mobilePlaceholder, height, defaultValue, placeholder, data, bgColor, selectedValue, setSelectedValue , setHeight = false }) => {
 
@@ -35,7 +36,7 @@ const DropdownInput = ({ width, setSelectedCity, type, setClicktype, mobilePlace
         };
     }, []);
 
-
+    const refIndex = useDropdownNavigation(dropdownRef, showList, 'drop-down-list-single-item')
 
 
   return (
@@ -53,7 +54,7 @@ const DropdownInput = ({ width, setSelectedCity, type, setClicktype, mobilePlace
         </div>
         <div className={`dropdown-list-container ${showList ? 'show-drop-down-list' : ''}`} style={{height: showList ? height : 0}}>
             {data.map((item, index) => (
-                <p key={index} onClick={() => handleSelectValue(item)}>{item.name}</p>
+                <p className={`drop-down-list-single-item ${refIndex === index ? 'active-dropdown-item' : ''}`}  key={index} onClick={() => handleSelectValue(item)}>{item.name}</p>
             ))}
         </div>
     </div>

@@ -18,13 +18,7 @@ export const SearchVehicleProvider = ({ children }) => {
     const [isVehicleSearched, setIsVehicleSearched] = useState(false)
     const [searchedVehicles, setSearchedVehicles] = useState([])
 
-    // const [searchVehiclePayload, setSearchVehiclePayload] = useState({
-    //     "pickup_location": null,
-    //     "drop_location": null,
-    //     "pickup_time": "",
-    //     "drop_time": "",
-    //     "driver_age": '24'
-    // })
+    
 
     const [searchVehiclePayload, setSearchVehiclePayload] = useState(() => {
         if (typeof window !== "undefined") {

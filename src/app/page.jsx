@@ -101,6 +101,7 @@ export default function Home() {
   const getAllVehicles = async () => {
     const api = `https://zm.skyhub.pk/cars/get`;
 
+    
     try {
       const response = await axios.get(api);
       if (response.status === 200) {
@@ -114,8 +115,9 @@ export default function Home() {
   }
 
   useEffect(() => {
-    
-      getAllVehicles();
+      if(searchedVehicles?.length === 0) {
+        getAllVehicles();
+      }
     
   }, []);
 
@@ -126,7 +128,7 @@ export default function Home() {
       {loader && <MainLoader />}
       <Hero marginBottom='20px' bgImage={'/assets/main-banners/home-page.jpg'}/>
 
-      {carsDetails.map((item, index) => (
+      {carsDetails?.map((item, index) => (
           <CarDetails
             key={index}
             data={item}

@@ -103,7 +103,6 @@ export const BookingProvider = ({ children }) => {
         // };
     }, []);
 
-    useEffect(() => {console.log("Booking Payload", bookingPayload)}, [bookingPayload])
 
 
     return (

@@ -38,7 +38,7 @@ const BookNowClient = () => {
     setUserData,
   } = useBookingContext()
 
-  console.log("sesion data", vehicleSesionData)
+  // console.log("sesion data", vehicleSesionData)
   const { setSearchVehiclePayload, setIsVehicleSearched, setPickupCity, setDropupCity, setPickupTime, setDropupTime } = useSearchVehicle()
   const searchParam = useSearchParams();
   const router = useRouter();
@@ -53,6 +53,14 @@ const BookNowClient = () => {
   const [userDiscount, setUserDiscount] = useState('');
   const [isLoading, setISloading] = useState(false)
   const [paymentError, setPaymentError] = useState("");
+
+
+  // useEffect(() => {
+  //   console.log("vehicle sesion data", vehicleSesionData)
+  //   if(Object.keys(vehicleSesionData).length === 0) {
+  //     router.push('/vehicles')
+  //   }
+  // }, [])
 
   const getUserDiscount = async () => {
     const guesApi = `${url}/discounts/get/1`
@@ -431,6 +439,12 @@ const BookNowClient = () => {
     const pickDrop = JSON.parse(sessionStorage.getItem('pick_and_drop_details'));
     setTotalDays(getTotalDays(pickDrop?.pickup_time, pickDrop?.drop_time))
     setPickDropLocation(pickDrop)
+    if (pickDrop.pickup_location === null && pickDrop.drop_location === null) {
+      sessionStorage.removeItem('pick_and_drop_details');
+      sessionStorage.removeItem('selected-vehicle-details');
+      sessionStorage.removeItem('vehicle-details');
+      router.push('/vehicles')
+    }
   }, [])
 
   const [locations, setLocations] = useState([])

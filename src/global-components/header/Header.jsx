@@ -20,7 +20,7 @@ const Header = () => {
   }, [])
 
   const headerData = [
-    { name: "+6421467261", tel: "tel:+6421467261", icon: MdOutlinePhoneIphone },
+    { name: "+64221708848", tel: "tel:+64221708848", icon: MdOutlinePhoneIphone },
     { name: "Email Us", tel: "mailto:info@zmrentals.co.nz", icon: IoMailOutline },
     { name: "Sing In", tel: "/sign-up", icon: FaRegUser },
   ];
@@ -45,6 +45,26 @@ const Header = () => {
     return () => { document.removeEventListener('scroll', handleScroll) }
   }, [])
 
+  const rotatingMessage = [
+    { id: 1, message: 'Free Airport Pick Up & Drop Off' },
+    { id: 2, message: 'No Booking Fee ' },
+    { id: 3, message: 'Subscribe & Get Amazing Loyalty Discount' },
+  ]
+
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % rotatingMessage.length);
+    }, 3000); // every 3s
+
+    return () => clearInterval(interval); // cleanup
+  }, []);
+
+
+
+
+
   return (
     <div className="header-main-container">
       {/* <PromotionalHeader /> */}
@@ -56,12 +76,26 @@ const Header = () => {
 
             <span>
               Need help?{" "}
-              <a className="toll-free-ancor" href="tel:+6421467261">
-                Call +6421467261
+              <a className="toll-free-ancor" href="tel:+64221708848">
+                Call +64221708848
               </a>
             </span>
 
           </div>
+
+          <div className="rotating-message-container">
+            {rotatingMessage.map((item, i) => (
+              <span
+                key={item.id}
+                className={`promotion-announcement ${index === i ? "active" : "inactive"
+                  }`}
+              >
+                <p className="rotating-text">{item.message}</p>
+              </span>
+            ))}
+          </div>
+
+
 
           <Link
             className='promotion-login-item'

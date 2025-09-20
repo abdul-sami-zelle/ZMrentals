@@ -13,6 +13,7 @@ import axios from 'axios';
 import DropdownInput from '../dropdown-input/DropdownInput';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 import PrimaryButton from '../primary-button/PrimaryButton';
+import useCalendarNavigation from '../../utils/calanderKeyPress'
 
 
 const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxShadow, handleSearchVehicles, setHeight = false, isPickupSelected, setIsPickupSelected }) => {
@@ -46,7 +47,7 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
     ]
 
     const driverAgeList = [
-        { name: '18' }, { name: '19' }, { name: '20' }, { name: '21' }, { name: '22' }, { name: '23' }, { name: '24' }, { name: '25+' }
+        { name: '21' }, { name: '22' }, { name: '23' }, { name: '24' }, { name: '25+' }
     ]
 
     const [locations, setLocations] = useState([])
@@ -84,12 +85,14 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
 
     const handlePickupDateChange = (date) => {
         setSelectedPickupDate(date);
+        formatePickupDateAndTime(date, pickupTime)
         setPickupCalender(false); // hide after selection
     };
 
 
     const handleDropDateChange = (date) => {
         setSelectedDropDate(date);
+        handleDropofTimeAndDate(date, dropupTime)
         setDropCalender(false); // hide after selection
     };
 
@@ -204,6 +207,14 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
         document.addEventListener('mousedown' , handleOutsideClick)
         return () => {document.removeEventListener('mousedown', handleOutsideClick)}
     }, [])
+
+    // hook handles arrow keys + enter selection
+        useCalendarNavigation(pickupCalanderRef, pickupCalender, (el) => {
+            if (pickedDate) handlePickupDateChange(pickedDate);
+        });
+        useCalendarNavigation(dropupCalanderRef, dropCalender, (el) => {
+            if (pickedDate) handleDropDateChange(pickedDate);
+        });
 
     return (
         <div className='sticky-booking-form-main-contianer'>

@@ -15,11 +15,12 @@ const GetInTouch = () => {
 
     const [loading, setLoading] = useState(false);
     const [showAddrss, setShowAddress] = useState(false);
+    const [isFormSubmited, setIsFormSubmited] = useState(false);
     const addresses = [
         {
             city: 'Auckland City',
             address: `Address: 11 peninsula road Mangere Auckland 2022`,
-            phone: `+6421467261`,
+            phone: `+64221708848`,
             openingHours: `Operating Hours: 9am - 5pm`,
             googleLocation: 'Google Location'
         }
@@ -36,9 +37,13 @@ const GetInTouch = () => {
 
     const handleContactData = (e) => {
         const { name, value } = e.target;
+
+        let formatedNumber = value.replace(/[^0-9+]/g, '')
+        // let formatedEmail = value.replace(/[^a-zA-Z0-9@._-]/g, '')
+
         setContactData((prevData) => ({
             ...prevData,
-            [name]: value
+            [name]: name === 'contact' ? formatedNumber : value
         }))
 
         setErrors((prev) => ({ ...prev, [name]: "" }));
@@ -48,7 +53,14 @@ const GetInTouch = () => {
         let newErrors = {};
 
         if (!contactData.name) newErrors.name = "Name is required";
-        if (!contactData.email) newErrors.email = "Email is required";
+        if (!contactData.email) {
+            newErrors.email = "Email is required";
+        } else {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(contactData.email)) {
+                newErrors.email = "Invalid Email";
+            }
+        }
         if (!contactData.contact) newErrors.contact = "Phone is required";
         if (!contactData.message) newErrors.message = "Message is required";
 
@@ -62,6 +74,7 @@ const GetInTouch = () => {
         try {
             const response = await axios.post(api, contactData);
             if (response.status === 201) {
+                setIsFormSubmited(true)
                 setLoading(false);
                 setContactData({ name: "", email: "", contact: "", message: "" }); // clear form
                 setErrors({}); // clear errors
@@ -103,7 +116,7 @@ const GetInTouch = () => {
                             </div>
                             <span className='contact-type-section'>
                                 <FaPhone size={20} color='var(--color-white)' />
-                                <a href="tel:+6421467261">+64 21 467 261</a>
+                                <a href="tel:+64221708848">+64 21 467 261</a>
                             </span>
                             <span className='contact-type-section'>
                                 <FaEnvelope size={20} color='var(--color-white)' />
@@ -117,40 +130,57 @@ const GetInTouch = () => {
 
                     </div>
 
-
-                    <div className='contact-form-inputs-container'>
+                    {
+                        isFormSubmited ? (
+                            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', maxWidth: '815px', height: '100%', maxHeight: '440px', padding: '60px 36px', gap: '15px'}}>
+                                <Image src={'/assets/icons/Done.gif'} width={220} height={220} alt='gif' />
+                                <h3 style={{fontSize: '22px', lineHeight: '25px', fontWeight: '500', color: 'var(--primary-color)'}}>Request Submitted Successfully</h3>
+                                <p style={{fontSize: '15px', lineHeight: '18px', fontWeight: '400', color: '#000'}}>Thank you for contacting us. We’ve received your message and will get back to you shortly.</p>
+                            </div>
+                        ) : (
+                            <div className='contact-form-inputs-container'>
                         <div className='contact-input-name-and-last-name'>
-                            <label className={`contact-input-label ${contactData.name ? 'filled' : ''}`} style={{borderBottom: errors.name ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)'}}>
+                            <label className={`contact-input-label ${contactData.name || errors.name ? 'filled' : ''}`} style={{ borderBottom: errors.name ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)' }}>
                                 <p>Your Name</p>
-                                <input type='text' className='contact-form-input' name='name' value={contactData.name} onChange={(e) => handleContactData(e)} />
+                                <input
+                                    type='text'
+                                    className='contact-form-input'
+                                    name='name'
+                                    placeholder={errors.name ? errors.name : ''}
+                                    value={contactData.name}
+                                    onChange={(e) => handleContactData(e)}
+                                />
                             </label>
 
-                            <label className={`contact-input-label ${contactData.contact ? 'filled' : ''}`} style={{borderBottom: errors.contact ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)'}}>
+                            <label className={`contact-input-label ${contactData.contact || errors.contact ? 'filled' : ''}`} style={{ borderBottom: errors.contact ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)' }}>
                                 <p>Your Phone</p>
-                                <input type='text' className='contact-form-input' name='contact' value={contactData.contact} onChange={(e) => handleContactData(e)} />
+                                <input type='text' className='contact-form-input' placeholder={errors.contact ? errors.contact : ''} name='contact' value={contactData.contact} onChange={(e) => handleContactData(e)} />
                             </label>
                         </div>
 
-                        <label className={`contact-input-label ${contactData.email ? 'filled' : ''}`} style={{borderBottom: errors.email ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)'}}>
+                        <label className={`contact-input-label ${contactData.email || errors.email ? 'filled' : ''}`} style={{ borderBottom: errors.email ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)' }}>
                             <p>Your Email</p>
-                            <input type='text' className='contact-form-input' name='email' value={contactData.email} onChange={(e) => handleContactData(e)} />
+                            <input type='text' className='contact-form-input' name='email' placeholder={errors.email ? errors.email : ''} value={contactData.email} onChange={(e) => handleContactData(e)} />
                         </label>
 
-                        <label className={`contact-input-label ${contactData.message ? 'filled' : ''}`} style={{borderBottom: errors.message ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)'}}>
+                        <label className={`contact-input-label ${contactData.message || errors.message ? 'filled' : ''}`} style={{ borderBottom: errors.message ? '2px solid rgba(150, 21, 2, 0.7)' : '2px solid rgba(150, 21, 2, 0.2)' }}>
                             <p>Message</p>
                             {/* message */}
-                            <textarea rows={3} className='contact-form-input' name='message' value={contactData.message} onChange={(e) => handleContactData(e)} />
+                            <textarea rows={3} className='contact-form-input' name='message' placeholder={errors.message ? errors.message : ''} value={contactData.message} onChange={(e) => handleContactData(e)} />
                         </label>
                         <div className='contact-form-inputs-submit-button-container' onClick={handleSubmitContact}>
                             <button>Submit</button>
 
                         </div>
                     </div>
+                        )
+                    }
+                    
 
                     <div className='mobile-view-contact-details'>
                         <span>
                             <h3>Phone</h3>
-                            <a href="tel:+6421467261">+64 21 467 261</a>
+                            <a href="tel:+64221708848">+64 21 467 261</a>
                         </span>
                         <span>
                             <h3>Email</h3>

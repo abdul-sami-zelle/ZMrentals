@@ -19,7 +19,7 @@ const BookingInstruction = () => {
                 'We’ll help you select the best car for your needs and finalize the reservation right then and there.',
                 // 'visit out official website at www.zmrentals.com',
             ] ,
-            link: 'tel:+6421467261'
+            link: 'tel:+64221708848'
         },
         {
             heading: 'Walk-in Bookings', details: [

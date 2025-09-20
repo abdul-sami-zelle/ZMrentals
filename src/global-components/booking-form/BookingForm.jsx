@@ -12,6 +12,8 @@ import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import axios from 'axios';
 import ScreenResize from '../../utils/screenSize'
 
+import useCalendarNavigation from '../../utils/calanderKeyPress'
+
 const BookingForm = (
     {
         bgColor,
@@ -52,7 +54,7 @@ const BookingForm = (
     } = useSearchVehicle();
 
     const driverAgeList = [
-        { name: '18' }, { name: '19' }, { name: '20' }, { name: '21' }, { name: '22' }, { name: '23' }, { name: '24' }, { name: '25+' }
+        { name: '21' }, { name: '22' }, { name: '23' }, { name: '24' }, { name: '25+' }
     ]
 
     const [locations, setLocations] = useState([])
@@ -82,10 +84,6 @@ const BookingForm = (
 
     const togglePickupCalendar = () => {
         setPickupCalender(prev => !prev);
-    };
-
-    const toggleDropCalendar = () => {
-        setDropCalender(prev => !prev);
     };
 
     const handlePickupDateChange = (date) => {
@@ -216,7 +214,6 @@ const BookingForm = (
         const date = new Date(dateString);
         const formattedDate = formatDateAt10AM(date);
 
-        console.log("drop time change", formattedDate)
         setSearchVehiclePayload((prev) => ({
             ...prev,
             drop_time: formattedDate,
@@ -228,7 +225,6 @@ const BookingForm = (
         const futureDate = new Date(today);
         futureDate.setDate(today.getDate() + daysAhead);
         getPickupDateAt10AM(futureDate)
-        console.log("selected pick date", futureDate)
         setSelectedPickupDate(futureDate); // Update selected date
 
     };
@@ -238,7 +234,6 @@ const BookingForm = (
         const futureDate = new Date(today);
         futureDate.setDate(today.getDate() + daysAhead);
         getDropOffDateAt10AM(futureDate)
-        console.log("drop date", futureDate)
         setSelectedDropDate(futureDate); // Update selected date
 
     };
@@ -248,12 +243,11 @@ const BookingForm = (
         const futureDate = new Date(current);
         futureDate.setDate(current.getDate() + 4)
         getDropOffDateAt10AM(futureDate)
-        console.log(" future date", futureDate)
         setSelectedDropDate(futureDate)
     }
 
     useEffect(() => {
-        if(!selectedDropDate) {
+        if (!selectedDropDate) {
             selectFutureDate(selectedPickupDate)
         }
     }, [selectedPickupDate])
@@ -292,10 +286,18 @@ const BookingForm = (
         return () => { document.removeEventListener('mousedown', handleCalanderClose) }
     }, [dropCalender])
 
+    // hook handles arrow keys + enter selection
+    useCalendarNavigation(pickupCalanderRef, pickupCalender, (el) => {
+        if (pickedDate) handlePickupDateChange(pickedDate);
+    });
+    useCalendarNavigation(dropCalandrRef, dropCalender, (el) => {
+         if (pickedDate) handleDropDateChange(pickedDate);
+    });
+
     return (
         <div className={`booking-form-main-container ${searchVehiclePayload.pickup_location !== null ? 'control-booking-location-contianer' : ''}`} style={{ boxShadow: boxShadow }}>
-            
-            
+
+
             <div className='booking-form-inputs-container'>
                 <div className='booking-form-inputs'>
 
@@ -387,17 +389,17 @@ const BookingForm = (
 
                         <div className='booking-time-container'>
 
-                            <div className='select-drop-up-date-button'>
+                            <div ref={dropCalandrRef} className='select-drop-up-date-button'>
                                 <button
                                     className="select-date-button"
-                                    onClick={toggleDropCalendar}
+                                    onClick={() => setDropCalender(prev => !prev)}
                                     style={{ backgroundColor: bgColor }}
                                 >
                                     {selectedDropDate ? selectedDropDate.toDateString() : 'Date'}
                                 </button>
 
                                 {dropCalender && (
-                                    <div ref={dropCalandrRef} className='booking-drop-calender-container'>
+                                    <div  className='booking-drop-calender-container'>
                                         <Calendar
                                             onChange={handleDropDateChange}
                                             value={selectedDropDate}

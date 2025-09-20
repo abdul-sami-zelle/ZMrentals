@@ -1,10 +1,12 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './ContactUs.css';
 import ServicesHero from '@/components/services-hero/ServicesHero';
 import GetInTouch from '../../components/get-in-touch/GetInTouch'
+import Image from 'next/image';
 
 const ContactUs = () => {
+  
   return (
     <div className="contact-us-page-main-container">
       <ServicesHero
@@ -17,7 +19,8 @@ const ContactUs = () => {
  
       <div className="contact-us-inner-section">
         <div className="contact-us-max-width-container">
-          <GetInTouch />
+          
+            <GetInTouch  />
 
         </div>
       </div>

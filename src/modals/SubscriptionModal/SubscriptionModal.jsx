@@ -5,6 +5,7 @@ import { url } from '@/utils/services';
 import axios from 'axios';
 import MainLoader from '@/loaders/MainLoader/MainLoader';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) => {
 
@@ -107,13 +108,13 @@ const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) =>
 
 
     return (
-        <div className={`subscription-main-container ${showSubscription ? 'show-subscription' : ''}`} onClick={() => {setShowSubscription(false); setIsSubscriptionSubmit(false)}}>
+        <div className={`subscription-main-container ${showSubscription ? 'show-subscription' : ''}`} onClick={() => { setShowSubscription(false); setIsSubscriptionSubmit(false) }}>
             <div className={`subscription-inner-modal ${showSubscription ? 'show-subscription-inner' : ''}`} onClick={(e) => e.stopPropagation()}>
                 {loading && <MainLoader />}
                 <div className='subscription-head-container'>
                     <div className='subscription-close-and-heading-contianer'>
                         <h3>Join our ZM Newsletter</h3>
-                        <IoIosClose size={20} color='#595959' onClick={() => {setShowSubscription(false); setIsSubscriptionSubmit(false)}} style={{ cursor: 'pointer' }} />
+                        <IoIosClose size={20} color='#595959' onClick={() => { setShowSubscription(false); setIsSubscriptionSubmit(false) }} style={{ cursor: 'pointer' }} />
                     </div>
                     <h3 className='subscription-main-heading'>Save 10% off your next adventure</h3>
                 </div>
@@ -123,12 +124,17 @@ const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) =>
                 </div>
 
                 <div className='subscription-terms-and-inputs'>
-                    <p className='subscribe-modal-promotional-text'>Receive exclusive deals, exciting updates, travel tips, and inspiration!</p>
+                    {!isSubscriptionSubmit && (
+                        <p className='subscribe-modal-promotional-text'>Receive exclusive deals, exciting updates, travel tips, and inspiration!</p>
+                    )}
 
                     {
                         isSubscriptionSubmit ? (
-                            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '125px'}}>
-                                <h3 style={{fontSize: '20px', fontWeight: 600, color: '#961502', lineHeight: '25px'}}>Your Request Submit Successfully</h3>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', width: '100%',  height: '100%', padding: '0px', gap: '10px' }}>
+                                <Image src={'/assets/icons/Done.gif'} width={80} height={80} alt='gif' style={{width: '80px', height: '80px'}} />
+                                <h3 style={{ fontSize: '18px', lineHeight: '22px', fontWeight: '500', textAlign: 'center', color: 'var(--primary-color)' }}>Request Submitted Successfully</h3>
+                                <p style={{ fontSize: '13px', lineHeight: '16px', fontWeight: '400', textAlign: 'center', color: '#000' }}>Thank you for subscribing to our Newsletter. We’ll send the latest car rental deals straight to Your Email</p>
+                                <p style={{ fontSize: '13px', lineHeight: '16px', fontWeight: '400', textAlign: 'center', color: '#000' }}>Meanwhile, check out our current offers</p>
                             </div>
                         ) : (
                             <div className='subscrive-modal-inputs'>
@@ -165,17 +171,20 @@ const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) =>
                         )
                     }
 
-
-                    <Link href={'/terms-and-conditions'} className='subscribe-modal-terms-and-conditions'>Read Terms & Conditions</Link>
+                    {
+                        !isSubscriptionSubmit && (
+                            <Link href={'/terms-and-conditions'} className='subscribe-modal-terms-and-conditions'>Read Terms & Conditions</Link>
+                        )
+                    }
                 </div>
                 {
                     isSubscriptionSubmit ? (
-                        <button className='submit-subscribe-modal-button' onClick={() => {setShowSubscription(false); setIsSubscriptionSubmit(false)}}>Explore More</button>
+                        <button className='submit-subscribe-modal-button' onClick={() => { setShowSubscription(false); setIsSubscriptionSubmit(false) }}>Explore More</button>
                     ) : (
                         <button className='submit-subscribe-modal-button' onClick={handleSubmitSubscription}>Subscribe</button>
                     )
                 }
-                
+
             </div>
         </div>
     )

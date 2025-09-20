@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './Vehicles.css'
 import BookingForm from '@/global-components/booking-form/BookingForm'
 import CarDetails from '../../components/car-details/CarDetails'
@@ -9,6 +9,7 @@ import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleCo
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import Toust from '../../modals/Toust/Toust'
+import StickySection from '@/global-components/sticky-section/StickySection'
 
 
 const Vehicles = () => {
@@ -201,13 +202,33 @@ const Vehicles = () => {
 
   };
 
+  const [isSticky, setIsSticky] = useState(false);
+  const bookingFormRef = useRef(null)
+  useEffect(() => {
+    if (!bookingFormRef.current) return
+
+    const handleScroll = () => {
+      const rect = bookingFormRef?.current?.getBoundingClientRect();
+      if (rect.bottom <= 93) {
+        setIsSticky(true);
+        
+      } else {
+        setIsSticky(false);
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, []);
+
 
   return (
     <div className='page-main-container '>
       {/* Max wiwdth Container Start */}
       <div className='page-max-width-container'>
 
-        <div className='page-main-heading-container'>
+        <div ref={bookingFormRef} className='page-main-heading-container'>
           <div className='page-main-booking-form-container'>
             <h3 className='vehicles-main-heading'>Vehicles for Rent in Auckland</h3>
             <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} isPickupSelected={isPickupSelected} setIsPickupSelected={setIsPickupSelected} handleSearchVehicles={handleSearchVehicles} textColor={'var(--primary-color)'} primaryButtonText={'Search Car'} />
@@ -266,6 +287,10 @@ const Vehicles = () => {
         setShowToust={setTOustShow}
         message={toustMessage}
       />
+
+      <div className={`vehicle-booking-sticky-form ${isSticky ? 'vehicle-show-sticky-booking-form' : ''}`}>
+        <StickySection bgColor={'var(--color-white)'} isPickupSelected={true} setIsPickupSelected={setIsPickupSelected} setHeight={true} handleSearchVehicles={handleSearchVehicles} boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px'} textColor={'var(--color-white)'} textShadow={'1px 1px 2px #961502;'} primaryButtonText={'Search Cars'} />
+      </div>
     </div>
   )
 }

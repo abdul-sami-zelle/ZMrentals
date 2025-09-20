@@ -59,6 +59,7 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
   const [isMobile, setIsMobile] = useState(false);
 
 
+
   
 
   useEffect(() => {
@@ -80,8 +81,8 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
         <Link href={'/'} className='global-heading-style'>{`Our Fleet`}</Link>
       </div>
       <div className='cars-cars-container'>
-        {searchedVehicles.length !== 0 ? (
-          searchedVehicles.slice(0, showLength).map((car, carIndex) => (
+        {searchedVehicles?.length !== 0 ? (
+          searchedVehicles?.slice(0, showLength)?.map((car, carIndex) => (
             <VehicleCard
               key={carIndex}
               vehicleData={car}
@@ -122,7 +123,6 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
         modalType={modalType}
 
       />
-
     </div>
   )
 }
