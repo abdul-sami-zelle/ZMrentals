@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './InsuranceType.css';
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
+import { AiFillQuestionCircle } from "react-icons/ai";
 
 const InsuranceType = ({ insurances, selectedTabIndex, insuranceSeleted, setInsuranceSelected, packageSelected, setPackageSelected }) => {
 
@@ -10,6 +11,14 @@ const InsuranceType = ({ insurances, selectedTabIndex, insuranceSeleted, setInsu
     { heading: 'Excess', details: `This amount will be charged to your credit card in the event of any damage to the car. If the cost of the damage is lower than the excess, the difference will be refunded to you once the claim has been processed.` },
     { heading: 'Bond', details: `When you pick up your car, this amount will be held on your credit card for 5-10 working days, depending on your bank and card type. Please note debit cards cannot be used for the bond.` }
   ]
+
+  const shuttleOptions = [
+    {id: 1, name: <><strong>Yes,</strong> from <strong>Domestic</strong> arrivals </>},
+    {id: 2, name: <><strong>Yes,</strong> from <strong>International</strong> arrivals </>},
+    {id: 3, name: <><strong>No,</strong> I'll make my own way to the branch </>},
+  ]
+
+  const [activeShuttle, setActiveShuttle] = useState(3);
 
   const [showDetails, setShowDetails] = useState(false);
   const [pickAndDrop, setPickAndDrop] = useState({})
@@ -24,7 +33,7 @@ const InsuranceType = ({ insurances, selectedTabIndex, insuranceSeleted, setInsu
     return [...zeroPriceInsurance, ...otherInsurances]
   }
 
-  const { setBookingPayload, bookingVehicleData } = useBookingContext();
+  const { setBookingPayload, bookingPayload, bookingVehicleData } = useBookingContext();
   const handleSelectInsurance = (item) => {
     setInsuranceSelected(item)
     setPackageSelected(item.insurance_option_id);
@@ -80,6 +89,26 @@ const InsuranceType = ({ insurances, selectedTabIndex, insuranceSeleted, setInsu
     }))
   }, [pickAndDrop])
 
+  const handleSelectShuttleOption = (id) => {
+    console.log("shuttle id", id)
+    setActiveShuttle(id)
+    setBookingPayload((prev) => ({
+      ...prev,
+      booking: {
+        ...prev.booking,
+        shuttle_option: id
+      }
+    }))
+  }
+
+  useEffect(() => {console.log("booking vehilcle", bookingPayload)}, [bookingPayload])
+
+  const [flightReason, setFlightReason] = useState(false);
+  const handleOpenFlightReason = () => {
+    console.log("toast")
+    setFlightReason((prev) => prev === true ? false : true)
+  }
+
   return (
 
     <div className='insurance-type-main-container'>
@@ -120,19 +149,28 @@ const InsuranceType = ({ insurances, selectedTabIndex, insuranceSeleted, setInsu
 
 
       {insurances.length !== 0 ? (
-        <div className='insurance-type-collapse'>
-          <div className='insurance-types-details-head' onClick={() => setShowDetails((prevState) => prevState === true ? false : true)}>
-            {showDetails ? <FaMinus size={25} color='var(--primary-color)' /> : <FaPlus size={25} color='var(--primary-color)' />}
-            <h3>What are Excess and Bond?</h3>
-          </div>
-          <div className={`insurance-type-details ${showDetails ? 'show-insurance-details' : ''}`}>
-            {excessAndBond.map((item, index) => (
-              <div className='single-insurance-details' key={index}>
-                <h3>{item.heading}</h3>
-                <p>{item.details}</p>
-              </div>
+        <div className='shuttle-options-main-contianer'>
+          <h3 className='shuttle-options-main-heading'>Would you like our shuttle to pick you up?</h3>
+
+          <div className='shuttle-options'>
+            {shuttleOptions.map((item) => (
+              <label key={item.id} className={`shuttle-single-option ${activeShuttle === item.id ? 'selected-shuttle-option' : ''}`} onClick={() => handleSelectShuttleOption(item.id)}>
+                <input type='radio' readOnly checked={item.id === bookingPayload.booking.shuttle_option } />
+                <span className='shuttle-radio'></span>
+                {item.name}
+              </label>
             ))}
           </div>
+
+          <div className='flight-number-input-contianer'>
+            <p className='flight-number-heading'>Flight Number (Optional) <AiFillQuestionCircle color='var(--primary-color)' size={15} onClick={handleOpenFlightReason} /></p>
+            <input type='text' name='flight_number' className='flight-number-input-box' value={bookingPayload?.booking?.flight_number} onChange={(e) => setBookingPayload((prev) => ({...prev, booking: {...prev.booking, flight_number: e.target.value}}))} />
+            <div className={`flight-number-reason-contianer ${flightReason ? 'show-reason-message' : ''}`}>
+              <p>We'll monitor your flight to make sure we have your car ready on time, even if your flight is early or late </p>
+            </div>
+          </div>
+
+
         </div>
       ) : (
         <div className='insurance-faq-shimmer'></div>

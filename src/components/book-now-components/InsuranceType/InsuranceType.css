@@ -4,7 +4,7 @@
     width: 100%;
     align-items: start;
     justify-content: start;
-    gap: 16px;
+    gap: 25px;
 }
 
 .insurance-type-body {
@@ -105,6 +105,175 @@
     border-radius: 50%;
 }
 
+.shuttle-options-main-contianer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 15px;
+}
+
+.shuttle-options-main-heading {
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-bold);
+    color: var(--primary-color);
+}
+
+.shuttle-options {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 15px;
+}
+
+.shuttle-single-option {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    gap: 5px;
+    height: 40px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 5px 15px 5px 45px;
+    border: 2px solid #f1f1f1;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 400;
+    position: relative;
+    cursor: pointer;
+}
+
+.shuttle-single-option.selected-shuttle-option {
+    background-color: #FFF;
+    border: 2px solid var(--primary-color);
+}
+
+.shuttle-single-option > input[type="radio"] {
+    display: none;
+}
+
+.shuttle-radio {
+    position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 18px;
+  width: 18px;
+  border: 2px solid var(--primary-color);
+  border-radius: 50%;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+/* checked state */
+.shuttle-single-option input[type="radio"]:checked + .shuttle-radio {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+/* white tick */
+.shuttle-single-option input[type="radio"]:checked + .shuttle-radio::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 1px 1px 0;
+  transform: rotate(45deg);
+}
+
+.flight-number-input-contianer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 5px;
+    padding: 10px 15px;
+    height: auto;
+    background-color: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    position: relative;
+}
+
+.flight-number-heading {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #000;
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    cursor: pointer;
+    width: max-content;
+    gap: 10px;
+}
+
+
+
+.flight-number-input-box {
+    display: flex;
+    width: 100%;
+    height: 25px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.flight-number-reason-contianer  {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    max-height: 0;
+    overflow: hidden;
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
+.flight-number-reason-contianer.show-reason-message {
+    width: 100%;
+    height: max-content;
+    padding: 8px 15px;
+    max-height: 120px;
+    background-color: hsl(0, 0%, 100%);
+    border: 1px solid #fff;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.flight-number-reason-contianer  > p {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+.flight-number-reason-contianer::after {
+    content: '';
+    width: 0px;
+    height: 0px;
+    /* background-color: #FFF; */
+    position: absolute;
+    bottom: -11px;
+    left: 160px;
+    border-left: 10px solid transparent;  /* left side transparent */
+  border-right: 10px solid transparent; /* right side transparent */
+  border-top: 10px solid #fff; 
+  /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
+}
+
+/* 
 .insurance-type-collapse {
     display: flex;
     flex-direction: column;
@@ -171,7 +340,7 @@
     line-height: var(--line-height-body);
     font-weight: var(--font-weight-regular);
     
-}
+} */
 
 
 /* Shimmer styling */
@@ -248,6 +417,7 @@
     .booking-steps-main-container {
         width: 100%;
         padding: 16px;
+        gap: 15px;
     }
 
     .insurance-type-head > span {
@@ -264,14 +434,15 @@
     }
 
     .insurance-single-tab   {
-        gap: 8px !important;
+        gap: 5px !important;
         padding: 12px 7px !important;
     }
 
     .select-insurance-radio-container {
         display: flex;
         width: 100%;
-        align-items: center;
+        height: 67px;
+        align-items: start;
         justify-content: start;
         gap: 16px;
         font-size: var(--font-body-md);
@@ -307,5 +478,13 @@
         line-height: var(--line-height-heading);
         font-weight: var(--font-weight-bold);
         color: var(--primary-color);
+    }
+
+    .insurance-bottom-text {
+        color: var(--primary-color);
+    }
+
+    .shuttle-single-option {
+        font-size: 12px;
     }
 }

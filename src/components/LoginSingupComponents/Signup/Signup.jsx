@@ -77,7 +77,6 @@ const Signup = ({loading, setLoading}) => {
       return { success: false, message: error.response?.data?.message || "Sign up failed" };
     }
 
-    alert(" You are good to go")
 
   }
 

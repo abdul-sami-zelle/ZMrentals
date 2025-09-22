@@ -92,9 +92,11 @@ const VehicleCard = (
     return diffDays + 1;
   }
 
+  console.log("vehicle data", vehicleData)
+
   return (
     <div className='vehicle-card-main-container' onClick={handleModalOpen}>
-      <div className={`vehicle-card-image-container ${vehicleData.available === 0 ? 'sold-out-car' : ''}`}>
+      <div className={`vehicle-card-image-container ${vehicleData?.available === 0 ? 'sold-out-car' : ''}`}>
         <Image src={vehicleImage} alt='small car' width={315} height={160} />
       </div>
       <div className='vehicle-details-container'>
@@ -122,6 +124,7 @@ const VehicleCard = (
             {
               vehicleData.available !== 0 ? (
                 isVehicleSearched ? (
+
               <div className='price-and-book-now-ammount'>
                 <span> <h3>NZD {vehicleData.base_rate}</h3><p>/day</p> </span>
                 {vehicleData.duration_discount !== 0 ? (
@@ -129,15 +132,15 @@ const VehicleCard = (
                 ) : (
                   <span> <span className='total-price-after-discount'> <h3>NZD {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
                 )}
-                
-                
-                
               </div>
+
             ) : (
               <h3 className='vehicle-price-heading' onClick={(e) => { e.stopPropagation(); handleScrolllTop() }}>{seePrice}</h3>
             )
               ) : (
-                <></>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'start', width: '100%'}}>
+                  <h3 className='vehicle-price-heading' onClick={(e) => { e.stopPropagation(); handleScrolllTop() }}>{seePrice}</h3>
+                </div>
               )
             }
             

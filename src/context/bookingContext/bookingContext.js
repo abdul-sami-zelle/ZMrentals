@@ -19,6 +19,8 @@ export const BookingProvider = ({ children }) => {
             drop_time: "",
             extras: [],
             insurance_id: null,
+            shuttle_option: 3,
+            flight_number: ''
         },
         user: {
             firstname: "",

@@ -58,10 +58,6 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
 
   const [isMobile, setIsMobile] = useState(false);
 
-
-
-  
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // mobile breakpoint
@@ -77,7 +73,6 @@ const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
     <div className='car-details-main-container' onClick={openModal} style={{ maxWidth: maxWidth }}>
       <h3 className={pathname === '/' ? 'main-page-section-heading' : 'section-main-heading'}>{data?.heading}</h3>
       <div className='car-details-description-and-all-vehicles-link-container' style={{ display: pathname === '/' ? 'none' : 'flex' }}>
-        {/* <p>{data.description}</p> */}
         <Link href={'/'} className='global-heading-style'>{`Our Fleet`}</Link>
       </div>
       <div className='cars-cars-container'>
