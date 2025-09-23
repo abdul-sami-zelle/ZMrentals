@@ -28,6 +28,8 @@ const BookNowClient = () => {
     bookingVehicleData,
     bookingPayload,
     setBookingPayload,
+    activeShuttle,
+    setActiveShuttle,
     validateForm,
     vehicleSesionData,
     setVehicleSesionData,
@@ -36,10 +38,11 @@ const BookNowClient = () => {
     setUserType,
     userData,
     setUserData,
+    countryCode,
+    setCountryCode,
   } = useBookingContext()
 
-  // console.log("sesion data", vehicleSesionData)
-  const { setSearchVehiclePayload, setIsVehicleSearched, setPickupCity, setDropupCity, setPickupTime, setDropupTime } = useSearchVehicle()
+  const { setSearchVehiclePayload, setIsVehicleSearched, setSearchedVehicles, setPickupCity, setDropupCity, setPickupTime, setDropupTime, setShowBookingButton  } = useSearchVehicle()
   const searchParam = useSearchParams();
   const router = useRouter();
   const step = parseInt(searchParam.get('step')) || 1;
@@ -53,14 +56,7 @@ const BookNowClient = () => {
   const [userDiscount, setUserDiscount] = useState('');
   const [isLoading, setISloading] = useState(false)
   const [paymentError, setPaymentError] = useState("");
-
-
-  // useEffect(() => {
-  //   console.log("vehicle sesion data", vehicleSesionData)
-  //   if(Object.keys(vehicleSesionData).length === 0) {
-  //     router.push('/vehicles')
-  //   }
-  // }, [])
+  // const [countryCode, setCountryCode] = useState('')
 
   const getUserDiscount = async () => {
     const guesApi = `${url}/discounts/get/1`
@@ -137,6 +133,13 @@ const BookNowClient = () => {
     return allFilled && noErrors;
   }
 
+  const isArrivalDetailsAdded = () => {
+    const flightNumber = bookingPayload?.booking?.flight_number || "";
+    const arrivalCity = bookingPayload?.booking?.arrival_city || "";
+
+    return flightNumber.trim() !== "" && arrivalCity.trim() !== "";
+  };
+
   const goToNewStep = (newIndex) => {
     setSelectedTabIndex(newIndex)
     const param = new URLSearchParams(searchParam.toString());
@@ -153,12 +156,23 @@ const BookNowClient = () => {
   const handleCompleteBooking = async () => {
     const api = `https://zm.skyhub.pk/booking/add-booking`;
 
+    const payloadWithPhoneCode = {
+      ...bookingPayload,
+      user: {
+        ...bookingPayload.user,
+        phone: `${countryCode}${bookingPayload.user.phone}`
+      }
+    };
+
     try {
       setISloading(true)
-      const response = await axios.post(api, bookingPayload);
+      const response = await axios.post(api, payloadWithPhoneCode);
       if (response.status === 201) {
         setISloading(false);
         setShowAvailableModal(true)
+        setShowBookingButton(false);
+        setSearchedVehicles([])
+        setSearchedVehicles([])
         setCloseType('success');
         setSubmitBookingMessage({
           head: 'Thank You For Booking',
@@ -209,6 +223,9 @@ const BookNowClient = () => {
       } else {
         setISloading(false);
         setShowAvailableModal(true)
+        setShowBookingButton(false)
+        setSearchedVehicles([])
+        setSearchedVehicles([])
         setCloseType('reject');
         setSubmitBookingMessage({
           head: 'Selected Car Not Available',
@@ -221,6 +238,9 @@ const BookNowClient = () => {
       setISloading(false);
       console.log("UnExpected Error", error);
       setShowAvailableModal(true)
+      setShowBookingButton(false)
+      setSearchedVehicles([])
+      setSearchedVehicles([])
       setCloseType('reject');
       setSubmitBookingMessage({
         head: 'Selected Car Not Available',
@@ -232,6 +252,15 @@ const BookNowClient = () => {
 
   // Handle Pay Now
   const handlePayNowAndBook = async () => {
+    const payloadWithPhoneCode = {
+      ...bookingPayload,
+      user: {
+        ...bookingPayload.user,
+        phone: `${countryCode}${bookingPayload.user.phone}`
+      }
+    };
+
+
     try {
       setISloading(true);
       setPaymentError('');
@@ -239,7 +268,7 @@ const BookNowClient = () => {
       // 1️⃣ Create booking first
       const bookingResponse = await axios.post(
         `https://zm.skyhub.pk/booking/add-booking`,
-        bookingPayload
+        payloadWithPhoneCode
       );
 
       if (bookingResponse.status !== 201) {
@@ -282,7 +311,6 @@ const BookNowClient = () => {
       if (result.error) {
         setPaymentError(result.error.message);
         console.error("Payment error:", result.error.message);
-
         setShowAvailableModal(true);
         setCloseType('reject');
         setSubmitBookingMessage({
@@ -297,6 +325,8 @@ const BookNowClient = () => {
         if (status === 'succeeded') {
           // ✅ Payment successful
           setShowAvailableModal(true);
+          setShowBookingButton(false)
+          setSearchedVehicles([])
           setCloseType('success');
           setSubmitBookingMessage({
             head: 'Paid Successfully!',
@@ -363,6 +393,8 @@ const BookNowClient = () => {
               link: 'Explore More Options',
             });
 
+            setShowBookingButton(false)
+            setSearchedVehicles([])
             // Reset booking form
             setBookingPayload({
               booking: {
@@ -498,9 +530,23 @@ const BookNowClient = () => {
   const handleBookNow = () => {
 
     if (selectedTabIndex < 3) {
-      if (selectedTabIndex === 2 && !isUserInfoFilled()) {
+
+      if (activeShuttle !== 3 && selectedTabIndex === 0 && !isArrivalDetailsAdded()) {
+        setTOustShow(true)
+        setToustMessage("Please Fill Flight Number and Arrival City");
+      } else if (selectedTabIndex === 2 && !isUserInfoFilled()) {
         setTOustShow(true)
         setToustMessage("Please Fill All The Information")
+      } else if (activeShuttle === 3 && selectedTabIndex === 0) {
+        setBookingPayload((prev) => ({
+          ...prev,
+          booking: {
+            ...prev.booking,
+            flight_number: '',
+            arrival_city: ''
+          }
+        }))
+        goToNewStep(selectedTabIndex + 1);
       } else {
         goToNewStep(selectedTabIndex + 1);
       }
@@ -527,13 +573,35 @@ const BookNowClient = () => {
     }
   }
 
+  const getInsurancesTotal = () => {
+    let total = 0;
+    const safeDays = totalDays > 0 ? totalDays : 1;
+    // Insurance
+    if (insuranceSeleted && Object.keys(insuranceSeleted).length > 0) {
+      const insuranceRate = parseFloat(insuranceSeleted?.rate || 0);
+      total += insuranceRate * safeDays;
+    }
+    return total.toFixed(2)
+  }
+
+  const getSubTotal = () => {
+    let total = 0;
+
+    // Get Total Days
+    const subTotal = parseFloat(vehicleSesionData.sub_total || 0);
+    total += subTotal - parseFloat(vehicleSesionData?.discounts?.value);
+    return total.toFixed(2)
+  }
+
   const getGrandTotal = () => {
     let total = 0;
 
+    // Get Total Days
     const safeDays = totalDays > 0 ? totalDays : 1;
 
+
     const subTotal = parseFloat(vehicleSesionData.sub_total || 0);
-    total += subTotal;
+    total += subTotal - parseFloat(vehicleSesionData?.discounts?.value);
 
     // Insurance
     if (insuranceSeleted && Object.keys(insuranceSeleted).length > 0) {
@@ -564,6 +632,7 @@ const BookNowClient = () => {
     return total.toFixed(2); // format to 2 decimal places if needed
   };
 
+
   const [emailModal, setEmailModal] = useState(false);
   const [modalType, setModalType] = useState('')
   const handleOpenEmailEnquiry = (type) => {
@@ -586,9 +655,9 @@ const BookNowClient = () => {
     const discount = parseFloat(discountPercent);
 
     if (isNaN(numPrice) || isNaN(discount)) return 0;
-
     return (numPrice * (discount / 100)).toFixed(2); // discount amount
   };
+
 
   return (
     <div className="book-now-page-main-container">
@@ -628,10 +697,26 @@ const BookNowClient = () => {
                   </div>
                 </div>
 
-                {selectedTabIndex === 0 ? <InsuranceType insurances={bookingVehicleData.insurance} selectedTabIndex={selectedTabIndex} insuranceSeleted={insuranceSeleted} setInsuranceSelected={setInsuranceSelected} packageSelected={packageSelected} setPackageSelected={setPackageSelected} />
-                  : selectedTabIndex === 1 ? <Extras extras={bookingVehicleData.extras} />
+                {selectedTabIndex === 0 ? <InsuranceType
+                  insurances={bookingVehicleData?.insurance}
+                  selectedTabIndex={selectedTabIndex}
+                  insuranceSeleted={insuranceSeleted}
+                  setInsuranceSelected={setInsuranceSelected}
+                  packageSelected={packageSelected}
+                  setPackageSelected={setPackageSelected}
+                />
+                  : selectedTabIndex === 1 ? <Extras
+                    extras={bookingVehicleData.extras}
+                  />
                     : selectedTabIndex === 2 ? <HirerDetails />
-                      : <Payments grandTotal={applyDiscount(getGrandTotal(), userDiscount)} isChecked={isChecked} setIsChecked={setIsChecked} selectPaymentType={selectPaymentType} setSelectPaymentType={setSelectPaymentType} />}
+                      : <Payments
+                        grandTotal={applyDiscount(getGrandTotal(), userDiscount)}
+                        isChecked={isChecked}
+                        setIsChecked={setIsChecked}
+                        selectPaymentType={selectPaymentType}
+                        setSelectPaymentType={setSelectPaymentType}
+                      />
+                }
               </div>
 
 
@@ -649,14 +734,14 @@ const BookNowClient = () => {
                       <h3>Pick-up</h3>
                       <h3>{locations.find((item) => item.id === pickDropLocation.pickup_location)?.name}</h3>
                       <p>{formatDateFromISO(pickDropLocation.pickup_time)}</p>
-                      <p className='pick-drop-time'>{formatTimeFromISO(pickDropLocation.pickup_time)}</p>
+                      <p className='pick-drop-time'>{formatTimeFromISO(pickDropLocation?.pickup_time)}</p>
                       <Link href={'/vehicles'} className='edit-enquiry'>Edit Itinerary</Link>
                     </div>
                     <div className='drop-off-section'>
                       <h3>Drop-off</h3>
                       <h3>{locations.find((item) => item.id === pickDropLocation.drop_location)?.name}</h3>
-                      <p>{formatDateFromISO(pickDropLocation.drop_time)}</p>
-                      <p>{formatTimeFromISO(pickDropLocation.drop_time)}</p>
+                      <p>{formatDateFromISO(pickDropLocation?.drop_time)}</p>
+                      <p>{formatTimeFromISO(pickDropLocation?.drop_time)}</p>
                     </div>
                   </div>
                   <div className='vehicle-details-section'>
@@ -665,11 +750,15 @@ const BookNowClient = () => {
                       {/* <p>${bookingVehicleData.base_rate}/day x {totalDays} day</p> */}
                       {vehicleSesionData?.duration_discount !== 0 ? (
                         <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'start', width: 'auto', flexDirection: 'column' }}>
-                          <del>NZD {vehicleSesionData?.was_price}</del>
-                          <span>NZD {vehicleSesionData?.sub_total}</span>
+                          <del>NZ$ {vehicleSesionData?.was_price}</del>
+
+                          <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', width: 'max-content' }}>
+                            NZ$ {vehicleSesionData?.sub_total}
+                            <p style={{ fontSize: '10px', lineHeight: '12px', fontWeight: 400 }}>({vehicleSesionData?.duration_discount} days discount)</p>
+                          </span>
                         </div>
                       ) : (
-                        <span>NZD {vehicleSesionData?.sub_total}</span>
+                        <span>NZ$ {vehicleSesionData?.sub_total}</span>
                       )}
 
                       <Link href={'/vehicles'}>Change Vehicle</Link>
@@ -678,21 +767,39 @@ const BookNowClient = () => {
                       <Image src={url + bookingVehicleData?.image} alt='vehicle image' width={192} height={96} className='vehicle-image' />
                     </div>
                   </div>
+
+
                   <div className='booking-prices-details-section'>
                     <span>
-                      <p>Basic Insurance</p>
-                      <h3>{Object.keys(insuranceSeleted)?.length > 0 ? insuranceSeleted?.name : bookingVehicleData?.insurance[0]?.name}</h3>
+                      <p>{vehicleSesionData?.discounts?.name}</p>
+                      <h3>NZ$ {getDiscountAmount(vehicleSesionData?.sub_total, vehicleSesionData?.discounts?.percent)}</h3>
                     </span>
 
-                    {/* <span>
-                      <p>One Way Fee</p>
-                      <h3>${Object.keys(insuranceSeleted).length > 0 ? parseInt(insuranceSeleted.rate) === 0 ? 0 : parseInt(insuranceSeleted?.rate) * totalDays : '0'}</h3>
-                    </span> */}
+                    <span>
+                      <p>Sub Total</p>
+                      <h3>NZ$ {getSubTotal()}</h3>
+                    </span>
+
+
+                    {Object.keys(insuranceSeleted).length > 0 && (
+                      <span>
+                        <p>Insurance</p>
+                        {
+                          parseFloat(insuranceSeleted?.rate) === 0 ? (
+                            <h3>Free</h3>
+                          ) : (
+                            <h3>{getInsurancesTotal()}</h3>
+                          )
+                        }
+
+                      </span>
+                    )}
+
 
                     {bookingPayload?.booking?.extras && bookingPayload?.booking?.extras.map((item, index) => (
                       <span key={index}>
                         <p> {bookingVehicleData?.extras?.find(extra => extra.id === item?.extras_option_id)?.name} <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' /></p>
-                        <h3>NZD {bookingVehicleData?.extras?.find(extra => extra.id === item.extras_option_id)?.rate * item.quantity * totalDays}</h3>
+                        <h3>NZ$ {bookingVehicleData?.extras?.find(extra => extra.id === item.extras_option_id)?.rate * item.quantity * totalDays}</h3>
                       </span>
                     ))}
 
@@ -700,26 +807,17 @@ const BookNowClient = () => {
                       vehicleSesionData?.off_hour_charges !== 0 && (
                         <span>
                           <p>Off Hour Charges</p>
-                          <h3>NZD {vehicleSesionData?.off_hour_charges}</h3>
+                          <h3>NZ$ {vehicleSesionData?.off_hour_charges}</h3>
                         </span>
                       )
                     }
 
-                    <span>
-                      <p>Sub Total</p>
-                      <h3>NZD {getGrandTotal()}</h3>
-                    </span>
-
-                    <span>
-                      <p>Discount {(userDiscount)}%</p>
-                      <h3>NZD {getDiscountAmount(getGrandTotal(), userDiscount)}</h3>
-                    </span>
 
                   </div>
                   <div className='grand-total-section'>
                     <p>Grand Total</p>
                     <span>
-                      <h3>NZD {applyDiscount(getGrandTotal(), userDiscount)}</h3>
+                      <h3>NZ$ {getGrandTotal()}</h3>
                       <p>(Inclusive of GST)</p>
                     </span>
                     {/* <h3>${Object.keys(insuranceSeleted).length > 0 ? bookingVehicleData.base_rate * totalDays + parseInt(insuranceSeleted?.rate) * totalDays : bookingVehicleData.base_rate * totalDays}</h3> */}

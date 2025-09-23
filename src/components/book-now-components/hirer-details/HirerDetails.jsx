@@ -3,7 +3,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import './HirerDetails.css'
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
-import {useOutsideClick} from '../../../utils/DetectClickOutside'
+import { useOutsideClick } from '../../../utils/DetectClickOutside'
+// import { MdOutlineArrowDropDown } from "react-icons/md";
 
 const HirerDetails = () => {
 
@@ -26,7 +27,7 @@ const HirerDetails = () => {
     'Other',
   ]
 
-  const { bookingPayload, setBookingPayload, errors, setErrors, validateForm } = useBookingContext()
+  const { bookingPayload, setBookingPayload, errors, setErrors, validateForm, countryCode, setCountryCode } = useBookingContext()
 
   const [parentCountryShow, setParentCountryShow] = useState(false);
   const [driverAgeShow, setDriverAgeShow] = useState(false);
@@ -40,6 +41,7 @@ const HirerDetails = () => {
       try {
         const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
         const data = await res.json();
+
 
         const formatted = data
           .map((item) => {
@@ -62,7 +64,7 @@ const HirerDetails = () => {
     handleGetAllCountries();
   }, []);
 
-
+  const [showCountryCodeList, setShowCountryCodeList] = useState(false);
 
 
   useEffect(() => {
@@ -71,17 +73,20 @@ const HirerDetails = () => {
       (c) => c.country.toLowerCase() === defaultCountry.toLowerCase()
     );
 
+    
+
     if (countryObj) {
-      setBookingPayload((prev) => ({
-        ...prev,
-        user: {
-          ...prev.user,
-          country: defaultCountry,
-          phone: countryObj.code, // ✅ set code initially
-        },
-      }));
+      setCountryCode(countryObj.code)
+      // setBookingPayload((prev) => ({
+      //   ...prev,
+      //   user: {
+      //     ...prev.user,
+      //     country: countryObj.country
+      //   }
+      // }) )
     }
-  }, [countryList]);
+  }, [countryList, countryCode, bookingPayload]);
+
 
 
 
@@ -129,29 +134,11 @@ const HirerDetails = () => {
         );
 
         if (countryObj) {
-          const countryCode = countryObj.code; // e.g. +92
+          // Keep only digits
+          newValue = value.replace(/\D/g, "");
 
-          // Remove all characters except digits and +
-          newValue = value.replace(/[^0-9+]/g, "");
-
-          // Ensure it starts with country code
-          if (!newValue.startsWith(countryCode)) {
-            // If user typed leading 0, replace with country code
-            if (newValue.startsWith("0")) {
-              newValue = countryCode + newValue.slice(1);
-            } else {
-              newValue = countryCode + newValue.replace(/^\+/, "");
-            }
-          }
-
-          // Prevent duplicate codes (like +92+92)
-          if (newValue.startsWith(countryCode + countryCode)) {
-            newValue = countryCode + newValue.slice(countryCode.length * 2);
-          }
-
-          // Simple phone length validation (at least 8 digits after code)
-          const digits = newValue.replace(/\D/g, "");
-          if (digits.length < countryCode.replace(/\D/g, "").length + 8) {
+          // Simple phone length validation (e.g. at least 8 digits)
+          if (newValue.length < 8) {
             setErrors((prevErrors) => ({
               ...prevErrors,
               phone: "Invalid phone number",
@@ -165,10 +152,13 @@ const HirerDetails = () => {
           }
         }
 
+        
+
         return {
           ...prev,
           user: {
             ...prev.user,
+            // [name]: `${countryCode}${newValue}`,
             [name]: newValue,
           },
         };
@@ -200,13 +190,14 @@ const HirerDetails = () => {
 
 
 
+
   const handleSelectLivingCountry = (item) => {
     setBookingPayload((prev) => ({
       ...prev,
       user: {
         ...prev.user,
         country: item.country,
-        phone: item.code
+        // phone: item.code
       }
     }));
 
@@ -355,13 +346,26 @@ const HirerDetails = () => {
 
         <label style={{ border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
           Phone Number
-          <input
-            type='text'
-            name='phone'
-            value={bookingPayload.user.phone}
-            onChange={handleHirerDetailsAdd}
-          // onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, phone: e.target.value } }))}
-          />
+
+          <div className='hirer-phone-with-country-code'>
+            <div className='country-code-dropdown'>
+              <p onClick={() => setShowCountryCodeList(!showCountryCodeList)}>{countryCode} <MdOutlineArrowDropDown size={10} color='#535353' /></p>
+              <div className={`country-code-list ${showCountryCodeList ? 'show-country-code-list' : ''}`}>
+                {countryList.map((item, index) => (
+                  <p key={index} className='country-code-list-item' onClick={() => { setCountryCode(item.code); setShowCountryCodeList(false) }}>{item.code}</p>
+                ))}
+              </div>
+            </div>
+            <input
+              type='text'
+              name='phone'
+              value={bookingPayload.user.phone}
+              onChange={handleHirerDetailsAdd}
+
+            // onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, phone: e.target.value } }))}
+            />
+
+          </div>
         </label>
       </div>
 

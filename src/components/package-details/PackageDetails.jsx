@@ -7,11 +7,11 @@ import Image from 'next/image'
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton'
 import { useRouter } from 'next/navigation'
 
-const PackageDetails = ({ data, sectionImage, packageHeading, flexDirection, buttonText, display , objectFit}) => {
+const PackageDetails = ({ data, navigateUrl = '/', sectionImage, packageHeading, flexDirection, buttonText, display , objectFit}) => {
     
   const router = useRouter()
   const handleNavigate = () => {
-    router.push('/locations')
+    router.push(navigateUrl)
   }
 
   return (

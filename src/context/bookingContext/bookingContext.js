@@ -10,6 +10,8 @@ export const BookingProvider = ({ children }) => {
     const [extraQuantities, setExtraQuantities] = useState({});
     const [userType, setUserType] = useState('guest')
     const [userData, setUserData] = useState({})
+    const [activeShuttle, setActiveShuttle] = useState(3);
+    const [countryCode, setCountryCode] = useState('')
     const [bookingPayload, setBookingPayload] = useState({
         booking: {
             car_id: null,
@@ -20,7 +22,8 @@ export const BookingProvider = ({ children }) => {
             extras: [],
             insurance_id: null,
             shuttle_option: 3,
-            flight_number: ''
+            flight_number: '',
+            arrival_city: ''
         },
         user: {
             firstname: "",
@@ -56,8 +59,6 @@ export const BookingProvider = ({ children }) => {
         if (Object.keys(bookingVehicleData).length === 0) {
             setBookingVehicleData(sellectedVehicleSessionData);
         }
-
-
     }, [])
 
     useEffect(() => {
@@ -106,6 +107,7 @@ export const BookingProvider = ({ children }) => {
     }, []);
 
 
+    // useEffect(() => {console.log("booking payload", bookingPayload)}, [bookingPayload])
 
     return (
         <BookingContext.Provider value={{
@@ -124,6 +126,10 @@ export const BookingProvider = ({ children }) => {
             setUserType, 
             userData, 
             setUserData,
+            activeShuttle, 
+            setActiveShuttle,
+            countryCode, 
+            setCountryCode,
         }}>
             {children}
         </BookingContext.Provider>

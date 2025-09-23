@@ -21,6 +21,7 @@ import axios from 'axios';
 export default function Home() {
 
   const { loader } = useSearchVehicle()
+  const { searchedVehicles, isVehicleSearched, setIsVehicleSearched, setSearchedVehicles } = useSearchVehicle()
 
   const packageDescription = [
     `
@@ -90,7 +91,6 @@ export default function Home() {
     },
   ]
 
-  const {searchedVehicles, setSearchedVehicles } = useSearchVehicle()
 
   const carsDetails = [
     {
@@ -132,6 +132,8 @@ export default function Home() {
           <CarDetails
             key={index}
             data={item}
+            searchedVehicles={searchedVehicles}
+            isVehicleSearched={false}
             showLength={8}
             maxWidth={'1323px'}
           />
@@ -151,6 +153,7 @@ export default function Home() {
       <PackageDetails
         packageHeading={'Our Commitment to Sustainability'}
         data={packageDescription}
+        navigateUrl={'/car-rental-services'}
         sectionImage={'/assets/home/Home_page_Our_Commitment_to_Sustainability_image.jpg'}
         flexDirection={'row'}
         buttonText={'Find Out More'}
@@ -159,6 +162,7 @@ export default function Home() {
       <PackageDetails
         packageHeading={'Curated Fleet Collection in Auckland'}
         data={packageDescriptionTwo}
+        navigateUrl={'/vehicles'}
         sectionImage={'/assets/home/home_page_Curated_Fleet_Collection_image.jpg'}
         flexDirection={'row-reverse'}
         buttonText={'Hire Now'}

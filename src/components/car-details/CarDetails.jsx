@@ -10,12 +10,12 @@ import EmailEnquiryModal from '../../modals/EmailEnquiryModal/EmailEnquiryModal'
 
 
 
-const CarDetails = ({ data, openModal, showLength, maxWidth = '100%' }) => {
+const CarDetails = ({ searchedVehicles, isVehicleSearched, data, openModal, showLength, maxWidth = '100%' }) => {
 
   const pathname = usePathname()
 
 
-  const { searchedVehicles, isVehicleSearched, setIsVehicleSearched } = useSearchVehicle()
+  // const { searchedVehicles, isVehicleSearched, setIsVehicleSearched } = useSearchVehicle()
   const url = `https://zm.skyhub.pk`
 
 

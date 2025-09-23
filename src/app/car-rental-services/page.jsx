@@ -137,18 +137,28 @@ const CarRentalServices = () => {
             serviceDescription={`Experience the freedom of exploring Auckland on your own terms with our self-drive car rental services. Forget public transport schedules, rigid itineraries, or crowded metros and travel at your own pace in total comfort. Whether you're planning a scenic day trip or visiting top attractions, our self-drive car hire offers ultimate flexibility and convenience. Grab your keys and discover Auckland’s vibrant city center or its serene suburbs. Book your comfortable self-drive rental with ZM today and experience Auckland the way it was meant to be – your way.`}
           />
 
-          <ServiceDetail
-            serviceImage={'/assets/Car-Rental-Services/(optional)-Car-Rental-Insurance.jpg'}
-            serviceHeading={'(optional) Car Rental Insurance'}
-            flexDirection={'row'}
-            serviceDescription={`At ZM Rentals, your safety and peace of mind matter as much as your comfort. While car rental insurance isn’t mandatory, we highly recommend it for added security on Auckland’s roads. We offer flexible, budget-friendly insurance options to suit your needs. Our Basic Insurance covers essentials like collision damage, theft, and third-party liability. For reduced financial risk, our Excess Reduction Package includes Collision Damage Waiver (CDW) and Loss Damage Waiver (LDW). For full protection, choose our Full Protection Coverage, which covers accidents, theft, windscreen, tires, and more. Drive confidently with ZM Rentals — we've got you covered.`}
-          />
+          
+
+
+          
 
         </div>
+
         <DiscountBanner
           discountImage={discountBannerImage}
           marginBottom={'50px'}
         />
+
+
+        <div className='rental-services-max-width-container'>
+            <ServiceDetail
+            serviceImage={'/assets/Car-Rental-Services/(optional)-Car-Rental-Insurance.jpg'}
+            serviceHeading={'Car Rental Insurance'}
+            flexDirection={'row'}
+            serviceDescription={`At ZM Rentals, your safety and peace of mind matter as much as your comfort. While car rental insurance isn’t mandatory, we highly recommend it for added security on Auckland’s roads. We offer flexible, budget-friendly insurance options to suit your needs. Our Basic Insurance covers essentials like collision damage, theft, and third-party liability. For reduced financial risk, our Excess Reduction Package includes Collision Damage Waiver (CDW) and Loss Damage Waiver (LDW). For full protection, choose our Full Protection Coverage, which covers accidents, theft, windscreen, tires, and more. Drive confidently with ZM Rentals — we've got you covered.`}
+          />
+          </div>
+        
       </div>
     </div>
   )

@@ -240,6 +240,8 @@ const Vehicles = () => {
           <CarDetails
             key={index}
             data={item}
+            searchedVehicles={searchedVehicles}
+            isVehicleSearched={isVehicleSearched}
           />
         ))}
 

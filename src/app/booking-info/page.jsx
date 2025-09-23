@@ -108,13 +108,23 @@ const BookingInfo = () => {
         // paraTwo={'Find out what makes us tick.'}
         buttonText={'Book Now'}
       /> */}
-      <div className='bookinng-info-content-container'> 
+      <div className='bookinng-info-content-container' style={{marginBottom: '57px'}}> 
+
         <div className='booking-info-max-width-container'>
           <RentalServiceHeader
             heading={'Booking Car Rental in Auckland'}
             description={`Booking a car hire in Auckland doesn’t need to be complicated, especially when you choose ZM Rentals. We’ve designed the car rental booking process to be simple and hassle-free, both on the website and in person. `}
           />
+        </div>
 
+        <DiscountBanner
+          discountImage={'/assets/images/mix/Insurance-Coverage12-600x436.jpg'}
+          marginBottom={'0px'}
+        />
+
+
+        <div className='booking-info-max-width-container'>
+          
           <BookingInstruction />
 
           <RentalPolicy />
@@ -145,10 +155,7 @@ const BookingInfo = () => {
           />
 
         </div>
-        <DiscountBanner
-          discountImage={'/assets/images/mix/Insurance-Coverage12-600x436.jpg'}
-          marginBottom={'57px'}
-        />
+        
       </div>
     </div>
   )

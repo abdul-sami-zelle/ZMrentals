@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { BsFillFuelPumpFill, BsFillGearFill } from "react-icons/bs";
 import { FaDroplet } from "react-icons/fa6";
 import { handleScrolllTop } from '../../utils/midlewares'
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import axios from 'axios';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
@@ -25,7 +25,7 @@ const VehicleCard = (
   }) => {
 
 
-  const { searchVehiclePayload, setSearchVehiclePayload } = useSearchVehicle()
+  // const { searchVehiclePayload, setSearchVehiclePayload } = useSearchVehicle()
   const {setVehicleSesionData} = useBookingContext();
   const [toustShow, setTOustShow] = useState(false)
   const [toustMessage, setToustMessage] = useState('');
@@ -33,11 +33,11 @@ const VehicleCard = (
   const router = useRouter();
   const { setBookingVehicleData } = useBookingContext()
 
-  const { isVehicleSearched } = useSearchVehicle()
+  const { isVehicleSearched, showBookingButton, setShowBookingButton , searchVehiclePayload} = useSearchVehicle()
 
 
   const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
-  const [showBookingButton, setShowBookingButton] = useState(false);
+  // const [showBookingButton, setShowBookingButton] = useState(false);
   useEffect(() => {
     if (pickup_location && drop_location && pickup_time && drop_time) {
       setShowBookingButton(true);
@@ -92,11 +92,13 @@ const VehicleCard = (
     return diffDays + 1;
   }
 
-  console.log("vehicle data", vehicleData)
+  const pathname = usePathname()
+  console.log(vehicleData)
+
 
   return (
     <div className='vehicle-card-main-container' onClick={handleModalOpen}>
-      <div className={`vehicle-card-image-container ${vehicleData?.available === 0 ? 'sold-out-car' : ''}`}>
+      <div className={`vehicle-card-image-container ${pathname !== '/' &&  vehicleData?.available === 0 ? 'sold-out-car' : ''}`}>
         <Image src={vehicleImage} alt='small car' width={315} height={160} />
       </div>
       <div className='vehicle-details-container'>
@@ -122,15 +124,15 @@ const VehicleCard = (
           </span>
           <div className={`price-and-book-now ${vehicleData.available === 0 ? 'items-align-end' : ''}`}>
             {
-              vehicleData.available !== 0 ? (
+              vehicleData.available && vehicleData.available !== 0 ? (
                 isVehicleSearched ? (
 
               <div className='price-and-book-now-ammount'>
-                <span> <h3>NZD {vehicleData.base_rate}</h3><p>/day</p> </span>
+                <span> <h3>NZ$ {vehicleData.base_rate}</h3><p>/day</p> </span>
                 {vehicleData.duration_discount !== 0 ? (
-                  <span> <del style={{marginRight: '10px'}}>NZD {formatPrice(vehicleData?.was_price)}</del>  <span className='total-price-after-discount'> <h3>NZD {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
+                  <span> <del style={{marginRight: '10px'}}>NZ$ {formatPrice(vehicleData?.was_price)}</del>  <span className='total-price-after-discount'> <h3>NZ$ {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
                 ) : (
-                  <span> <span className='total-price-after-discount'> <h3>NZD {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
+                  <span> <span className='total-price-after-discount'> <h3>NZ$ {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
                 )}
               </div>
 
@@ -145,7 +147,7 @@ const VehicleCard = (
             }
             
             {vehicleData.available === 0 ? (
-              <button disabled className={`sold-button ${showBookingButton ? 'show-booking-button' : ''}`}>Sold</button>
+              <button disabled className={`sold-button ${pathname !== '/' && showBookingButton ? 'show-booking-button' : ''}`}>Sold Out</button>
             ) : (
               <button className={`booking-button ${showBookingButton ? 'show-booking-button' : ''}`} onClick={handleBookVehicle}>Book Now</button>
             )}

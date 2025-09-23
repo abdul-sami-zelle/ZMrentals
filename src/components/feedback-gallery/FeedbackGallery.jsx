@@ -6,6 +6,9 @@ import SecondaryButton from '@/global-components/secondary-button/SecondaryButto
 import imgOne from '../../assets/home/home_pageFlexible_Car_Rental_Services_image_2.jpg'
 
 const FeedbackGallery = () => {
+    const handleNavigate = () => {
+    router.push('/car-rental-services')
+  }
     return (
         <div className='feedback-gallery-main-container'>
 
@@ -27,6 +30,7 @@ const FeedbackGallery = () => {
                     convenient and enjoyable as possible.
                 </p>
                 <SecondaryButton
+                    handleSecondaryButtonClick={handleNavigate}
                     secondaryButtonClass={'secondary-prop-class'}
                     width={'157px'}
                     height={'44px'}

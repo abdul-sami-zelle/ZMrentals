@@ -57,7 +57,6 @@ const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) =>
     }
 
     const handleCountrySelect = (item) => {
-        console.log("country", item)
         setSubscribePayload((prev) => ({
             ...prev,
             country: item
@@ -96,7 +95,6 @@ const SubscriptionModal = ({ showSubscription, setShowSubscription, imgUrl }) =>
                         country: ''
                     })
                 }
-                console.log("subscription response", response);
             } catch (error) {
                 setLoading(false)
                 console.error("UnExpected Server Error", error)

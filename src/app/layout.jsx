@@ -7,6 +7,7 @@ import {SearchVehicleProvider} from '../context/searchVehicleContext/searchVehic
 import {BookingProvider} from '../context/bookingContext/bookingContext'
 import WhatsappButton from '../global-components/WhatsappButton/WhatsappButton'
 import StripeProvider from '../context/stripeProvider/stripeProvider'
+import { UserDashboardProvider } from "@/context/dashContext/dashContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,10 +53,14 @@ export default function RootLayout({ children }) {
         <SearchVehicleProvider>
           <BookingProvider>
           <StripeProvider>
+          <UserDashboardProvider>
+
+          
           <Header />
           {children}
           <Footer />
           <WhatsappButton />
+          </UserDashboardProvider>
           </StripeProvider>
           </BookingProvider>
         </SearchVehicleProvider>

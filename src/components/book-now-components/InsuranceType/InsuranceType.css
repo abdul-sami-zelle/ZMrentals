@@ -189,19 +189,29 @@
   transform: rotate(45deg);
 }
 
+.flight-and-arrival-city {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    width: 100%;
+    gap: 16px;
+    height: auto;
+}
+
 .flight-number-input-contianer {
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: start;
-    width: 100%;
+    width: 70%;
     gap: 5px;
-    padding: 10px 15px;
+    /* padding: 10px 15px; */
     height: auto;
-    background-color: #f1f1f1;
-    border: 1px solid #f1f1f1;
+    background-color: #FFF;
     position: relative;
 }
+
+
 
 .flight-number-heading {
     font-size: 12px;
@@ -222,13 +232,34 @@
 .flight-number-input-box {
     display: flex;
     width: 100%;
-    height: 25px;
+    height: 40px;
+    padding: 5px 15px;
     border: none;
     outline: none;
     font-size: 15px;
     line-height: 1.2;
     font-weight: 500;
+    background-color: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    border-radius: 5px;
     color: #000;
+}
+
+.flight-number-input-box::placeholder {
+    font-weight: 400;
+}
+
+.arrival-city-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 30%;
+    gap: 5px;
+    /* padding: 10px 15px; */
+    height: auto;
+    background-color: #FFF;
+    position: relative;
 }
 
 .flight-number-reason-contianer  {

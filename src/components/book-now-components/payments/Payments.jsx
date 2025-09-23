@@ -11,8 +11,8 @@ import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 
 const Payments = ({ grandTotal, isChecked, setIsChecked, selectPaymentType, setSelectPaymentType }) => {
   const payTime = [
-    {id: 1, title: 'Pay Later', val: 'pay-leter', disc: 'Pay when you check in or pick-up.', total: `NZD ${grandTotal} NZD` },
-    {id: 2, title: 'Pay Now', val: 'pay-now', disc: 'Pay the full amount now, save time later.', total: `NZD ${grandTotal} NZD` },
+    {id: 1, title: 'Pay Later', val: 'pay-leter', disc: 'Pay when you check in or pick-up.', total: `NZ$ ${grandTotal} NZ$` },
+    {id: 2, title: 'Pay Now', val: 'pay-now', disc: 'Pay the full amount now, save time later.', total: `NZ$ ${grandTotal} NZ$` },
   ]
   const paymentTypeCards = [
     '/assets/icons/american-express.png',

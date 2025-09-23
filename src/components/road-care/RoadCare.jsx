@@ -4,6 +4,7 @@ import SecondaryButton from '../../global-components/secondary-button/SecondaryB
 import { SiVlcmediaplayer } from "react-icons/si";
 import { TbCurrencyDollarOff } from "react-icons/tb";
 import { LuCircleDollarSign } from "react-icons/lu";
+import { useRouter } from 'next/navigation';
 
 const RoadCare = () => {
     const roadCAreData = [
@@ -30,6 +31,12 @@ const RoadCare = () => {
         // },
 
     ]
+
+    const router = useRouter();
+    const handleNavigate = () => {
+        router.push('/terms-and-conditions')
+    }
+
   return (
     <div className='road-care-main-container'>
         <div className='road-care-inner-container'>
@@ -50,6 +57,7 @@ const RoadCare = () => {
             </div>
             <p className='road-care-litle-details'>With Total Road Care, we handle all the essentials so you can focus on the adventure ahead.</p>
             <SecondaryButton
+                    handleSecondaryButtonClick={handleNavigate}
                   secondaryButtonClass={'secondary-prop-class'}
                   width={'220px'}
                   height={'44px'}

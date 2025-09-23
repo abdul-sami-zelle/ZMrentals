@@ -4,8 +4,13 @@ import './ServicesHero.css'
 import Image from 'next/image'
 import PrimaryButton from '@/global-components/primary-button/PrimaryButton'
 import { GoArrowRight } from "react-icons/go";
+import { useRouter } from 'next/navigation';
 
 const ServicesHero = ({ heading, paraOne, paraTwo, buttonText, servicesHeroBg }) => {
+    const router = useRouter();
+    const handleNavigate = () => {
+        router.push('/why-zm-rentals')
+    }
     return (
         <div className='services-hero-main-container'>
             <div className='services-hero-inner-content-container'>
@@ -20,6 +25,7 @@ const ServicesHero = ({ heading, paraOne, paraTwo, buttonText, servicesHeroBg })
 
                         <div className='services-desktop-button'>
                             <PrimaryButton
+                                handleCLick={handleNavigate}
                                 primaryMainClass={'primary-button-main-class'}
                                 primaryText={buttonText}
                                 primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}

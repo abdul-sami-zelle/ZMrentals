@@ -79,7 +79,6 @@ const GetInTouch = () => {
                 setContactData({ name: "", email: "", contact: "", message: "" }); // clear form
                 setErrors({}); // clear errors
             }
-            console.log("contact response", response);
         } catch (error) {
             setLoading(false);
             console.log("Unexpected Server Error", error);
@@ -124,7 +123,7 @@ const GetInTouch = () => {
                             </span>
                             <span className='contact-type-section'>
                                 <FaLocationArrow size={20} color='var(--color-white)' />
-                                Auckland, New Zeeland
+                                Auckland, New Zealand
                             </span>
                         </div>
 

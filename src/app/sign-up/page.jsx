@@ -1,16 +1,55 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Signup.css'
 import Login from '../../components/LoginSingupComponents/Login/Login'
 import Signup from '../../components/LoginSingupComponents/Signup/Signup'
 import Link from 'next/link'
 import MainLoader from '@/loaders/MainLoader/MainLoader'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
+import { url } from '@/utils/services'
 
 const SignUp = () => {
+    const router = useRouter();
     const [showLogin, setShowLogin] = useState(true);
     const [inputShow, setInputShow] = useState()
     const [loading, setLoading] = useState(false);
+
+    const verifyUser = async () => {
+        const userToken = localStorage.getItem('userToken');
+        const verifyTokenApi = `${url}/customer/verify-token`
+        
+        if (userToken) {
+            
+            try {
+                // setLoading(true);
+                const response = await axios.get(verifyTokenApi, {
+                    headers: {
+                        "Authorization": `Bearer ${userToken}`
+                    }
+                })
+
+                if (response.status === 200) {
+                    router.push(`/user-dashboard/${response.data.customer.customer_id}`)
+                    
+                } else {
+                    localStorage.removeItem('userToken');
+                    localStorage.removeItem('userId');
+                    
+                }
+            } catch (error) {
+                console.error("UnExpected Server Error", error);
+                setLoading(false);
+            } finally {setLoading(false)}
+
+        }
+    }
+
+    useEffect(() => {
+        verifyUser()
+    } , [])
+
     return (
         <div className='login-signup-main-contianer'>
             {loading && <MainLoader />}
@@ -28,7 +67,10 @@ const SignUp = () => {
                     )}
                 </div>
                 <div className={`signup-sec-contianer ${showLogin ? 'swipe-to-content' : ''}`}>
-                    {showLogin ? (
+                    {!showLogin ? (
+                        <Signup />
+
+                    ) : (
                         <div className='login-sec-content-contianer'>
                             <img src='/assets/icons/car-icon.svg' alt='logo' />
                             <h3>Welcome Back!</h3>
@@ -39,8 +81,6 @@ const SignUp = () => {
                             </span>
                             <button onClick={() => setShowLogin(!showLogin)} className='login-and-signup-button'>Sign up</button>
                         </div>
-                    ) : (
-                        <Signup  />
                     )}
                 </div>
 

@@ -7,6 +7,9 @@ import discountBannerImage from '../../assets/home/Beyond_Rentals_image_1.jpg'
 
 
 const HappySnapGallery = () => {
+    const handleNavigate = () => {
+    router.push('/about-us')
+  }
   return (
     <>
         <div className='happy-snap-mobile-main-container'>
@@ -26,6 +29,7 @@ const HappySnapGallery = () => {
                 </p>
 
                   <SecondaryButton
+                        handleSecondaryButtonClick={handleNavigate}
                       secondaryButtonClass={'secondary-prop-class'}
                       width={'157px'}
                       height={'44px'}

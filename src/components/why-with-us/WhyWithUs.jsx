@@ -126,6 +126,10 @@ const WhyWithUs = () => {
             )
         },
     ]
+
+    const handleTrigerCall = () => {
+        window.location.href = `tel:+64221708848`;
+    }
   return (
     <div className='why-with-us-main-container'>
         <div className='why-with-us-inner-container'>
@@ -143,6 +147,7 @@ const WhyWithUs = () => {
 
             </div>
                 <SecondaryButton
+                handleSecondaryButtonClick={handleTrigerCall}
                   secondaryButtonClass={'secondary-prop-class'}
                   width={'157px'}
                   height={'44px'}

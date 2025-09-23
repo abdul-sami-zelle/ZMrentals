@@ -140,7 +140,6 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
             const api = `${url}/mail-enquiry/add`;
             try {
                 const response = await axios.post(api, qoutePayload);
-                console.log("enquiry response", response)
             } catch (error) {
                 console.log("UnExpected Server Error", error)
             }
@@ -195,10 +194,10 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                                     </p>
                                 </span>
 
-                                {Object.keys(carObj).length > 0 && (
+                                {Object.keys(carObj)?.length > 0 && (
                                     <span className='email-qoute-price-total'>
                                         
-                                        <h3>NZD {carObj?.base_rate * countDays(bookingDays?.pickup_time, bookingDays?.drop_time)}</h3>
+                                        <h3>NZ$ {carObj?.base_rate * countDays(bookingDays?.pickup_time, bookingDays?.drop_time)}</h3>
                                         <p>Total</p>
                                     </span>
                                 ) }

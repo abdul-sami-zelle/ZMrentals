@@ -50,12 +50,13 @@ const Login = ({ showInput, loading, setLoading }) => {
         const api = `${url}/customer/login`;
         try {
             const response = await axios.post(api, userDetail)
+            console.log("res", response)
             if(response.status === 200) {
-                sessionStorage.setItem('user-data', JSON.stringify(response.data.data))
-                router.push('/user-dashboard')
+                localStorage.setItem('userToken', response.data.data.token)
+                localStorage.setItem('userId', response.data.data.customer.customer_id)
+                router.push(`/user-dashboard/${response.data.data.customer.customer_id}`);
                 setLoading(false);
             }
-            console.log("login response", response)
         } catch (error) {
             setLoading(false);
             return { success: false, message: error.response?.data?.message || "Login failed" };

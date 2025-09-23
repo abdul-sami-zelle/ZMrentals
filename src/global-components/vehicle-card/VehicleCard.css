@@ -200,7 +200,7 @@
 
 .sold-button {
     display: none;
-    width: 80px;
+    width: 140px;
     align-items: center;
     justify-content: center;
     height: max-content;
@@ -208,13 +208,13 @@
     font-size: 12px;
     line-height: 1.2;
     color: #FFF;
-    font-weight: 400;
-    background-color: var(--primary-color);
+    font-weight: 500;
+    background-color: #D10000;
     /* background-image: linear-gradient(to right top, #113b84, #0e3f92, #0c43a1, #0c47af, #0f4bbe); */
     color: var(--color-white);
     border-radius: 25px;
     cursor: not-allowed;
-    opacity: 0.4;
+    opacity: 1;
     transition: all 0.3s ease-in-out;
 }
 

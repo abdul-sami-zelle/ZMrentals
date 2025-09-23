@@ -233,18 +233,18 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                             {vehicleDetails.available !== 0 && (
                                 <div className='car-detail-modal-footer-after-vehicle-searched-total-and-per-day'>
                                     <span>
-                                        <h3>NZD {vehicleDetails?.base_rate}</h3><p>/day</p>
+                                        <h3>NZ$ {vehicleDetails?.base_rate}</h3><p>/day</p>
                                     </span>
 
                                     <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 'max-content', gap: '5px' }}>
                                         {/* <h3>${vehicleDetails?.base_rate * countDays(bookingDays.pickup_time, bookingDays.drop_time)}</h3> */}
                                         {
                                             vehicleDetails.duration_discount === 0 ? (
-                                                <h3>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
+                                                <h3>NZ$ {formatPrice(vehicleDetails.sub_total)}</h3>
                                             ) : (
                                                 <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 'max-content', gap: '10px',}}>
-                                                    <del >NZD {formatPrice(vehicleDetails.was_price)}</del>
-                                                    <h3>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
+                                                    <del >NZ$ {formatPrice(vehicleDetails.was_price)}</del>
+                                                    <h3>NZ$ {formatPrice(vehicleDetails.sub_total)}</h3>
                                                 </span>
                                             )
                                         }
@@ -268,21 +268,20 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                                 vehicleDetails.available !== 0 && (
                                     <div className='mob-view-car-price'>
                                         <span>
-                                            <h3>NZD {vehicleDetails?.base_rate}</h3>
+                                            <h3>NZ$ {vehicleDetails?.base_rate}</h3>
                                             <p>/day</p>
                                         </span>
 
                                         {
                                             vehicleDetails.duration_discount === 0 ? (
                                                 <span>
-                                                    {/* <del>NZD {formatPrice(vehicleDetails.was_price)}</del> */}
-                                                    <h3 style={{marginRight: '5px'}}>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
+                                                    <h3 style={{marginRight: '5px'}}>NZ$ {formatPrice(vehicleDetails.sub_total)}</h3>
                                                     <p>Total</p>
                                                 </span>
                                             ) : (
                                                 <span>
-                                                    <del style={{marginRight: '5px'}}>NZD {formatPrice(vehicleDetails.was_price)}</del>
-                                                    <h3 style={{marginRight: '5px'}}>NZD {formatPrice(vehicleDetails.sub_total)}</h3>
+                                                    <del style={{marginRight: '5px'}}>NZ$ {formatPrice(vehicleDetails.was_price)}</del>
+                                                    <h3 style={{marginRight: '5px'}}>NZ$ {formatPrice(vehicleDetails.sub_total)}</h3>
                                                     <p>Total</p>
                                                 </span>
                                             )
