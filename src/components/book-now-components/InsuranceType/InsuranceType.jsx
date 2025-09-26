@@ -101,7 +101,7 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
     setFlightReason((prev) => prev === true ? false : true)
   }
 
-  
+  console.log("insurances", insurances)
 
   return (
 
@@ -126,8 +126,16 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
                 {item.name}
               </label>
 
-              <p>NZ$ {item.excess}</p>
-              <p>NZ$ {item.bond}</p>
+              <span style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width : '100%'}}>
+                <p>Excess</p>
+                <p>NZ$ {item.excess}</p>
+              </span>
+              <span style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width : '100%'}}>
+                <p>Bond</p>
+                <p>NZ$ {item.bond}</p>
+              </span>
+              
+              
               <p className='insurance-bottom-text'>{parseInt(item.rate) === 0 ? 'Free' : `NZ$ ${parseInt(item.rate)}/Day`}</p>
 
             </div>

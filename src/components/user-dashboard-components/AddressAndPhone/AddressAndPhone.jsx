@@ -2,14 +2,21 @@ import React, { useEffect, useState } from 'react'
 import './AddressAndPhone.css'
 import { IoIosLock, IoMdArrowDropdown } from "react-icons/io";
 import { url } from '@/utils/services';
+import axios from 'axios';
 
 const AddressAndPhone = () => {
   const [showCountries, setShowCountries] = useState(false);
   const [countriesList, setCountriesList] = useState([]);
   const [selectedCountryItem, setSelectedCountryItem] = useState('')
-  // const [addressAndPhon, setAddressAndPhone] = useState({
-
-  // })
+  const [addressAndPhon, setAddressAndPhone] = useState({
+    street_no: "",
+    suburb: "",
+    city: "",
+    post_code: "",
+    country: "",
+    phone: "",
+    alternate_phone: ""
+  })
 
 
   useEffect(() => {
@@ -43,11 +50,39 @@ const AddressAndPhone = () => {
   const handleSelectCountry = (item) => {
     setSelectedCountryItem(item.country)
     setShowCountries(false);
+    setAddressAndPhone((prev) => ({
+      ...prev,
+      country: item.country
+    }))
   }
 
-  // const handleGetAddressAndPhone = async () => {
-  //   const api = `${url}/customer/address`
-  // }
+  const handleSetAddressAndPhoneValue = (event) => {
+    const {name, value} = event.target;
+
+    setAddressAndPhone((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleUpdateAddressAndPhone = async () => {
+    const userToken = localStorage.getItem('userToken');
+    const api = `${url}/customer/address`
+
+    try {
+      const response = await axios.post(api, addressAndPhon, {
+        headers: {
+          "Authorization": `Bearer ${userToken}`
+        }
+      })
+
+      console.log("address response", response);
+    } catch (error) {
+      console.error("UnExpected Server Error", error);
+    }
+  }
+
+  // useEffect(() => {handleGetAddressAndPhone()}, [])
 
 
   return (
@@ -60,25 +95,25 @@ const AddressAndPhone = () => {
 
             <div className='two-input-row'>
               <label>
-                Street number & name 
-                <input type='text' />
+                Street number & name
+                <input type='text' name='street_no' value={addressAndPhon.street_no} onChange={handleSetAddressAndPhoneValue} />
               </label>
 
               <label>
-                Suburb 
-                <input type='text' />
+                Suburb
+                <input type='text' name='suburb' value={addressAndPhon.suburb} onChange={handleSetAddressAndPhoneValue} />
               </label>
             </div>
 
-              <div className='two-input-row'>
+            <div className='two-input-row'>
               <label>
-                City/town 
-                <input type='text' />
+                City/town
+                <input type='text' name='city' value={addressAndPhon.city} onChange={handleSetAddressAndPhoneValue}  />
               </label>
 
               <label>
                 Post code
-                <input type='text' />
+                <input type='text' name='post_code' value={addressAndPhon.post_code} onChange={handleSetAddressAndPhoneValue} />
               </label>
             </div>
 
@@ -91,8 +126,8 @@ const AddressAndPhone = () => {
 
               <div className={`country-dropdown-list-container ${showCountries ? 'show-countries-list' : ''}`}>
                 {countriesList.map((item, index) => (
-                  <p 
-                    key={index} 
+                  <p
+                    key={index}
                     className={`countries-list-item ${selectedCountryItem === item.country ? 'active-country-list-item' : ''}`}
                     onClick={() => handleSelectCountry(item)}
                   >
@@ -111,7 +146,7 @@ const AddressAndPhone = () => {
 
           <div className='phone-input'>
             <p>Phone number</p>
-            <input type='text' />
+            <input type='text' name='phone' value={addressAndPhon.phone} onChange={handleSetAddressAndPhoneValue} />
           </div>
         </div>
 
@@ -119,8 +154,8 @@ const AddressAndPhone = () => {
           <IoIosLock size={20} color='var(--primary-color)' />
           Your personal information is secure and encrypted
         </span>
-        
-        <button className='address-and-phone-save-button'>Save Address & Phone</button>
+
+        <button className='address-and-phone-save-button' onClick={handleUpdateAddressAndPhone}>Save Address & Phone</button>
       </div>
     </div>
   )

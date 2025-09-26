@@ -34,8 +34,6 @@ const HirerDetails = () => {
   const [findUs, setFindUs] = useState(false);
   const [countryList, setCountryList] = useState([]);
 
-
-
   useEffect(() => {
     const handleGetAllCountries = async () => {
       try {
@@ -65,6 +63,7 @@ const HirerDetails = () => {
   }, []);
 
   const [showCountryCodeList, setShowCountryCodeList] = useState(false);
+  const [showLocalCountryCodeList, setShowLocalCountryCodeList] = useState(false);
 
 
   useEffect(() => {
@@ -73,17 +72,9 @@ const HirerDetails = () => {
       (c) => c.country.toLowerCase() === defaultCountry.toLowerCase()
     );
 
-    
-
     if (countryObj) {
       setCountryCode(countryObj.code)
-      // setBookingPayload((prev) => ({
-      //   ...prev,
-      //   user: {
-      //     ...prev.user,
-      //     country: countryObj.country
-      //   }
-      // }) )
+
     }
   }, [countryList, countryCode, bookingPayload]);
 
@@ -152,7 +143,7 @@ const HirerDetails = () => {
           }
         }
 
-        
+
 
         return {
           ...prev,
@@ -163,6 +154,34 @@ const HirerDetails = () => {
           },
         };
       }
+
+      // 📞 Local phone (always prepend +64)
+    if (name === "local_phone") {
+      // Keep only digits
+      newValue = value.replace(/\D/g, "");
+
+      // Validate length
+      if (newValue.length < 8) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          local_phone: "Invalid local phone number",
+        }));
+      } else {
+        setErrors((prevErrors) => {
+          const newErrors = { ...prevErrors };
+          delete newErrors.local_phone;
+          return newErrors;
+        });
+      }
+
+      return {
+        ...prev,
+        user: {
+          ...prev.user,
+          [name]: newValue,
+        },
+      };
+    }
 
       // Default required check for other fields
       setErrors((prevErrors) => {
@@ -185,11 +204,7 @@ const HirerDetails = () => {
     });
   };
 
-
-
-
-
-
+  useEffect(() => {console.log("local phone added", bookingPayload)}, [bookingPayload])
 
   const handleSelectLivingCountry = (item) => {
     setBookingPayload((prev) => ({
@@ -215,7 +230,7 @@ const HirerDetails = () => {
     setParentCountryShow(false);
   };
 
-  const driverAgeList = ['18', '19', '20', '21', '22', '23', '24', '25+']
+  const driverAgeList = ['21', '22', '23', '24', '25+']
 
   const handleSellectDriverAge = (item) => {
     setBookingPayload((prev) => ({
@@ -344,7 +359,7 @@ const HirerDetails = () => {
           />
         </label>
 
-        <label style={{ border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
+        <label style={{   border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
           Phone Number
 
           <div className='hirer-phone-with-country-code'>
@@ -369,20 +384,46 @@ const HirerDetails = () => {
         </label>
       </div>
 
+      <div className='find-us-and-local-phone-number'>
 
+        
 
-      <div className='hirer-parent-country' ref={foundUsRef} style={{ border: errors.how_find_us ? '1px solid red' : '1px solid transparent' }}>
-        <p>how did you find us?</p>
-        <span onClick={() => setFindUs((prevState) => prevState === true ? false : true)}>
-          <h3>{bookingPayload.user.how_find_us.length > 0 ? bookingPayload.user.how_find_us : 'Please Select'}</h3>
-          <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
-        </span>
-        <div className={`parent-country-list ${findUs ? 'show-parent-country-list' : ''}`}>
-          {whereFindUs.map((item, index) => (
-            <p key={index} onClick={() => handleFoundTell(item)}>{item}</p>
-          ))}
+        <label className='local-phone-number' style={{width: '60%', border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
+          Local Phone Number
+
+          <div className='hirer-local-phone-with-country-code'>
+            <div className='local-phone-country-code-dropdown'>
+              <p>+64</p>
+            </div>
+            <input
+              type='text'
+              name='local_phone'
+              value={bookingPayload.user.local_phone}
+              onChange={handleHirerDetailsAdd}
+
+            />
+
+          </div>
+        </label>
+
+        <div className='hirer-parent-country' ref={foundUsRef} style={{width: '40%',  border: errors.how_find_us ? '1px solid red' : '1px solid transparent' }}>
+          <p>how did you find us?</p>
+          <span onClick={() => setFindUs((prevState) => prevState === true ? false : true)}>
+            <h3>{bookingPayload.user.how_find_us.length > 0 ? bookingPayload.user.how_find_us : 'Please Select'}</h3>
+            <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
+          </span>
+          <div className={`parent-country-list ${findUs ? 'show-parent-country-list' : ''}`}>
+            {whereFindUs.map((item, index) => (
+              <p key={index} onClick={() => handleFoundTell(item)}>{item}</p>
+            ))}
+          </div>
         </div>
+
+
+
       </div>
+
+
 
       <div className='travel-reason-container'>
         <p>Travel Reason</p>

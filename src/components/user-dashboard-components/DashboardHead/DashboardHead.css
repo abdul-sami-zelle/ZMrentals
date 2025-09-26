@@ -33,7 +33,36 @@
     background-color: var(--primary-color);
     color: #FFF;
 }
+
 .dash-tab-name.select-selected-name {
     background-color: var(--primary-color);
     color: #FFF;
+}
+
+@media only screen and (max-width: 767px) {
+    .dash-head-main-contianer {
+        width: 100%;
+        height: max-content;
+        padding: 5px 15px;
+    }
+
+    .dash-head-inner-container {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        overflow-y: hidden;
+        overflow-x: auto;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .dash-head-inner-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    .dash-tab-name {
+        font-size: 13px;
+        display: flex;
+        flex-shrink: 0;
+    }
 }

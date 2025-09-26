@@ -19,6 +19,7 @@ import EmailEnquiryModal from '@/modals/EmailEnquiryModal/EmailEnquiryModal';
 import MainLoader from '@/loaders/MainLoader/MainLoader';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
+import { disconnect } from 'process';
 
 const BookNowClient = () => {
   const stripe = useStripe();
@@ -42,7 +43,7 @@ const BookNowClient = () => {
     setCountryCode,
   } = useBookingContext()
 
-  const { setSearchVehiclePayload, setIsVehicleSearched, setSearchedVehicles, setPickupCity, setDropupCity, setPickupTime, setDropupTime, setShowBookingButton  } = useSearchVehicle()
+  const { setSearchVehiclePayload, setIsVehicleSearched, setSearchedVehicles, setPickupCity, setDropupCity, setPickupTime, setDropupTime, setShowBookingButton } = useSearchVehicle()
   const searchParam = useSearchParams();
   const router = useRouter();
   const step = parseInt(searchParam.get('step')) || 1;
@@ -160,7 +161,8 @@ const BookNowClient = () => {
       ...bookingPayload,
       user: {
         ...bookingPayload.user,
-        phone: `${countryCode}${bookingPayload.user.phone}`
+        phone: `${countryCode}${bookingPayload.user.phone}`,
+        local_phone: `+64${bookingPayload.user.local_phone}`
       }
     };
 
@@ -256,7 +258,8 @@ const BookNowClient = () => {
       ...bookingPayload,
       user: {
         ...bookingPayload.user,
-        phone: `${countryCode}${bookingPayload.user.phone}`
+        phone: `${countryCode}${bookingPayload.user.phone}`,
+        local_phone: `+64${bookingPayload.user.local_phone}`
       }
     };
 
@@ -658,6 +661,8 @@ const BookNowClient = () => {
     return (numPrice * (discount / 100)).toFixed(2); // discount amount
   };
 
+  console.log("discount value", vehicleSesionData)
+
 
   return (
     <div className="book-now-page-main-container">
@@ -710,7 +715,7 @@ const BookNowClient = () => {
                   />
                     : selectedTabIndex === 2 ? <HirerDetails />
                       : <Payments
-                        grandTotal={applyDiscount(getGrandTotal(), userDiscount)}
+                        grandTotal={getGrandTotal()}
                         isChecked={isChecked}
                         setIsChecked={setIsChecked}
                         selectPaymentType={selectPaymentType}
@@ -770,7 +775,7 @@ const BookNowClient = () => {
 
 
                   <div className='booking-prices-details-section'>
-                    <span>
+                    <span style={{display: vehicleSesionData.discounts.percent === 0 ? 'none' : 'flex'}}>
                       <p>{vehicleSesionData?.discounts?.name}</p>
                       <h3>NZ$ {getDiscountAmount(vehicleSesionData?.sub_total, vehicleSesionData?.discounts?.percent)}</h3>
                     </span>
@@ -783,12 +788,12 @@ const BookNowClient = () => {
 
                     {Object.keys(insuranceSeleted).length > 0 && (
                       <span>
-                        <p>Insurance</p>
+                        <p>{insuranceSeleted?.name}</p>
                         {
                           parseFloat(insuranceSeleted?.rate) === 0 ? (
                             <h3>Free</h3>
                           ) : (
-                            <h3>{getInsurancesTotal()}</h3>
+                            <h3>NZ$ {getInsurancesTotal()}</h3>
                           )
                         }
 
@@ -796,12 +801,22 @@ const BookNowClient = () => {
                     )}
 
 
-                    {bookingPayload?.booking?.extras && bookingPayload?.booking?.extras.map((item, index) => (
-                      <span key={index}>
-                        <p> {bookingVehicleData?.extras?.find(extra => extra.id === item?.extras_option_id)?.name} <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' /></p>
-                        <h3>NZ$ {bookingVehicleData?.extras?.find(extra => extra.id === item.extras_option_id)?.rate * item.quantity * totalDays}</h3>
-                      </span>
-                    ))}
+                    {bookingPayload?.booking?.extras && bookingPayload?.booking?.extras.map((item, index) => {
+                      const extra = bookingVehicleData?.extras?.find(extra => extra.id === item?.extras_option_id);
+                      const rate = extra?.rate * item.quantity * totalDays;
+
+                      return (
+                        <span key={index}>
+                          <p>
+                            {extra?.name}
+                            <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' />
+                          </p>
+                          <h3>
+                            NZ$ {rate ? rate.toFixed(2) : "0.00"}
+                          </h3>
+                        </span>
+                      );
+                    })}
 
                     {
                       vehicleSesionData?.off_hour_charges !== 0 && (

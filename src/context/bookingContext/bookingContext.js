@@ -30,6 +30,7 @@ export const BookingProvider = ({ children }) => {
             lastname: "",
             email: "",
             phone: "",
+            local_phone: "",
             country: "New Zealand",
             driver_age: '24',
             how_find_us: "",

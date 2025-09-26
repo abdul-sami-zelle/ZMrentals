@@ -147,3 +147,19 @@
     line-height: 15px;
     font-weight: 500;
 }
+
+@media only screen and (max-width: 767px) {
+    .dash-profille-tab-main-heading {
+        font-size: 25px;
+    }
+    .first-and-last-name {
+        flex-direction: column;
+    }
+
+    .first-and-last-name > label {
+        width: 100%;
+    }
+    .protected-data-message {
+        font-size: 10px !important;
+    }
+}

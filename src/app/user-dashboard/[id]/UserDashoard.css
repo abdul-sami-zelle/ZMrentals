@@ -28,3 +28,9 @@
     border-radius: 15px;
     min-height: 450px;
 }
+
+@media only screen and (max-width: 767px) {
+    .user-dashboard-width-controller {
+        padding: 20px 10px;
+    }
+}

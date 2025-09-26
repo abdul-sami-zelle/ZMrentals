@@ -104,14 +104,6 @@ const Locations = () => {
         locationPara={'ZM the distance with an affordable car rental'}
       />
 
-        {/* <div className='page-main-heading-container'>
-          <div className='booking-form-inner-shadow-container'>
-            <h3 className='section-main-heading'>Car Rental Auckland</h3>
-            <p>ZM the distance with an affordable car rental</p>
-            <BookingForm bgColor={'#f7f7f7'} boxShadow={`none`} textColor={'var(--primary-color)'} primaryButtonText={'Find My Car'} />
-          </div>
-        </div> */}
-
       <div className='location-page-location-section-container'>
         <div className='location-page-location-section-width-controller'>
         <LocationDetails />

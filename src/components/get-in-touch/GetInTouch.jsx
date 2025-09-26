@@ -19,7 +19,7 @@ const GetInTouch = () => {
     const addresses = [
         {
             city: 'Auckland City',
-            address: `Address: 11 peninsula road Mangere Auckland 2022`,
+            address: `Aero Auckland Airport Hotel 190 Kirkbride Road, Māngere, Auckland 2022`,
             phone: `+64221708848`,
             openingHours: `Operating Hours: 9am - 5pm`,
             googleLocation: 'Google Location'
@@ -115,7 +115,7 @@ const GetInTouch = () => {
                             </div>
                             <span className='contact-type-section'>
                                 <FaPhone size={20} color='var(--color-white)' />
-                                <a href="tel:+64221708848">+64 21 467 261</a>
+                                <a href="tel:+64221708848">+64221708848</a>
                             </span>
                             <span className='contact-type-section'>
                                 <FaEnvelope size={20} color='var(--color-white)' />
@@ -123,7 +123,7 @@ const GetInTouch = () => {
                             </span>
                             <span className='contact-type-section'>
                                 <FaLocationArrow size={20} color='var(--color-white)' />
-                                Auckland, New Zealand
+                                Aero Auckland Airport Hotel 190 Kirkbride Road, Māngere, Auckland 2022
                             </span>
                         </div>
 
@@ -179,7 +179,7 @@ const GetInTouch = () => {
                     <div className='mobile-view-contact-details'>
                         <span>
                             <h3>Phone</h3>
-                            <a href="tel:+64221708848">+64 21 467 261</a>
+                            <a href="tel:+64221708848">+64221708848</a>
                         </span>
                         <span>
                             <h3>Email</h3>
@@ -187,7 +187,7 @@ const GetInTouch = () => {
                         </span>
                         <span>
                             <h3>Address</h3>
-                            Auckland City
+                            Aero Auckland Airport Hotel 190 Kirkbride Road, Māngere, Auckland 2022
                         </span>
                     </div>
 

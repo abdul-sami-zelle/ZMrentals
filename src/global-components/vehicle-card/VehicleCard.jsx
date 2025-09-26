@@ -132,7 +132,7 @@ const VehicleCard = (
                 {vehicleData.duration_discount !== 0 ? (
                   <span> <del style={{marginRight: '10px'}}>NZ$ {formatPrice(vehicleData?.was_price)}</del>  <span className='total-price-after-discount'> <h3>NZ$ {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
                 ) : (
-                  <span> <span className='total-price-after-discount'> <h3>NZ$ {formatPrice(vehicleData.sub_total)}</h3> <p>Total</p> </span> </span>
+                  <span> <span className='total-price-after-discount'> <h3>NZ$ {formatPrice(vehicleData.sub_total)}</h3> </span> </span>
                 )}
               </div>
 

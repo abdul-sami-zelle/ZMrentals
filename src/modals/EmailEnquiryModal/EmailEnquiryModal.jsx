@@ -194,7 +194,7 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                                     </p>
                                 </span>
 
-                                {Object.keys(carObj)?.length > 0 && (
+                                {carObj && Object.keys(carObj)?.length > 0 && (
                                     <span className='email-qoute-price-total'>
                                         
                                         <h3>NZ$ {carObj?.base_rate * countDays(bookingDays?.pickup_time, bookingDays?.drop_time)}</h3>
@@ -203,9 +203,9 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                                 ) }
                             </span>
 
-                            <div className='email-qoute-ask-for-qoute-right'>
+                            {carObj && (<div className='email-qoute-ask-for-qoute-right'>
                                 <img src={url + carObj.image} alt='img' />
-                            </div>
+                            </div>)}
                         </div>
                     ) : (
                         <h3 className='email-enquiry-modal-car-name'>{carObj?.name}</h3>

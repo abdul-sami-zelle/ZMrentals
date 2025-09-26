@@ -194,7 +194,7 @@ const PrivacyAndPolicy = () => {
             <p className='global-content-style'>165 Beach Road, Auckland City,</p>
             <p className='global-content-style'>Auckland, 1010</p>
             <p className='global-content-style'>Email: <Link href={'mailto:info@zmrentals.co.nz'} className='anchor-inside-para'> info@zmrentals.co.nz.</Link></p>
-            <p className='global-content-style'>+64 21 467 261</p>
+            <p className='global-content-style'>+64221708848</p>
           </span>
 
           <p className='global-content-style'>Contact requires identity verification and specific Personal Information access requirements.</p>

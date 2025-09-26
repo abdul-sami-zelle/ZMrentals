@@ -1,12 +1,33 @@
 import React, { useEffect, useState } from 'react'
 import './LicenceTab.css'
 import { IoIosLock, IoMdArrowDropdown } from "react-icons/io";
+import { url } from '@/utils/services';
+import axios from 'axios';
+import MainLoader from '@/loaders/MainLoader/MainLoader';
 
 const LisenceTab = () => {
 
   const [showCountries, setShowCountries] = useState(false);
   const [countriesList, setCountriesList] = useState([]);
   const [selectedCountryItem, setSelectedCountryItem] = useState('')
+  const [loading, setLoading] = useState(false);
+  const [licenceDetails, setLicenceDetails] = useState({
+    name_on_license: '',
+    dob: '',
+    license_number: '',
+    expiry_date: '',
+    issue_country: ''
+  })
+
+  const handleSetLicenceValues = (event) => {
+    const {name, value} = event.target;
+
+    setLicenceDetails((prev) => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
   useEffect(() => {
     const handleGetAllCountries = async () => {
       try {
@@ -35,13 +56,41 @@ const LisenceTab = () => {
     handleGetAllCountries();
   }, []);
 
+
+
   const handleSelectCountry = (item) => {
     setSelectedCountryItem(item.country)
     setShowCountries(false);
+    setLicenceDetails((prev) => ({
+      ...prev,
+      issue_country: item.country
+    }))
+  }
+
+  const handleUpdateLicenceDetails = async () => {
+    const userToken = localStorage.getItem('userToken');
+
+    const api = `${url}/customer/license`;
+    setLoading(true)
+    try {
+      const response = await axios.post(api, licenceDetails, {
+        headers: {
+          "Authorization": `Bearer ${userToken}`
+        }
+      })
+
+      console.log("licence update response", response)
+    } catch (error) {
+      setLoading(false)
+      console.error("UnExpected Server Error", error);
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <div className='driver-licence-main-contianer'>
+      {loading && <MainLoader />}
       <div className='driver-licence-width-controller'>
         <h3 className="driver-licence-main-heading">Driver Licence</h3>
 
@@ -49,21 +98,21 @@ const LisenceTab = () => {
           <div className='driver-licence-dual-inputs'>
             <label>
               Name on licence
-              <input type='text' />
+              <input type='text' name='name_on_license' value={licenceDetails.name_on_license} onChange={handleSetLicenceValues} />
             </label>
             <label>
               Date of birth
-              <input type='text' placeholder='DD-MM-YY' />
+              <input type='text' placeholder='YY-MM-DD' name='dob' value={licenceDetails.dob} onChange={handleSetLicenceValues} />
             </label>
           </div>
           <div className='driver-licence-dual-inputs'>
             <label>
               Licence number
-              <input type='text' />
+              <input type='text' name='license_number' value={licenceDetails.license_number} onChange={handleSetLicenceValues} />
             </label>
             <label>
               Licence expiry date
-              <input type='text' placeholder='DD-MM-YY' />
+              <input type='text' placeholder='YY-MM-DD' name='expiry_date' value={licenceDetails.expiry_date} onChange={handleSetLicenceValues} />
             </label>
           </div>
 
@@ -95,7 +144,7 @@ const LisenceTab = () => {
           Your personal information is secure and encrypted
         </span>
 
-        <button className='address-and-phone-save-button'>Save driver licence</button>
+        <button className='address-and-phone-save-button' onClick={handleUpdateLicenceDetails}>Save driver licence</button>
       </div>
     </div>
   )
