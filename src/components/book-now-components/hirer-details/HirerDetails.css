@@ -351,7 +351,7 @@
     visibility: visible;
 }
 
-.parent-country-list>p {
+.living-country-item {
     width: 100%;
     padding: 7px;
     font-size: var(--font-body-md);
@@ -361,9 +361,20 @@
     cursor: pointer;
 }
 
-.parent-country-list>p:hover {
-    background-color: rgba(255, 139, 64, 0.1);
+.living-country-item:hover {
+    background-color: #961502;
+    color: #FFF;
 
+}
+
+.living-country-item.active-country-item {
+    background-color: #961502;
+    color: #FFF !important;
+}
+
+.living-country-item.highlighted {
+    background-color: #961502;
+    color: #FFF !important;
 }
 
 .hirer-age-list {
@@ -372,14 +383,15 @@
     flex-direction: column;
     width: 100%;
     height: 0;
-    visibility: hidden;
-    background-color: #FFFFFF;
+    max-height: 0;
+    /* visibility: hidden; */
+    background-color: transparent;
     z-index: 999;
     top: 100%;
     left: 0;
     overflow-x: hidden;
     overflow-y: auto;
-    border: 1px solid var(--primary-color);
+    border: 1px solid transparent;
     transition: all 0.3s ease-in-out;
 }
 
@@ -388,11 +400,14 @@
 }
 
 .hirer-age-list.show-hirer-age-list {
-    height: 180px;
-    visibility: visible;
+    height: auto;
+    max-height: 150px;
+    background-color: #FFFFFF;
+    border: 1px solid var(--primary-color);
+    /* visibility: visible; */
 }
 
-.hirer-age-list>p {
+.hirer-age-list-item {
     width: 100%;
     padding: 7px;
     font-size: var(--font-body-md);
@@ -402,9 +417,15 @@
     cursor: pointer;
 }
 
-.hirer-age-list>p:hover {
-    background-color: rgba(255, 139, 64, 0.1);
+.hirer-age-list-item:hover {
+    background-color: #961502;
+    color: #FFF;
 
+}
+
+.hirer-age-list-item.active-hirer-age {
+    background-color: #961502;
+    color: #FFF;
 }
 
 .hirer-input-label {

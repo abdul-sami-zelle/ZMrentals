@@ -20,8 +20,13 @@ import MainLoader from '@/loaders/MainLoader/MainLoader';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleContext';
 import { disconnect } from 'process';
+import countries from "i18n-iso-countries";
+import en from "i18n-iso-countries/langs/en.json";
+
 
 const BookNowClient = () => {
+
+  countries.registerLocale(en);
   const stripe = useStripe();
   const elements = useElements();
   const url = `https://zm.skyhub.pk`
@@ -43,7 +48,16 @@ const BookNowClient = () => {
     setCountryCode,
   } = useBookingContext()
 
-  const { setSearchVehiclePayload, setIsVehicleSearched, setSearchedVehicles, setPickupCity, setDropupCity, setPickupTime, setDropupTime, setShowBookingButton } = useSearchVehicle()
+  const {
+    setSearchVehiclePayload,
+    setIsVehicleSearched,
+    setSearchedVehicles,
+    setPickupCity,
+    setDropupCity,
+    setPickupTime,
+    setDropupTime,
+    setShowBookingButton
+  } = useSearchVehicle()
   const searchParam = useSearchParams();
   const router = useRouter();
   const step = parseInt(searchParam.get('step')) || 1;
@@ -306,9 +320,18 @@ const BookNowClient = () => {
           card: elements.getElement(CardElement),
           billing_details: {
             name: `${bookingPayload.user.firstname || 'Guest'} ${bookingPayload.user.lastname || ''}`.trim(),
+            // country: bookingPayload?.user?.country
+            address: {
+              country: countries.getAlpha2Code(bookingPayload?.user?.country, "en"), // ✅ CORRECT
+            },
           },
         },
+        
       });
+
+      console.log("payment methoss", result)
+
+      
 
       // 4️⃣ Handle payment result
       if (result.error) {
@@ -472,7 +495,8 @@ const BookNowClient = () => {
   useEffect(() => {
 
     const pickDrop = JSON.parse(sessionStorage.getItem('pick_and_drop_details'));
-    setTotalDays(getTotalDays(pickDrop?.pickup_time, pickDrop?.drop_time))
+    // setTotalDays(getTotalDays(pickDrop?.pickup_time, pickDrop?.drop_time))
+    setTotalDays(vehicleSesionData?.daily_rates?.length)
     setPickDropLocation(pickDrop)
     if (pickDrop.pickup_location === null && pickDrop.drop_location === null) {
       sessionStorage.removeItem('pick_and_drop_details');
@@ -635,7 +659,6 @@ const BookNowClient = () => {
     return total.toFixed(2); // format to 2 decimal places if needed
   };
 
-
   const [emailModal, setEmailModal] = useState(false);
   const [modalType, setModalType] = useState('')
   const handleOpenEmailEnquiry = (type) => {
@@ -775,7 +798,7 @@ const BookNowClient = () => {
 
 
                   <div className='booking-prices-details-section'>
-                    <span style={{display: vehicleSesionData.discounts.percent === 0 ? 'none' : 'flex'}}>
+                    <span style={{ display: vehicleSesionData.discounts.percent === 0 ? 'none' : 'flex' }}>
                       <p>{vehicleSesionData?.discounts?.name}</p>
                       <h3>NZ$ {getDiscountAmount(vehicleSesionData?.sub_total, vehicleSesionData?.discounts?.percent)}</h3>
                     </span>

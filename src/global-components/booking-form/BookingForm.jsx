@@ -290,6 +290,7 @@ const BookingForm = (
     useCalendarNavigation(pickupCalanderRef, pickupCalender, (el) => {
         if (pickedDate) handlePickupDateChange(pickedDate);
     });
+    
     useCalendarNavigation(dropCalandrRef, dropCalender, (el) => {
          if (pickedDate) handleDropDateChange(pickedDate);
     });

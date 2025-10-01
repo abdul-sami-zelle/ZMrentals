@@ -55,6 +55,7 @@ const Payments = ({ grandTotal, isChecked, setIsChecked, selectPaymentType, setS
                 base: { fontSize: '16px', color: '#000' },
                 invalid: { color: 'red' },
               },
+              hidePostalCode: true,
             }}
           />
         </div>

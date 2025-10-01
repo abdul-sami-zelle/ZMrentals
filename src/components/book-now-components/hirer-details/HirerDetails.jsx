@@ -4,9 +4,14 @@ import './HirerDetails.css'
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import { useOutsideClick } from '../../../utils/DetectClickOutside'
+import useDropdownNavigation from '@/utils/keyPress';
+import useDropdownNavigationWithSearch from '@/utils/keyPress';
+
 // import { MdOutlineArrowDropDown } from "react-icons/md";
 
 const HirerDetails = () => {
+
+  
 
   // const countryList = [
   //   'Pakistan',
@@ -33,12 +38,17 @@ const HirerDetails = () => {
   const [driverAgeShow, setDriverAgeShow] = useState(false);
   const [findUs, setFindUs] = useState(false);
   const [countryList, setCountryList] = useState([]);
+  // const [highlightedIndex, setHighlightedIndex] = useState(null);
+  // const [searchChar, setSearchChar] = useState("");
+  // const [charIndex, setCharIndex] = useState(0);
 
   useEffect(() => {
     const handleGetAllCountries = async () => {
       try {
         const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
         const data = await res.json();
+
+        console.log("country raw data", data);
 
 
         const formatted = data
@@ -53,6 +63,8 @@ const HirerDetails = () => {
           // sort alphabetically by country name
           .sort((a, b) => a.country.localeCompare(b.country));
 
+          console.log("country formates data", formatted)
+
         setCountryList(formatted);
       } catch (err) {
         console.error("Error fetching countries:", err);
@@ -61,6 +73,40 @@ const HirerDetails = () => {
 
     handleGetAllCountries();
   }, []);
+
+  // useEffect(() => {
+  //   if (!parentCountryShow) return;
+
+  //   const handleKeyPress = (e) => {
+  //     if (!/^[a-z]$/i.test(e.key)) return; // only letters
+
+  //     const char = e.key.toLowerCase();
+
+  //     if (searchChar === char) {
+  //       setCharIndex((prev) => prev + 1);   // ✅ correct setter
+  //     } else {
+  //       setSearchChar(char);
+  //       setCharIndex(0);
+  //     }
+
+  //     const matches = countryList
+  //       .map((c, i) => ({ ...c, index: i }))
+  //       .filter((c) => c.country.toLowerCase().startsWith(char));
+
+  //     if (matches.length > 0) {
+  //       const match = matches[charIndex % matches.length]; // cycle
+  //       setHighlightedIndex(match.index);
+
+  //       // auto scroll into view
+  //       document.getElementById(`country-item-${match.index}`)?.scrollIntoView({
+  //         block: "nearest",
+  //       });
+  //     }
+  //   };
+
+  //   window.addEventListener("keydown", handleKeyPress);
+  //   return () => window.removeEventListener("keydown", handleKeyPress);
+  // }, [parentCountryShow, searchChar, charIndex, countryList]);
 
   const [showCountryCodeList, setShowCountryCodeList] = useState(false);
   const [showLocalCountryCodeList, setShowLocalCountryCodeList] = useState(false);
@@ -156,32 +202,32 @@ const HirerDetails = () => {
       }
 
       // 📞 Local phone (always prepend +64)
-    if (name === "local_phone") {
-      // Keep only digits
-      newValue = value.replace(/\D/g, "");
+      if (name === "local_phone") {
+        // Keep only digits
+        newValue = value.replace(/\D/g, "");
 
-      // Validate length
-      if (newValue.length < 8) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          local_phone: "Invalid local phone number",
-        }));
-      } else {
-        setErrors((prevErrors) => {
-          const newErrors = { ...prevErrors };
-          delete newErrors.local_phone;
-          return newErrors;
-        });
+        // Validate length
+        if (newValue.length < 8) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            local_phone: "Invalid local phone number",
+          }));
+        } else {
+          setErrors((prevErrors) => {
+            const newErrors = { ...prevErrors };
+            delete newErrors.local_phone;
+            return newErrors;
+          });
+        }
+
+        return {
+          ...prev,
+          user: {
+            ...prev.user,
+            [name]: newValue,
+          },
+        };
       }
-
-      return {
-        ...prev,
-        user: {
-          ...prev.user,
-          [name]: newValue,
-        },
-      };
-    }
 
       // Default required check for other fields
       setErrors((prevErrors) => {
@@ -204,7 +250,6 @@ const HirerDetails = () => {
     });
   };
 
-  useEffect(() => {console.log("local phone added", bookingPayload)}, [bookingPayload])
 
   const handleSelectLivingCountry = (item) => {
     setBookingPayload((prev) => ({
@@ -286,6 +331,11 @@ const HirerDetails = () => {
   useOutsideClick(driverAgeRef, () => setDriverAgeShow(false))
   useOutsideClick(foundUsRef, () => setFindUs(false))
 
+  const countryIndex = useDropdownNavigationWithSearch(livingCountryRef, parentCountryShow, 'living-country-item')
+  const ageIndex = useDropdownNavigation(driverAgeRef, driverAgeShow, 'hirer-age-list-item')
+  const foundUsIndex = useDropdownNavigation(foundUsRef, findUs, 'living-country-item')
+
+
 
 
   return (
@@ -325,7 +375,7 @@ const HirerDetails = () => {
           </span>
           <div className={`parent-country-list ${parentCountryShow ? 'show-parent-country-list' : ''}`}>
             {countryList.map((item, index) => (
-              <p key={index} onClick={() => handleSelectLivingCountry(item)}>{item.country}</p>
+              <p className={`living-country-item ${countryIndex === index ? 'active-country-item' : ''}`} key={index} id={`country-item-${index}`} onClick={() => handleSelectLivingCountry(item)}>{item.country}</p>
             ))}
           </div>
         </div>
@@ -338,7 +388,7 @@ const HirerDetails = () => {
           </span>
           <div className={`hirer-age-list ${driverAgeShow ? 'show-hirer-age-list' : ''}`}>
             {driverAgeList.map((item, index) => (
-              <p key={index} onClick={() => handleSellectDriverAge(item)}>{item}</p>
+              <p className={`hirer-age-list-item ${ageIndex === index ? 'active-hirer-age' : ''} `} key={index} onClick={() => handleSellectDriverAge(item)}>{item}</p>
             ))}
           </div>
         </div>
@@ -359,7 +409,7 @@ const HirerDetails = () => {
           />
         </label>
 
-        <label style={{   border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
+        <label style={{ border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
           Phone Number
 
           <div className='hirer-phone-with-country-code'>
@@ -386,9 +436,9 @@ const HirerDetails = () => {
 
       <div className='find-us-and-local-phone-number'>
 
-        
 
-        <label className='local-phone-number' style={{width: '60%', border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
+
+        <label className='local-phone-number' style={{ width: '60%', border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
           Local Phone Number
 
           <div className='hirer-local-phone-with-country-code'>
@@ -406,7 +456,7 @@ const HirerDetails = () => {
           </div>
         </label>
 
-        <div className='hirer-parent-country' ref={foundUsRef} style={{width: '40%',  border: errors.how_find_us ? '1px solid red' : '1px solid transparent' }}>
+        <div className='hirer-parent-country' ref={foundUsRef} style={{ width: '40%', border: errors.how_find_us ? '1px solid red' : '1px solid transparent' }}>
           <p>how did you find us?</p>
           <span onClick={() => setFindUs((prevState) => prevState === true ? false : true)}>
             <h3>{bookingPayload.user.how_find_us.length > 0 ? bookingPayload.user.how_find_us : 'Please Select'}</h3>
@@ -414,7 +464,7 @@ const HirerDetails = () => {
           </span>
           <div className={`parent-country-list ${findUs ? 'show-parent-country-list' : ''}`}>
             {whereFindUs.map((item, index) => (
-              <p key={index} onClick={() => handleFoundTell(item)}>{item}</p>
+              <p className={`living-country-item ${foundUsIndex === index ? 'active-country-item' : ''}`} key={index} onClick={() => handleFoundTell(item)}>{item}</p>
             ))}
           </div>
         </div>
