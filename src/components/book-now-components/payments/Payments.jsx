@@ -7,12 +7,13 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import {checkIsZero} from '../../../utils/checkZero'
 
 
 const Payments = ({ grandTotal, isChecked, setIsChecked, selectPaymentType, setSelectPaymentType }) => {
   const payTime = [
-    {id: 1, title: 'Pay Later', val: 'pay-leter', disc: 'Pay when you check in or pick-up.', total: `NZ$ ${grandTotal} NZ$` },
-    {id: 2, title: 'Pay Now', val: 'pay-now', disc: 'Pay the full amount now, save time later.', total: `NZ$ ${grandTotal} NZ$` },
+    {id: 1, title: 'Pay Later', val: 'pay-leter', disc: 'Pay when you check in or pick-up.', total: `NZ$ ${checkIsZero(grandTotal)}` },
+    {id: 2, title: 'Pay Now', val: 'pay-now', disc: 'Pay the full amount now, save time later.', total: `NZ$ ${checkIsZero(grandTotal)}` },
   ]
   const paymentTypeCards = [
     '/assets/icons/american-express.png',
@@ -20,11 +21,6 @@ const Payments = ({ grandTotal, isChecked, setIsChecked, selectPaymentType, setS
     '/assets/icons/master.png',
     '/assets/icons/visa.png',
   ]
-
-
-
-
-
 
   return (
     <div className='payment-main-container'>

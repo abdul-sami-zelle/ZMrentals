@@ -439,6 +439,10 @@
         font-size: 10px;
         line-height: 1.2;
     }
+    .insurance-single-tab > span > p {
+        font-size: 10px;
+        line-height: 1.2;
+    }
 }
 
 @media only screen and (max-width: 767px) {
@@ -501,7 +505,12 @@
     .insurance-type-body {
         gap: 7px;
     }
+
+    
     .insurance-single-tab > p {
+        font-size: 12px !important;
+    }
+    .insurance-single-tab > span > p {
         font-size: 12px !important;
     }
     .insurance-types-details-head > h3 {
@@ -517,5 +526,11 @@
 
     .shuttle-single-option {
         font-size: 12px;
+    }
+    .flight-number-input-contianer {
+        width: 50%;
+    }
+    .arrival-city-container {
+        width: 50%;
     }
 }

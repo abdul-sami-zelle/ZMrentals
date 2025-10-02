@@ -11,7 +11,7 @@ import useDropdownNavigationWithSearch from '@/utils/keyPress';
 
 const HirerDetails = () => {
 
-  
+
 
   // const countryList = [
   //   'Pakistan',
@@ -38,9 +38,7 @@ const HirerDetails = () => {
   const [driverAgeShow, setDriverAgeShow] = useState(false);
   const [findUs, setFindUs] = useState(false);
   const [countryList, setCountryList] = useState([]);
-  // const [highlightedIndex, setHighlightedIndex] = useState(null);
-  // const [searchChar, setSearchChar] = useState("");
-  // const [charIndex, setCharIndex] = useState(0);
+
 
   useEffect(() => {
     const handleGetAllCountries = async () => {
@@ -63,7 +61,7 @@ const HirerDetails = () => {
           // sort alphabetically by country name
           .sort((a, b) => a.country.localeCompare(b.country));
 
-          console.log("country formates data", formatted)
+        console.log("country formates data", formatted)
 
         setCountryList(formatted);
       } catch (err) {
@@ -109,7 +107,6 @@ const HirerDetails = () => {
   // }, [parentCountryShow, searchChar, charIndex, countryList]);
 
   const [showCountryCodeList, setShowCountryCodeList] = useState(false);
-  const [showLocalCountryCodeList, setShowLocalCountryCodeList] = useState(false);
 
 
   useEffect(() => {
@@ -202,32 +199,32 @@ const HirerDetails = () => {
       }
 
       // 📞 Local phone (always prepend +64)
-      if (name === "local_phone") {
-        // Keep only digits
-        newValue = value.replace(/\D/g, "");
+      // if (name === "local_phone") {
+      //   // Keep only digits
+      //   newValue = value.replace(/\D/g, "");
 
-        // Validate length
-        if (newValue.length < 8) {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            local_phone: "Invalid local phone number",
-          }));
-        } else {
-          setErrors((prevErrors) => {
-            const newErrors = { ...prevErrors };
-            delete newErrors.local_phone;
-            return newErrors;
-          });
-        }
+      //   // Validate length
+      //   if (newValue.length < 8) {
+      //     setErrors((prevErrors) => ({
+      //       ...prevErrors,
+      //       local_phone: "Invalid local phone number",
+      //     }));
+      //   } else {
+      //     setErrors((prevErrors) => {
+      //       const newErrors = { ...prevErrors };
+      //       delete newErrors.local_phone;
+      //       return newErrors;
+      //     });
+      //   }
 
-        return {
-          ...prev,
-          user: {
-            ...prev.user,
-            [name]: newValue,
-          },
-        };
-      }
+      //   return {
+      //     ...prev,
+      //     user: {
+      //       ...prev.user,
+      //       [name]: newValue,
+      //     },
+      //   };
+      // }
 
       // Default required check for other fields
       setErrors((prevErrors) => {
@@ -326,10 +323,12 @@ const HirerDetails = () => {
   const livingCountryRef = useRef();
   const driverAgeRef = useRef();
   const foundUsRef = useRef();
+  const countryCodeRef = useRef();
 
   useOutsideClick(livingCountryRef, () => setParentCountryShow(false))
   useOutsideClick(driverAgeRef, () => setDriverAgeShow(false))
   useOutsideClick(foundUsRef, () => setFindUs(false))
+  useOutsideClick(countryCodeRef, () => setShowCountryCodeList(false))
 
   const countryIndex = useDropdownNavigationWithSearch(livingCountryRef, parentCountryShow, 'living-country-item')
   const ageIndex = useDropdownNavigation(driverAgeRef, driverAgeShow, 'hirer-age-list-item')
@@ -367,38 +366,117 @@ const HirerDetails = () => {
 
       <div className='hirer-living-country-and-age-container'>
 
-        <div className='hirer-parent-country' ref={livingCountryRef} style={{ border: errors.country ? '1px solid red' : '1px solid transparent' }}>
+        <div
+          className='hirer-parent-country'
+          ref={livingCountryRef}
+          tabIndex={0}
+          role='button'
+          aria-expanded={parentCountryShow}
+          
+          onKeyDown={(e) => {
+            if ((e.key === 'Enter' || e.key === ' ')
+              && e.target === e.currentTarget   // only run if parent is focus target
+              && !parentCountryShow                        // only toggle if dropdown closed
+            ) {
+              e.preventDefault();
+              setParentCountryShow(true);
+            }
+            if (e.key === "ArrowDown" && e.target === e.currentTarget) {
+              e.preventDefault();
+              document.getElementById("country-item-0")?.focus();
+            }
+          }}
+          style={{ border: errors.country ? '1px solid red' : '1px solid transparent' }}
+        >
           <p>Which country do you live in?</p>
-          <span onClick={() => setParentCountryShow((prevState) => prevState === true ? false : true)}>
+          <span
+            onClick={() => setParentCountryShow((prevState) => prevState === true ? false : true)}
+
+          >
             <h3>{bookingPayload.user.country ? bookingPayload.user.country : 'Please Select'}</h3>
             <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
           </span>
           <div className={`parent-country-list ${parentCountryShow ? 'show-parent-country-list' : ''}`}>
             {countryList.map((item, index) => (
-              <p className={`living-country-item ${countryIndex === index ? 'active-country-item' : ''}`} key={index} id={`country-item-${index}`} onClick={() => handleSelectLivingCountry(item)}>{item.country}</p>
+              <p
+                tabIndex={0}
+                role="option"
+                aria-selected={countryIndex === index}
+                className={`living-country-item ${countryIndex === index ? 'active-country-item' : ''}`}
+                key={index}
+                id={`country-item-${index}`}
+                onClick={() => handleSelectLivingCountry(item)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }
+                }}
+              >
+                {item.country}
+              </p>
             ))}
           </div>
         </div>
 
-        <div className='hirer-age' ref={driverAgeRef} style={{ border: errors.driver_age ? '1px solid red' : '1px solid transparent' }}>
+        <div
+          className='hirer-age'
+          ref={driverAgeRef}
+          tabIndex={0}
+          role='button'
+          aria-expanded={driverAgeShow}
+          onKeyDown={(e) => {
+            if ((e.key === 'Enter' || e.key === ' ')
+              && e.target === e.currentTarget   // only run if parent is focus target
+              && !driverAgeShow                        // only toggle if dropdown closed
+            ) {
+              e.preventDefault();
+              setDriverAgeShow(true);
+            }
+            if (e.key === "ArrowDown" && e.target === e.currentTarget) {
+              e.preventDefault();
+              document.getElementById("driver-item-0")?.focus();
+            }
+          }}
+          style={{ border: errors.driver_age ? '1px solid red' : '1px solid transparent' }}
+        >
           <p>Driver Age</p>
-          <span onClick={() => setDriverAgeShow((prevState) => prevState === true ? false : true)}>
+          <span
+            onClick={() => setDriverAgeShow((prevState) => prevState === true ? false : true)}
+
+
+
+
+          >
             <h3>{bookingPayload.user.driver_age ? bookingPayload.user.driver_age : 'Please Select'}</h3>
             <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
           </span>
-          <div className={`hirer-age-list ${driverAgeShow ? 'show-hirer-age-list' : ''}`}>
+          <div
+            className={`hirer-age-list ${driverAgeShow ? 'show-hirer-age-list' : ''}`}
+
+          >
             {driverAgeList.map((item, index) => (
-              <p className={`hirer-age-list-item ${ageIndex === index ? 'active-hirer-age' : ''} `} key={index} onClick={() => handleSellectDriverAge(item)}>{item}</p>
+              <p
+                className={`hirer-age-list-item ${ageIndex === index ? 'active-hirer-age' : ''} `}
+                key={index}
+                onClick={() => handleSellectDriverAge(item)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleSellectDriverAge(item);
+                  }
+                }}
+              >
+                {item}</p>
             ))}
           </div>
         </div>
 
       </div>
 
-
-
-      <div className='hirer-first-and-last-name'>
-        <label style={{ border: errors.email ? '1px solid red' : '1px solid transparent' }}>
+      <div className='hirer-first-and-last-name flex-colum-on-mobile'>
+        <label className='width-full-on-phone' style={{ border: errors.email ? '1px solid red' : '1px solid transparent' }}>
           Email Address
           <input
             type='text'
@@ -409,11 +487,11 @@ const HirerDetails = () => {
           />
         </label>
 
-        <label style={{ border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
+        <label className='width-full-on-phone' style={{ border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
           Phone Number
 
           <div className='hirer-phone-with-country-code'>
-            <div className='country-code-dropdown'>
+            <div ref={countryCodeRef} className='country-code-dropdown'>
               <p onClick={() => setShowCountryCodeList(!showCountryCodeList)}>{countryCode} <MdOutlineArrowDropDown size={10} color='#535353' /></p>
               <div className={`country-code-list ${showCountryCodeList ? 'show-country-code-list' : ''}`}>
                 {countryList.map((item, index) => (
@@ -436,9 +514,7 @@ const HirerDetails = () => {
 
       <div className='find-us-and-local-phone-number'>
 
-
-
-        <label className='local-phone-number' style={{ width: '60%', border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
+        <label className='local-phone-number' style={{ width: '60%' }}>
           Local Phone Number
 
           <div className='hirer-local-phone-with-country-code'>
@@ -456,24 +532,56 @@ const HirerDetails = () => {
           </div>
         </label>
 
-        <div className='hirer-parent-country' ref={foundUsRef} style={{ width: '40%', border: errors.how_find_us ? '1px solid red' : '1px solid transparent' }}>
+        <div
+          className='hirer-parent-country'
+          ref={foundUsRef}
+          tabIndex={0}
+          role='button'
+          aria-expanded={findUs}
+          onKeyDown={(e) => {
+            if ((e.key === 'Enter' || e.key === ' ')
+              && e.target === e.currentTarget   // only run if parent is focus target
+              && !findUs                        // only toggle if dropdown closed
+            ) {
+              e.preventDefault();
+              setFindUs(true);
+            }
+            if (e.key === "ArrowDown" && e.target === e.currentTarget) {
+              e.preventDefault();
+              document.getElementById("find-item-0")?.focus();
+            }
+          }}
+          style={{ width: '40%', border: errors.how_find_us ? '1px solid red' : '1px solid transparent' }}
+
+        >
           <p>how did you find us?</p>
           <span onClick={() => setFindUs((prevState) => prevState === true ? false : true)}>
             <h3>{bookingPayload.user.how_find_us.length > 0 ? bookingPayload.user.how_find_us : 'Please Select'}</h3>
             <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
           </span>
-          <div className={`parent-country-list ${findUs ? 'show-parent-country-list' : ''}`}>
+          <div
+            className={`parent-country-list ${findUs ? 'show-parent-country-list' : ''}`}
+          >
             {whereFindUs.map((item, index) => (
-              <p className={`living-country-item ${foundUsIndex === index ? 'active-country-item' : ''}`} key={index} onClick={() => handleFoundTell(item)}>{item}</p>
+              <p
+                className={`living-country-item ${foundUsIndex === index ? 'active-country-item' : ''}`}
+                key={index}
+                onClick={() => handleFoundTell(item)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleFoundTell(item);
+                  }
+                }}
+              >
+                {item}
+              </p>
             ))}
           </div>
         </div>
 
-
-
       </div>
-
-
 
       <div className='travel-reason-container'>
         <p>Travel Reason</p>

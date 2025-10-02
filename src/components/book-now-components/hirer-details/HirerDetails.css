@@ -563,4 +563,11 @@
     .hirer-age>span>h3 {
         font-size: 12px;
     }
+    .flex-colum-on-mobile {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    .width-full-on-phone {
+        width: 100% !important;
+    }
 }

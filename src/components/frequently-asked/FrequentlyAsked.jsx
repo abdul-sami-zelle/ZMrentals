@@ -28,7 +28,7 @@ const FrequentlyAsked = ({ faqData }) => {
                                 <MdKeyboardDoubleArrowRight size={25} color='var(--secondary-color)' />
                                 <h3>{toTitleCase(item.question)}</h3>
                             </div>
-                            <div className={`faq-desktop-body ${desktopIndex === index ? 'show-desktop-body' : ''}`} style={{height: desktopIndex === index ? item.height : 0}}>
+                            <div className={`faq-desktop-body ${desktopIndex === index ? 'show-desktop-body' : ''}`}>
                                 <p>{item.answer}</p>
                             </div>
                         </div>

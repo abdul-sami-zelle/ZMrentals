@@ -22,6 +22,8 @@ import { useSearchVehicle } from '@/context/searchVehicleContext/searchVehicleCo
 import { disconnect } from 'process';
 import countries from "i18n-iso-countries";
 import en from "i18n-iso-countries/langs/en.json";
+import { checkIsZero } from '../../utils/checkZero'
+
 
 
 const BookNowClient = () => {
@@ -134,12 +136,12 @@ const BookNowClient = () => {
   }, [step, searchParam, router]);
 
   const isUserInfoFilled = () => {
-    // return Object.values(bookingPayload.user).every(value => value && value.trim() !== '');
-
-    // 1. Check if all fields have some value
-    const allFilled = Object.values(bookingPayload.user).every(
-      (value) => value && value.trim() !== ""
-    );
+    
+    // 1. Check if all fields except local_phone have some value
+    const allFilled = Object.entries(bookingPayload.user).every(([key, value]) => {
+      if (key === "local_phone") return true; // skip validation for local_phone
+      return value && value.trim() !== "";
+    });
 
     // 2. Check if there are any errors (like invalid email/phone etc.)
     const noErrors = Object.keys(errors).length === 0;
@@ -277,7 +279,6 @@ const BookNowClient = () => {
       }
     };
 
-
     try {
       setISloading(true);
       setPaymentError('');
@@ -326,12 +327,11 @@ const BookNowClient = () => {
             },
           },
         },
-        
+
       });
 
-      console.log("payment methoss", result)
 
-      
+
 
       // 4️⃣ Handle payment result
       if (result.error) {
@@ -495,7 +495,6 @@ const BookNowClient = () => {
   useEffect(() => {
 
     const pickDrop = JSON.parse(sessionStorage.getItem('pick_and_drop_details'));
-    // setTotalDays(getTotalDays(pickDrop?.pickup_time, pickDrop?.drop_time))
     setTotalDays(vehicleSesionData?.daily_rates?.length)
     setPickDropLocation(pickDrop)
     if (pickDrop.pickup_location === null && pickDrop.drop_location === null) {
@@ -684,7 +683,11 @@ const BookNowClient = () => {
     return (numPrice * (discount / 100)).toFixed(2); // discount amount
   };
 
-  console.log("discount value", vehicleSesionData)
+
+  useEffect(() => {
+    // console.log(checkIsZero('15.0'))
+  }, [])
+
 
 
   return (
@@ -778,15 +781,15 @@ const BookNowClient = () => {
                       {/* <p>${bookingVehicleData.base_rate}/day x {totalDays} day</p> */}
                       {vehicleSesionData?.duration_discount !== 0 ? (
                         <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'start', width: 'auto', flexDirection: 'column' }}>
-                          <del>NZ$ {vehicleSesionData?.was_price}</del>
+                          <del>NZ$ {checkIsZero(vehicleSesionData?.was_price)}</del>
 
                           <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', width: 'max-content' }}>
-                            NZ$ {vehicleSesionData?.sub_total}
+                            NZ$ {checkIsZero(vehicleSesionData?.sub_total)}
                             <p style={{ fontSize: '10px', lineHeight: '12px', fontWeight: 400 }}>({vehicleSesionData?.duration_discount} days discount)</p>
                           </span>
                         </div>
                       ) : (
-                        <span>NZ$ {vehicleSesionData?.sub_total}</span>
+                        <span>NZ$ {checkIsZero(vehicleSesionData?.sub_total)}</span>
                       )}
 
                       <Link href={'/vehicles'}>Change Vehicle</Link>
@@ -800,12 +803,12 @@ const BookNowClient = () => {
                   <div className='booking-prices-details-section'>
                     <span style={{ display: vehicleSesionData.discounts.percent === 0 ? 'none' : 'flex' }}>
                       <p>{vehicleSesionData?.discounts?.name}</p>
-                      <h3>NZ$ {getDiscountAmount(vehicleSesionData?.sub_total, vehicleSesionData?.discounts?.percent)}</h3>
+                      <h3>NZ$ {checkIsZero(getDiscountAmount(vehicleSesionData?.sub_total, vehicleSesionData?.discounts?.percent))}</h3>
                     </span>
 
                     <span>
                       <p>Sub Total</p>
-                      <h3>NZ$ {getSubTotal()}</h3>
+                      <h3>NZ$ {checkIsZero(getSubTotal())}</h3>
                     </span>
 
 
@@ -816,7 +819,7 @@ const BookNowClient = () => {
                           parseFloat(insuranceSeleted?.rate) === 0 ? (
                             <h3>Free</h3>
                           ) : (
-                            <h3>NZ$ {getInsurancesTotal()}</h3>
+                            <h3>NZ$ {checkIsZero(getInsurancesTotal())}</h3>
                           )
                         }
 
@@ -835,7 +838,7 @@ const BookNowClient = () => {
                             <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' />
                           </p>
                           <h3>
-                            NZ$ {rate ? rate.toFixed(2) : "0.00"}
+                            NZ$ {rate ? checkIsZero(rate.toFixed(2)) : "0.00"}
                           </h3>
                         </span>
                       );
@@ -845,7 +848,7 @@ const BookNowClient = () => {
                       vehicleSesionData?.off_hour_charges !== 0 && (
                         <span>
                           <p>Off Hour Charges</p>
-                          <h3>NZ$ {vehicleSesionData?.off_hour_charges}</h3>
+                          <h3>NZ$ {checkIsZero(vehicleSesionData?.off_hour_charges)}</h3>
                         </span>
                       )
                     }
@@ -855,7 +858,7 @@ const BookNowClient = () => {
                   <div className='grand-total-section'>
                     <p>Grand Total</p>
                     <span>
-                      <h3>NZ$ {getGrandTotal()}</h3>
+                      <h3>NZ$ {checkIsZero(getGrandTotal())}</h3>
                       <p>(Inclusive of GST)</p>
                     </span>
                     {/* <h3>${Object.keys(insuranceSeleted).length > 0 ? bookingVehicleData.base_rate * totalDays + parseInt(insuranceSeleted?.rate) * totalDays : bookingVehicleData.base_rate * totalDays}</h3> */}

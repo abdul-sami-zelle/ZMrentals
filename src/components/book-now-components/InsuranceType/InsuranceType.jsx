@@ -4,10 +4,9 @@ import './InsuranceType.css';
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import { AiFillQuestionCircle } from "react-icons/ai";
+import {checkIsZero} from '../../../utils/checkZero'
 
 const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, packageSelected, setPackageSelected }) => {
-
-  
 
   const shuttleOptions = [
     { id: 1, name: <><strong>Yes,</strong> from <strong>Domestic</strong> arrivals </> },
@@ -16,7 +15,6 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
   ]
 
   // const [activeShuttle, setActiveShuttle] = useState(3);
-
   const [pickAndDrop, setPickAndDrop] = useState({})
   useEffect(() => {
     const locationData = JSON.parse(sessionStorage.getItem('pick_and_drop_details'));
@@ -47,7 +45,6 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
     }))
 
   }
-
 
   useEffect(() => {
 
@@ -95,13 +92,10 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
     }))
   }
 
-
   const [flightReason, setFlightReason] = useState(false);
   const handleOpenFlightReason = () => {
     setFlightReason((prev) => prev === true ? false : true)
   }
-
-  console.log("insurances", insurances)
 
   return (
 
@@ -128,11 +122,11 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
 
               <span style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width : '100%'}}>
                 <p>Excess</p>
-                <p>NZ$ {item.excess}</p>
+                <p>NZ$ {checkIsZero(item.excess)}</p>
               </span>
               <span style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width : '100%'}}>
                 <p>Bond</p>
-                <p>NZ$ {item.bond}</p>
+                <p>NZ$ {checkIsZero(item.bond)}</p>
               </span>
               
               

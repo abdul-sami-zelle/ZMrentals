@@ -67,13 +67,15 @@
     align-items: start;
     justify-content: start;
     height: 0;
+    max-height: 0;
     overflow: hidden;
     transition: all 0.3s ease-in-out;
 }
 
-/* .faq-desktop-body.show-desktop-body {
-    height: 160px;
-} */
+.faq-desktop-body.show-desktop-body {
+    height: auto;
+    max-height: 1500px;
+}
 
 .faq-desktop-body > p {
     font-size: var(--font-body-md);

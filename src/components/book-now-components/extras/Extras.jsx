@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import './Extras.css'
 import { useBookingContext } from '@/context/bookingContext/bookingContext'
 import { FaPlus, FaMinus } from "react-icons/fa6";
+import {checkIsZero} from '../../../utils/checkZero'
 
 
 const Extras = ({ extras }) => {
@@ -100,7 +101,7 @@ const Extras = ({ extras }) => {
           </div>
           <div className='extra-item-and-price-container'>
             <h3>{item.name}</h3>
-            <p>NZ$ {item.rate}</p>
+            <p>NZ$ {checkIsZero(item.rate)}</p>
           </div>
         </div>
       ))}
