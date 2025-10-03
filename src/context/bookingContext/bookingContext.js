@@ -12,6 +12,7 @@ export const BookingProvider = ({ children }) => {
     const [userData, setUserData] = useState({})
     const [activeShuttle, setActiveShuttle] = useState(3);
     const [countryCode, setCountryCode] = useState('')
+    const [selectedCountryDetails, setSelectedCountryDetails] = useState()
     const [bookingPayload, setBookingPayload] = useState({
         booking: {
             car_id: null,
@@ -33,7 +34,7 @@ export const BookingProvider = ({ children }) => {
             local_phone: "",
             country: "New Zealand",
             driver_age: '24',
-            how_find_us: "",
+            how_find_us: "Google",
             travel_reason: "Leisure"
         }
     });
@@ -131,6 +132,8 @@ export const BookingProvider = ({ children }) => {
             setActiveShuttle,
             countryCode, 
             setCountryCode,
+            selectedCountryDetails, 
+            setSelectedCountryDetails,
         }}>
             {children}
         </BookingContext.Provider>

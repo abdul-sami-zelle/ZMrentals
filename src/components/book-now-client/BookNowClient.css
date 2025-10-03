@@ -281,7 +281,8 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 .vehicle-details > del {
@@ -295,7 +296,8 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
     opacity: 1;
     cursor: pointer;
 }
@@ -304,7 +306,8 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
-    color: var(--secondary-color);
+    /* color: var(--secondary-color); */
+    color: #000;
 }
 
 .vehicle-image-container {

@@ -6,23 +6,90 @@ import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import { useOutsideClick } from '../../../utils/DetectClickOutside'
 import useDropdownNavigation from '@/utils/keyPress';
 import useDropdownNavigationWithSearch from '@/utils/keyPress';
+import { IoCheckmark } from "react-icons/io5";
+import { CiSearch } from "react-icons/ci";
+import Select from 'react-select';
 
 // import { MdOutlineArrowDropDown } from "react-icons/md";
 
+const customStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    minHeight: "24px",
+    height: "24px",
+    borderRadius: 0,
+    padding: '0 16px',
+    border: "none",          // 🚀 removed border from the input
+    boxShadow: "none",
+    background: 'Transparent',          // no border radius
+    borderColor: state.isFocused ? "#961502" : "#ccc", // red on focus/open
+    boxShadow: "none",
+    "&:hover": {
+      borderColor: "#961502",
+    },
+
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    height: "24px",
+    padding: "0",
+    border: 'none',
+  }),
+  input: (provided) => ({
+    ...provided,
+    margin: 0,
+    padding: 0,
+    fontSize: "13px",        // 🚀 font size set to 13px
+    lineHeight: 1.5,         // 🚀 line height set to 1.5
+    fontWeight: 400,         // 🚀 font weight set to 400
+    color: "#000",
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    fontSize: "13px",        // 🚀 same font rules applied to selected value
+    lineHeight: 1.5,
+    fontWeight: 400,
+    color: "#000",
+  }),
+  indicatorsContainer: (provided) => ({
+    ...provided,
+    height: "24px",
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected
+      ? "#961502"
+      : state.isFocused
+        ? "#961502"
+        : "white",    // active/hover red
+    color: state.isSelected || state.isFocused ? "white" : "black",
+    borderRadius: 0,
+    cursor: "pointer",
+    minHeight: "24px",
+    fontSize: "13px",
+  }),
+  menu: (provided) => ({
+    ...provided,
+    borderRadius: 0,
+    marginTop: 12,
+    marginBottom: 0,
+    width: "100%",
+    border: "1px solid #961502",
+  }),
+  menuList: (provided) => ({
+    ...provided,
+    paddingTop: 0,
+    paddingBottom: 0,
+    maxHeight: "200px",               // 🚀 cap height to avoid huge dropdown
+    overflowY: "auto",                // allow scrolling
+    "::-webkit-scrollbar": {
+      display: "none",                // 🚀 hide scrollbar (still scrollable)
+    },
+  }),
+};
+
 const HirerDetails = () => {
 
-
-
-  // const countryList = [
-  //   'Pakistan',
-  //   'Russia',
-  //   'Dubai',
-  //   'Saudi Arabia',
-  //   'Qatar',
-  //   'New Zealand',
-  //   'Australia',
-  //   'Spain',
-  // ]
   const whereFindUs = [
     'Google',
     'Facebook',
@@ -32,12 +99,15 @@ const HirerDetails = () => {
     'Other',
   ]
 
-  const { bookingPayload, setBookingPayload, errors, setErrors, validateForm, countryCode, setCountryCode } = useBookingContext()
+  const { bookingPayload, setBookingPayload, errors, setErrors, validateForm, countryCode, setCountryCode, selectedCountryDetails, setSelectedCountryDetails } = useBookingContext()
 
   const [parentCountryShow, setParentCountryShow] = useState(false);
   const [driverAgeShow, setDriverAgeShow] = useState(false);
   const [findUs, setFindUs] = useState(false);
   const [countryList, setCountryList] = useState([]);
+  const [filterLivingCountry, setFilterLivingCountry] = useState([])
+
+
 
 
   useEffect(() => {
@@ -107,21 +177,6 @@ const HirerDetails = () => {
   // }, [parentCountryShow, searchChar, charIndex, countryList]);
 
   const [showCountryCodeList, setShowCountryCodeList] = useState(false);
-
-
-  useEffect(() => {
-    const defaultCountry = bookingPayload.user.country; // or however you set it
-    const countryObj = countryList.find(
-      (c) => c.country.toLowerCase() === defaultCountry.toLowerCase()
-    );
-
-    if (countryObj) {
-      setCountryCode(countryObj.code)
-
-    }
-  }, [countryList, countryCode, bookingPayload]);
-
-
 
 
 
@@ -198,34 +253,6 @@ const HirerDetails = () => {
         };
       }
 
-      // 📞 Local phone (always prepend +64)
-      // if (name === "local_phone") {
-      //   // Keep only digits
-      //   newValue = value.replace(/\D/g, "");
-
-      //   // Validate length
-      //   if (newValue.length < 8) {
-      //     setErrors((prevErrors) => ({
-      //       ...prevErrors,
-      //       local_phone: "Invalid local phone number",
-      //     }));
-      //   } else {
-      //     setErrors((prevErrors) => {
-      //       const newErrors = { ...prevErrors };
-      //       delete newErrors.local_phone;
-      //       return newErrors;
-      //     });
-      //   }
-
-      //   return {
-      //     ...prev,
-      //     user: {
-      //       ...prev.user,
-      //       [name]: newValue,
-      //     },
-      //   };
-      // }
-
       // Default required check for other fields
       setErrors((prevErrors) => {
         const newErrors = { ...prevErrors };
@@ -247,21 +274,21 @@ const HirerDetails = () => {
     });
   };
 
-
   const handleSelectLivingCountry = (item) => {
     setBookingPayload((prev) => ({
       ...prev,
       user: {
         ...prev.user,
-        country: item.country,
+        country: item.value,
         // phone: item.code
       }
     }));
+    // setLivingCountryQuery(item.value)
 
     // ✅ Clear error for country when a valid value is selected
     setErrors((prev) => {
       const newErrors = { ...prev };
-      if (item && item.country.trim() !== "") {
+      if (item && item.value?.trim() !== "") {
         delete newErrors.country;  // remove error
       } else {
         newErrors.country = "Required"; // keep error if empty
@@ -270,6 +297,7 @@ const HirerDetails = () => {
     });
 
     setParentCountryShow(false);
+    setMenuOpen(false)
   };
 
   const driverAgeList = ['21', '22', '23', '24', '25+']
@@ -319,6 +347,79 @@ const HirerDetails = () => {
     setFindUs(false)
   }
 
+  // const [selectedCountryDetails, setSelectedCountryDetails] = useState()
+  const [filteredCountries, setFilteredCountries] = useState(countryList)
+  const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    const defaultCountry = bookingPayload.user.country; // or however you set it
+    const countryObj = countryList?.find(
+      (c) => c.country.toLowerCase() === defaultCountry?.toLowerCase()
+    );
+
+    if (countryObj) {
+      setSelectedCountryDetails(countryObj)
+
+    }
+    setFilteredCountries(countryList);
+    setFilterLivingCountry(countryList)
+  }, [countryList, countryCode, bookingPayload]);
+
+
+  const handleSearchCountryQuery = (query) => {
+    setQuery(query);
+
+    if (!query) {
+      // if input is empty -> reset to full list
+      setFilteredCountries(countryList);
+      return;
+    }
+
+    const lowerCaseQuery = query.toLowerCase();
+
+    const result = countryList.filter(
+      (item) =>
+        item.country.toLowerCase().startsWith(lowerCaseQuery) ||
+        item.code.toLowerCase().startsWith(lowerCaseQuery)
+    );
+
+    setFilteredCountries(result);
+  };
+
+  const handleSelectCountryWithCode = (item) => {
+    setSelectedCountryDetails(item);
+    setShowCountryCodeList(false)
+  }
+  // const spacificCountries = handleSearchCountryQuery(query)
+
+
+  // const [livingCountryQuery, setLivingCountryQuery] = useState('')
+  // useEffect(() => {
+  //   setLivingCountryQuery(bookingPayload?.user?.country)
+  // }, [])
+
+  // const handleSearchAndSelectCountry = (query) => {
+  //   setLivingCountryQuery(query)
+  //   if (!query) {
+  //     setFilterLivingCountry(countryList);
+  //     return
+  //   }
+
+  //   const lowerQuery = query.toLowerCase();
+  //   const result = countryList.filter(
+  //     (item) =>
+  //       item.country.toLowerCase().startsWith(lowerQuery)
+  //   )
+  //   setFilterLivingCountry(result)
+  // }
+
+
+  const options = filterLivingCountry.map((item) => ({
+    value: item.country,
+    label: item.country,
+  }));
+
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const livingCountryRef = useRef();
   const driverAgeRef = useRef();
@@ -333,9 +434,6 @@ const HirerDetails = () => {
   const countryIndex = useDropdownNavigationWithSearch(livingCountryRef, parentCountryShow, 'living-country-item')
   const ageIndex = useDropdownNavigation(driverAgeRef, driverAgeShow, 'hirer-age-list-item')
   const foundUsIndex = useDropdownNavigation(foundUsRef, findUs, 'living-country-item')
-
-
-
 
   return (
     <div className='hirer-details-main-container'>
@@ -366,13 +464,47 @@ const HirerDetails = () => {
 
       <div className='hirer-living-country-and-age-container'>
 
-        <div
+        <div className='hirer-details-select-contianer'>
+          <p>Which country do you live in?</p>
+          <Select
+
+            options={options}
+            value={options.find((opt) => opt.value === bookingPayload.user.country) || null}
+            onChange={(selected) => handleSelectLivingCountry(selected)}
+            styles={customStyles}
+            isClearable={false}
+            isSearchable
+            className="my-country-input"
+            placeholder="Which country do you live in?"
+            menuIsOpen={menuOpen}               // force open/close
+            onFocus={() => setMenuOpen(true)}   // open on focus (Tab)
+            onBlur={() => setMenuOpen(false)}
+            filterOption={(option, inputValue) =>
+              option.label.toLowerCase().startsWith(inputValue.toLowerCase())
+            }
+          />
+        </div>
+
+        {/* <div
           className='hirer-parent-country'
           ref={livingCountryRef}
           tabIndex={0}
           role='button'
           aria-expanded={parentCountryShow}
           
+
+          onFocus={(e) => {
+            if (e.target === e.currentTarget) {
+              setParentCountryShow(true); // open dropdown
+              setTimeout(() => {
+                const input = document.getElementById("living-country-input");
+                if (input) {
+                  input.focus();
+                  input.setSelectionRange(input.value.length, input.value.length); // move caret to end
+                }
+              }, 0);
+            }
+          }}
           onKeyDown={(e) => {
             if ((e.key === 'Enter' || e.key === ' ')
               && e.target === e.currentTarget   // only run if parent is focus target
@@ -380,9 +512,13 @@ const HirerDetails = () => {
             ) {
               e.preventDefault();
               setParentCountryShow(true);
+              setTimeout(() => {
+                document.getElementById("living-country-input")?.focus();
+              }, 0);
             }
             if (e.key === "ArrowDown" && e.target === e.currentTarget) {
               e.preventDefault();
+              setParentCountryShow(true);
               document.getElementById("country-item-0")?.focus();
             }
           }}
@@ -390,14 +526,32 @@ const HirerDetails = () => {
         >
           <p>Which country do you live in?</p>
           <span
-            onClick={() => setParentCountryShow((prevState) => prevState === true ? false : true)}
+            // onClick={() => setParentCountryShow((prevState) => prevState === true ? false : true)}
+            onClick={() => setParentCountryShow(true)}
 
           >
-            <h3>{bookingPayload.user.country ? bookingPayload.user.country : 'Please Select'}</h3>
+            <input
+              type='text'
+              value={livingCountryQuery}
+              onChange={(e) => handleSearchAndSelectCountry(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "ArrowDown") {
+                  e.preventDefault();
+                  setParentCountryShow(true);
+                  document.getElementById("country-item-0")?.focus();
+                }
+                if (e.key === "ArrowUp") {
+                  e.preventDefault();
+                  setParentCountryShow(true);
+                  const lastIndex = filterLivingCountry.length - 1;
+                  document.getElementById(`country-item-${lastIndex}`)?.focus();
+                }
+              }}
+            />
             <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
           </span>
           <div className={`parent-country-list ${parentCountryShow ? 'show-parent-country-list' : ''}`}>
-            {countryList.map((item, index) => (
+            {filterLivingCountry?.map((item, index) => (
               <p
                 tabIndex={0}
                 role="option"
@@ -417,7 +571,7 @@ const HirerDetails = () => {
               </p>
             ))}
           </div>
-        </div>
+        </div> */}
 
         <div
           className='hirer-age'
@@ -425,6 +579,13 @@ const HirerDetails = () => {
           tabIndex={0}
           role='button'
           aria-expanded={driverAgeShow}
+          onFocus={(e) => {
+            if (e.target === e.currentTarget) {
+              setDriverAgeShow(true); // open dropdown
+            } else {
+              setDriverAgeShow(false)
+            }
+          }}
           onKeyDown={(e) => {
             if ((e.key === 'Enter' || e.key === ' ')
               && e.target === e.currentTarget   // only run if parent is focus target
@@ -487,27 +648,45 @@ const HirerDetails = () => {
           />
         </label>
 
-        <label className='width-full-on-phone' style={{ border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
+        <label ref={countryCodeRef} className='width-full-on-phone' style={{ border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
           Phone Number
-
           <div className='hirer-phone-with-country-code'>
-            <div ref={countryCodeRef} className='country-code-dropdown'>
-              <p onClick={() => setShowCountryCodeList(!showCountryCodeList)}>{countryCode} <MdOutlineArrowDropDown size={10} color='#535353' /></p>
-              <div className={`country-code-list ${showCountryCodeList ? 'show-country-code-list' : ''}`}>
-                {countryList.map((item, index) => (
-                  <p key={index} className='country-code-list-item' onClick={() => { setCountryCode(item.code); setShowCountryCodeList(false) }}>{item.code}</p>
-                ))}
-              </div>
+            <div className='country-code-dropdown'>
+              <p onClick={() => setShowCountryCodeList(!showCountryCodeList)}>{selectedCountryDetails?.code} <MdOutlineArrowDropDown size={10} color='#535353' /></p>
             </div>
             <input
               type='text'
               name='phone'
               value={bookingPayload.user.phone}
               onChange={handleHirerDetailsAdd}
-
-            // onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, phone: e.target.value } }))}
             />
+          </div>
+          <div className={`country-code-list ${showCountryCodeList ? 'show-country-code-list' : ''}`}>
+            <div className='country-code-drop-down-head'>
+              <h3>Selected</h3>
+              <div className='country-code-selected-and-search'>
+                <span>
+                  <h3>{selectedCountryDetails?.country || 'New Zealand'}</h3>
+                  <p>{selectedCountryDetails?.code || '+64'}</p>
+                </span>
+                <IoCheckmark size={20} color='#000' />
+              </div>
+              <div className='country-code-search'>
+                <button>
+                  <CiSearch size={25} color='#000' />
+                </button>
+                <input type='text' placeholder='search country' value={query} onChange={(e) => handleSearchCountryQuery(e.target.value)} />
+              </div>
+            </div>
 
+            <div className='country-code-inner-list-contianer'>
+              {filteredCountries?.map((item, index) => (
+                <span key={index} className='country-code-inner-item' onClick={() => handleSelectCountryWithCode(item)}>
+                  <p>{item.country}</p>
+                  <p className='country-code-list-item' >{item.code ? `(${item.code})` : ''}</p>
+                </span>
+              ))}
+            </div>
           </div>
         </label>
       </div>
@@ -538,6 +717,13 @@ const HirerDetails = () => {
           tabIndex={0}
           role='button'
           aria-expanded={findUs}
+          onFocus={(e) => {
+            if (e.target === e.currentTarget) {
+              setFindUs(true); // open dropdown
+            } else {
+              setFindUs(false)
+            }
+          }}
           onKeyDown={(e) => {
             if ((e.key === 'Enter' || e.key === ' ')
               && e.target === e.currentTarget   // only run if parent is focus target

@@ -4,7 +4,7 @@ import './InsuranceType.css';
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import { AiFillQuestionCircle } from "react-icons/ai";
-import {checkIsZero} from '../../../utils/checkZero'
+import { checkIsZero } from '../../../utils/checkZero'
 
 const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, packageSelected, setPackageSelected }) => {
 
@@ -21,11 +21,17 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
     setPickAndDrop(locationData)
   }, [])
 
-  const sortInsurances = (array) => {
-    const zeroPriceInsurance = array.filter(item => parseInt(item.rate) === 0);
-    const otherInsurances = array.filter(item => parseInt(item.rate) !== 0).sort((a, b) => a.rate - b.rate);
-    return [...zeroPriceInsurance, ...otherInsurances]
-  }
+  const sortInsurances = (array = []) => {
+    const zeroPriceInsurance = array.filter(
+      (item) => parseInt(item.rate, 10) === 0
+    );
+
+    const otherInsurances = array
+      .filter((item) => parseInt(item.rate, 10) !== 0)
+      .sort((a, b) => parseInt(a.rate, 10) - parseInt(b.rate, 10));
+
+    return [...zeroPriceInsurance, ...otherInsurances];
+  };
 
   const { setBookingPayload, bookingPayload, bookingVehicleData, activeShuttle, setActiveShuttle } = useBookingContext();
   const handleSelectInsurance = (item) => {
@@ -71,12 +77,11 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
       ...prev,
       booking: {
         ...prev.booking,
-        car_id: bookingVehicleData.car_id,
-        // insurance_id: prev.booking.insurance_id ?? firstInsurance?.id,
-        drop_location: pickAndDrop.drop_location,
-        drop_time: pickAndDrop.drop_time,
-        pickup_location: pickAndDrop.pickup_location,
-        pickup_time: pickAndDrop.pickup_time
+        car_id: bookingVehicleData?.car_id,
+        drop_location: pickAndDrop?.drop_location,
+        drop_time: pickAndDrop?.drop_time,
+        pickup_location: pickAndDrop?.pickup_location,
+        pickup_time: pickAndDrop?.pickup_time
       }
     }))
   }, [pickAndDrop])
@@ -120,16 +125,16 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
                 {item.name}
               </label>
 
-              <span style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width : '100%'}}>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                 <p>Excess</p>
                 <p>NZ$ {checkIsZero(item.excess)}</p>
               </span>
-              <span style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width : '100%'}}>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                 <p>Bond</p>
                 <p>NZ$ {checkIsZero(item.bond)}</p>
               </span>
-              
-              
+
+
               <p className='insurance-bottom-text'>{parseInt(item.rate) === 0 ? 'Free' : `NZ$ ${parseInt(item.rate)}/Day`}</p>
 
             </div>
@@ -162,19 +167,19 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
             activeShuttle !== 3 && (
               <div className='flight-and-arrival-city'>
                 <div className='flight-number-input-contianer'>
-                <p className='flight-number-heading'>Flight Number <AiFillQuestionCircle color='var(--primary-color)' size={15} onClick={handleOpenFlightReason} /></p>
-                <input type='text' name='flight_number' placeholder='Flight Number' className='flight-number-input-box' value={bookingPayload?.booking?.flight_number} onChange={(e) => setBookingPayload((prev) => ({ ...prev, booking: { ...prev.booking, flight_number: e.target.value } }))} />
-                <div className={`flight-number-reason-contianer ${flightReason ? 'show-reason-message' : ''}`}>
-                  <p>We'll monitor your flight to make sure we have your car ready on time, even if your flight is early or late </p>
+                  <p className='flight-number-heading'>Flight Number <AiFillQuestionCircle color='var(--primary-color)' size={15} onClick={handleOpenFlightReason} /></p>
+                  <input type='text' name='flight_number' placeholder='Flight Number' className='flight-number-input-box' value={bookingPayload?.booking?.flight_number} onChange={(e) => setBookingPayload((prev) => ({ ...prev, booking: { ...prev.booking, flight_number: e.target.value } }))} />
+                  <div className={`flight-number-reason-contianer ${flightReason ? 'show-reason-message' : ''}`}>
+                    <p>We'll monitor your flight to make sure we have your car ready on time, even if your flight is early or late </p>
+                  </div>
+                </div>
+
+                <div className='arrival-city-container'>
+                  <p className='flight-number-heading'>Arrival City <AiFillQuestionCircle color='var(--primary-color)' size={15} /></p>
+                  <input type='text' name='arrival_city' placeholder='Arrival City' className='flight-number-input-box' value={bookingPayload?.booking?.arrival_city} onChange={(e) => setBookingPayload((prev) => ({ ...prev, booking: { ...prev.booking, arrival_city: e.target.value } }))} />
                 </div>
               </div>
 
-              <div className='arrival-city-container'>
-                <p className='flight-number-heading'>Arrival City <AiFillQuestionCircle color='var(--primary-color)' size={15} /></p>
-                <input type='text' name='arrival_city' placeholder='Arrival City' className='flight-number-input-box' value={bookingPayload?.booking?.arrival_city} onChange={(e) => setBookingPayload((prev) => ({ ...prev, booking: { ...prev.booking, arrival_city: e.target.value } }))} />
-              </div>
-              </div>
-              
             )
           }
 

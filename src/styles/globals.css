@@ -91,6 +91,7 @@
 } */
 
 
+
 body {
   background: var(--background);
   color: #000;
@@ -98,6 +99,11 @@ body {
   overflow: hidden;
 }
 
+.page-content {
+  flex: 1;                 /* take remaining height */
+  display: flex;           /* optional: allows inner flex layouts */
+  flex-direction: column;  /* keeps children vertical */
+}
 .section-main-heading {
   font-size: var(--font-heading-lg);
   line-height: var(--line-height-heading);

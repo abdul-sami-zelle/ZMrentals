@@ -36,6 +36,7 @@ const UserDashoard = () => {
                     }
                 })
 
+                  console.log("user response", response)
                 
 
                 if (response.status !== 200) {

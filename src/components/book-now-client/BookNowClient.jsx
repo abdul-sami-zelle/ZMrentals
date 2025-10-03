@@ -28,6 +28,17 @@ import { checkIsZero } from '../../utils/checkZero'
 
 const BookNowClient = () => {
 
+  const router = useRouter()
+  useEffect(() => {
+    const seasionData = sessionStorage.getItem('vehicle-details');
+    console.log("sesiondata", seasionData)
+    if (seasionData === null) {
+      router.push('/')
+    }
+  }, [])
+
+
+
   countries.registerLocale(en);
   const stripe = useStripe();
   const elements = useElements();
@@ -42,12 +53,15 @@ const BookNowClient = () => {
     vehicleSesionData,
     setVehicleSesionData,
     errors,
+    setErrors,
     userType,
     setUserType,
     userData,
     setUserData,
     countryCode,
     setCountryCode,
+    selectedCountryDetails,
+    setSelectedCountryDetails,
   } = useBookingContext()
 
   const {
@@ -61,7 +75,7 @@ const BookNowClient = () => {
     setShowBookingButton
   } = useSearchVehicle()
   const searchParam = useSearchParams();
-  const router = useRouter();
+
   const step = parseInt(searchParam.get('step')) || 1;
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [insuranceSeleted, setInsuranceSelected] = useState({})
@@ -106,26 +120,6 @@ const BookNowClient = () => {
     getUserDiscount()
   }, [])
 
-  function getTotalDays(pickupISO, dropISO) {
-    if (!pickupISO || !dropISO) return 0;
-    const pickupDate = new Date(pickupISO);
-    const dropDate = new Date(dropISO);
-
-    if (isNaN(pickupDate) || isNaN(dropDate)) return 0;
-
-    // Convert both to date-only strings (UTC)
-    const pickupStr = pickupDate?.toISOString().split('T')[0];
-    const dropStr = dropDate?.toISOString().split('T')[0];
-
-    // Convert back to Date objects (midnight UTC)
-    const d1 = new Date(pickupStr);
-    const d2 = new Date(dropStr);
-
-    const diffMs = d2 - d1;
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-    return diffDays === 0 ? 1 : diffDays;
-  }
 
   useEffect(() => {
     if (!step) {
@@ -135,20 +129,30 @@ const BookNowClient = () => {
     }
   }, [step, searchParam, router]);
 
+
   const isUserInfoFilled = () => {
-    
-    // 1. Check if all fields except local_phone have some value
-    const allFilled = Object.entries(bookingPayload.user).every(([key, value]) => {
-      if (key === "local_phone") return true; // skip validation for local_phone
-      return value && value.trim() !== "";
+    let newErrors = {};
+
+    // loop all keys of user payload
+    Object.entries(bookingPayload.user).forEach(([key, value]) => {
+      if (key === "local_phone") return; // skip validation for local_phone
+
+      if (!value || value.trim() === "") {
+        newErrors[key] = "Required";
+      }
     });
 
-    // 2. Check if there are any errors (like invalid email/phone etc.)
-    const noErrors = Object.keys(errors).length === 0;
+    // merge new errors with existing ones
+    setErrors((prev) => ({ ...prev, ...newErrors }));
 
-    // ✅ Only allow if both conditions are true
+    // 1. Check if all fields (except local_phone) are filled
+    const allFilled = Object.keys(newErrors).length === 0;
+
+    // 2. Check if there are no format errors (email, phone, etc.)
+    const noErrors = Object.keys(errors).length === 0 && allFilled;
+
     return allFilled && noErrors;
-  }
+  };
 
   const isArrivalDetailsAdded = () => {
     const flightNumber = bookingPayload?.booking?.flight_number || "";
@@ -177,8 +181,8 @@ const BookNowClient = () => {
       ...bookingPayload,
       user: {
         ...bookingPayload.user,
-        phone: `${countryCode}${bookingPayload.user.phone}`,
-        local_phone: `+64${bookingPayload.user.local_phone}`
+        phone: `${selectedCountryDetails?.code}${bookingPayload.user.phone}`,
+        local_phone: bookingPayload?.user?.local_phone ? `+64${bookingPayload.user.local_phone}` : ''
       }
     };
 
@@ -207,16 +211,21 @@ const BookNowClient = () => {
             drop_time: "",
             extras: [],
             insurance_id: null,
-          },
-          user: {
+            shuttle_option: 3,
+            flight_number: '',
+            arrival_city: ''
+        },
+        user: {
             firstname: "",
             lastname: "",
             email: "",
             phone: "",
-            country: "",
-            how_find_us: "",
+            local_phone: "",
+            country: "New Zealand",
+            driver_age: '24',
+            how_find_us: "Google",
             travel_reason: "Leisure"
-          }
+        }
         })
 
         setSearchVehiclePayload({
@@ -236,8 +245,6 @@ const BookNowClient = () => {
         sessionStorage.removeItem('selected-vehicle-details');
         sessionStorage.removeItem('vehicle-details');
 
-
-
       } else {
         setISloading(false);
         setShowAvailableModal(true)
@@ -246,9 +253,9 @@ const BookNowClient = () => {
         setSearchedVehicles([])
         setCloseType('reject');
         setSubmitBookingMessage({
-          head: 'Selected Car Not Available',
-          para: `Sorry The selected date is already taken`,
-          link: 'Please Try Another Date'
+          head: 'Something went wrong',
+          para: `Please try again later`,
+          link: 'Try Again',
         })
       }
 
@@ -261,11 +268,38 @@ const BookNowClient = () => {
       setSearchedVehicles([])
       setCloseType('reject');
       setSubmitBookingMessage({
-        head: 'Selected Car Not Available',
-        para: `Sorry The selected date is already taken`,
-        link: 'Please Try Another Date'
+        head: 'Something went wrong',
+        para: `Please try again later`,
+        link: 'Try Again',
       })
-    } finally { setISloading(false) }
+    } finally { 
+      setISloading(false)
+      setBookingPayload({
+        booking: {
+            car_id: null,
+            pickup_location: "",
+            drop_location: "",
+            pickup_time: "",
+            drop_time: "",
+            extras: [],
+            insurance_id: null,
+            shuttle_option: 3,
+            flight_number: '',
+            arrival_city: ''
+        },
+        user: {
+            firstname: "",
+            lastname: "",
+            email: "",
+            phone: "",
+            local_phone: "",
+            country: "New Zealand",
+            driver_age: '24',
+            how_find_us: "Google",
+            travel_reason: "Leisure"
+        }
+      })
+     }
   }
 
   // Handle Pay Now
@@ -274,8 +308,8 @@ const BookNowClient = () => {
       ...bookingPayload,
       user: {
         ...bookingPayload.user,
-        phone: `${countryCode}${bookingPayload.user.phone}`,
-        local_phone: `+64${bookingPayload.user.local_phone}`
+        phone: `${selectedCountryDetails?.code}${bookingPayload.user.phone}`,
+        local_phone: bookingPayload?.user?.local_phone ? `+64${bookingPayload.user.local_phone}` : ''
       }
     };
 
@@ -293,9 +327,9 @@ const BookNowClient = () => {
         setShowAvailableModal(true);
         setCloseType('reject');
         setSubmitBookingMessage({
-          head: 'Selected Car Not Available',
-          para: `Sorry, the selected date is already taken`,
-          link: 'Please Try Another Date',
+          head: 'Something went wrong',
+          para: `Please try again later`,
+          link: 'Try Again',
         });
         return;
       }
@@ -329,9 +363,6 @@ const BookNowClient = () => {
         },
 
       });
-
-
-
 
       // 4️⃣ Handle payment result
       if (result.error) {
@@ -370,16 +401,21 @@ const BookNowClient = () => {
               drop_time: "",
               extras: [],
               insurance_id: null,
+              shuttle_option: 3,
+              flight_number: '',
+              arrival_city: ''
             },
             user: {
               firstname: "",
               lastname: "",
               email: "",
               phone: "",
-              country: "",
-              how_find_us: "",
-              travel_reason: "Leisure",
-            },
+              local_phone: "",
+              country: "New Zealand",
+              driver_age: '24',
+              how_find_us: "Google",
+              travel_reason: "Leisure"
+            }
           });
 
           setSearchVehiclePayload({
@@ -431,16 +467,21 @@ const BookNowClient = () => {
                 drop_time: "",
                 extras: [],
                 insurance_id: null,
+                shuttle_option: 3,
+                flight_number: '',
+                arrival_city: ''
               },
               user: {
                 firstname: "",
                 lastname: "",
                 email: "",
                 phone: "",
-                country: "",
-                how_find_us: "",
-                travel_reason: "Leisure",
-              },
+                local_phone: "",
+                country: "New Zealand",
+                driver_age: '24',
+                how_find_us: "Google",
+                travel_reason: "Leisure"
+              }
             });
 
             setSearchVehiclePayload({
@@ -483,8 +524,34 @@ const BookNowClient = () => {
         link: 'Try Again',
       });
 
+
     } finally {
       setISloading(false);
+      setBookingPayload({
+        booking: {
+          car_id: null,
+          pickup_location: "",
+          drop_location: "",
+          pickup_time: "",
+          drop_time: "",
+          extras: [],
+          insurance_id: null,
+          shuttle_option: 3,
+          flight_number: '',
+          arrival_city: ''
+        },
+        user: {
+          firstname: "",
+          lastname: "",
+          email: "",
+          phone: "",
+          local_phone: "",
+          country: "New Zealand",
+          driver_age: '24',
+          how_find_us: "Google",
+          travel_reason: "Leisure"
+        }
+      });
     }
   };
 
@@ -554,7 +621,7 @@ const BookNowClient = () => {
   };
 
   const handleBookNow = () => {
-
+    console.log("errors", errors)
     if (selectedTabIndex < 3) {
 
       if (activeShuttle !== 3 && selectedTabIndex === 0 && !isArrivalDetailsAdded()) {
@@ -562,6 +629,7 @@ const BookNowClient = () => {
         setToustMessage("Please Fill Flight Number and Arrival City");
       } else if (selectedTabIndex === 2 && !isUserInfoFilled()) {
         setTOustShow(true)
+        console.log("func return", isUserInfoFilled())
         setToustMessage("Please Fill All The Information")
       } else if (activeShuttle === 3 && selectedTabIndex === 0) {
         setBookingPayload((prev) => ({
@@ -684,10 +752,6 @@ const BookNowClient = () => {
   };
 
 
-  useEffect(() => {
-    // console.log(checkIsZero('15.0'))
-  }, [])
-
 
 
   return (
@@ -781,15 +845,15 @@ const BookNowClient = () => {
                       {/* <p>${bookingVehicleData.base_rate}/day x {totalDays} day</p> */}
                       {vehicleSesionData?.duration_discount !== 0 ? (
                         <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'start', width: 'auto', flexDirection: 'column' }}>
-                          <del>NZ$ {checkIsZero(vehicleSesionData?.was_price)}</del>
+                          <del>NZ$ {vehicleSesionData?.was_price}</del>
 
                           <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', width: 'max-content' }}>
-                            NZ$ {checkIsZero(vehicleSesionData?.sub_total)}
+                            NZ$ {vehicleSesionData?.sub_total}
                             <p style={{ fontSize: '10px', lineHeight: '12px', fontWeight: 400 }}>({vehicleSesionData?.duration_discount} days discount)</p>
                           </span>
                         </div>
                       ) : (
-                        <span>NZ$ {checkIsZero(vehicleSesionData?.sub_total)}</span>
+                        <span>NZ$ {vehicleSesionData?.sub_total}</span>
                       )}
 
                       <Link href={'/vehicles'}>Change Vehicle</Link>
@@ -801,14 +865,14 @@ const BookNowClient = () => {
 
 
                   <div className='booking-prices-details-section'>
-                    <span style={{ display: vehicleSesionData.discounts.percent === 0 ? 'none' : 'flex' }}>
+                    <span style={{ display: vehicleSesionData?.discounts?.percent === 0 ? 'none' : 'flex' }}>
                       <p>{vehicleSesionData?.discounts?.name}</p>
-                      <h3>NZ$ {checkIsZero(getDiscountAmount(vehicleSesionData?.sub_total, vehicleSesionData?.discounts?.percent))}</h3>
+                      <h3>NZ$ {getDiscountAmount(vehicleSesionData?.sub_total, vehicleSesionData?.discounts?.percent)}</h3>
                     </span>
 
                     <span>
                       <p>Sub Total</p>
-                      <h3>NZ$ {checkIsZero(getSubTotal())}</h3>
+                      <h3>NZ$ {getSubTotal()}</h3>
                     </span>
 
 
@@ -819,7 +883,7 @@ const BookNowClient = () => {
                           parseFloat(insuranceSeleted?.rate) === 0 ? (
                             <h3>Free</h3>
                           ) : (
-                            <h3>NZ$ {checkIsZero(getInsurancesTotal())}</h3>
+                            <h3>NZ$ {getInsurancesTotal()}</h3>
                           )
                         }
 
@@ -838,7 +902,7 @@ const BookNowClient = () => {
                             <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' />
                           </p>
                           <h3>
-                            NZ$ {rate ? checkIsZero(rate.toFixed(2)) : "0.00"}
+                            NZ$ {rate ? rate.toFixed(2) : "0.00"}
                           </h3>
                         </span>
                       );
@@ -848,7 +912,7 @@ const BookNowClient = () => {
                       vehicleSesionData?.off_hour_charges !== 0 && (
                         <span>
                           <p>Off Hour Charges</p>
-                          <h3>NZ$ {checkIsZero(vehicleSesionData?.off_hour_charges)}</h3>
+                          <h3>NZ$ {vehicleSesionData?.off_hour_charges}</h3>
                         </span>
                       )
                     }
@@ -858,7 +922,7 @@ const BookNowClient = () => {
                   <div className='grand-total-section'>
                     <p>Grand Total</p>
                     <span>
-                      <h3>NZ$ {checkIsZero(getGrandTotal())}</h3>
+                      <h3>NZ$ {getGrandTotal()}</h3>
                       <p>(Inclusive of GST)</p>
                     </span>
                     {/* <h3>${Object.keys(insuranceSeleted).length > 0 ? bookingVehicleData.base_rate * totalDays + parseInt(insuranceSeleted?.rate) * totalDays : bookingVehicleData.base_rate * totalDays}</h3> */}

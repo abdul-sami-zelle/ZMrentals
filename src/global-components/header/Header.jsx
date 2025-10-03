@@ -7,9 +7,11 @@ import { IoMailOutline } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 import Navbar from "../navbar/Navbar";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
 
+  const pathname = usePathname()
   const [currentIndex, setCurrentIndex] = useState(0);
   const dynamicHeading = [0, 1, 2]
   useEffect(() => {
@@ -70,7 +72,7 @@ const Header = () => {
       {/* <PromotionalHeader /> */}
 
       <Navbar />
-      <div className={`header-section-container ${promotionBanner ? 'hide-promotion-banner' : ''}`}>
+      <div style={{display: pathname === '/manage-booking' ? 'none' : 'flex'}} className={`header-section-container ${promotionBanner ? 'hide-promotion-banner' : ''}`}>
         <div className="header-inner-section-container">
           <div className="rotating-message">
 
@@ -96,14 +98,26 @@ const Header = () => {
           </div>
 
 
+          <div className="promotion-login-and-manage-booking">
 
-          <Link
-            className='promotion-login-item'
-            href={'/sign-up'}
-          >
-            <FaRegUser />
-            Login
-          </Link>
+            <Link
+              className='promotion-login-item'
+              href={'/sign-up'}
+            >
+              <FaRegUser />
+              Login
+            </Link>
+
+            <Link
+              className='promotion-login-item'
+              href={'/manage-booking'}
+            >
+              <FaRegUser />
+              Manage Booking
+            </Link>
+
+          </div>
+
 
 
 

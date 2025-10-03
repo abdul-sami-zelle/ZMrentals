@@ -1,12 +1,16 @@
+'use client'
+
 import React from 'react'
 import './Footer.css'
 import Link from 'next/link'
 // import logo from '../../assets/logo.png'
 import { FaFacebookF, FaInstagram, FaTiktok, FaYoutube } from "react-icons/fa6";
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 const Footer = () => {
 
+  const pathname = usePathname()
   const footerData = [
     {
       name: 'Vehicles', link: '#', footerItems: [
@@ -44,7 +48,7 @@ const Footer = () => {
 
   return ( 
     <div className='footer-main-container'>
-      <div className='footer-bg-container'>
+      <div className='footer-bg-container' style={{display: pathname === '/manage-booking' ? 'none' : 'flex'}}>
         <div className='footer-width-controller-container'>
 
           <div className='footer-menu-items-main-container'>

@@ -1,0 +1,99 @@
+.manage-booking-main-contianer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    flex: 1;
+    padding: 60px;
+    backdrop-filter: blur(15px);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+/* add blur overlay */
+.manage-booking-main-contianer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(5px); /* ✅ blur works here */
+  background-color: rgba(255, 255, 255, 0.1); /* semi-transparent orange */
+  z-index: 0;
+}
+
+.manage-booking-inner-contianer {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 10px;
+    width: 70vw;
+    height: 100%;
+    flex: 1;
+    /* max-width: 1230px; */
+    background-color: #FFF;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.manage-booking-left-sec {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 50%;
+    /* height: 100%; */
+    flex: 1;
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.manage-booking-right-sec {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    gap: 20px;
+    flex-direction: column;
+    width: 50%;
+    padding: 35px;
+    /* height: 100%; */
+    flex: 1;
+    border-radius: 25px;
+}
+
+.manage-booking-form-arrow-back-contianer {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+}
+
+.manage-booking-right-content-scroll-contianer {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    gap: 15px;
+}
+
+.manage-booking-right-content-scroll-contianer::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* Edit Booking */
+
+
+@media only screen and (min-width: 1024px) and (max-width: 1300px) {
+    .manage-booking-inner-contianer {
+        width: 90vw;
+    }
+    .booking-edit-main-continair {
+        width: 90vw;
+    }
+}

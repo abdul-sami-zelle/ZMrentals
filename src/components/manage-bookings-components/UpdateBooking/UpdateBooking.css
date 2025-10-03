@@ -1,0 +1,395 @@
+.booking-edit-main-continair {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 10px;
+    width: 70vw;
+    height: 100%;
+    flex: 1;
+    /* max-width: 1230px; */
+    background-color: #FFF;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 25px;
+    padding: 15px;
+}
+
+.edit-booking-left-sec {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: start;
+    justify-content: space-between;
+    padding: 25px 0;
+    width: 50%;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.edit-booking-vehicle-image-and-name {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    border-radius: 25px;
+    border: 1px solid #afafaf;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}
+
+.edit-booking-vehicle-image-and-name > img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.edit-booking-vehicle-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.edit-booking-car-features {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    width: 100%;
+}
+
+.edit-booking-car-features > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+
+.edit-booking-dick-and-drop-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.pick-drop-details-box {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: start;
+    justify-content: start;
+    width: 50%;
+    gap: 10px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+.pick-drop-detial-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.pick-drop-detial-head > h3 {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.pick-drop-detial-head > button {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pick-drop-location {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.pick-drop-time-and-date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 25px;
+    gap: 10px;
+}
+
+.pick-drop-date-and-month {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+}
+
+.pick-drop-date-and-month > h3 {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.pick-drop-date-and-month > p {
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #000;
+    margin-top: -10px;
+    margin-right: 5px;
+}
+
+.pick-drop-time-date-saprator {
+    display: flex;
+    width: 1px;
+    height: 100%;
+    background-color: #000;
+}
+
+.pick-drop-time-and-date > h3 {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+/* Right Section */
+.edit-booking-left-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: start;
+    justify-content: space-between;
+    padding: 25px 0;
+    width: 50%;
+    border-radius: 25px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.edit-booking-left-right::-webkit-scrollbar {
+    display: none;
+}
+
+.edit-hirer-details-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    height: auto;
+}
+
+.hirer-info-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+}
+
+.hirer-info-head > h3 {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.hirer-info-head > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.hirer-info-inputs {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 10px;
+}
+
+.hirer-info-two-columns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.hirer-info-two-columns > label {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 50%;
+    gap: 5px;
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.hirer-info-two-columns > label > input {
+    width: 100%;
+    height: 35px;
+    padding: 5px 15px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    outline: none;
+}
+
+.living-country {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 50%;
+    gap: 5px;
+}
+
+.living-country > p {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.living-country > h3 {
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+    padding: 5px 15px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    width: 100%;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+/* Driver info */
+.edit-driver-info {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    height: auto;
+    gap: 20px;
+}
+
+.edit-driver-info-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+}
+
+.edit-driver-info-head > h3 {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.edit-driver-info-head > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #000;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.edit-drivers-list-contianer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 20px;
+    width: 100%;
+}
+
+.driver-list-single-item {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    background-color: #fff;
+    
+    border-radius: 5px;
+    border: 1px solid #afafaf;
+}
+
+.driver-list-single-item-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.driver-list-single-item > h3 {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.driver-list-single-item-inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    height: 0;
+    max-height: 0;
+    overflow: hidden;
+    padding: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.driver-list-single-item-inputs.edit-driver-detials {
+    height: auto;
+    max-height: 2000px;
+    padding: 15px;
+}

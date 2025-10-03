@@ -27,7 +27,9 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
+    position: relative;
 }
 
 .hirer-first-and-last-name>label>input {
@@ -35,11 +37,13 @@
     height: 100%;
     border: none;
     outline: none;
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 .hirer-first-and-last-name>label>input::placeholder {
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 .hirer-phone-with-country-code {
@@ -93,10 +97,11 @@
 
 .country-code-list.show-country-code-list {
     height: auto;
-    max-height: 180px;
+    max-height: 380px;
     background-color: #FFF;
     overflow-x: hidden;
     overflow-y: auto;
+    padding-bottom: 10px;
     border: 1px solid var(--primary-color);
 }
 
@@ -104,21 +109,148 @@
     display: none;
 }
 
-.country-code-list>p {
+.country-code-drop-down-head {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    gap: 15px;
+}
+
+.country-code-drop-down-head > h3 {
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.country-code-selected-and-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+}
+
+.country-code-selected-and-search > span {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: max-content;
+    height: auto;
+    gap: 20px;
+}
+
+.country-code-selected-and-search > span > h3 {
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.country-code-selected-and-search > span > p {
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.country-code-search {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    border: 1px solid #afafaf;
+    height: 40px;
+}
+
+.country-code-search > button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-right: 1px solid #afafaf;
+    width: 45px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.country-code-search > input {
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+    outline: none;
+    border: none;
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+/* .country-code-search > input::placeholder {
+    color: #000;
+} */
+
+.country-code-inner-list-contianer {
+    display: flex;
+    flex-direction: column;
+    /* padding: 10px; */
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+    min-height: 180px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.country-code-inner-list-contianer::-webkit-scrollbar {
+    display: none;
+}
+
+.country-code-inner-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+    background-color: transparent;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.country-code-inner-item:hover {
+    background-color: #961502;
+    color: #FFF;
+}
+
+.country-code-inner-item > p {
+    color: #535353;
+}
+
+.country-code-inner-item:hover > p {
+    color: #FFF;
+}
+
+/* .country-code-list>p {
     padding: 5px 10px;
     width: 100%;
     background-color: transparent;
-    color: var(--primary-color);
+    color: #000;
     font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
     cursor: pointer;
-}
+} */
 
-.country-code-list>p:hover {
+/* .country-code-list>p:hover {
     color: #FFF;
     background-color: var(--primary-color);
-}
+} */
 
 .local-phone-number {
     display: flex;
@@ -129,7 +261,8 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 .hirer-phone-with-country-code>input {
@@ -137,11 +270,13 @@
     height: 100%;
     border: none;
     outline: none;
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 .hirer-phone-with-country-codeinput>input::placeholder {
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 .find-us-and-local-phone-number {
@@ -166,11 +301,13 @@
     height: 100%;
     border: none;
     outline: none;
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 .hirer-local-phone-with-country-code>input::placeholder {
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 .local-phone-country-code-dropdown {
@@ -232,7 +369,8 @@
     padding: 5px 10px;
     width: 100%;
     background-color: transparent;
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
     font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
@@ -243,6 +381,37 @@
     color: #FFF;
     background-color: var(--primary-color);
 }
+
+.hirer-details-select-contianer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: start;
+    justify-content: start;
+    padding: 8px 0;
+    width: 100%;
+    height: 60px;
+    background-color: #f7f7f7;
+    position: relative;
+}
+
+.hirer-details-select-contianer > p {
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-regular);
+    /* color: var(--primary-color); */
+    color: #000;
+    margin-left: 16px;
+}
+
+/* Select Styling */
+.my-country-input {
+    background-color: transparent;
+    width: 100% !important;
+    height: 19px;
+    border: none !important;
+}
+
 
 .hirer-parent-country {
     display: flex;
@@ -262,7 +431,8 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 .hirer-parent-country>span {
@@ -273,11 +443,22 @@
     cursor: pointer;
 }
 
-.hirer-parent-country>span>h3 {
+/* .hirer-parent-country>span>h3 {
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    color: #000;
+} */
+
+.hirer-parent-country > span > input {
+    width: 100%;
+    height: 100%; 
+    /* padding: 0 10px; */
+    color: #000;
+    font-size: var(--font-body-lg);
+    line-height: var(--line-height-heading);
+    font-weight: var(--font-weight-regular);
+    outline: none;
 }
 
 .hirer-age {
@@ -298,7 +479,8 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 .hirer-age>span {
@@ -313,7 +495,8 @@
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 
@@ -357,7 +540,8 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
     cursor: pointer;
 }
 
@@ -413,7 +597,8 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
     cursor: pointer;
 }
 
@@ -474,7 +659,8 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    color: var(--primary-color);
+    /* color: var(--primary-color); */
+    color: #000;
 }
 
 .travel-reason-radio-container {
@@ -531,9 +717,12 @@
     border-radius: 50%;
 }
 
+
+
 @media only screen and (max-width: 767px) {
     .hirer-age {
-        width: 120px;
+        /* width: 120px; */
+        width: 100%;
     }
 
     .hirer-first-and-last-name>label {
@@ -569,5 +758,19 @@
     }
     .width-full-on-phone {
         width: 100% !important;
+    }
+    .find-us-and-local-phone-number {
+        flex-direction: column;
+    }
+
+    .local-phone-number {
+        width: 100% !important;
+    }
+
+    .hirer-parent-country {
+        width: 100% !important;
+    }
+    .hirer-living-country-and-age-container {
+        flex-direction: column;
     }
 }

@@ -60,6 +60,14 @@
     border-bottom: 2px solid var(--primary-color);
 }
 
+.nav-login-and-manage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    gap: 15px;
+}
+
 .nav-login-item {
     display: flex;
     align-items: center;
@@ -318,6 +326,9 @@
     }
 
     .nav-login-item {
+        display: none;
+    }
+    .nav-login-and-manage {
         display: none;
     }
 }

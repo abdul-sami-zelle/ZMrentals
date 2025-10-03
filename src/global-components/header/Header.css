@@ -138,6 +138,14 @@
     font-weight: var(--font-weight-bold);
 }
 
+.promotion-login-and-manage-booking {
+    display: none !important;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    gap: 15px;
+}
+
 
 .promotion-login-item {
     display: none !important;
@@ -160,6 +168,9 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .promotion-login-and-manage-booking {
+        display: flex !important;
+    }
     .promotion-login-item {
         display: flex !important;
     }

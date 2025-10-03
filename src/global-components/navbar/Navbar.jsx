@@ -164,14 +164,24 @@ const Navbar = () => {
             ))}
           </ul>
 
-            
-            <Link
-              className='nav-login-item'
-              href={'/sign-up'}
-            >
-              <FaRegUser />
-              Login
-            </Link>
+            <div className='nav-login-and-manage'>
+
+              <Link
+                className='nav-login-item'
+                href={'/sign-up'}
+              >
+                <FaRegUser />
+                Login
+              </Link>
+              <Link
+                className='nav-login-item'
+                href={'/manage-booking'}
+              >
+                <FaRegUser />
+                Manage Booking
+              </Link>
+
+            </div>
 
 
         </nav>

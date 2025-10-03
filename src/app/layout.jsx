@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import Header from "@/global-components/header/Header";
 import Footer from '@/global-components/footer/Footer';
-import {SearchVehicleProvider} from '../context/searchVehicleContext/searchVehicleContext'
-import {BookingProvider} from '../context/bookingContext/bookingContext'
+import { SearchVehicleProvider } from '../context/searchVehicleContext/searchVehicleContext'
+import { BookingProvider } from '../context/bookingContext/bookingContext'
 import WhatsappButton from '../global-components/WhatsappButton/WhatsappButton'
 import StripeProvider from '../context/stripeProvider/stripeProvider'
 import { UserDashboardProvider } from "@/context/dashContext/dashContext";
@@ -44,24 +44,27 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        
+
         <link rel="icon" href="/favicon.png" sizes="any" />
-        
+
       </head>
 
-      <body suppressHydrationWarning style={{ backgroundColor: '#FFFFFF' }} >
+      <body suppressHydrationWarning style={{display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#FFFFFF' }} >
         <SearchVehicleProvider>
           <BookingProvider>
-          <StripeProvider>
-          <UserDashboardProvider>
+            <StripeProvider>
+              <UserDashboardProvider>
 
-          
-          <Header />
-          {children}
-          <Footer />
-          <WhatsappButton />
-          </UserDashboardProvider>
-          </StripeProvider>
+
+                <Header />
+                <main className="page-content">
+                  {children}
+                </main>
+                {/* {children} */}
+                <Footer />
+                <WhatsappButton />
+              </UserDashboardProvider>
+            </StripeProvider>
           </BookingProvider>
         </SearchVehicleProvider>
       </body>
