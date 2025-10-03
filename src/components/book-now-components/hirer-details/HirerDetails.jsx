@@ -9,6 +9,7 @@ import useDropdownNavigationWithSearch from '@/utils/keyPress';
 import { IoCheckmark } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import Select from 'react-select';
+import { IoIosArrowDown } from "react-icons/io";
 
 // import { MdOutlineArrowDropDown } from "react-icons/md";
 
@@ -180,6 +181,102 @@ const HirerDetails = () => {
 
 
 
+  // const handleHirerDetailsAdd = (e) => {
+  //   const { name, value } = e.target;
+
+  //   setBookingPayload((prev) => {
+  //     let newValue = value;
+
+  //     // 📧 Email validation
+  //     if (name === "email") {
+  //       const trimmed = value.trim();
+  //       setErrors((prevErrors) => {
+  //         const newErrors = { ...prevErrors };
+
+  //         if (trimmed === "") {
+  //           newErrors[name] = "Required";
+  //         } else {
+  //           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //           if (!emailRegex.test(trimmed)) {
+  //             newErrors[name] = "Invalid email format";
+  //           } else {
+  //             delete newErrors[name];
+  //           }
+  //         }
+
+  //         return newErrors;
+  //       });
+
+  //       return {
+  //         ...prev,
+  //         user: {
+  //           ...prev.user,
+  //           [name]: value,
+  //         },
+  //       };
+  //     }
+
+  //     // 📱 Phone validation
+  //     if (name === "phone") {
+  //       const selectedCountry = prev.user.country;
+  //       const countryObj = countryList.find(
+  //         (item) => item.country.toLowerCase() === selectedCountry?.toLowerCase()
+  //       );
+
+  //       if (countryObj) {
+  //         // Keep only digits
+  //         newValue = value.replace(/\D/g, "");
+
+  //         // Simple phone length validation (e.g. at least 8 digits)
+  //         if (newValue.length < 8) {
+  //           setErrors((prevErrors) => ({
+  //             ...prevErrors,
+  //             phone: "Invalid phone number",
+  //           }));
+  //         } else {
+  //           setErrors((prevErrors) => {
+  //             const newErrors = { ...prevErrors };
+  //             delete newErrors.phone;
+  //             return newErrors;
+  //           });
+  //         }
+  //       }
+
+
+
+  //       return {
+  //         ...prev,
+  //         user: {
+  //           ...prev.user,
+  //           // [name]: `${countryCode}${newValue}`,
+  //           [name]: newValue,
+  //         },
+  //       };
+  //     }
+
+  //     // Default required check for other fields
+  //     setErrors((prevErrors) => {
+  //       const newErrors = { ...prevErrors };
+  //       if (value.trim() !== "") {
+  //         delete newErrors[name];
+  //       } else {
+  //         newErrors[name] = "Required";
+  //       }
+  //       return newErrors;
+  //     });
+
+  //     return {
+  //       ...prev,
+  //       user: {
+  //         ...prev.user,
+  //         [name]: value,
+  //       },
+  //     };
+  //   });
+  // };
+
+
+
   const handleHirerDetailsAdd = (e) => {
     const { name, value } = e.target;
 
@@ -215,39 +312,56 @@ const HirerDetails = () => {
         };
       }
 
-      // 📱 Phone validation
+      // 📱 Phone validation (required)
       if (name === "phone") {
-        const selectedCountry = prev.user.country;
-        const countryObj = countryList.find(
-          (item) => item.country.toLowerCase() === selectedCountry?.toLowerCase()
-        );
+        newValue = value.replace(/\D/g, ""); // only numbers
+        if (newValue.length > 13) newValue = newValue.slice(0, 13); // max 13 digits
 
-        if (countryObj) {
-          // Keep only digits
-          newValue = value.replace(/\D/g, "");
-
-          // Simple phone length validation (e.g. at least 8 digits)
-          if (newValue.length < 8) {
-            setErrors((prevErrors) => ({
-              ...prevErrors,
-              phone: "Invalid phone number",
-            }));
-          } else {
-            setErrors((prevErrors) => {
-              const newErrors = { ...prevErrors };
-              delete newErrors.phone;
-              return newErrors;
-            });
-          }
+        if (newValue.length < 8 || newValue.length > 13) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            phone: "Phone must be 8–13 digits",
+          }));
+        } else {
+          setErrors((prevErrors) => {
+            const newErrors = { ...prevErrors };
+            delete newErrors.phone;
+            return newErrors;
+          });
         }
-
-
 
         return {
           ...prev,
           user: {
             ...prev.user,
-            // [name]: `${countryCode}${newValue}`,
+            [name]: newValue,
+          },
+        };
+      }
+
+      // ☎️ Local phone validation (optional)
+      if (name === "local_phone") {
+        newValue = value.replace(/\D/g, ""); // only numbers
+        if (newValue.length > 13) newValue = newValue.slice(0, 13); // max 13 digits
+
+        // ❌ no error pushed if empty
+        if (newValue && (newValue.length < 8 || newValue.length > 13)) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            local_phone: "Local phone must be 8–13 digits",
+          }));
+        } else {
+          setErrors((prevErrors) => {
+            const newErrors = { ...prevErrors };
+            delete newErrors.local_phone;
+            return newErrors;
+          });
+        }
+
+        return {
+          ...prev,
+          user: {
+            ...prev.user,
             [name]: newValue,
           },
         };
@@ -273,6 +387,9 @@ const HirerDetails = () => {
       };
     });
   };
+
+
+
 
   const handleSelectLivingCountry = (item) => {
     setBookingPayload((prev) => ({
@@ -390,28 +507,7 @@ const HirerDetails = () => {
     setSelectedCountryDetails(item);
     setShowCountryCodeList(false)
   }
-  // const spacificCountries = handleSearchCountryQuery(query)
 
-
-  // const [livingCountryQuery, setLivingCountryQuery] = useState('')
-  // useEffect(() => {
-  //   setLivingCountryQuery(bookingPayload?.user?.country)
-  // }, [])
-
-  // const handleSearchAndSelectCountry = (query) => {
-  //   setLivingCountryQuery(query)
-  //   if (!query) {
-  //     setFilterLivingCountry(countryList);
-  //     return
-  //   }
-
-  //   const lowerQuery = query.toLowerCase();
-  //   const result = countryList.filter(
-  //     (item) =>
-  //       item.country.toLowerCase().startsWith(lowerQuery)
-  //   )
-  //   setFilterLivingCountry(result)
-  // }
 
 
   const options = filterLivingCountry.map((item) => ({
@@ -434,6 +530,7 @@ const HirerDetails = () => {
   const countryIndex = useDropdownNavigationWithSearch(livingCountryRef, parentCountryShow, 'living-country-item')
   const ageIndex = useDropdownNavigation(driverAgeRef, driverAgeShow, 'hirer-age-list-item')
   const foundUsIndex = useDropdownNavigation(foundUsRef, findUs, 'living-country-item')
+  const countryCodeIndex = useDropdownNavigation(countryCodeRef, showCountryCodeList, 'country-code-inner-item')
 
   return (
     <div className='hirer-details-main-container'>
@@ -441,7 +538,7 @@ const HirerDetails = () => {
 
       <div className='hirer-first-and-last-name' >
         <label style={{ border: errors.firstname ? '1px solid red' : '1px solid transparent' }}>
-          First name
+          First Name
           <input
             type='text'
             name='firstname'
@@ -451,7 +548,7 @@ const HirerDetails = () => {
           />
         </label>
         <label style={{ border: errors.lastname ? '1px solid red' : '1px solid transparent' }}>
-          Last name
+          Last Lame
           <input
             type='text'
             name='lastname'
@@ -485,93 +582,6 @@ const HirerDetails = () => {
           />
         </div>
 
-        {/* <div
-          className='hirer-parent-country'
-          ref={livingCountryRef}
-          tabIndex={0}
-          role='button'
-          aria-expanded={parentCountryShow}
-          
-
-          onFocus={(e) => {
-            if (e.target === e.currentTarget) {
-              setParentCountryShow(true); // open dropdown
-              setTimeout(() => {
-                const input = document.getElementById("living-country-input");
-                if (input) {
-                  input.focus();
-                  input.setSelectionRange(input.value.length, input.value.length); // move caret to end
-                }
-              }, 0);
-            }
-          }}
-          onKeyDown={(e) => {
-            if ((e.key === 'Enter' || e.key === ' ')
-              && e.target === e.currentTarget   // only run if parent is focus target
-              && !parentCountryShow                        // only toggle if dropdown closed
-            ) {
-              e.preventDefault();
-              setParentCountryShow(true);
-              setTimeout(() => {
-                document.getElementById("living-country-input")?.focus();
-              }, 0);
-            }
-            if (e.key === "ArrowDown" && e.target === e.currentTarget) {
-              e.preventDefault();
-              setParentCountryShow(true);
-              document.getElementById("country-item-0")?.focus();
-            }
-          }}
-          style={{ border: errors.country ? '1px solid red' : '1px solid transparent' }}
-        >
-          <p>Which country do you live in?</p>
-          <span
-            // onClick={() => setParentCountryShow((prevState) => prevState === true ? false : true)}
-            onClick={() => setParentCountryShow(true)}
-
-          >
-            <input
-              type='text'
-              value={livingCountryQuery}
-              onChange={(e) => handleSearchAndSelectCountry(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "ArrowDown") {
-                  e.preventDefault();
-                  setParentCountryShow(true);
-                  document.getElementById("country-item-0")?.focus();
-                }
-                if (e.key === "ArrowUp") {
-                  e.preventDefault();
-                  setParentCountryShow(true);
-                  const lastIndex = filterLivingCountry.length - 1;
-                  document.getElementById(`country-item-${lastIndex}`)?.focus();
-                }
-              }}
-            />
-            <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
-          </span>
-          <div className={`parent-country-list ${parentCountryShow ? 'show-parent-country-list' : ''}`}>
-            {filterLivingCountry?.map((item, index) => (
-              <p
-                tabIndex={0}
-                role="option"
-                aria-selected={countryIndex === index}
-                className={`living-country-item ${countryIndex === index ? 'active-country-item' : ''}`}
-                key={index}
-                id={`country-item-${index}`}
-                onClick={() => handleSelectLivingCountry(item)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }
-                }}
-              >
-                {item.country}
-              </p>
-            ))}
-          </div>
-        </div> */}
 
         <div
           className='hirer-age'
@@ -610,7 +620,7 @@ const HirerDetails = () => {
 
           >
             <h3>{bookingPayload.user.driver_age ? bookingPayload.user.driver_age : 'Please Select'}</h3>
-            <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
+            <IoIosArrowDown size={17} color='rgba(204,204,204,1)' strokeWidth={5} />
           </span>
           <div
             className={`hirer-age-list ${driverAgeShow ? 'show-hirer-age-list' : ''}`}
@@ -652,7 +662,7 @@ const HirerDetails = () => {
           Phone Number
           <div className='hirer-phone-with-country-code'>
             <div className='country-code-dropdown'>
-              <p onClick={() => setShowCountryCodeList(!showCountryCodeList)}>{selectedCountryDetails?.code} <MdOutlineArrowDropDown size={10} color='#535353' /></p>
+              <p onClick={() => setShowCountryCodeList(!showCountryCodeList)}>{selectedCountryDetails?.code} <IoIosArrowDown size={17} color='rgba(204,204,204,1)' strokeWidth={5} /></p>
             </div>
             <input
               type='text'
@@ -669,7 +679,7 @@ const HirerDetails = () => {
                   <h3>{selectedCountryDetails?.country || 'New Zealand'}</h3>
                   <p>{selectedCountryDetails?.code || '+64'}</p>
                 </span>
-                <IoCheckmark size={20} color='#000' />
+                <IoIosArrowDown size={17} color='rgba(204,204,204,1)' strokeWidth={5} />
               </div>
               <div className='country-code-search'>
                 <button>
@@ -681,7 +691,7 @@ const HirerDetails = () => {
 
             <div className='country-code-inner-list-contianer'>
               {filteredCountries?.map((item, index) => (
-                <span key={index} className='country-code-inner-item' onClick={() => handleSelectCountryWithCode(item)}>
+                <span key={index} className={`country-code-inner-item ${countryCodeIndex === index ? 'active-code' : ''}`} onClick={() => handleSelectCountryWithCode(item)}>
                   <p>{item.country}</p>
                   <p className='country-code-list-item' >{item.code ? `(${item.code})` : ''}</p>
                 </span>
@@ -740,10 +750,10 @@ const HirerDetails = () => {
           style={{ width: '40%', border: errors.how_find_us ? '1px solid red' : '1px solid transparent' }}
 
         >
-          <p>how did you find us?</p>
+          <p>How did you find us?</p>
           <span onClick={() => setFindUs((prevState) => prevState === true ? false : true)}>
             <h3>{bookingPayload.user.how_find_us.length > 0 ? bookingPayload.user.how_find_us : 'Please Select'}</h3>
-            <MdOutlineArrowDropDown size={15} color='var(--primary-details)' />
+            <IoIosArrowDown size={17} color='rgba(204,204,204,1)' strokeWidth={5} />
           </span>
           <div
             className={`parent-country-list ${findUs ? 'show-parent-country-list' : ''}`}

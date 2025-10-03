@@ -26,6 +26,7 @@ import { checkIsZero } from '../../utils/checkZero'
 
 
 
+
 const BookNowClient = () => {
 
   const router = useRouter()
@@ -62,6 +63,7 @@ const BookNowClient = () => {
     setCountryCode,
     selectedCountryDetails,
     setSelectedCountryDetails,
+    setExtraQuantities,
   } = useBookingContext()
 
   const {
@@ -214,8 +216,8 @@ const BookNowClient = () => {
             shuttle_option: 3,
             flight_number: '',
             arrival_city: ''
-        },
-        user: {
+          },
+          user: {
             firstname: "",
             lastname: "",
             email: "",
@@ -225,7 +227,7 @@ const BookNowClient = () => {
             driver_age: '24',
             how_find_us: "Google",
             travel_reason: "Leisure"
-        }
+          }
         })
 
         setSearchVehiclePayload({
@@ -272,34 +274,37 @@ const BookNowClient = () => {
         para: `Please try again later`,
         link: 'Try Again',
       })
-    } finally { 
+    } finally {
       setISloading(false)
       setBookingPayload({
         booking: {
-            car_id: null,
-            pickup_location: "",
-            drop_location: "",
-            pickup_time: "",
-            drop_time: "",
-            extras: [],
-            insurance_id: null,
-            shuttle_option: 3,
-            flight_number: '',
-            arrival_city: ''
+          car_id: null,
+          pickup_location: "",
+          drop_location: "",
+          pickup_time: "",
+          drop_time: "",
+          extras: [],
+          insurance_id: null,
+          shuttle_option: 3,
+          flight_number: '',
+          arrival_city: ''
         },
         user: {
-            firstname: "",
-            lastname: "",
-            email: "",
-            phone: "",
-            local_phone: "",
-            country: "New Zealand",
-            driver_age: '24',
-            how_find_us: "Google",
-            travel_reason: "Leisure"
+          firstname: "",
+          lastname: "",
+          email: "",
+          phone: "",
+          local_phone: "",
+          country: "New Zealand",
+          driver_age: '24',
+          how_find_us: "Google",
+          travel_reason: "Leisure"
         }
       })
-     }
+      setExtraQuantities({})
+      setSelectedCountryDetails()
+      setActiveShuttle(3)
+    }
   }
 
   // Handle Pay Now
@@ -552,12 +557,13 @@ const BookNowClient = () => {
           travel_reason: "Leisure"
         }
       });
+      setExtraQuantities({})
+      setSelectedCountryDetails()
+      setActiveShuttle(3)
     }
   };
 
-  const [pickDropLocation, setPickDropLocation] = useState({
-
-  });
+  const [pickDropLocation, setPickDropLocation] = useState({});
   const [totalDays, setTotalDays] = useState(0);
   useEffect(() => {
 

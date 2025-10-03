@@ -228,11 +228,19 @@
     color: #FFF;
 }
 
+.country-code-inner-item.active-code {
+    background-color: #961502;
+    color: #FFF;
+}
+
 .country-code-inner-item > p {
     color: #535353;
 }
 
 .country-code-inner-item:hover > p {
+    color: #FFF;
+}
+.country-code-inner-item.active-code > p {
     color: #FFF;
 }
 

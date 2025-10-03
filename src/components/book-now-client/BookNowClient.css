@@ -296,8 +296,7 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    /* color: var(--primary-color); */
-    color: #000;
+    color: var(--primary-color);
     opacity: 1;
     cursor: pointer;
 }
