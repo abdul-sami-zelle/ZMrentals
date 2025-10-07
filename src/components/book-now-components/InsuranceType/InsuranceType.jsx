@@ -14,7 +14,6 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
     { id: 3, name: <><strong>No,</strong> I'll make my own way to the branch </> },
   ]
 
-  // const [activeShuttle, setActiveShuttle] = useState(3);
   const [pickAndDrop, setPickAndDrop] = useState({})
   useEffect(() => {
     const locationData = JSON.parse(sessionStorage.getItem('pick_and_drop_details'));
@@ -33,7 +32,7 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
     return [...zeroPriceInsurance, ...otherInsurances];
   };
 
-  const { setBookingPayload, bookingPayload, bookingVehicleData, activeShuttle, setActiveShuttle } = useBookingContext();
+  const { setBookingPayload, bookingPayload, bookingVehicleData, activeShuttle, setActiveShuttle, arrivlaErrors, setArrivalErrors, } = useBookingContext();
   const handleSelectInsurance = (item) => {
     setInsuranceSelected(item)
     setPackageSelected(item.insurance_option_id);
@@ -102,6 +101,23 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
     setFlightReason((prev) => prev === true ? false : true)
   }
 
+  const handleSetFlightInfo = (event) => {
+    const { name, value } = event.target;
+
+    setBookingPayload((prev) => ({
+      ...prev,
+      booking: {
+        ...prev.booking,
+        [name]: value
+      }
+    }))
+    // Clear error live when user starts typing
+    setArrivalErrors((prev) => ({
+      ...prev,
+      [name]: value.trim() !== "" ? "" : prev[name], // clear only if not empty
+    }));
+  }
+
   return (
 
     <div className='insurance-type-main-container'>
@@ -166,9 +182,18 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
           {
             activeShuttle !== 3 && (
               <div className='flight-and-arrival-city'>
+
                 <div className='flight-number-input-contianer'>
                   <p className='flight-number-heading'>Flight Number <AiFillQuestionCircle color='var(--primary-color)' size={15} onClick={handleOpenFlightReason} /></p>
-                  <input type='text' name='flight_number' placeholder='Flight Number' className='flight-number-input-box' value={bookingPayload?.booking?.flight_number} onChange={(e) => setBookingPayload((prev) => ({ ...prev, booking: { ...prev.booking, flight_number: e.target.value } }))} />
+                  <input
+                    type='text'
+                    name='flight_number'
+                    placeholder='Flight Number'
+                    className='flight-number-input-box'
+                    style={{ border: arrivlaErrors.flight_number ? '1px solid red' : '1px solid #f1f1f1' }}
+                    value={bookingPayload?.booking?.flight_number}
+                    onChange={handleSetFlightInfo}
+                  />
                   <div className={`flight-number-reason-contianer ${flightReason ? 'show-reason-message' : ''}`}>
                     <p>We'll monitor your flight to make sure we have your car ready on time, even if your flight is early or late </p>
                   </div>
@@ -176,7 +201,15 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
 
                 <div className='arrival-city-container'>
                   <p className='flight-number-heading'>Arrival City <AiFillQuestionCircle color='var(--primary-color)' size={15} /></p>
-                  <input type='text' name='arrival_city' placeholder='Arrival City' className='flight-number-input-box' value={bookingPayload?.booking?.arrival_city} onChange={(e) => setBookingPayload((prev) => ({ ...prev, booking: { ...prev.booking, arrival_city: e.target.value } }))} />
+                  <input
+                    type='text'
+                    name='arrival_city'
+                    placeholder='Arrival City'
+                    className='flight-number-input-box'
+                    value={bookingPayload?.booking?.arrival_city}
+                    style={{ border: arrivlaErrors.arrival_city ? '1px solid red' : '1px solid #f1f1f1' }}
+                    onChange={handleSetFlightInfo}
+                  />
                 </div>
               </div>
 

@@ -1,15 +1,14 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
 import './HirerDetails.css'
-import { MdOutlineArrowDropDown } from "react-icons/md";
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import { useOutsideClick } from '../../../utils/DetectClickOutside'
 import useDropdownNavigation from '@/utils/keyPress';
-import useDropdownNavigationWithSearch from '@/utils/keyPress';
-import { IoCheckmark } from "react-icons/io5";
-import { CiSearch } from "react-icons/ci";
 import Select from 'react-select';
 import { IoIosArrowDown } from "react-icons/io";
+import CountryCodeDropdown from '../SearchCountryPhone/SearchCountryPhone'
+import PhoneInput from 'react-phone-input-2';
+import "react-phone-input-2/lib/bootstrap.css";
 
 // import { MdOutlineArrowDropDown } from "react-icons/md";
 
@@ -100,7 +99,17 @@ const HirerDetails = () => {
     'Other',
   ]
 
-  const { bookingPayload, setBookingPayload, errors, setErrors, validateForm, countryCode, setCountryCode, selectedCountryDetails, setSelectedCountryDetails } = useBookingContext()
+  const {
+    bookingPayload,
+    setBookingPayload,
+    errors,
+    setErrors,
+    validateForm,
+    countryCode,
+    setCountryCode,
+    selectedCountryDetails,
+    setSelectedCountryDetails
+  } = useBookingContext()
 
   const [parentCountryShow, setParentCountryShow] = useState(false);
   const [driverAgeShow, setDriverAgeShow] = useState(false);
@@ -108,16 +117,12 @@ const HirerDetails = () => {
   const [countryList, setCountryList] = useState([]);
   const [filterLivingCountry, setFilterLivingCountry] = useState([])
 
-
-
-
   useEffect(() => {
     const handleGetAllCountries = async () => {
       try {
         const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
         const data = await res.json();
 
-        console.log("country raw data", data);
 
 
         const formatted = data
@@ -132,7 +137,6 @@ const HirerDetails = () => {
           // sort alphabetically by country name
           .sort((a, b) => a.country.localeCompare(b.country));
 
-        console.log("country formates data", formatted)
 
         setCountryList(formatted);
       } catch (err) {
@@ -143,139 +147,7 @@ const HirerDetails = () => {
     handleGetAllCountries();
   }, []);
 
-  // useEffect(() => {
-  //   if (!parentCountryShow) return;
-
-  //   const handleKeyPress = (e) => {
-  //     if (!/^[a-z]$/i.test(e.key)) return; // only letters
-
-  //     const char = e.key.toLowerCase();
-
-  //     if (searchChar === char) {
-  //       setCharIndex((prev) => prev + 1);   // ✅ correct setter
-  //     } else {
-  //       setSearchChar(char);
-  //       setCharIndex(0);
-  //     }
-
-  //     const matches = countryList
-  //       .map((c, i) => ({ ...c, index: i }))
-  //       .filter((c) => c.country.toLowerCase().startsWith(char));
-
-  //     if (matches.length > 0) {
-  //       const match = matches[charIndex % matches.length]; // cycle
-  //       setHighlightedIndex(match.index);
-
-  //       // auto scroll into view
-  //       document.getElementById(`country-item-${match.index}`)?.scrollIntoView({
-  //         block: "nearest",
-  //       });
-  //     }
-  //   };
-
-  //   window.addEventListener("keydown", handleKeyPress);
-  //   return () => window.removeEventListener("keydown", handleKeyPress);
-  // }, [parentCountryShow, searchChar, charIndex, countryList]);
-
   const [showCountryCodeList, setShowCountryCodeList] = useState(false);
-
-
-
-  // const handleHirerDetailsAdd = (e) => {
-  //   const { name, value } = e.target;
-
-  //   setBookingPayload((prev) => {
-  //     let newValue = value;
-
-  //     // 📧 Email validation
-  //     if (name === "email") {
-  //       const trimmed = value.trim();
-  //       setErrors((prevErrors) => {
-  //         const newErrors = { ...prevErrors };
-
-  //         if (trimmed === "") {
-  //           newErrors[name] = "Required";
-  //         } else {
-  //           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  //           if (!emailRegex.test(trimmed)) {
-  //             newErrors[name] = "Invalid email format";
-  //           } else {
-  //             delete newErrors[name];
-  //           }
-  //         }
-
-  //         return newErrors;
-  //       });
-
-  //       return {
-  //         ...prev,
-  //         user: {
-  //           ...prev.user,
-  //           [name]: value,
-  //         },
-  //       };
-  //     }
-
-  //     // 📱 Phone validation
-  //     if (name === "phone") {
-  //       const selectedCountry = prev.user.country;
-  //       const countryObj = countryList.find(
-  //         (item) => item.country.toLowerCase() === selectedCountry?.toLowerCase()
-  //       );
-
-  //       if (countryObj) {
-  //         // Keep only digits
-  //         newValue = value.replace(/\D/g, "");
-
-  //         // Simple phone length validation (e.g. at least 8 digits)
-  //         if (newValue.length < 8) {
-  //           setErrors((prevErrors) => ({
-  //             ...prevErrors,
-  //             phone: "Invalid phone number",
-  //           }));
-  //         } else {
-  //           setErrors((prevErrors) => {
-  //             const newErrors = { ...prevErrors };
-  //             delete newErrors.phone;
-  //             return newErrors;
-  //           });
-  //         }
-  //       }
-
-
-
-  //       return {
-  //         ...prev,
-  //         user: {
-  //           ...prev.user,
-  //           // [name]: `${countryCode}${newValue}`,
-  //           [name]: newValue,
-  //         },
-  //       };
-  //     }
-
-  //     // Default required check for other fields
-  //     setErrors((prevErrors) => {
-  //       const newErrors = { ...prevErrors };
-  //       if (value.trim() !== "") {
-  //         delete newErrors[name];
-  //       } else {
-  //         newErrors[name] = "Required";
-  //       }
-  //       return newErrors;
-  //     });
-
-  //     return {
-  //       ...prev,
-  //       user: {
-  //         ...prev.user,
-  //         [name]: value,
-  //       },
-  //     };
-  //   });
-  // };
-
-
 
   const handleHirerDetailsAdd = (e) => {
     const { name, value } = e.target;
@@ -388,9 +260,6 @@ const HirerDetails = () => {
     });
   };
 
-
-
-
   const handleSelectLivingCountry = (item) => {
     setBookingPayload((prev) => ({
       ...prev,
@@ -464,9 +333,8 @@ const HirerDetails = () => {
     setFindUs(false)
   }
 
-  // const [selectedCountryDetails, setSelectedCountryDetails] = useState()
   const [filteredCountries, setFilteredCountries] = useState(countryList)
-  const [query, setQuery] = useState('');
+  // const [query, setQuery] = useState('');
 
   useEffect(() => {
     const defaultCountry = bookingPayload.user.country; // or however you set it
@@ -480,35 +348,33 @@ const HirerDetails = () => {
     }
     setFilteredCountries(countryList);
     setFilterLivingCountry(countryList)
-  }, [countryList, countryCode, bookingPayload]);
+  }, [countryList, countryCode]);
 
 
-  const handleSearchCountryQuery = (query) => {
-    setQuery(query);
+  // const handleSearchCountryQuery = (query) => {
+  //   setQuery(query);
 
-    if (!query) {
-      // if input is empty -> reset to full list
-      setFilteredCountries(countryList);
-      return;
-    }
+  //   if (!query) {
+  //     // if input is empty -> reset to full list
+  //     setFilteredCountries(countryList);
+  //     return;
+  //   }
 
-    const lowerCaseQuery = query.toLowerCase();
+  //   const lowerCaseQuery = query.toLowerCase();
 
-    const result = countryList.filter(
-      (item) =>
-        item.country.toLowerCase().startsWith(lowerCaseQuery) ||
-        item.code.toLowerCase().startsWith(lowerCaseQuery)
-    );
+  //   const result = countryList.filter(
+  //     (item) =>
+  //       item.country.toLowerCase().startsWith(lowerCaseQuery) ||
+  //       item.code.toLowerCase().startsWith(lowerCaseQuery)
+  //   );
 
-    setFilteredCountries(result);
-  };
+  //   setFilteredCountries(result);
+  // };
 
-  const handleSelectCountryWithCode = (item) => {
-    setSelectedCountryDetails(item);
-    setShowCountryCodeList(false)
-  }
-
-
+  // const handleSelectCountryWithCode = (item) => {
+  //   setSelectedCountryDetails(item);
+  //   setShowCountryCodeList(false)
+  // }
 
   const options = filterLivingCountry.map((item) => ({
     value: item.country,
@@ -516,6 +382,9 @@ const HirerDetails = () => {
   }));
 
   const [menuOpen, setMenuOpen] = useState(false)
+
+  
+
 
   const livingCountryRef = useRef();
   const driverAgeRef = useRef();
@@ -527,10 +396,10 @@ const HirerDetails = () => {
   useOutsideClick(foundUsRef, () => setFindUs(false))
   useOutsideClick(countryCodeRef, () => setShowCountryCodeList(false))
 
-  const countryIndex = useDropdownNavigationWithSearch(livingCountryRef, parentCountryShow, 'living-country-item')
+  // const countryIndex = useDropdownNavigationWithSearch(livingCountryRef, parentCountryShow, 'living-country-item')
   const ageIndex = useDropdownNavigation(driverAgeRef, driverAgeShow, 'hirer-age-list-item')
   const foundUsIndex = useDropdownNavigation(foundUsRef, findUs, 'living-country-item')
-  const countryCodeIndex = useDropdownNavigation(countryCodeRef, showCountryCodeList, 'country-code-inner-item')
+  // const countryCodeIndex = useDropdownNavigation(countryCodeRef, showCountryCodeList, 'country-code-inner-item')
 
   return (
     <div className='hirer-details-main-container'>
@@ -548,7 +417,7 @@ const HirerDetails = () => {
           />
         </label>
         <label style={{ border: errors.lastname ? '1px solid red' : '1px solid transparent' }}>
-          Last Lame
+          Last Name
           <input
             type='text'
             name='lastname'
@@ -658,47 +527,15 @@ const HirerDetails = () => {
           />
         </label>
 
-        <label ref={countryCodeRef} className='width-full-on-phone' style={{ border: errors.phone ? '1px solid red' : '1px solid transparent' }}>
-          Phone Number
-          <div className='hirer-phone-with-country-code'>
-            <div className='country-code-dropdown'>
-              <p onClick={() => setShowCountryCodeList(!showCountryCodeList)}>{selectedCountryDetails?.code} <IoIosArrowDown size={17} color='rgba(204,204,204,1)' strokeWidth={5} /></p>
-            </div>
-            <input
-              type='text'
-              name='phone'
-              value={bookingPayload.user.phone}
-              onChange={handleHirerDetailsAdd}
-            />
-          </div>
-          <div className={`country-code-list ${showCountryCodeList ? 'show-country-code-list' : ''}`}>
-            <div className='country-code-drop-down-head'>
-              <h3>Selected</h3>
-              <div className='country-code-selected-and-search'>
-                <span>
-                  <h3>{selectedCountryDetails?.country || 'New Zealand'}</h3>
-                  <p>{selectedCountryDetails?.code || '+64'}</p>
-                </span>
-                <IoIosArrowDown size={17} color='rgba(204,204,204,1)' strokeWidth={5} />
-              </div>
-              <div className='country-code-search'>
-                <button>
-                  <CiSearch size={25} color='#000' />
-                </button>
-                <input type='text' placeholder='search country' value={query} onChange={(e) => handleSearchCountryQuery(e.target.value)} />
-              </div>
-            </div>
+        <CountryCodeDropdown 
+          countryList={countryList}
+          selectedCountryDetails={selectedCountryDetails}
+          bookingPayload={bookingPayload}
+          setSelectedCountryDetails={setSelectedCountryDetails}
+          errors={errors}
+          handleHirerDetailsAdd={handleHirerDetailsAdd}
+        />
 
-            <div className='country-code-inner-list-contianer'>
-              {filteredCountries?.map((item, index) => (
-                <span key={index} className={`country-code-inner-item ${countryCodeIndex === index ? 'active-code' : ''}`} onClick={() => handleSelectCountryWithCode(item)}>
-                  <p>{item.country}</p>
-                  <p className='country-code-list-item' >{item.code ? `(${item.code})` : ''}</p>
-                </span>
-              ))}
-            </div>
-          </div>
-        </label>
       </div>
 
       <div className='find-us-and-local-phone-number'>

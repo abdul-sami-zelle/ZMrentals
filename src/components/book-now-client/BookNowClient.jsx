@@ -32,7 +32,6 @@ const BookNowClient = () => {
   const router = useRouter()
   useEffect(() => {
     const seasionData = sessionStorage.getItem('vehicle-details');
-    console.log("sesiondata", seasionData)
     if (seasionData === null) {
       router.push('/')
     }
@@ -64,6 +63,8 @@ const BookNowClient = () => {
     selectedCountryDetails,
     setSelectedCountryDetails,
     setExtraQuantities,
+    arrivlaErrors,
+    setArrivalErrors,
   } = useBookingContext()
 
   const {
@@ -89,7 +90,6 @@ const BookNowClient = () => {
   const [userDiscount, setUserDiscount] = useState('');
   const [isLoading, setISloading] = useState(false)
   const [paymentError, setPaymentError] = useState("");
-  // const [countryCode, setCountryCode] = useState('')
 
   const getUserDiscount = async () => {
     const guesApi = `${url}/discounts/get/1`
@@ -159,8 +159,15 @@ const BookNowClient = () => {
   const isArrivalDetailsAdded = () => {
     const flightNumber = bookingPayload?.booking?.flight_number || "";
     const arrivalCity = bookingPayload?.booking?.arrival_city || "";
+    const newErrors = {};
 
-    return flightNumber.trim() !== "" && arrivalCity.trim() !== "";
+    if (!flightNumber) newErrors.flight_number = "Flight number is required";
+    if (!arrivalCity) newErrors.arrival_city = "Arrival city is required";
+
+    setArrivalErrors(newErrors);
+
+    // Return true only if both are filled
+    return Object.keys(newErrors).length === 0;
   };
 
   const goToNewStep = (newIndex) => {
@@ -627,15 +634,14 @@ const BookNowClient = () => {
   };
 
   const handleBookNow = () => {
-    console.log("errors", errors)
     if (selectedTabIndex < 3) {
 
       if (activeShuttle !== 3 && selectedTabIndex === 0 && !isArrivalDetailsAdded()) {
         setTOustShow(true)
         setToustMessage("Please Fill Flight Number and Arrival City");
+        return
       } else if (selectedTabIndex === 2 && !isUserInfoFilled()) {
         setTOustShow(true)
-        console.log("func return", isUserInfoFilled())
         setToustMessage("Please Fill All The Information")
       } else if (activeShuttle === 3 && selectedTabIndex === 0) {
         setBookingPayload((prev) => ({
@@ -739,15 +745,6 @@ const BookNowClient = () => {
     setEmailModal(true);
   }
 
-  const applyDiscount = (price, discountPercent) => {
-    const numPrice = parseFloat(price);
-    const discount = parseFloat(discountPercent);
-
-    if (isNaN(numPrice) || isNaN(discount)) return price;
-
-    const discountedPrice = numPrice - (numPrice * (discount / 100));
-    return discountedPrice.toFixed(2); // keep 2 decimal places
-  };
 
   const getDiscountAmount = (price, discountPercent) => {
     const numPrice = parseFloat(price);
@@ -756,9 +753,6 @@ const BookNowClient = () => {
     if (isNaN(numPrice) || isNaN(discount)) return 0;
     return (numPrice * (discount / 100)).toFixed(2); // discount amount
   };
-
-
-
 
   return (
     <div className="book-now-page-main-container">
@@ -848,7 +842,6 @@ const BookNowClient = () => {
                   <div className='vehicle-details-section'>
                     <div className='vehicle-details'>
                       <h3>{bookingVehicleData.name}</h3>
-                      {/* <p>${bookingVehicleData.base_rate}/day x {totalDays} day</p> */}
                       {vehicleSesionData?.duration_discount !== 0 ? (
                         <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'start', width: 'auto', flexDirection: 'column' }}>
                           <del>NZ$ {vehicleSesionData?.was_price}</del>
@@ -905,7 +898,6 @@ const BookNowClient = () => {
                         <span key={index}>
                           <p>
                             {extra?.name}
-                            <FaQuestionCircle size={15} color='var(--primary-color)' className='booking-price-que' />
                           </p>
                           <h3>
                             NZ$ {rate ? rate.toFixed(2) : "0.00"}
@@ -931,7 +923,6 @@ const BookNowClient = () => {
                       <h3>NZ$ {getGrandTotal()}</h3>
                       <p>(Inclusive of GST)</p>
                     </span>
-                    {/* <h3>${Object.keys(insuranceSeleted).length > 0 ? bookingVehicleData.base_rate * totalDays + parseInt(insuranceSeleted?.rate) * totalDays : bookingVehicleData.base_rate * totalDays}</h3> */}
                   </div>
                   <div className='queries-section'>
                     <span onClick={() => handleOpenEmailEnquiry('email-qoute')}>

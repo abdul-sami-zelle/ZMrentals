@@ -90,7 +90,7 @@ const VerifyBooking = ({imageChange, manageBookingSteper, setManageBookingSteper
     <div className='verify-otp-main-contianer'>
       <div className='vehify-otp-heading-contianer'>
         <h3>Verification Code</h3>
-        <p>We sent you verifiction code on <strong>{maskEmail(bookingEmial)}</strong></p>
+        <p>We sent you verification code on <strong>{maskEmail(bookingEmial)}</strong></p>
       </div>
 
       <div className='verify-otp-inputs-contianer'>
@@ -114,7 +114,7 @@ const VerifyBooking = ({imageChange, manageBookingSteper, setManageBookingSteper
           ))}
         </div>
         <div className='verify-otp-timer'>
-          <span>recend code in: <strong>01: 00</strong></span>
+          <span>resend code in: <strong>01: 00</strong></span>
         </div>
       </div>
       <div className='verify-otp-button'>

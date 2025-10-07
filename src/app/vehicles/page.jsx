@@ -19,6 +19,9 @@ const Vehicles = () => {
   const [toustMessage, setToustMessage] = useState('')
 
   const [isPickupSelected, setIsPickupSelected] = useState(false)
+  useEffect(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }, [searchedVehicles]);
 
   const getAllVehicles = async () => {
     const api = `https://zm.skyhub.pk/cars/get`;

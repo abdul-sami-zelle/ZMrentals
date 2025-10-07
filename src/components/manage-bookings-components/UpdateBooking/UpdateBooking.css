@@ -309,6 +309,7 @@
     width: 100%;
     height: auto;
     gap: 20px;
+    overflow: visible;
 }
 
 .edit-driver-info-head {
@@ -344,6 +345,7 @@
     justify-content: start;
     gap: 20px;
     width: 100%;
+    overflow: unset;
 }
 
 .driver-list-single-item {
@@ -392,4 +394,83 @@
     height: auto;
     max-height: 2000px;
     padding: 15px;
+    gap: 15px;
+}
+
+
+.licence-issue-country-list-main-contianer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.licence-issue-country-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    
+    padding: 5px 15px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    height: 35px;
+    cursor: pointer;
+}
+
+.licence-issue-country-head > h3 {
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.licence-issue-country-list {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    height: 0;
+    max-height: 0;
+    border: 1px solid transparent;
+    background-color: transparent;
+    overflow: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.licence-issue-country-list::-webkit-scrollbar {
+    display: none;
+}
+
+.licence-issue-country-list.show-licence-country-list {
+    height: auto;
+    max-height: 160px;
+    border: 1px solid #afafaf;
+    background-color: #FFF;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+}
+
+.licence-country-list-item {
+    width: 100%;
+    padding: 5px 10px;
+    color: #000;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 400;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.licence-country-list-item:hover {
+    background-color: #961502;
+    color: #FFF;
 }

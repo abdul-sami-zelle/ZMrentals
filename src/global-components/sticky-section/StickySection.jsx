@@ -38,13 +38,11 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
         setSelectedPickupDate,
         selectedDropDate,
         setSelectedDropDate,
-        driverAge, 
+        driverAge,
         setDriverAge,
     } = useSearchVehicle();
 
-    const citiesList = [
-        'Mangere Auckland',
-    ]
+
 
     const driverAgeList = [
         { name: '21' }, { name: '22' }, { name: '23' }, { name: '24' }, { name: '25+' }
@@ -191,30 +189,32 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
 
     useEffect(() => {
         const handleOutsideClick = (event) => {
-            if(pickupCalanderRef.current && !pickupCalanderRef.current.contains(event.target)) {
+            if (pickupCalanderRef.current && !pickupCalanderRef.current.contains(event.target)) {
                 setPickupCalender(false);
             }
         }
-        document.addEventListener('mousedown' , handleOutsideClick)
-        return () => {document.removeEventListener('mousedown', handleOutsideClick)}
+        document.addEventListener('mousedown', handleOutsideClick)
+        return () => { document.removeEventListener('mousedown', handleOutsideClick) }
     }, [])
+
     useEffect(() => {
         const handleOutsideClick = (event) => {
-            if(dropupCalanderRef.current && !dropupCalanderRef.current.contains(event.target)) {
+            if (dropupCalanderRef.current && !dropupCalanderRef.current.contains(event.target)) {
                 setDropCalender(false);
             }
         }
-        document.addEventListener('mousedown' , handleOutsideClick)
-        return () => {document.removeEventListener('mousedown', handleOutsideClick)}
+        document.addEventListener('mousedown', handleOutsideClick)
+        return () => { document.removeEventListener('mousedown', handleOutsideClick) }
     }, [])
 
     // hook handles arrow keys + enter selection
-        useCalendarNavigation(pickupCalanderRef, pickupCalender, (el) => {
-            if (pickedDate) handlePickupDateChange(pickedDate);
-        });
-        useCalendarNavigation(dropupCalanderRef, dropCalender, (el) => {
-            if (pickedDate) handleDropDateChange(pickedDate);
-        });
+    useCalendarNavigation(pickupCalanderRef, pickupCalender, (el) => {
+        if (pickedDate) handlePickupDateChange(pickedDate);
+    });
+
+    useCalendarNavigation(dropupCalanderRef, dropCalender, (el) => {
+        if (pickedDate) handleDropDateChange(pickedDate);
+    });
 
     return (
         <div className='sticky-booking-form-main-contianer'>
@@ -387,39 +387,39 @@ const StickySection = ({ bgColor, textColor, textShadow, primaryButtonText, boxS
             <div className='sticky-booking-dates-find-car-button-contianer'>
                 <div className='sticky-booking-driver-age-and-button-container'>
                     <div className='sticky-driver-age-contianer'>
-                            <DropdownInput
-                        width={'100%'}
-                        height={'120px'}
-                        defaultValue={'Driver Age'}
-                        placeholder={'Driver Age'}
-                        setSelectedCity={handleDriverAge}
-                        data={driverAgeList}
-                        // type={'pick'}
-                        bgColor={bgColor}
-                        setClicktype={setClicktype}
-                        selectedValue={driverAge}
-                        setSelectedValue={setDriverAge}
-                        setHeight={setHeight}
-                    />
+                        <DropdownInput
+                            width={'100%'}
+                            height={'120px'}
+                            defaultValue={'Driver Age'}
+                            placeholder={'Driver Age'}
+                            setSelectedCity={handleDriverAge}
+                            data={driverAgeList}
+                            // type={'pick'}
+                            bgColor={bgColor}
+                            setClicktype={setClicktype}
+                            selectedValue={driverAge}
+                            setSelectedValue={setDriverAge}
+                            setHeight={setHeight}
+                        />
                     </div>
 
                     <div className='sticky-vehicle-book-btn'>
-                            <PrimaryButton
-                        handleCLick={handleSearchVehicles}
-                        primaryMainClass={'primary-button-main-class'}
-                        primaryText={primaryButtonText}
-                        primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}
-                        width={'220px'}
-                        height={'47px'}
-                        gap={'20px'}
-                        fontSize={'var(--font-body-lg)'}
-                        lineHeight={'var(--line-height-body)'}
-                        fontWeight={'var(--font-weight-bold)'}
-                    />
+                        <PrimaryButton
+                            handleCLick={handleSearchVehicles}
+                            primaryMainClass={'primary-button-main-class'}
+                            primaryText={primaryButtonText}
+                            primaryIcon={<GoArrowRight size={30} color='#fff' className='primary-icon' />}
+                            width={'220px'}
+                            height={'47px'}
+                            gap={'20px'}
+                            fontSize={'var(--font-body-lg)'}
+                            lineHeight={'var(--line-height-body)'}
+                            fontWeight={'var(--font-weight-bold)'}
+                        />
                     </div>
-                    
 
-                    
+
+
                 </div>
             </div>
         </div>

@@ -8,7 +8,8 @@ import { TbAirConditioning } from "react-icons/tb";
 import { HiUserGroup } from "react-icons/hi2";
 import { CiEdit } from "react-icons/ci";
 import { IoIosArrowDown } from "react-icons/io";
-
+import CarAvailabilityModal from '../CarAvailabilityModal/CarAvailabilityModal'
+ 
 const UpdateBooking = () => {
 
     // Get Vehicle data
@@ -45,7 +46,7 @@ const UpdateBooking = () => {
     });
 
     const handleGetVehicleData = async () => {
-        const api = `https://zm.skyhub.pk/booking/get/222`;
+        const api = `https://zm.skyhub.pk/booking/get/253`;
         try {
             const response = await axios.get(api);
             if (response.status === 200) {
@@ -86,13 +87,17 @@ const UpdateBooking = () => {
             console.error("UnExpected Server Error", error);
         }
     }
+
     useEffect(() => { handleGetVehicleData() }, [])
+
+
+    useEffect(() => { console.log("edit booking", editBookingPayload) }, [editBookingPayload])
 
     const carFeatures = [
         { id: 1, icon: GiGearStickPattern, value: `${vehicleData?.Car?.CarDetailAssociations[0]?.transmission}` },
-        { id: 1, icon: FaBluetoothB, value: `${vehicleData?.Car?.CarDetailAssociations[0]?.is_bluetooth_capable === true ? 'Yes' : 'No'}` },
-        { id: 1, icon: TbAirConditioning, value: `${vehicleData?.Car?.CarDetailAssociations[0]?.air_conditioned === true ? 'Yes' : 'No'}` },
-        { id: 1, icon: HiUserGroup, value: `${vehicleData?.Car?.CarDetailAssociations[0]?.passenger_capacity}` },
+        { id: 2, icon: FaBluetoothB, value: `${vehicleData?.Car?.CarDetailAssociations[0]?.is_bluetooth_capable === true ? 'Yes' : 'No'}` },
+        { id: 3, icon: TbAirConditioning, value: `${vehicleData?.Car?.CarDetailAssociations[0]?.air_conditioned === true ? 'Yes' : 'No'}` },
+        { id: 4, icon: HiUserGroup, value: `${vehicleData?.Car?.CarDetailAssociations[0]?.passenger_capacity}` },
     ]
 
     const [isHirerEditable, setIsHirerEditable] = useState(false);
@@ -114,6 +119,63 @@ const UpdateBooking = () => {
     const handleDriverIndex = (index) => {
         setDriverEdit((prev) => prev !== index ? index : null)
     }
+
+    const [showDriverAge, setShowDriverAge] = useState(false);
+    const driverAgeList = ['21', '22', '23', '24', '25+']
+
+    const handleDriverAge = () => {
+        setShowDriverAge(!showDriverAge);
+    }
+
+    function formatIsoDate(isoDate) {
+        const date = new Date(isoDate);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = String(date.getFullYear()).slice(-2); // last 2 digits
+        return `${day}-${month}-${year}`;
+    }
+
+    const [countriesList, setCountriesList] = useState([])
+    useEffect(() => {
+        const handleGetAllCountries = async () => {
+            try {
+                const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
+                const data = await res.json();
+
+
+
+                const formatted = data
+                    .map((item) => {
+                        const root = item.idd?.root || "";
+                        const suffix = item.idd?.suffixes?.[0] || "";
+                        return {
+                            country: item.name.common,
+                            code: root + suffix, // e.g. +92
+                        };
+                    })
+                    // sort alphabetically by country name
+                    .sort((a, b) => a.country.localeCompare(b.country));
+
+
+                setCountriesList(formatted);
+            } catch (err) {
+                console.error("Error fetching countries:", err);
+            }
+        };
+
+        handleGetAllCountries();
+    }, []);
+
+    const [showLLicenceCountry, setShowLicenceCountry] = useState(false);
+    const handleShowLicenceCountry = () => {
+        setShowLicenceCountry(!showLLicenceCountry)
+    }
+
+    const [showAvailabilitycheckModal, setShowAvailabilitycheckModal] = useState(false);
+    const handleShowAvailabilityCheckModal = () => {
+        setShowAvailabilitycheckModal(!showAvailabilitycheckModal);
+    }
+
 
     useEffect(() => { console.log("edit payload", editBookingPayload) }, [editBookingPayload])
 
@@ -145,7 +207,7 @@ const UpdateBooking = () => {
                     <div className='pick-drop-details-box'>
                         <div className='pick-drop-detial-head'>
                             <h3>Pick-up Location</h3>
-                            <button>
+                            <button onClick={handleShowAvailabilityCheckModal}>
                                 <CiEdit size={15} color='#000' />
                             </button>
                         </div>
@@ -164,7 +226,7 @@ const UpdateBooking = () => {
                     <div className='pick-drop-details-box'>
                         <div className='pick-drop-detial-head'>
                             <h3>Drop-off Location</h3>
-                            <button>
+                            <button onClick={handleShowAvailabilityCheckModal}>
                                 <CiEdit size={15} color='#000' />
                             </button>
                         </div>
@@ -274,19 +336,19 @@ const UpdateBooking = () => {
                     </div>
 
                     <div className='edit-drivers-list-contianer'>
-                        {Array.from({ length: 2 }).map((_, index) => (
+                        {editBookingPayload?.drivers && editBookingPayload?.drivers?.map((item, index) => (
                             <div className='driver-list-single-item'>
                                 <div className='driver-list-single-item-head' onClick={() => handleDriverIndex(index)}>
-                                    <h3>Driver Name</h3>
+                                    <h3>{item.driver_name}</h3>
                                     <IoIosArrowDown size={20} color='#000' />
                                 </div>
                                 <div className={`driver-list-single-item-inputs ${driverEdit === index ? 'edit-driver-detials' : ''}`}>
 
                                     <div className='hirer-info-two-columns'>
-                                       
+
                                         <div className='living-country'>
                                             <p>Date of birth</p>
-                                            <h3>20-01-1998</h3>
+                                            <h3>{formatIsoDate(item.driver_dob)}</h3>
                                         </div>
 
                                         <div className='living-country'>
@@ -295,6 +357,44 @@ const UpdateBooking = () => {
                                         </div>
 
                                     </div>
+                                    <div className='hirer-info-two-columns'>
+
+                                        <div className='living-country'>
+                                            <p>Licence Issuing Country</p>
+                                            <div className='licence-issue-country-list-main-contianer'>
+                                                <div className='licence-issue-country-head' onClick={handleShowLicenceCountry}>
+                                                    <h3>{item.license_country}</h3>
+                                                </div>
+                                                <div className={`licence-issue-country-list ${showLLicenceCountry ? 'show-licence-country-list' : ''}`}>
+                                                    {countriesList.map((item, index) => (
+                                                        <p key={index} className={`licence-country-list-item`}>{item.country}</p>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div className='living-country'>
+                                            <p>Licence Number</p>
+                                            <h3>{item.license_no}</h3>
+                                        </div>
+
+                                    </div>
+                                    <div className='hirer-info-two-columns'>
+
+                                        <div className='living-country'>
+                                            <p>Licence Expiry Date</p>
+                                            <h3>{formatIsoDate(item.license_expiry)}</h3>
+                                        </div>
+
+                                        <div className='living-country'>
+                                            <p>Living Country</p>
+                                            <h3>24</h3>
+                                        </div>
+
+                                    </div>
+
+
                                 </div>
                             </div>
                         ))}
@@ -302,6 +402,14 @@ const UpdateBooking = () => {
                 </div>
 
             </div>
+
+            <CarAvailabilityModal 
+                showModal={showAvailabilitycheckModal}
+                setShowModal={setShowAvailabilitycheckModal}
+                vehicleData={vehicleData}
+                editBookingPayload={editBookingPayload}
+                setEditBookingPayload={setEditBookingPayload}
+            />
 
         </div>
     )

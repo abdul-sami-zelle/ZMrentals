@@ -41,6 +41,8 @@ export const BookingProvider = ({ children }) => {
 
     const [errors, setErrors] = useState({});
 
+    const [arrivlaErrors, setArrivalErrors] = useState({})
+
     const validateForm = () => {
         const newErrors = {};
 
@@ -134,6 +136,8 @@ export const BookingProvider = ({ children }) => {
             setCountryCode,
             selectedCountryDetails, 
             setSelectedCountryDetails,
+            arrivlaErrors, 
+            setArrivalErrors,
         }}>
             {children}
         </BookingContext.Provider>

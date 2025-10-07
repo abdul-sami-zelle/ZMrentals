@@ -15,13 +15,14 @@ import MainLoader from '../loaders/MainLoader/MainLoader'
 import CarDetails from '@/components/car-details/CarDetails';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
 
 
 export default function Home() {
 
   const { loader } = useSearchVehicle()
-  const { searchedVehicles, isVehicleSearched, setIsVehicleSearched, setSearchedVehicles } = useSearchVehicle()
+  const { searchedVehicles, isVehicleSearched, setIsVehicleSearched, setSearchedVehicles, getCurrentFormattedHourInAuckland } = useSearchVehicle()
 
   const packageDescription = [
     `
@@ -120,6 +121,9 @@ export default function Home() {
       }
     
   }, []);
+
+  // const {getCurrentFormattedHourInAuckland} = useBookingContext();
+  // useEffect(() => {getCurrentFormattedHourInAuckland()}, [])
 
 
 

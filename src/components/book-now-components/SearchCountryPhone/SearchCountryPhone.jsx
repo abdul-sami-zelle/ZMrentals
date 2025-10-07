@@ -1,0 +1,183 @@
+import React, { useEffect, useRef, useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
+import { CiSearch } from "react-icons/ci";
+
+const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedCountryDetails, errors, bookingPayload, handleHirerDetailsAdd }) => {
+    const [showCountryCodeList, setShowCountryCodeList] = useState(false);
+    const [query, setQuery] = useState("");
+    const [filteredCountries, setFilteredCountries] = useState(countryList);
+    const [activeIndex, setActiveIndex] = useState(-1);
+
+    const countryCodeRef = useRef(null);
+    const searchRef = useRef(null);
+    const phoneInputRef = useRef(null);
+
+    // 🔍 Filter countries
+    useEffect(() => {
+        const lower = query.toLowerCase();
+        const filtered = countryList.filter(
+            (c) =>
+                c.country.toLowerCase().includes(lower) ||
+                c.code.toLowerCase().includes(lower)
+        );
+        setFilteredCountries(filtered);
+        setActiveIndex(filtered.length ? 0 : -1);
+    }, [query, countryList]);
+
+    // ✅ Select country + close + focus phone input
+    const handleSelectCountry = (item) => {
+        setSelectedCountryDetails(item);
+        setShowCountryCodeList(false);
+        setQuery("");
+        phoneInputRef.current?.focus();
+    };
+
+    // 🎹 Keyboard navigation inside dropdown
+    const handleKeyDown = (e) => {
+        if (!showCountryCodeList) return;
+
+        if (e.key === "ArrowDown") {
+            e.preventDefault();
+            setActiveIndex((prev) =>
+                prev < filteredCountries.length - 1 ? prev + 1 : 0
+            );
+        } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            setActiveIndex((prev) =>
+                prev > 0 ? prev - 1 : filteredCountries.length - 1
+            );
+        } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (activeIndex >= 0) handleSelectCountry(filteredCountries[activeIndex]);
+        } else if (e.key === "Escape") {
+            e.preventDefault();
+            setShowCountryCodeList(false);
+        }
+    };
+
+    // 🧭 Auto-focus search when dropdown opens
+    useEffect(() => {
+        if (showCountryCodeList) {
+            setTimeout(() => searchRef.current?.focus(), 50);
+        }
+    }, [showCountryCodeList]);
+
+    // ⚡ TAB from search → go to next field (not reopen dropdown)
+    const handleSearchKeyDown = (e) => {
+        if (e.key === "Tab") {
+            e.preventDefault();
+            setShowCountryCodeList(false);
+            // 👇 Move to next tabbable element after this component
+            const focusable = document.querySelectorAll(
+                'input, button, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+            const currentIndex = Array.from(focusable).indexOf(phoneInputRef.current);
+            if (focusable[currentIndex + 1]) focusable[currentIndex + 1].focus();
+        }
+    };
+
+    // ⚙️ FIX → Prevent reopening dropdown when tabbing out
+    const handleLabelFocus = (e) => {
+        // Only open dropdown when clicked or focused by keyboard directly (not tabbing from phone input)
+        const fromPhone = phoneInputRef.current && phoneInputRef.current === e.relatedTarget;
+        if (!fromPhone && !showCountryCodeList) {
+            setShowCountryCodeList(true);
+        }
+    };
+
+    const handleLabelBlur = (e) => {
+        // Close dropdown only if focus leaves entire component
+        if (!e.currentTarget.contains(e.relatedTarget)) {
+            setShowCountryCodeList(false);
+        }
+    };
+
+    return (
+        <label
+            ref={countryCodeRef}
+            tabIndex={0}
+            className="width-full-on-phone"
+            style={{
+                border: errors?.phone ? "1px solid red" : "1px solid transparent",
+            }}
+            onFocus={handleLabelFocus}
+            onBlur={handleLabelBlur}
+            onKeyDown={handleKeyDown}
+        >
+            Phone Number
+            <div className="hirer-phone-with-country-code">
+                <div
+                    className="country-code-dropdown"
+                    onClick={() => setShowCountryCodeList((prev) => !prev)}
+                >
+                    <p>
+                        {selectedCountryDetails?.code}{" "}
+                        <IoIosArrowDown size={17} color="rgba(204,204,204,1)" strokeWidth={5} />
+                    </p>
+                </div>
+
+                <input
+                    ref={phoneInputRef}
+                    type="text"
+                    name="phone"
+                    value={bookingPayload?.user?.phone}
+                    onChange={handleHirerDetailsAdd}
+                    placeholder="Enter phone"
+                    tabIndex={0}
+                    style={{ flex: 1 }}
+                    onFocus={() => setShowCountryCodeList(false)}
+                />
+            </div>
+
+            {showCountryCodeList && (
+                <div className="country-code-list show-country-code-list">
+                    <div className="country-code-drop-down-head">
+                        <h3>Selected</h3>
+                        <div className="country-code-selected-and-search">
+                            <span>
+                                <h3>{selectedCountryDetails?.country || "New Zealand"}</h3>
+                                <p>{selectedCountryDetails?.code || "+64"}</p>
+                            </span>
+                            <IoIosArrowDown size={17} color="rgba(204,204,204,1)" strokeWidth={5} />
+                        </div>
+                        <div className="country-code-search">
+                            <button type="button">
+                                <CiSearch size={25} color="#000" />
+                            </button>
+                            <input
+                                ref={searchRef}
+                                type="text"
+                                placeholder="search country"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                onKeyDown={handleSearchKeyDown}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="country-code-inner-list-contianer">
+                        {filteredCountries.map((item, index) => (
+                            <span
+                                key={index}
+                                tabIndex={-1}
+                                className={`country-code-inner-item ${
+                                    index === activeIndex ? "active-code" : ""
+                                }`}
+                                onClick={() => handleSelectCountry(item)}
+                                onMouseEnter={() => setActiveIndex(index)}
+                            >
+                                <p>{item.country}</p>
+                                <p className="country-code-list-item">
+                                    {item.code ? `(${item.code})` : ""}
+                                </p>
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </label>
+    );
+};
+
+export default CountryCodeDropdown;
+

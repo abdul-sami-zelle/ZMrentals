@@ -10,11 +10,13 @@ import StickySection from '../../global-components/sticky-section/StickySection'
 
 
 const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marginBottom = '50px', minHeight = 'auto' }) => {
-    const { searchVehiclePayload, setSearchedVehicles, setLoader, setIsVehicleSearched } = useSearchVehicle()
+    const { searchVehiclePayload, searchedVehicles, setSearchedVehicles, setLoader, setIsVehicleSearched } = useSearchVehicle()
     const router = useRouter()
     const [toustShow, setTOustShow] = useState(false)
     const [toustMessage, setToustMessage] = useState('')
     const [isPickupSelected, setIsPickupSelected] = useState(false);
+
+    
 
     const isValidDropDate = (pickup, drop) => {
         if (!pickup || !drop) return false; // both must exist
@@ -27,7 +29,7 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
 
 
         if (isValidDropDate(searchVehiclePayload?.pickup_time, searchVehiclePayload?.drop_time)) {
-                try {
+            try {
                 setLoader(true)
                 if (pickup_location && drop_location && pickup_time && drop_time) {
                     const response = await axios.post(api, searchVehiclePayload);
@@ -38,6 +40,13 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
                         setIsVehicleSearched(true)
                         sessionStorage.setItem('pick_and_drop_details', JSON.stringify(searchVehiclePayload));
                         router.push("/vehicles");
+
+
+                        window.scrollTo({
+                            top: 0,
+                            behavior: "smooth",
+                        });
+
                     } else {
                         setLoader(false)
                         console.warn(`[WARN] Unexpected status code: ${response.status}`);
@@ -80,7 +89,7 @@ const Hero = ({ bgImage, locationHeading, locationPara, dualHeading = true, marg
             setToustMessage("Please Select Valid Drop Off Date")
         }
 
-            
+
     };
 
 

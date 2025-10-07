@@ -93,7 +93,6 @@ const VehicleCard = (
   }
 
   const pathname = usePathname()
-  console.log(vehicleData)
 
 
   return (

@@ -87,10 +87,12 @@ const BookingForm = (
     };
 
     const handlePickupDateChange = (date) => {
+        console.log("date select", date)
         setSelectedPickupDate(date);
         formatePickupDateAndTime(date, pickupTime)
         setPickupCalender(false); // hide after selection
     };
+
 
     const handleDropDateChange = (date) => {
         setSelectedDropDate(date);
@@ -131,22 +133,22 @@ const BookingForm = (
     const formatePickupDateAndTime = (date, time) => {
         // Combine selected date and selected time
         const [hourMin, meridiem] = time?.split(" ");
-        let [hour, minute] = hourMin.split(":").map(Number);
+        let [hour, minute] = hourMin?.split(":").map(Number);
 
         if (meridiem === "PM" && hour !== 12) hour += 12;
         if (meridiem === "AM" && hour === 12) hour = 0;
 
         // Create a new Date object in New Zealand Time (NZT)
         const nzDateTime = new Date(Date.UTC(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate(),
+            date?.getFullYear(),
+            date?.getMonth(),
+            date?.getDate(),
             hour,
             minute
         ));
 
         // Convert the date to ISO string with Z (treated as UTC)
-        const formatted = nzDateTime.toISOString(); // gives: 2025-06-20T11:00:00.000Z
+        const formatted = nzDateTime?.toISOString(); // gives: 2025-06-20T11:00:00.000Z
         // Update your payload here:
         setSearchVehiclePayload(prev => ({
             ...prev,
