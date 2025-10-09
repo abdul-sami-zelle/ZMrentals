@@ -66,7 +66,6 @@ export const SearchVehicleProvider = ({ children }) => {
     useEffect(() => {
         if (typeof window === 'undefined') return
 
-        console.log("time val", pickupTime)
 
         if (!pickupTime && !dropupTime) {
             getCurrentFormattedHourInAuckland()

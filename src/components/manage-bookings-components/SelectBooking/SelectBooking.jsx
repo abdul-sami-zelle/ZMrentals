@@ -62,7 +62,6 @@ const SelectBooking = ({ manageBookingSteper, setManageBookingSteper, imageChane
 
         // if there are errors, stop here
         if (Object.keys(newErrors).length > 0) {
-            console.log("❌ Errors found:", newErrors);
             return;
         }
 

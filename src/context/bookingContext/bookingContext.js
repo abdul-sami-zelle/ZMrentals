@@ -111,7 +111,6 @@ export const BookingProvider = ({ children }) => {
     }, []);
 
 
-    // useEffect(() => {console.log("booking payload", bookingPayload)}, [bookingPayload])
 
     return (
         <BookingContext.Provider value={{

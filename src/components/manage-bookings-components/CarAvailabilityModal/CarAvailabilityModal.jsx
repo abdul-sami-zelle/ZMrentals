@@ -7,13 +7,16 @@ import axios from 'axios';
 import { useOutsideClick } from '../../../utils/DetectClickOutside';
 import Calendar from 'react-calendar';
 import { useDropdownNavigation } from '@/utils/keyPress';
+import useCalendarNavigation from '@/utils/calanderKeyPress';
+import MainLoader from '@/loaders/MainLoader/MainLoader';
 
 const CarAvailabilityModal = ({
     showModal,
     setShowModal,
     vehicleData,
+    setVehicleData,
     editBookingPayload,
-    setEditBookingPayload
+    setEditBookingPayload,
 }) => {
 
     const pickupResult = formatISODate(editBookingPayload?.booking?.pickup_time);
@@ -33,28 +36,45 @@ const CarAvailabilityModal = ({
     const [timeLlistShow, setTimeListShow] = useState(false);
     const [dropTimeListShow, setDropTimeList] = useState(false);
     const [carAvailablilityCheck, setCarAvailabilityCheck] = useState('');
+    const [loading, setLoading] = useState(false)
+    
 
     const pickupLocationRef = useRef();
     const dropoffLocationRef = useRef();
     const pickupTimeRef = useRef();
     const dropoffTimeRef = useRef();
+    const pickupDateRef = useRef();
+    const dropoffDateRef = useRef();
 
     useOutsideClick(pickupLocationRef, () => setShowPickupList(false));
     useOutsideClick(dropoffLocationRef, () => setShowDropList(false));
     useOutsideClick(pickupTimeRef, () => setTimeListShow(false));
     useOutsideClick(dropoffTimeRef, () => setDropTimeList(false));
+    useOutsideClick(pickupDateRef, () => setPickupCalender(false));
+    useOutsideClick(dropoffDateRef, () => setDropDateCalender(false));
 
     const pickLocationIndex = useDropdownNavigation(pickupLocationRef, showPickupList, 'pick-up-location-item')
     const dropLocationIndex = useDropdownNavigation(dropoffLocationRef, showDropList, 'drop-location-item')
     const pickuptimeIndex = useDropdownNavigation(pickupTimeRef, timeLlistShow, 'pick-up-time-item')
     const dropoffTimeIndex = useDropdownNavigation(dropoffTimeRef, dropTimeListShow, 'drop-off-time-item')
 
+    useCalendarNavigation(pickupDateRef, pickupCalender, (el) => {
+        if (pickupCalender) handlePickupDateChange(pickupCalender);
+    });
+    useCalendarNavigation(dropoffDateRef, dropDateCalander, (el) => {
+        if (dropDateCalander) handleDropDateChange(dropDateCalander);
+    });
+
     const getApi = async () => {
+        setLoading(true)
         try {
             const response = await axios.get(`https://zm.skyhub.pk/locations/get`);
             setLocations(response.data.data);
         } catch (error) {
             console.error(error);
+            setLoading(false)
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -223,13 +243,64 @@ const CarAvailabilityModal = ({
         }));
     };
 
-    const handleCheckAvailability = () => setCarAvailabilityCheck('yes');
+    const [updatedVehicleData, setUpdatedVehilceData] = useState({})
+    const handleCheckAvailability = async () => {
+        const api = `${url}/cars/specific-available-car`
+
+        const availabilityObj = {
+            pickup_location: editBookingPayload?.booking?.pickup_location,
+            drop_location: editBookingPayload?.booking?.drop_location,
+            pickup_time: editBookingPayload?.booking?.pickup_time,
+            drop_time: editBookingPayload?.booking?.drop_time,
+            driver_age: "24",
+            car_id: editBookingPayload?.booking?.car_id
+        }
+
+        console.log("availability obj", availabilityObj)
+        setLoading(true)
+        try {
+            const response = await axios.post(api, availabilityObj)
+            if(response.status === 200) {
+                if(response.data.available === 1) {
+                    setUpdatedVehilceData(response.data)
+                    setCarAvailabilityCheck('yes');
+                } else {
+                    setCarAvailabilityCheck('no');
+                }
+            }
+            console.log("availability response", response)
+        } catch (error) {
+            console.error("UnExpected server error", error);
+            setLoading(false)
+        } finally {
+            setLoading(false)
+        }
+
+        
+    }
     const handleCloseModal = () => setShowModal(false);
 
-    useEffect(() => { console.log("edit booking data change", editBookingPayload) })
+    const handleRecheckAvailability = () => {
+        setCarAvailabilityCheck('')
+    }
+
+
+    const handleUpdateBookingTiming = () => {
+        setVehicleData((prev) => ({
+            ...prev,
+            rates: updatedVehicleData?.daily_rates,
+            car_rates: updatedVehicleData?.sub_total,
+            discount_amount: updatedVehicleData?.discounts?.value,
+            discount_percent: updatedVehicleData?.discounts?.percent,
+            off_hour_charges: updatedVehicleData?.off_hour_charges
+        }))
+        setShowModal(false)
+    }
+
 
     return (
         <div className={`car-available-modal-main-contianer ${showModal ? 'show-car-available-modal' : ''}`} onClick={handleCloseModal}>
+            
             <div className={`car-available-modal-inner ${showModal ? 'show-car-available-inner-modal' : ''}`} onClick={(e) => e.stopPropagation()}>
                 <div className='car-available-modal-head'>
                     <h3>Edit Car Information</h3>
@@ -265,7 +336,7 @@ const CarAvailabilityModal = ({
                             </div>
 
                             <div className='pick-up-location-time-and-date'>
-                                <div className='pick-up-location-date'>
+                                <div ref={pickupDateRef} className='pick-up-location-date'>
                                     <p>Date</p>
                                     <h3 onClick={handlePickupDateCalender}>{pickupResult.date}</h3>
                                     {pickupCalender && (
@@ -318,7 +389,7 @@ const CarAvailabilityModal = ({
                             </div>
 
                             <div className='pick-up-location-time-and-date'>
-                                <div className='pick-up-location-date'>
+                                <div ref={dropoffDateRef} className='pick-up-location-date'>
                                     <p>Date</p>
                                     <h3 onClick={handleDropDateCalender}>{dropoffResult.date}</h3>
                                     {dropDateCalander && (
@@ -357,6 +428,7 @@ const CarAvailabilityModal = ({
 
                 {/* Availability Check */}
                 <div className='available-or-not-contianer'>
+                    {carAvailablilityCheck !== '' && <button className='recheck-availability' onClick={handleRecheckAvailability}><CgCloseO size={20} color='#000' /></button>}
                     {carAvailablilityCheck === '' ? (
                         <div className='car-availability-check-button-contianer'>
                             <h3 onClick={handleCheckAvailability}>Check Availability</h3>
@@ -368,7 +440,7 @@ const CarAvailabilityModal = ({
                     )}
                 </div>
 
-                <button className={`check-availability-button ${carAvailablilityCheck === 'yes' ? 'active-availability' : ''}`}>Save</button>
+                <button onClick={handleUpdateBookingTiming} className={`check-availability-button ${carAvailablilityCheck === 'yes' ? 'active-availability' : ''}`}>Save</button>
             </div>
         </div>
     );

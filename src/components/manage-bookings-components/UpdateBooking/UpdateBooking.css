@@ -2,11 +2,11 @@
     position: relative;
     display: flex;
     align-items: stretch;
-    justify-content: space-between;
+    justify-content: start;
     gap: 10px;
     width: 70vw;
-    height: 100%;
-    flex: 1;
+    height: 70vh;
+    /* flex: 1; */
     /* max-width: 1230px; */
     background-color: #FFF;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -20,9 +20,9 @@
     gap: 30px;
     align-items: start;
     justify-content: space-between;
-    padding: 25px 0;
+    padding: 0;
     width: 50%;
-    border-radius: 25px;
+    /* border-radius: 25px; */
     overflow: hidden;
 }
 
@@ -184,9 +184,10 @@
     gap: 20px;
     align-items: start;
     justify-content: space-between;
-    padding: 25px 0;
+    padding: 0;
     width: 50%;
-    border-radius: 25px;
+    height: 100%;
+    /* border-radius: 25px; */
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -260,14 +261,293 @@
     color: #000;
 }
 
+
+
 .hirer-info-two-columns > label > input {
     width: 100%;
     height: 35px;
     padding: 5px 15px;
-    border: 1px solid #000;
+    border: 1px solid #afafaf;
     border-radius: 5px;
     outline: none;
 }
+
+/* living country dropdown */
+.edit-booking-living-country {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 50%;
+    gap: 5px;
+    position: relative;
+}
+
+.edit-booking-living-country > p {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.edit-booking-living-country-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px 15px;
+    border: 1px solid #afafaf;
+    border-radius: 5px;
+    width: 100%;
+    height: 35px;
+    cursor: pointer;
+}
+
+.edit-booking-living-country-head > h3 {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.edit-booking-living-country-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid transparent;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: 0;
+    max-height: 0;
+    overflow: hidden;
+    z-index: 999999;
+    transition: all 0.3s ease-in-out;
+
+}
+
+.edit-booking-living-country-dropdown::-webkit-scrollbar {
+    display: none;
+}
+
+.edit-booking-living-country-dropdown.show-living-country-list {
+    height: auto;
+    max-height: 220px;
+    background-color: #FFF;
+    border: 1px solid #afafaf;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.living-country-list-item {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+    background-color: transparent;
+    width: 100%;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.living-country-list-item:hover {
+    background-color: #961502;
+    color: #FFF;
+}
+.living-country-list-item.active-country-list-item{
+    background-color: #961502;
+    color: #FFF;
+}
+
+/* Living country dropdown end */
+
+/* Find us */
+
+.edit-how-you-find-us {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 50%;
+    gap: 5px;
+    position: relative;
+}
+
+.edit-how-you-find-us > p {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.edit-how-you-find-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px 15px;
+    border: 1px solid #afafaf;
+    border-radius: 5px;
+    width: 100%;
+    height: 35px;
+    cursor: pointer;
+}
+
+.edit-how-you-find-head> h3 {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.edit-how-you-find-list {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid transparent;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: 0;
+    max-height: 0;
+    overflow: hidden;
+    z-index: 999999;
+    transition: all 0.3s ease-in-out;
+}
+
+.edit-how-you-find-list::-webkit-scrollbar {
+    display: none;
+}
+
+.edit-how-you-find-list.show-how-find-us {
+    height: auto;
+    max-height: 220px;
+    background-color: #FFF;
+    border: 1px solid #afafaf;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.edit-where-found-item {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+    background-color: transparent;
+    width: 100%;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.edit-where-found-item:hover {
+    background-color: #961502;
+    color: #FFF;
+}
+.edit-where-found-item.active-find-us-item{
+    background-color: #961502;
+    color: #FFF;
+}
+
+/* Find us end */
+
+/* Visit Perpose */
+
+.visit-perpose-dropdown-main {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 50%;
+    gap: 5px;
+    position: relative;
+}
+
+.visit-perpose-dropdown-main > p {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.visit-perpose-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px 15px;
+    border: 1px solid #afafaf;
+    border-radius: 5px;
+    width: 100%;
+    height: 35px;
+    cursor: pointer;
+}
+
+.visit-perpose-head > h3 {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.visit-perpose-list {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid transparent;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: 0;
+    max-height: 0;
+    overflow: hidden;
+    z-index: 999999;
+    transition: all 0.3s ease-in-out;
+}
+
+.visit-perpose-list::-webkit-scrollbar {
+    display: none;
+}
+
+.visit-perpose-list.show-visit-perpose {
+    height: auto;
+    max-height: 220px;
+    background-color: #FFF;
+    border: 1px solid #afafaf;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.visit-perpose-item {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+    background-color: transparent;
+    width: 100%;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.visit-perpose-item:hover {
+    background-color: #961502;
+    color: #FFF;
+}
+
+.visit-perpose-item.active-visit-perpose {
+    background-color: #961502;
+    color: #FFF;
+}
+
+/* End Visit Perpose */
 
 .living-country {
     display: flex;
@@ -286,18 +566,38 @@
 }
 
 .living-country > h3 {
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.2;
-    font-weight: 500;
+    font-weight: 400;
     color: #000;
     padding: 5px 15px;
-    border: 1px solid #000;
+    border: 1px solid #afafaf;
     border-radius: 5px;
     width: 100%;
     height: 35px;
     display: flex;
     align-items: center;
     justify-content: start;
+}
+
+.hirer-info-update-button-contianer {
+    display: flex;
+    width: 100%;
+    align-items: end;
+    justify-content: end;
+    margin-top: 15px;
+}
+
+.hirer-info-update-button-contianer > button {
+    background-color: #961502;
+    padding: 10px 20px;
+    border: 1px solid #961502;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #FFF;
+    width: max-content;
 }
 
 /* Driver info */
@@ -343,7 +643,7 @@
     flex-direction: column;
     align-items: start;
     justify-content: start;
-    gap: 20px;
+    gap: 10px;
     width: 100%;
     overflow: unset;
 }
@@ -366,17 +666,28 @@
     justify-content: space-between;
     width: 100%;
     gap: 10px;
-    padding: 15px;
+    height: 35px;
+    padding: 5px 15px;
     cursor: pointer;
 }
 
-.driver-list-single-item > h3 {
-    font-size: 15px;
+.driver-list-single-item-head > h3 {
+    font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
 }
 
+.driver-view-or-adit-contianer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: max-content;
+    height: 100%;
+    gap: 15px;
+}
+
+/* 
 .driver-list-single-item-inputs {
     display: flex;
     flex-direction: column;
@@ -473,4 +784,340 @@
 .licence-country-list-item:hover {
     background-color: #961502;
     color: #FFF;
+} */
+
+
+/* Insurances Styling */
+
+.insurance-main-contianer {
+    display: flex;
+    /* flex-direction: column; */
+    align-items: start;
+    justify-content: start;
+    width: 100%;
 }
+
+.car-insurance-head {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+}
+
+.car-insurance-head> h3 {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.insurance-content-sec > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #000;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 5px;
+}
+
+.insurance-content-sec {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: max-content;
+    flex-shrink: 0;
+}
+
+.car-insurance-head> span {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 5px;
+    width: 100%;
+}
+
+.car-insurance-head > span > h3 {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+.car-insurance-head > span > p {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.car-insurance-head > p {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+
+
+/* Inusrances End */
+
+
+/* Summary */
+
+.summary-main-contianer {
+    display: flex;
+    align-self: stretch;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+
+}
+
+.summary-extras-and-signature {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 50%;
+    gap: 10px;
+
+}
+
+.extras-count-container {
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #afafaf;
+    border-radius: 5px;
+}
+
+.extras-count-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    border-bottom: 1px solid #afafaf;
+    padding-bottom: 10px;
+}
+
+.extras-count-head > h3 {
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.extras-count-option-contianer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 15px;
+    width: 100%;
+    max-height: 75px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.extras-count-option-contianer::-webkit-scrollbar {
+    display: none;
+}
+
+.extras-count-option-contianer > span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+}
+
+.extras-count-option-contianer > span > h3 {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.extras-count-option-contianer > span > p {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.summary-signature-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* height: 75px; */
+    height: 100%;
+    border: 1px solid #afafaf;
+    border-radius: 5px;
+}
+
+.summary-signature-option > p {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.summary-total-section {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    gap: 10px;
+    border: 1px solid #afafaf;
+    border-radius: 5px;
+}
+
+.summary-total-section > h3 {
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+    display: flex;
+    width: 100%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #afafaf;
+}
+
+.summary-values-and-totals {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 10px;
+}
+
+.summary-values-and-totals > span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+}
+
+.summary-values-and-totals > span > p {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.summary-values-and-totals > span > h3 {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+/* Summary */
+
+
+/* Extras Feature */
+
+.extras-main-contianer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 10px;
+}
+
+.extras-head-contianer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.extras-head-contianer > h3 {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.extras-head-contianer > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #000;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 5px;
+}
+
+.extras-selected-options-contianer{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 10px;
+}
+
+.extra-selected-single-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.extra-selected-single-option > h3 {
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.extra-selected-option-quantity-and-total {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: max-content;
+}
+
+.extra-selected-option-quantity-and-total > span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: max-content;
+}
+
+.extra-selected-option-quantity-and-total > span > p {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.extra-selected-option-quantity-and-total > span > h3 {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+/* Extras Feature Value */

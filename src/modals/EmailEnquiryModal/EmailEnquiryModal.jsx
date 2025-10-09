@@ -141,11 +141,11 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
             try {
                 const response = await axios.post(api, qoutePayload);
             } catch (error) {
-                console.log("UnExpected Server Error", error)
+                console.error("UnExpected Server Error", error)
             }
         } else {
             // ❌ Some fields missing
-            console.log("Please fill all required fields");
+            console.error("Please fill all required fields");
         }
     };
 

@@ -79,7 +79,6 @@ const LisenceTab = () => {
         }
       })
 
-      console.log("licence update response", response)
     } catch (error) {
       setLoading(false)
       console.error("UnExpected Server Error", error);

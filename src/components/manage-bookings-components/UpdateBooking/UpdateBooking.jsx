@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './UpdateBooking.css'
 import axios from 'axios';
 import { url } from '@/utils/services';
@@ -9,12 +9,26 @@ import { HiUserGroup } from "react-icons/hi2";
 import { CiEdit } from "react-icons/ci";
 import { IoIosArrowDown } from "react-icons/io";
 import CarAvailabilityModal from '../CarAvailabilityModal/CarAvailabilityModal'
- 
+import { useOutsideClick } from '@/utils/DetectClickOutside';
+import { useDropdownNavigation } from '@/utils/keyPress';
+import InsuranceUpdateModal from '../InsuranceUpdateModal/InsuranceUpdateModal';
+import ExtrasUpdateModal from '../ExtrasUpdateModal/ExtrasUpdateModal'
+import { GoPlus } from "react-icons/go";
+import { FaEye } from "react-icons/fa";
+import EditDriverModal from '../EdtiDriverModal/EditDriverModal'
+import MainLoader from '@/loaders/MainLoader/MainLoader';
+
 const UpdateBooking = () => {
 
+
+
     // Get Vehicle data
+    const [loading, setLoading] = useState(false)
     const [vehicleData, setVehicleData] = useState([]);
     const [driverEdit, setDriverEdit] = useState(null)
+    const [showLivingCountry, setShowLivingCountry] = useState(false)
+    const [howFind, setHowFind] = useState(false);
+    const [showVisitPerpose, setShowVisitPerpose] = useState(false)
     const [editBookingPayload, setEditBookingPayload] = useState({
         booking: {
             car_id: null,
@@ -45,8 +59,35 @@ const UpdateBooking = () => {
         }
     });
 
+    const livingCountryRef = useRef();
+    const howFindusRef = useRef();
+    const visitPerposeRef = useRef();
+
+    useOutsideClick(livingCountryRef, () => setShowLivingCountry(false));
+    useOutsideClick(howFindusRef, () => setHowFind(false));
+    useOutsideClick(visitPerposeRef, () => setShowVisitPerpose(false));
+
+    const livingCountryIndex = useDropdownNavigation(livingCountryRef, showLivingCountry, 'living-country-list-item')
+    const HowFindIndex = useDropdownNavigation(howFindusRef, howFind, 'edit-where-found-item')
+    const visitPerposeIndex = useDropdownNavigation(visitPerposeRef, showVisitPerpose, 'visit-perpose-item')
+
+    const [locations, setLocations] = useState([])
+    const getApi = async () => {
+        try {
+            const response = await axios.get(`https://zm.skyhub.pk/locations/get`);
+            setLocations(response.data.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        getApi();
+    }, []);
+
     const handleGetVehicleData = async () => {
         const api = `https://zm.skyhub.pk/booking/get/253`;
+        setLoading(true)
         try {
             const response = await axios.get(api);
             if (response.status === 200) {
@@ -76,22 +117,19 @@ const UpdateBooking = () => {
                         travel_reason: response.data.data.user.travel_reason
                     },
                     drivers: response.data.data.drivers,
-                    // signature: {
-                    //     signature_image: response?.data?.data?.signature[0]?.signature_image || ''
-                    // }
                     signature: response.data.data.signature || []
                 })
             }
-            console.log("response", response.data.data)
         } catch (error) {
             console.error("UnExpected Server Error", error);
+            setLoading(false);
+        } finally {
+            setLoading(false)
         }
     }
 
     useEffect(() => { handleGetVehicleData() }, [])
 
-
-    useEffect(() => { console.log("edit booking", editBookingPayload) }, [editBookingPayload])
 
     const carFeatures = [
         { id: 1, icon: GiGearStickPattern, value: `${vehicleData?.Car?.CarDetailAssociations[0]?.transmission}` },
@@ -176,14 +214,173 @@ const UpdateBooking = () => {
         setShowAvailabilitycheckModal(!showAvailabilitycheckModal);
     }
 
+    const [pickupDetails, setPickupDetails] = useState({})
+    const [dropupDetails, setDropUpDetails] = useState({})
+    function formatDate(dateString) {
+        const date = new Date(dateString);
 
-    useEffect(() => { console.log("edit payload", editBookingPayload) }, [editBookingPayload])
+        // Get day with suffix
+        const day = date.getUTCDate();
+        const suffix =
+            day % 10 === 1 && day !== 11
+                ? "st"
+                : day % 10 === 2 && day !== 12
+                    ? "nd"
+                    : day % 10 === 3 && day !== 13
+                        ? "rd"
+                        : "th";
+
+        // Get month name
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const month = monthNames[date.getUTCMonth()];
+
+        // Get time
+        const hours = date.getUTCHours().toString().padStart(2, "0");
+        const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+        const seconds = date.getUTCSeconds().toString().padStart(2, "0");
+        const time = `${hours}:${minutes}:${seconds}`;
+
+        return { day, suffix, month, time };
+    }
+
+    useEffect(() => {
+        const { day, suffix, month, time } = formatDate(editBookingPayload.booking.pickup_time)
+        setPickupDetails({
+            pickDate: day,
+            pickSuffix: suffix,
+            pickMonth: month,
+            pickTime: time
+        })
+
+    }, [editBookingPayload])
+
+    useEffect(() => {
+        const { day, suffix, month, time } = formatDate(editBookingPayload.booking.drop_time);
+        setDropUpDetails({
+            dropDate: day,
+            dropSuffix: suffix,
+            dropMonth: month,
+            dropTime: time
+        })
+    }, [editBookingPayload])
+
+    const handleLivingRoom = (item) => {
+        setEditBookingPayload((prev) => ({
+            ...prev,
+            user: {
+                ...prev.user,
+                country: item.country
+
+            }
+        }))
+        setShowLivingCountry(false)
+    }
+
+    const whereFindUs = [
+        'Google',
+        'Facebook',
+        'Instagram',
+        'Tiktok',
+        'Friends referral',
+        'Other',
+    ]
+
+    const handleHowFindUsItem = (item) => {
+
+        setEditBookingPayload((prev) => ({
+            ...prev,
+            user: {
+                ...prev.user,
+                how_find_us: item
+            }
+        }))
+        setHowFind(false)
+    }
+
+    const perposes = ['Leisure', 'Business', 'Other']
+    const handleSetVisitPerpose = (item) => {
+        setEditBookingPayload((prev) => ({
+            ...prev,
+            user: {
+                ...prev.user,
+                travel_reason: item
+            }
+        }))
+        setShowVisitPerpose(false);
+    }
+
+    // Driver Functionality
+    const [selectedDriver, setSelectedDriver] = useState({})
+    const [showDriverEdit, setShowDriverEdit] = useState(false)
+
+    const handleDriverEditModal = (item) => {
+        setShowDriverEdit(true)
+        setSelectedDriver(item)
+    }
+
+    const handleDetails = (item) => {
+        console.log("driver item", item);
+        setSelectedDriver(item)
+    }
 
 
+
+
+    const [insuranceModal, setInsuranceModal] = useState(false);
+    const handleUpdateInsurance = () => {
+        setInsuranceModal(true)
+    }
+
+
+    const handleExtrasTotal = () => {
+        const extrasPrices = [];
+
+        let extrasTotal = 0
+
+        editBookingPayload?.booking?.extras.map((item, index) => {
+            extrasPrices.push(parseFloat(item.rate) * vehicleData?.rates?.length)
+        })
+
+        extrasPrices.map((item) => {
+            extrasTotal += parseFloat(item)
+        })
+
+        return extrasTotal
+    }
+
+    const handleGrandTotal = () => {
+
+        const extraArray = []
+        let extraValues = 0
+        editBookingPayload?.booking?.extras?.map((item, index) => {
+            extraArray.push(parseFloat(item.rate) * vehicleData?.rates?.length)
+        })
+        extraArray.map((item) => {
+            extraValues += parseFloat(item)
+        })
+
+        const carRates = vehicleData?.car_rates;
+        const discount = vehicleData?.discount_amount;
+        const subTotal = parseFloat(carRates) - parseFloat(discount);
+        const offHourCharges = vehicleData?.off_hour_charges;
+        const insuranceTotal = vehicleData?.insurances ? parseFloat(vehicleData?.insurances[0]?.CarInsurancePricing?.rate) * vehicleData?.rates?.length : 0
+        
+        const grandTotal = parseFloat(subTotal) + parseFloat(offHourCharges) + parseFloat(insuranceTotal) + parseFloat(extraValues)
+        
+        return grandTotal
+    }
+
+
+
+
+    useEffect(() => { console.log("vehicle data payload", vehicleData) }, [vehicleData])
 
     return (
         <div className='booking-edit-main-continair'>
-
+            {loading && <MainLoader />}
             <div className='edit-booking-left-sec'>
 
                 <div className='edit-booking-vehicle-image-and-name'>
@@ -211,15 +408,15 @@ const UpdateBooking = () => {
                                 <CiEdit size={15} color='#000' />
                             </button>
                         </div>
-                        <h3 className='pick-drop-location'>Auckland</h3>
+                        <h3 className='pick-drop-location'>{locations.find((item) => item.id === editBookingPayload?.booking?.pickup_location)?.name}</h3>
                         <div className='pick-drop-time-and-date'>
                             <span className='pick-drop-date-and-month'>
-                                <h3>3</h3>
-                                <p>rd</p>
-                                <h3>October</h3>
+                                <h3>{pickupDetails.pickDate}</h3>
+                                <p>{pickupDetails.pickSuffix}</p>
+                                <h3>{pickupDetails.pickMonth}</h3>
                             </span>
                             <div className='pick-drop-time-date-saprator'></div>
-                            <h3>10: 00 AM</h3>
+                            <h3>{pickupDetails.pickTime}</h3>
                         </div>
                     </div>
 
@@ -230,15 +427,15 @@ const UpdateBooking = () => {
                                 <CiEdit size={15} color='#000' />
                             </button>
                         </div>
-                        <h3 className='pick-drop-location'>Auckland</h3>
+                        <h3 className='pick-drop-location'>{locations.find((item) => item.id === editBookingPayload?.booking?.drop_location)?.name}</h3>
                         <div className='pick-drop-time-and-date'>
                             <span className='pick-drop-date-and-month'>
-                                <h3>3</h3>
-                                <p>rd</p>
-                                <h3>October</h3>
+                                <h3>{dropupDetails.dropDate}</h3>
+                                <p>{dropupDetails.dropSuffix}</p>
+                                <h3>{dropupDetails.dropMonth}</h3>
                             </span>
                             <div className='pick-drop-time-date-saprator'></div>
-                            <h3>10: 00 AM</h3>
+                            <h3>{dropupDetails.dropTime}</h3>
                         </div>
                     </div>
 
@@ -249,15 +446,17 @@ const UpdateBooking = () => {
             <div className='edit-booking-left-right'>
 
                 <div className='edit-hirer-details-main-container'>
+
                     <div className='hirer-info-head'>
                         <h3>Hirer Information</h3>
                         <button onClick={handleHirerAdit}>
                             <CiEdit size={15} color='#000' />
                         </button>
                     </div>
+
                     <div className='hirer-info-inputs'>
-                        <div className='hirer-info-two-columns'>
-                            <label>
+                        <div className={`hirer-info-two-columns `}>
+                            <label style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
                                 First Name
                                 <input
                                     type='text'
@@ -267,7 +466,7 @@ const UpdateBooking = () => {
                                     readOnly={!isHirerEditable}
                                 />
                             </label>
-                            <label>
+                            <label style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
                                 Last Name
                                 <input
                                     type='text'
@@ -280,18 +479,34 @@ const UpdateBooking = () => {
                         </div>
 
                         <div className='hirer-info-two-columns'>
-                            <div className='living-country'>
-                                <p>Which country do you live</p>
-                                <h3>{editBookingPayload?.user?.country}</h3>
-                            </div>
-                            <label>
+                            {isHirerEditable ? (
+                                <div ref={livingCountryRef} className='edit-booking-living-country'>
+                                    <p>Which country do you live</p>
+                                    <div className='edit-booking-living-country-head' onClick={() => setShowLivingCountry(!showLivingCountry)}>
+                                        <h3>{editBookingPayload?.user?.country}</h3>
+                                        <IoIosArrowDown size={20} color='#000' />
+                                    </div>
+                                    <div className={`edit-booking-living-country-dropdown ${showLivingCountry ? 'show-living-country-list' : ''}`}>
+                                        {countriesList.map((item, index) => (
+                                            <p key={index} className={`living-country-list-item ${livingCountryIndex === index ? 'active-country-list-item' : ''} `} onClick={() => handleLivingRoom(item)}>{item.country}</p>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className='living-country' style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
+                                    <p>Which country do you live</p>
+                                    <h3>{editBookingPayload?.user?.country}</h3>
+                                </div>
+                            )}
+
+                            <label style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
                                 Email
                                 <input type='text' readOnly name='email' value={editBookingPayload?.user?.email} />
                             </label>
                         </div>
 
                         <div className='hirer-info-two-columns'>
-                            <label>
+                            <label style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
                                 Phone Number
                                 <input
                                     type='text'
@@ -301,7 +516,7 @@ const UpdateBooking = () => {
                                     readOnly={!isHirerEditable}
                                 />
                             </label>
-                            <label>
+                            <label style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
                                 Local Phone
                                 <input
                                     type='text'
@@ -314,24 +529,68 @@ const UpdateBooking = () => {
                         </div>
 
                         <div className='hirer-info-two-columns'>
-                            <div className='living-country'>
-                                <p>How did you find us?</p>
-                                <h3>{editBookingPayload?.user?.how_find_us}</h3>
-                            </div>
-                            <div className='living-country'>
-                                <p>Purpose of visit</p>
-                                <h3>{editBookingPayload?.user?.travel_reason}</h3>
-                            </div>
-                        </div>
+                            {isHirerEditable ? (
+                                <div ref={howFindusRef} className='edit-how-you-find-us'>
+                                    <p>How did you find us?</p>
+                                    <div className='edit-how-you-find-head' onClick={() => setHowFind(!howFind)}>
+                                        <h3>{editBookingPayload?.user?.how_find_us}</h3>
+                                        <IoIosArrowDown size={20} color='#000' />
+                                    </div>
+                                    <div className={`edit-how-you-find-list ${howFind ? 'show-how-find-us' : ''}`}>
+                                        {whereFindUs.map((item, index) => (
+                                            <p key={index} className={`edit-where-found-item ${HowFindIndex === index ? 'active-find-us-item' : ''}`} onClick={() => handleHowFindUsItem(item)} >{item}</p>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className='living-country' style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
+                                    <p>How did you find us?</p>
+                                    <h3>{editBookingPayload?.user?.how_find_us}</h3>
+                                </div>
+                            )}
 
+                            {isHirerEditable ? (
+                                <div ref={visitPerposeRef} className='visit-perpose-dropdown-main'>
+                                    <p>Purpose of visit</p>
+                                    <div className='visit-perpose-head' onClick={() => setShowVisitPerpose(!showVisitPerpose)}>
+                                        <h3>{editBookingPayload?.user?.travel_reason}</h3>
+                                        <IoIosArrowDown size={20} color='#000' />
+                                    </div>
+                                    <div className={`visit-perpose-list ${showVisitPerpose ? 'show-visit-perpose' : ''}`}>
+                                        {perposes.map((item, index) => (
+                                            <p
+                                                key={index}
+                                                className={`visit-perpose-item ${visitPerposeIndex === index ? 'active-visit-perpose' : ''}`}
+                                                onClick={() => handleSetVisitPerpose(item)}
+                                            >
+                                                {item}
+                                            </p>
+                                        ))}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className='living-country' style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
+                                    <p>Purpose of visit</p>
+                                    <h3>{editBookingPayload?.user?.travel_reason}</h3>
+                                </div>
+                            )}
+
+
+                        </div>
                     </div>
+
+                    {/* <div className='hirer-info-update-button-contianer' style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
+                        <button style={{ cursor: isHirerEditable ? 'pointer' : 'not-allowed' }}>Update</button>
+                    </div> */}
+
                 </div>
 
                 <div className='edit-driver-info'>
+
                     <div className='edit-driver-info-head'>
                         <h3>Driver Info</h3>
                         <button>
-                            <CiEdit size={15} color='#000' />
+                            <GoPlus size={15} color='#000' />
                         </button>
                     </div>
 
@@ -340,9 +599,12 @@ const UpdateBooking = () => {
                             <div className='driver-list-single-item'>
                                 <div className='driver-list-single-item-head' onClick={() => handleDriverIndex(index)}>
                                     <h3>{item.driver_name}</h3>
-                                    <IoIosArrowDown size={20} color='#000' />
+                                    <span className='driver-view-or-adit-contianer'>
+                                        <FaEye size={20} color='#000' onClick={() => handleDetails(item)} />
+                                        <CiEdit size={20} color='#000' onClick={() => handleDriverEditModal(item)} />
+                                    </span>
                                 </div>
-                                <div className={`driver-list-single-item-inputs ${driverEdit === index ? 'edit-driver-detials' : ''}`}>
+                                {/* <div className={`driver-list-single-item-inputs ${driverEdit === index ? 'edit-driver-detials' : ''}`}>
 
                                     <div className='hirer-info-two-columns'>
 
@@ -395,20 +657,137 @@ const UpdateBooking = () => {
                                     </div>
 
 
-                                </div>
+                                </div> */}
                             </div>
                         ))}
                     </div>
                 </div>
 
+                <div className='insurance-main-contianer'>
+                    <div className='car-insurance-head'>
+                        <h3>Insurance</h3>
+                        {vehicleData?.insurances && (
+                            <span>
+                                <h3>{vehicleData?.insurances[0]?.CarInsurancePricing?.name}</h3> /
+                                <p>NZD {vehicleData?.insurances[0]?.CarInsurancePricing?.rate}</p>
+                            </span>
+                        )}
+                        {vehicleData.insurances && (
+                            <span>
+                                <h3>Total: </h3>
+                                <p>NZD {parseFloat(vehicleData?.insurances[0]?.CarInsurancePricing?.rate) * vehicleData?.rates?.length}</p>
+                            </span>
+                        )}
+
+                    </div>
+                    <div className='insurance-content-sec' onClick={handleUpdateInsurance}>
+                        <button>
+                            <CiEdit size={15} color='#000' />
+                        </button>
+                    </div>
+
+                </div>
+
+                <div className='summary-main-contianer'>
+                    <div className='summary-extras-and-signature'>
+
+                        <div className='extras-count-container'>
+                            <div className='extras-count-head'>
+                                <h3>Extras</h3>
+                                <button>
+                                    <CiEdit size={15} color='#000' />
+                                </button>
+                            </div>
+                            <div className='extras-count-option-contianer'>
+                                {editBookingPayload?.booking?.extras?.map((item, index) => (
+                                    <span key={index}>
+                                        <h3>{item.name}</h3>
+                                        <p>NZD {parseFloat(item.rate) * vehicleData?.rates?.length}</p>
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className='summary-signature-option'>
+                            <p>Add Signature</p>
+                        </div>
+
+                    </div>
+                    <div className='summary-total-section'>
+                        <h3>Summary</h3>
+                        <div className='summary-values-and-totals'>
+                            <span>
+                                <p>Car Rate</p>
+                                <h3>NZD {parseFloat(vehicleData?.car_rates)}</h3>
+                            </span>
+                            <span>
+                                <p>Discount {parseInt(vehicleData?.discount_percent)}%</p>
+                                <h3>NZD {vehicleData?.discount_amount}</h3>
+                            </span>
+                            <span>
+                                <p>Duration</p>
+                                <h3>{vehicleData?.rates?.length} {vehicleData?.rates?.length > 1 ? 'days' : 'day'}</h3>
+                            </span>
+                            <span>
+                                <p>Sub Total</p>
+                                <h3>NZD {parseFloat(vehicleData?.car_rates) - parseFloat(vehicleData?.discount_amount)}</h3>
+                            </span>
+                            <span>
+                                <p>Off hour charges</p>
+                                <h3>NZD {vehicleData?.off_hour_charges}</h3>
+                            </span>
+                            <span>
+                                <p>Transaction Fees</p>
+                                <h3>NZD 0</h3>
+                            </span>
+                            <span>
+                                <p>Insurance</p>
+                                <h3>NZD {vehicleData?.insurances ? parseFloat(vehicleData?.insurances[0]?.CarInsurancePricing?.rate) * vehicleData?.rates?.length : 0}</h3>
+                            </span>
+                            <span>
+                                <p>Extras</p>
+                                <h3>NZD {handleExtrasTotal()}</h3>
+                            </span>
+                            <span style={{borderTop: '1px solid #afafaf', paddingTop: '10px'}}>
+                                <p style={{fontSize: '15px', fontWeight: 400, color: '#000'}}>Grand Total</p>
+                                <h3 style={{fontSize: '15px', fontWeight: 500, color: '#000'}}>NZD {handleGrandTotal()}</h3>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <CarAvailabilityModal 
+            <CarAvailabilityModal
                 showModal={showAvailabilitycheckModal}
                 setShowModal={setShowAvailabilitycheckModal}
                 vehicleData={vehicleData}
+                setVehicleData={setVehicleData}
                 editBookingPayload={editBookingPayload}
                 setEditBookingPayload={setEditBookingPayload}
+            />
+
+            <InsuranceUpdateModal
+                insuranceModal={insuranceModal}
+                setInsuranceModal={setInsuranceModal}
+                carId={vehicleData?.car_id}
+                payload={editBookingPayload}
+                setPayload={setEditBookingPayload}
+            />
+
+            <ExtrasUpdateModal
+                payload={editBookingPayload}
+                setPayload={setEditBookingPayload}
+                carId={vehicleData?.car_id}
+            />
+
+            <EditDriverModal
+                isEdit={showDriverEdit}
+                setIsEdit={setShowDriverEdit}
+                payload={editBookingPayload}
+                setPayload={setEditBookingPayload}
+                data={selectedDriver}
+                setData={setSelectedDriver}
             />
 
         </div>

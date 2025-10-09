@@ -87,7 +87,6 @@ const BookingForm = (
     };
 
     const handlePickupDateChange = (date) => {
-        console.log("date select", date)
         setSelectedPickupDate(date);
         formatePickupDateAndTime(date, pickupTime)
         setPickupCalender(false); // hide after selection

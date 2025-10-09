@@ -1,0 +1,402 @@
+import React, { useEffect, useRef, useState } from 'react'
+import './EditDriverModal.css'
+import { CgCloseO } from 'react-icons/cg';
+import { IoIosArrowDown } from "react-icons/io";
+import Calendar from 'react-calendar';
+import { url } from '@/utils/services';
+
+const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData, }) => {
+
+    // console.log("data", data)
+    const [showDobCalender, setShowDobCalender] = useState(false);
+    const [countryList, setCountryList] = useState([]);
+
+    const [updatedDriver, setUpdatedDriver] = useState({
+        driver_name: '',
+        driver_dob: '',
+        driver_age: '',
+        license_country: '',
+        license_no: '',
+        license_expiry: '',
+        address: '',
+        zipcode: '',
+        city: '',
+        state: '',
+        country: '',
+        remarks: '',
+        back_license_image: '',
+        front_license_image: '',
+    })
+
+    useEffect(() => {
+        setUpdatedDriver({
+            driver_name: data?.driver_name,
+            driver_dob: data?.driver_dob,
+            driver_age: data?.driver_age,
+            license_country: data?.license_country,
+            license_no: data?.license_no,
+            license_expiry: data?.license_expiry,
+            address: data?.address,
+            zipcode: data?.zipcode,
+            city: data?.city,
+            state: data?.state,
+            country: data?.country,
+            remarks: data?.remarks,
+            back_license_image: data?.back_license_image,
+            front_license_image: data?.front_license_image,
+        })
+    }, [data])
+
+    const handleShowDobCalender = () => {
+        setShowDobCalender(!showDobCalender)
+    }
+
+    const today = new Date();
+    const eighteenYearsAgo = new Date(
+        today.getFullYear() - 18,
+        today.getMonth(),
+        today.getDate()
+    );
+
+    const expiryYears = new Date(
+        today.getFullYear() + 1,
+        today.getMonth(),
+        today.getDate()
+    );
+
+    const driverAgeList = ['21', '22', '23', '24', '25+']
+    const [showDriverAgeList, setShowDriverAgeList] = useState(false);
+
+    const handleSelectDriverAge = (age) => {
+        setUpdatedDriver((prev) => ({
+            ...prev,
+            driver_age: age
+        }))
+        setShowDriverAgeList(false)
+    }
+
+    useEffect(() => {
+        const handleGetAllCountries = async () => {
+            try {
+                const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
+                const data = await res.json();
+
+
+
+                const formatted = data
+                    .map((item) => {
+                        const root = item.idd?.root || "";
+                        const suffix = item.idd?.suffixes?.[0] || "";
+                        return {
+                            country: item.name.common,
+                            code: root + suffix, // e.g. +92
+                        };
+                    })
+                    // sort alphabetically by country name
+                    .sort((a, b) => a.country.localeCompare(b.country));
+
+
+                setCountryList(formatted);
+            } catch (err) {
+                console.error("Error fetching countries:", err);
+            }
+        };
+
+        handleGetAllCountries();
+    }, []);
+
+    const [showCountries, setShowCountries] = useState(false);
+
+    const [showExpiry, setShowExpiry] = useState(false);
+
+
+
+    const handleSetDriverDetails = (event) => {
+        const { name, value } = event.target;
+
+        setUpdatedDriver((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
+    // Convert Time
+    function formatISOToDDMMYYYYStrict(isoString) {
+        if (!isoString) return "";
+
+        // Extract only the date part before the "T"
+        const [datePart] = isoString.split("T");
+        const [year, month, day] = datePart.split("-");
+
+        return `${day}-${month}-${year}`;
+    }
+
+
+    // No time zone iso selected date
+    function toISOStringWithoutTimezone(date) {
+        if (!date) return "";
+
+        // Get date parts manually to avoid timezone conversion
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+
+        // Build ISO manually (no timezone applied)
+        return `${year}-${month}-${day}T00:00:00.000Z`;
+    }
+
+    const handleDobChange = (date) => {
+        // Convert the selected date to an ISO string with NO timezone shift
+        const isoString = toISOStringWithoutTimezone(date);
+
+
+        setUpdatedDriver((prev) => ({
+            ...prev,
+            driver_dob: isoString
+        }))
+        setShowDobCalender(false)
+    };
+
+    const handleLicenceExpiryDate = (date) => {
+        // Convert the selected date to an ISO string with NO timezone shift
+        const isoString = toISOStringWithoutTimezone(date);
+
+
+        setUpdatedDriver((prev) => ({
+            ...prev,
+            license_expiry: isoString
+        }))
+        setShowExpiry(false)
+    };
+
+    const handleUpdateLicenceCountry = (item) => {
+        setUpdatedDriver((prev) => ({
+            ...prev,
+            license_country: item.country
+        }))
+        setShowCountries(false)
+    }
+
+    const fileInputRef = useRef()
+    // ✅ Trigger file input when div clicked
+    const handleDivClick = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.click();
+        }
+    };
+
+    const handleLicenceUpload = (event, type) => {
+        const file = event.target.files[0];
+        if (!file) return
+
+        if (type === 'front') {
+            setUpdatedDriver((prev) => ({
+                ...prev,
+                front_license_image: file
+            }))
+        } else {
+            setUpdatedDriver((prev) => ({
+                ...prev,
+                back_license_image: file
+            }))
+        }
+    }
+
+    const handleRemoveLicence = () => {
+        setUpdatedDriver((prev) => ({
+            ...prev,
+            back_license_image: '',
+            front_license_image: ''
+        }))
+    }
+
+    // useEffect(() => {console.log("updated driver", updatedDriver)}, [updatedDriver])
+
+
+
+
+    return (
+        <div className={`edit-driver-modal-main ${isEdit ? 'show-is-edit-driver' : ''}`} onClick={() => setIsEdit(false)}>
+            <div className={`edit-driver-modal-inner ${isEdit ? 'show-edit-driver-inner' : ''}`} onClick={(e) => e.stopPropagation()}>
+
+                <div className='edit-driver-modal-head'>
+                    <h3>Driver Information</h3>
+                    <CgCloseO color='#000' size={20} style={{ cursor: 'pointer' }} onClick={() => setIsEdit(false)} />
+                </div>
+
+                <div className='edit-driver-inputs'>
+
+                    <div className='driver-two-equal-columns'>
+                        <label>
+                            Driver Name
+                            <input type='text' name='driver_name' value={updatedDriver.driver_name} onChange={handleSetDriverDetails} />
+                        </label>
+
+                        <div className='driver-bod-contianer'>
+                            <p>Date of Birth</p>
+                            <div className='edit-driver-dob-head' onClick={handleShowDobCalender}>
+                                <h3>{formatISOToDDMMYYYYStrict(updatedDriver?.driver_dob)}</h3>
+                                <IoIosArrowDown color='#000' size={15} />
+                            </div>
+                            <div className={`edit-driver-dob-calender ${showDobCalender ? 'show-driver-dob-calender' : ''}`}>
+                                <Calendar
+                                    onChange={handleDobChange}
+                                    value={eighteenYearsAgo}
+                                    view="month"
+                                    next2Label={null}
+                                    prev2Label={null}
+                                    formatShortWeekday={(locale, date) =>
+                                        date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)
+                                    }
+                                    minDate={new Date(today.getFullYear() - 100, today.getMonth(), today.getDate())}
+                                    maxDate={eighteenYearsAgo}
+                                />
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div className='driver-two-equal-columns'>
+
+                        <div className='edit-driver-age-dropdown'>
+                            <p>Driver Age</p>
+                            <div className='driver-age-head' onClick={() => setShowDriverAgeList(!showDriverAgeList)}>
+                                <h3>{updatedDriver?.driver_age}</h3>
+                                <IoIosArrowDown size={15} color='#000' />
+                            </div>
+                            <div className={`driver-age-list ${showDriverAgeList ? 'show-age-list' : ''}`}>
+                                {driverAgeList.map((item, index) => (
+                                    <p key={index} className={`driver-age-list-item`} onClick={() => handleSelectDriverAge(item)}>{item}</p>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className='licence-country-dropdown'>
+                            <p>Licence issuing country</p>
+                            <div className='licence-country-head' onClick={() => setShowCountries(!showCountries)}>
+                                <h3>{updatedDriver?.license_country}</h3>
+                                <IoIosArrowDown size={15} color='#000' />
+                            </div>
+                            <div className={`licence-country-list ${showCountries ? 'show-licence-countries' : ''}`}>
+                                {countryList.map((item, index) => (
+                                    <p key={index} className={`licence-country-list-item`} onClick={() => handleUpdateLicenceCountry(item)}>{item.country}</p>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className='driver-two-equal-columns'>
+                        <label>
+                            Licence No
+                            <input type='text' name='license_no' value={updatedDriver.license_no} onChange={handleSetDriverDetails} />
+                        </label>
+
+                        <div className='licence-expiry-dropdown'>
+                            <p>Expiry Date</p>
+                            <div className='licence-expiry-head' onClick={() => setShowExpiry(!showExpiry)}>
+                                <h3>{formatISOToDDMMYYYYStrict(updatedDriver?.license_expiry)}</h3>
+                                <IoIosArrowDown size={15} color='#000' />
+                            </div>
+                            <div className={`licence-expiry-calender ${showExpiry ? 'show-licence-expiry' : ''}`}>
+                                <Calendar
+                                    onChange={handleLicenceExpiryDate}
+                                    value={expiryYears}
+                                    view="month"
+                                    next2Label={null}
+                                    prev2Label={null}
+                                    formatShortWeekday={(locale, date) =>
+                                        date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)
+                                    }
+                                    minDate={expiryYears}
+                                />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div className='driver-two-equal-columns'>
+                        <label style={{ width: '70%' }}>
+                            Address
+                            <input type='text' name='address' value={updatedDriver.address} onChange={handleSetDriverDetails} />
+                        </label>
+
+                        <label style={{ width: '30%' }}>
+                            Zip code
+                            <input type='text' name='zipcode' value={updatedDriver.zipcode} onChange={handleSetDriverDetails} />
+                        </label>
+                    </div>
+
+                    <div className='driver-two-equal-columns'>
+
+                        <label style={{ width: '100%' }}>
+                            City
+                            <input type='text' name='city' value={updatedDriver.city} onChange={handleSetDriverDetails} />
+                        </label>
+
+                        <label style={{ width: '100%' }}>
+                            State
+                            <input type='text' name='state' value={updatedDriver.state} onChange={handleSetDriverDetails} />
+                        </label>
+
+                        <label style={{ width: '100%' }}>
+                            Country
+                            <input type='text' name='country' value={updatedDriver.country} onChange={handleSetDriverDetails} />
+                        </label>
+
+                    </div>
+
+                    <div className='driver-two-equal-columns'>
+                        <label>
+                            Remarks
+                            <textarea name='remarks' value={updatedDriver.remarks} onChange={handleSetDriverDetails} />
+                        </label>
+
+                        <div className='licence-upload-contianer'>
+                            {updatedDriver?.front_license_image === '' && updatedDriver?.back_license_image === '' ? (
+                                // <div className='licence-upload-message'>
+                                updatedDriver?.front_license_image === '' ? (
+                                    <div className='licence-upload-message' onClick={(e) => handleDivClick(e, 'front')}>
+                                        <p>Upload Licence Front</p>
+                                    </div>
+                                ) : (
+                                    <div className='licence-upload-message' onClick={(e) => handleDivClick(e, 'back')}>
+                                        <p>Upload Licence Back</p>
+                                    </div>
+                                )
+
+                                // </div>
+                            ) : (
+                                <div className='licence-update-show-front-contianer'>
+                                    <button className='licence-remove-icon' onClick={handleRemoveLicence}>
+                                        <CgCloseO size={20} color='#000' style={{ cursor: 'pointer' }} />
+                                    </button>
+                                    <img src={url + updatedDriver?.front_license_image} />
+                                </div>
+                            )}
+
+                            <input
+                                type="file"
+                                accept="image/*"
+                                ref={fileInputRef}
+                                style={{ display: "none" }}
+                                onChange={handleLicenceUpload}
+                            />
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className='edit-driver-update-button'>
+                    <button>Update</button>
+                </div>
+
+
+
+            </div>
+        </div>
+    )
+}
+
+export default EditDriverModal

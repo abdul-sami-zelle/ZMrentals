@@ -270,7 +270,7 @@ const BookNowClient = () => {
 
     } catch (error) {
       setISloading(false);
-      console.log("UnExpected Error", error);
+      console.error("UnExpected Error", error);
       setShowAvailableModal(true)
       setShowBookingButton(false)
       setSearchedVehicles([])

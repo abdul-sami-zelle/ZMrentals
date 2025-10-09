@@ -42,7 +42,6 @@ const DashProfile = () => {
         router.push('/sign-up')
       }
 
-      console.log("profile data", response);
     } catch (error) {
       console.error("UnExpected Server Error", error);
     }

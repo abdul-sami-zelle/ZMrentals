@@ -635,12 +635,26 @@
     overflow: hidden;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .available-or-not-contianer > img {
     width: 100%;
     height: auto;
     object-fit: contain;
+}
+
+.recheck-availability {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-shrink: 0;
+    width: max-content;
+    height: max-content;
+    background-color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .car-availability-check-button-contianer {

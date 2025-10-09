@@ -76,7 +76,6 @@ const AddressAndPhone = () => {
         }
       })
 
-      console.log("address response", response);
     } catch (error) {
       console.error("UnExpected Server Error", error);
     }

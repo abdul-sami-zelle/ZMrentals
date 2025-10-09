@@ -8,7 +8,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import axios from 'axios'
 
 const page = () => {
-    const [manageBookingSteper, setManageBookingSteper] = useState(0);
+    const [manageBookingSteper, setManageBookingSteper] = useState(5);
 
     const images = [
         "/assets/manage-bookings/blur-bg.jpg",
@@ -30,7 +30,6 @@ const page = () => {
     const [posterBg, setPosterBg] = useState(posterImages[0]);
 
     const changeBackground = () => {
-        console.log("called")
         const randomIndex = Math.floor(Math.random() * images.length);
         const posterINdex = Math.floor(Math.random() * posterImages.length)
         setBgImage(images[randomIndex]);

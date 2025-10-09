@@ -45,7 +45,6 @@ const VerifyBooking = ({imageChange, manageBookingSteper, setManageBookingSteper
     // if all filled, join values
     if (newOtp.every((val) => val !== "")) {
       const otpCode = newOtp.join("");
-      console.log("✅ OTP Entered:", otpCode);
       // you can call API here
     }
   };
@@ -76,11 +75,9 @@ const VerifyBooking = ({imageChange, manageBookingSteper, setManageBookingSteper
   const handleVerify = () => {
     const enteredOtp = otp.join("");
     if (enteredOtp === otpNumber) {
-      console.log("✅ OTP Matched! Perform action here...");
       setManageBookingSteper(manageBookingSteper + 1); // example action
       imageChange()
     } else {
-      console.log("❌ OTP not match");
     }
   };
 

@@ -81,7 +81,7 @@ const GetInTouch = () => {
             }
         } catch (error) {
             setLoading(false);
-            console.log("Unexpected Server Error", error);
+            console.error("Unexpected Server Error", error);
         } finally {
             setLoading(false);
         }
