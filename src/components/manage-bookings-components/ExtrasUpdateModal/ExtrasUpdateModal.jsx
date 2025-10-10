@@ -5,9 +5,10 @@ import { url } from '@/utils/services';
 import axios from 'axios';
 import { FiMinus, FiPlus } from "react-icons/fi";
 
-const ExtrasUpdateModal = ({ showExtrasModal = false, setShowExtrasModal, payload, setPayload, carId }) => {
+const ExtrasUpdateModal = ({ showExtrasModal, setShowExtrasModal, payload, setPayload, carId }) => {
 
     const [vehicleData, setVehicleData] = useState({});
+    const [newExtras, setNewExtras] = useState([])
 
     const handleGetCarWithId = async () => {
         const api = `${url}/cars/get/${payload?.booking?.car_id}`;
@@ -80,18 +81,17 @@ const ExtrasUpdateModal = ({ showExtrasModal = false, setShowExtrasModal, payloa
                 delete update[index]
             } else {
                 update[index] = {
-                    main_id: item.extras_option_id,
-                    extras_option_id: item.id,
+                    ...item,
                     quantity: newQty
                 }
+                // update[index] = {
+                //     main_id: item.extras_option_id,
+                //     extras_option_id: item.id,
+                //     quantity: newQty
+                // }
             }
 
-            // console.log("updated values", update)
-
             return update
-
-
-
         })
     }
 
@@ -105,9 +105,6 @@ const ExtrasUpdateModal = ({ showExtrasModal = false, setShowExtrasModal, payloa
         }));
     }, [updateExtras]);
 
-    // useEffect(() => { console.log("vehicle Data", vehicleData) }, [vehicleData])
-    // useEffect(() => { console.log("initiall Data", payload) }, [payload])
-    // useEffect(() => { console.log("temporary Data", updateExtras) }, [updateExtras])
 
     return (
         <div className={`extras-modal-main-contianer ${showExtrasModal ? 'show-extras-main-modal' : ''}`} onClick={() => setShowExtrasModal(false)}>

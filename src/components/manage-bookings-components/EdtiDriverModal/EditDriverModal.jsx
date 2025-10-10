@@ -5,7 +5,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import Calendar from 'react-calendar';
 import { url } from '@/utils/services';
 
-const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData, }) => {
+const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload, setPayload, data, setData, }) => {
 
     // console.log("data", data)
     const [showDobCalender, setShowDobCalender] = useState(false);
@@ -30,20 +30,20 @@ const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData
 
     useEffect(() => {
         setUpdatedDriver({
-            driver_name: data?.driver_name,
-            driver_dob: data?.driver_dob,
-            driver_age: data?.driver_age,
-            license_country: data?.license_country,
-            license_no: data?.license_no,
-            license_expiry: data?.license_expiry,
-            address: data?.address,
-            zipcode: data?.zipcode,
-            city: data?.city,
-            state: data?.state,
-            country: data?.country,
-            remarks: data?.remarks,
-            back_license_image: data?.back_license_image,
-            front_license_image: data?.front_license_image,
+            driver_name: data?.driver_name || '',
+            driver_dob: data?.driver_dob || '',
+            driver_age: data?.driver_age || '',
+            license_country: data?.license_country || '',
+            license_no: data?.license_no || '',
+            license_expiry: data?.license_expiry || '',
+            address: data?.address || '',
+            zipcode: data?.zipcode || '',
+            city: data?.city || '',
+            state: data?.state || '',
+            country: data?.country || '',
+            remarks: data?.remarks || '',
+            back_license_image: data?.back_license_image || '',
+            front_license_image: data?.front_license_image || '',
         })
     }, [data])
 
@@ -178,23 +178,26 @@ const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData
     }
 
     const fileInputRef = useRef()
+    const [licenceSide, setLicenceSide] = useState('front')
     // ✅ Trigger file input when div clicked
-    const handleDivClick = () => {
+    const handleDivClick = (type) => {
+        setLicenceSide(type)
         if (fileInputRef.current) {
             fileInputRef.current.click();
         }
     };
 
-    const handleLicenceUpload = (event, type) => {
+
+    const handleLicenceUpload = (event) => {
         const file = event.target.files[0];
         if (!file) return
 
-        if (type === 'front') {
+        if (licenceSide === 'front') {
             setUpdatedDriver((prev) => ({
                 ...prev,
                 front_license_image: file
             }))
-        } else {
+        } else if (licenceSide === 'back') {
             setUpdatedDriver((prev) => ({
                 ...prev,
                 back_license_image: file
@@ -210,31 +213,65 @@ const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData
         }))
     }
 
+    const handleUpdateDriverDetails = () => {
+
+        setPayload((prev) => {
+            const existingDrivr = prev?.drivers?.some((item) => item.id === data.id);
+            let updatedDrivers;
+            if(existingDrivr) {
+                updatedDrivers = prev.drivers.map((item) => item.id === data.id ? {...item, ...updatedDriver} : item)
+            } else {
+                updatedDrivers = [...prev.drivers, {...updatedDriver}];
+            }
+            return {
+                ...prev,
+                drivers: updatedDrivers
+            }
+        })
+
+
+        // setPayload((prev) => {
+        //     const driver = prev.drivers.map((item) => item.id === data.id ? { ...item, ...updatedDriver } : item)
+
+        //     return {
+        //         ...prev,
+        //         drivers: driver
+        //     }
+        // })
+
+        setIsEdit(false)
+    }
+
+    const handleCloseDriverModal = () => {
+        setIsEdit(false);
+        setIsViewOnly(false)
+    }
+
     // useEffect(() => {console.log("updated driver", updatedDriver)}, [updatedDriver])
 
 
 
 
     return (
-        <div className={`edit-driver-modal-main ${isEdit ? 'show-is-edit-driver' : ''}`} onClick={() => setIsEdit(false)}>
+        <div className={`edit-driver-modal-main ${isEdit ? 'show-is-edit-driver' : ''}`} onClick={handleCloseDriverModal}>
             <div className={`edit-driver-modal-inner ${isEdit ? 'show-edit-driver-inner' : ''}`} onClick={(e) => e.stopPropagation()}>
 
                 <div className='edit-driver-modal-head'>
                     <h3>Driver Information</h3>
-                    <CgCloseO color='#000' size={20} style={{ cursor: 'pointer' }} onClick={() => setIsEdit(false)} />
+                    <CgCloseO color='#000' size={20} style={{ cursor: 'pointer' }} onClick={handleCloseDriverModal} />
                 </div>
 
                 <div className='edit-driver-inputs'>
 
                     <div className='driver-two-equal-columns'>
-                        <label>
+                        <label style={{opacity: isViewOnly ? 0.6 : 1}}>
                             Driver Name
-                            <input type='text' name='driver_name' value={updatedDriver.driver_name} onChange={handleSetDriverDetails} />
+                            <input type='text' readOnly={isViewOnly} name='driver_name' value={updatedDriver.driver_name} onChange={handleSetDriverDetails} />
                         </label>
 
-                        <div className='driver-bod-contianer'>
+                        <div className='driver-bod-contianer' style={{opacity: isViewOnly ? 0.6 : 1}}>
                             <p>Date of Birth</p>
-                            <div className='edit-driver-dob-head' onClick={handleShowDobCalender}>
+                            <div className='edit-driver-dob-head' onClick={() => isViewOnly ? null : handleShowDobCalender()}>
                                 <h3>{formatISOToDDMMYYYYStrict(updatedDriver?.driver_dob)}</h3>
                                 <IoIosArrowDown color='#000' size={15} />
                             </div>
@@ -246,7 +283,7 @@ const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData
                                     next2Label={null}
                                     prev2Label={null}
                                     formatShortWeekday={(locale, date) =>
-                                        date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)
+                                        date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
                                     }
                                     minDate={new Date(today.getFullYear() - 100, today.getMonth(), today.getDate())}
                                     maxDate={eighteenYearsAgo}
@@ -259,9 +296,9 @@ const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData
 
                     <div className='driver-two-equal-columns'>
 
-                        <div className='edit-driver-age-dropdown'>
+                        <div className='edit-driver-age-dropdown' style={{opacity: isViewOnly ? 0.6 : 1}}>
                             <p>Driver Age</p>
-                            <div className='driver-age-head' onClick={() => setShowDriverAgeList(!showDriverAgeList)}>
+                            <div className='driver-age-head' onClick={() => isViewOnly ? null : setShowDriverAgeList(!showDriverAgeList)}>
                                 <h3>{updatedDriver?.driver_age}</h3>
                                 <IoIosArrowDown size={15} color='#000' />
                             </div>
@@ -272,9 +309,9 @@ const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData
                             </div>
                         </div>
 
-                        <div className='licence-country-dropdown'>
-                            <p>Licence issuing country</p>
-                            <div className='licence-country-head' onClick={() => setShowCountries(!showCountries)}>
+                        <div className='licence-country-dropdown' style={{opacity: isViewOnly ? 0.6 : 1}}>
+                            <p>Licence Issuing Country</p>
+                            <div className='licence-country-head' onClick={() => isViewOnly ? null : setShowCountries(!showCountries)}>
                                 <h3>{updatedDriver?.license_country}</h3>
                                 <IoIosArrowDown size={15} color='#000' />
                             </div>
@@ -287,14 +324,14 @@ const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData
                     </div>
 
                     <div className='driver-two-equal-columns'>
-                        <label>
+                        <label style={{opacity: isViewOnly ? 0.6 : 1}}>
                             Licence No
-                            <input type='text' name='license_no' value={updatedDriver.license_no} onChange={handleSetDriverDetails} />
+                            <input type='text' readOnly={isViewOnly} name='license_no' value={updatedDriver.license_no} onChange={handleSetDriverDetails} />
                         </label>
 
-                        <div className='licence-expiry-dropdown'>
+                        <div className='licence-expiry-dropdown' style={{opacity: isViewOnly ? 0.6 : 1}}>
                             <p>Expiry Date</p>
-                            <div className='licence-expiry-head' onClick={() => setShowExpiry(!showExpiry)}>
+                            <div className='licence-expiry-head' onClick={() => isViewOnly ? null : setShowExpiry(!showExpiry)}>
                                 <h3>{formatISOToDDMMYYYYStrict(updatedDriver?.license_expiry)}</h3>
                                 <IoIosArrowDown size={15} color='#000' />
                             </div>
@@ -316,51 +353,51 @@ const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData
                     </div>
 
                     <div className='driver-two-equal-columns'>
-                        <label style={{ width: '70%' }}>
+                        <label style={{ width: '70%', opacity: isViewOnly ? 0.6 : 1 }} >
                             Address
-                            <input type='text' name='address' value={updatedDriver.address} onChange={handleSetDriverDetails} />
+                            <input type='text' readOnly={isViewOnly} name='address' value={updatedDriver.address} onChange={handleSetDriverDetails} />
                         </label>
 
-                        <label style={{ width: '30%' }}>
-                            Zip code
-                            <input type='text' name='zipcode' value={updatedDriver.zipcode} onChange={handleSetDriverDetails} />
+                        <label style={{ width: '30%', opacity: isViewOnly ? 0.6 : 1 }} >
+                            Zip Code
+                            <input type='text' readOnly={isViewOnly} name='zipcode' value={updatedDriver.zipcode} onChange={handleSetDriverDetails} />
                         </label>
                     </div>
 
                     <div className='driver-two-equal-columns'>
 
-                        <label style={{ width: '100%' }}>
+                        <label style={{ width: '100%', opacity: isViewOnly ? 0.6 : 1 }} >
                             City
-                            <input type='text' name='city' value={updatedDriver.city} onChange={handleSetDriverDetails} />
+                            <input type='text' readOnly={isViewOnly} name='city' value={updatedDriver.city} onChange={handleSetDriverDetails} />
                         </label>
 
-                        <label style={{ width: '100%' }}>
+                        <label style={{ width: '100%', opacity: isViewOnly ? 0.6 : 1 }}>
                             State
-                            <input type='text' name='state' value={updatedDriver.state} onChange={handleSetDriverDetails} />
+                            <input type='text' readOnly={isViewOnly} name='state' value={updatedDriver.state} onChange={handleSetDriverDetails} />
                         </label>
 
-                        <label style={{ width: '100%' }}>
+                        <label style={{ width: '100%', opacity: isViewOnly ? 0.6 : 1 }}>
                             Country
-                            <input type='text' name='country' value={updatedDriver.country} onChange={handleSetDriverDetails} />
+                            <input type='text' readOnly={isViewOnly} name='country' value={updatedDriver.country} onChange={handleSetDriverDetails} />
                         </label>
 
                     </div>
 
                     <div className='driver-two-equal-columns'>
-                        <label>
+                        <label style={{opacity: isViewOnly ? 0.6 : 1}}>
                             Remarks
-                            <textarea name='remarks' value={updatedDriver.remarks} onChange={handleSetDriverDetails} />
+                            <textarea name='remarks' readOnly={isViewOnly} value={updatedDriver.remarks} onChange={handleSetDriverDetails} />
                         </label>
 
-                        <div className='licence-upload-contianer'>
-                            {updatedDriver?.front_license_image === '' && updatedDriver?.back_license_image === '' ? (
+                        <div className='licence-upload-contianer' style={{opacity: isViewOnly ? 0.6 : 1}}>
+                            {updatedDriver?.front_license_image === '' || updatedDriver?.back_license_image === '' ? (
                                 // <div className='licence-upload-message'>
                                 updatedDriver?.front_license_image === '' ? (
-                                    <div className='licence-upload-message' onClick={(e) => handleDivClick(e, 'front')}>
+                                    <div className='licence-upload-message' onClick={(e) => isViewOnly ? null : handleDivClick('front')}>
                                         <p>Upload Licence Front</p>
                                     </div>
                                 ) : (
-                                    <div className='licence-upload-message' onClick={(e) => handleDivClick(e, 'back')}>
+                                    <div className='licence-upload-message' onClick={(e) => isViewOnly ? null : handleDivClick('back')}>
                                         <p>Upload Licence Back</p>
                                     </div>
                                 )
@@ -368,10 +405,18 @@ const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData
                                 // </div>
                             ) : (
                                 <div className='licence-update-show-front-contianer'>
-                                    <button className='licence-remove-icon' onClick={handleRemoveLicence}>
+                                    <button className='licence-remove-icon' onClick={() => isViewOnly ? null : handleRemoveLicence()}>
                                         <CgCloseO size={20} color='#000' style={{ cursor: 'pointer' }} />
                                     </button>
-                                    <img src={url + updatedDriver?.front_license_image} />
+                                    <img
+                                        src={
+                                            updatedDriver.front_license_image instanceof File
+                                                ? URL.createObjectURL(updatedDriver.front_license_image) // 🧠 for new upload
+                                                : url + updatedDriver.front_license_image // 🌐 for existing image
+                                        }
+                                        alt="Front License"
+                                    />
+                                    {/* <img src={url + updatedDriver?.front_license_image} /> */}
                                 </div>
                             )}
 
@@ -388,8 +433,8 @@ const EditDriverModal = ({ isEdit, setIsEdit, payload, setPayload, data, setData
 
                 </div>
 
-                <div className='edit-driver-update-button'>
-                    <button>Update</button>
+                <div className='edit-driver-update-button' style={{opacity: isViewOnly ? 0.6 : 1, cursor: isViewOnly ? 'not-allowed' : 'pointer'}}>
+                    <button onClick={isViewOnly ? null : handleUpdateDriverDetails}>Update</button>
                 </div>
 
 

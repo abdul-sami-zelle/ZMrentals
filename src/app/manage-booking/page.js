@@ -8,7 +8,7 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import axios from 'axios'
 
 const page = () => {
-    const [manageBookingSteper, setManageBookingSteper] = useState(5);
+    const [manageBookingSteper, setManageBookingSteper] = useState(0);
 
     const images = [
         "/assets/manage-bookings/blur-bg.jpg",
@@ -47,7 +47,7 @@ const page = () => {
                 backgroundPosition: "center",
             }}
         >
-            {manageBookingSteper < 2 ? (
+            {manageBookingSteper < 1 ? (
                 <div className='manage-booking-inner-contianer'>
                     <div
                         className='manage-booking-left-sec'
@@ -72,7 +72,7 @@ const page = () => {
                     </div>
                 </div>
             ) : (
-                <UpdateBooking />
+                <UpdateBooking setManageBookingSteper={setManageBookingSteper} />
                 
             )}
 

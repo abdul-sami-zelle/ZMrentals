@@ -7,11 +7,13 @@ import axios from 'axios';
 const InsuranceUpdateModal = ({insuranceModal, setInsuranceModal, carId, payload, setPayload}) => {
 
     const [vehicleData, setVehicleData] = useState({});
+    const [selectedPackage, setSelectedPackage] = useState()
     
     const handleGetCarWithId = async () => {
         const api = `${url}/cars/get/${payload?.booking?.car_id}`;
         try {
             const response = await axios.get(api);
+            // console.log(response.data)
             if(response.status === 200) {
                 setVehicleData(response.data)
             }
@@ -20,6 +22,27 @@ const InsuranceUpdateModal = ({insuranceModal, setInsuranceModal, carId, payload
         }
     }
     useEffect(() => {handleGetCarWithId()}, [carId])
+
+    useEffect(() => {
+        const selectedOption = vehicleData?.insurance?.find((item) => item.insurance_option_id === payload?.booking?.insurance_id);
+        setSelectedPackage(selectedOption?.insurance_option_id)
+        console.log("vehicle data insurance", vehicleData)
+    }, [vehicleData])
+
+    const handleInsuranceSelect = (item) => {
+        setSelectedPackage(item.insurance_option_id)
+        setPayload((prev) => ({
+            ...prev,
+            booking: {
+                ...prev.booking,
+                insurance_id: item.id
+            }
+        }))
+        console.log("item insurance", item)
+    }
+
+
+
   return (
     <div className={`insurance-update-modal-main-contianer ${insuranceModal ? 'show-insurance-modal' : ''}`} onClick={() => setInsuranceModal(false)}>
         <div className={`insurance-modal-inner-contianer ${insuranceModal ? 'show-inner-modal' : ''}`} onClick={(e) => e.stopPropagation()}>
@@ -41,12 +64,13 @@ const InsuranceUpdateModal = ({insuranceModal, setInsuranceModal, carId, payload
 
             <div className='insurace-update-options'>
                 {vehicleData && vehicleData?.insurance?.map((item, index) => (
-                    <div className='insurance-update-single-option'>
+                    <div className='insurance-update-single-option' onClick={() => handleInsuranceSelect(item)}>
                         <div className='insurance-update-head'>
                             <input 
                                 type='radio' 
                                 key={item.id}
-                                // checked={item.id === payload.booking.insurance_id}
+                                checked={item.insurance_option_id === selectedPackage}
+                                readOnly
                             />
                             <h3>{item.name}</h3>
                         </div>

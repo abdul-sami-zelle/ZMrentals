@@ -239,7 +239,7 @@ const Navbar = () => {
           <div className='mobile-menu-other-options-bottom'>
             <span>
               <MdOutlinePhoneIphone size={20} color='var(--color-white)' />
-              <strong>NZ</strong> 099741598
+              <strong>NZ</strong> +64221708848
               <MdOutlineArrowDropDown size={15} color='var(--color-white)' />
             </span>
 

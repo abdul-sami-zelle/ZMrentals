@@ -10,25 +10,25 @@ import { CiEdit } from "react-icons/ci";
 import { IoIosArrowDown } from "react-icons/io";
 import CarAvailabilityModal from '../CarAvailabilityModal/CarAvailabilityModal'
 import { useOutsideClick } from '@/utils/DetectClickOutside';
-import { useDropdownNavigation } from '@/utils/keyPress';
+import useDropdownNavigationWithSearch, { useDropdownNavigation } from '@/utils/keyPress';
 import InsuranceUpdateModal from '../InsuranceUpdateModal/InsuranceUpdateModal';
 import ExtrasUpdateModal from '../ExtrasUpdateModal/ExtrasUpdateModal'
 import { GoPlus } from "react-icons/go";
 import { FaEye } from "react-icons/fa";
 import EditDriverModal from '../EdtiDriverModal/EditDriverModal'
 import MainLoader from '@/loaders/MainLoader/MainLoader';
+import { CgCloseO } from "react-icons/cg";
+import SignatureModal from '../../../global-components/SignatureModal/SignatureModal'
 
-const UpdateBooking = () => {
+const UpdateBooking = ({ setManageBookingSteper }) => {
 
-
-
-    // Get Vehicle data
+    // Gernel States
     const [loading, setLoading] = useState(false)
     const [vehicleData, setVehicleData] = useState([]);
-    const [driverEdit, setDriverEdit] = useState(null)
-    const [showLivingCountry, setShowLivingCountry] = useState(false)
-    const [howFind, setHowFind] = useState(false);
-    const [showVisitPerpose, setShowVisitPerpose] = useState(false)
+    const [locations, setLocations] = useState([])
+    const [countriesList, setCountriesList] = useState([])
+    const [showSignature, setShowSignature] = useState(false)
+    const [userSignature, setSignature] = useState();
     const [editBookingPayload, setEditBookingPayload] = useState({
         booking: {
             car_id: null,
@@ -59,37 +59,23 @@ const UpdateBooking = () => {
         }
     });
 
-    const livingCountryRef = useRef();
-    const howFindusRef = useRef();
-    const visitPerposeRef = useRef();
-
-    useOutsideClick(livingCountryRef, () => setShowLivingCountry(false));
-    useOutsideClick(howFindusRef, () => setHowFind(false));
-    useOutsideClick(visitPerposeRef, () => setShowVisitPerpose(false));
-
-    const livingCountryIndex = useDropdownNavigation(livingCountryRef, showLivingCountry, 'living-country-list-item')
-    const HowFindIndex = useDropdownNavigation(howFindusRef, howFind, 'edit-where-found-item')
-    const visitPerposeIndex = useDropdownNavigation(visitPerposeRef, showVisitPerpose, 'visit-perpose-item')
-
-    const [locations, setLocations] = useState([])
-    const getApi = async () => {
-        try {
-            const response = await axios.get(`https://zm.skyhub.pk/locations/get`);
-            setLocations(response.data.data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    useEffect(() => {
-        getApi();
-    }, []);
-
+    // Gernal Functions 
     const handleGetVehicleData = async () => {
-        const api = `https://zm.skyhub.pk/booking/get/253`;
+        const bookingDetails = JSON.parse(sessionStorage.getItem('bookingDetails'))
+        const api = `${url}/booking/manage/get/${bookingDetails?.booking_id}`;
+
+        if (!bookingDetails) {
+            setManageBookingSteper(0);
+            return
+        }
+
         setLoading(true)
         try {
-            const response = await axios.get(api);
+            const response = await axios.get(api, {
+                headers: {
+                    Authorization: `Bearer ${bookingDetails?.token}`
+                }
+            });
             if (response.status === 200) {
                 setVehicleData(response.data.data)
                 setEditBookingPayload({
@@ -100,7 +86,7 @@ const UpdateBooking = () => {
                         pickup_time: response.data.data.pickup_time,
                         drop_time: response.data.data.drop_time,
                         extras: response.data.data.extras,
-                        insurance_id: response.data.data?.insurances[0]?.id,
+                        insurance_id: response.data.data?.insurances[0]?.CarInsurancePricing?.insurance_option_id,
                         shuttle_option: response.data.data.shuttle_option || '',
                         flight_number: response.data.data.flight_number || '',
                         arrival_city: response.data.data.arrival_city || ''
@@ -117,8 +103,12 @@ const UpdateBooking = () => {
                         travel_reason: response.data.data.user.travel_reason
                     },
                     drivers: response.data.data.drivers,
-                    signature: response.data.data.signature || []
+                    signature: response.data.data.signatures[0] || []
                 })
+                getApi();
+                handleGetAllCountries();
+            } else {
+                setManageBookingSteper(0);
             }
         } catch (error) {
             console.error("UnExpected Server Error", error);
@@ -128,9 +118,51 @@ const UpdateBooking = () => {
         }
     }
 
-    useEffect(() => { handleGetVehicleData() }, [])
 
 
+    const getApi = async () => {
+        try {
+            const response = await axios.get(`https://zm.skyhub.pk/locations/get`);
+            setLocations(response.data.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleGetAllCountries = async () => {
+        try {
+            const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
+            const data = await res.json();
+
+
+
+            const formatted = data
+                .map((item) => {
+                    const root = item.idd?.root || "";
+                    const suffix = item.idd?.suffixes?.[0] || "";
+                    return {
+                        country: item.name.common,
+                        code: root + suffix, // e.g. +92
+                    };
+                })
+                // sort alphabetically by country name
+                .sort((a, b) => a.country.localeCompare(b.country));
+
+
+            setCountriesList(formatted);
+        } catch (err) {
+            console.error("Error fetching countries:", err);
+        }
+    };
+
+    useEffect(() => {
+        handleGetVehicleData()
+    }, []);
+
+    // Location View And Update States
+    const [pickupDetails, setPickupDetails] = useState({})
+    const [dropupDetails, setDropUpDetails] = useState({})
+    const [showAvailabilitycheckModal, setShowAvailabilitycheckModal] = useState(false);
     const carFeatures = [
         { id: 1, icon: GiGearStickPattern, value: `${vehicleData?.Car?.CarDetailAssociations[0]?.transmission}` },
         { id: 2, icon: FaBluetoothB, value: `${vehicleData?.Car?.CarDetailAssociations[0]?.is_bluetooth_capable === true ? 'Yes' : 'No'}` },
@@ -138,84 +170,31 @@ const UpdateBooking = () => {
         { id: 4, icon: HiUserGroup, value: `${vehicleData?.Car?.CarDetailAssociations[0]?.passenger_capacity}` },
     ]
 
-    const [isHirerEditable, setIsHirerEditable] = useState(false);
-    const handleHirerDetialsChange = (event) => {
-        const { name, value } = event.target;
-        setEditBookingPayload((prev) => ({
-            ...prev,
-            user: {
-                ...prev.user,
-                [name]: value
-            }
-        }))
-    }
-
-    const handleHirerAdit = () => {
-        setIsHirerEditable(!isHirerEditable)
-    }
-
-    const handleDriverIndex = (index) => {
-        setDriverEdit((prev) => prev !== index ? index : null)
-    }
-
-    const [showDriverAge, setShowDriverAge] = useState(false);
-    const driverAgeList = ['21', '22', '23', '24', '25+']
-
-    const handleDriverAge = () => {
-        setShowDriverAge(!showDriverAge);
-    }
-
-    function formatIsoDate(isoDate) {
-        const date = new Date(isoDate);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = String(date.getFullYear()).slice(-2); // last 2 digits
-        return `${day}-${month}-${year}`;
-    }
-
-    const [countriesList, setCountriesList] = useState([])
-    useEffect(() => {
-        const handleGetAllCountries = async () => {
-            try {
-                const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
-                const data = await res.json();
-
-
-
-                const formatted = data
-                    .map((item) => {
-                        const root = item.idd?.root || "";
-                        const suffix = item.idd?.suffixes?.[0] || "";
-                        return {
-                            country: item.name.common,
-                            code: root + suffix, // e.g. +92
-                        };
-                    })
-                    // sort alphabetically by country name
-                    .sort((a, b) => a.country.localeCompare(b.country));
-
-
-                setCountriesList(formatted);
-            } catch (err) {
-                console.error("Error fetching countries:", err);
-            }
-        };
-
-        handleGetAllCountries();
-    }, []);
-
-    const [showLLicenceCountry, setShowLicenceCountry] = useState(false);
-    const handleShowLicenceCountry = () => {
-        setShowLicenceCountry(!showLLicenceCountry)
-    }
-
-    const [showAvailabilitycheckModal, setShowAvailabilitycheckModal] = useState(false);
+    // Location View Update Functions
     const handleShowAvailabilityCheckModal = () => {
         setShowAvailabilitycheckModal(!showAvailabilitycheckModal);
     }
 
-    const [pickupDetails, setPickupDetails] = useState({})
-    const [dropupDetails, setDropUpDetails] = useState({})
+    // Hirer Info View And Update States
+    const [showLivingCountry, setShowLivingCountry] = useState(false)
+    const [howFind, setHowFind] = useState(false);
+    const [showVisitPerpose, setShowVisitPerpose] = useState(false)
+    const [isHirerEditable, setIsHirerEditable] = useState(false);
+    const perposes = ['Leisure', 'Business', 'Other']
+    const [hirerInfo, setHirerInfo] = useState({})
+    const livingCountryRef = useRef();
+    const howFindusRef = useRef();
+    const visitPerposeRef = useRef();
+
+    // Hirer Info And Update Functions 
+    useOutsideClick(livingCountryRef, () => setShowLivingCountry(false));
+    useOutsideClick(howFindusRef, () => setHowFind(false));
+    useOutsideClick(visitPerposeRef, () => setShowVisitPerpose(false));
+
+    const livingCountryIndex = useDropdownNavigationWithSearch(livingCountryRef, showLivingCountry, 'living-country-list-item')
+    const HowFindIndex = useDropdownNavigationWithSearch(howFindusRef, howFind, 'edit-where-found-item')
+    const visitPerposeIndex = useDropdownNavigationWithSearch(visitPerposeRef, showVisitPerpose, 'visit-perpose-item')
+
     function formatDate(dateString) {
         const date = new Date(dateString);
 
@@ -246,6 +225,53 @@ const UpdateBooking = () => {
         return { day, suffix, month, time };
     }
 
+    const handleHirerAdit = () => {
+        setIsHirerEditable(!isHirerEditable)
+    }
+
+    const handleHirerDetialsChange = (event) => {
+        const { name, value } = event.target;
+
+        let newValue = value;
+
+        if (name === 'phone' || name === 'local_phone') {
+            newValue = newValue.replace(/[^\d+]/g, '');
+
+            if (newValue.includes('+')) {
+                newValue = '+' + newValue.replace(/\+/g, '');
+            }
+
+            if (newValue.length > 1 && newValue[0] === '+') {
+                newValue = '+' + newValue.slice(1).replace(/\+/g, '');
+            } else {
+                newValue = newValue.replace(/\+/g, '');
+            }
+
+            newValue = newValue.slice(0, 13);
+        }
+
+        setHirerInfo((prev) => ({
+            ...prev,
+            [name]: newValue
+        }))
+
+
+    }
+
+    useEffect(() => {
+        setHirerInfo({
+            firstname: editBookingPayload?.user?.firstname,
+            lastname: editBookingPayload?.user?.lastname,
+            email: editBookingPayload?.user?.email,
+            phone: editBookingPayload?.user?.phone,
+            local_phone: editBookingPayload?.user?.local_phone,
+            country: editBookingPayload?.user?.country,
+            driver_age: editBookingPayload?.user?.driver_age || 24,
+            how_find_us: editBookingPayload?.user?.how_find_us,
+            travel_reason: editBookingPayload?.user?.travel_reason || "Leisure"
+        })
+    }, [editBookingPayload])
+
     useEffect(() => {
         const { day, suffix, month, time } = formatDate(editBookingPayload.booking.pickup_time)
         setPickupDetails({
@@ -268,14 +294,13 @@ const UpdateBooking = () => {
     }, [editBookingPayload])
 
     const handleLivingRoom = (item) => {
-        setEditBookingPayload((prev) => ({
-            ...prev,
-            user: {
-                ...prev.user,
-                country: item.country
 
-            }
+        setHirerInfo((prev) => ({
+            ...prev,
+            country: item.country
         }))
+
+
         setShowLivingCountry(false)
     }
 
@@ -290,31 +315,40 @@ const UpdateBooking = () => {
 
     const handleHowFindUsItem = (item) => {
 
-        setEditBookingPayload((prev) => ({
+        setHirerInfo((prev) => ({
             ...prev,
-            user: {
-                ...prev.user,
-                how_find_us: item
-            }
+            how_find_us: item
         }))
+
         setHowFind(false)
     }
 
-    const perposes = ['Leisure', 'Business', 'Other']
     const handleSetVisitPerpose = (item) => {
-        setEditBookingPayload((prev) => ({
+        setHirerInfo((prev) => ({
             ...prev,
-            user: {
-                ...prev.user,
-                travel_reason: item
-            }
+            travel_reason: item
         }))
+
         setShowVisitPerpose(false);
     }
 
-    // Driver Functionality
+    const handleUpdateHirerInfo = () => {
+        setEditBookingPayload((prev) => ({
+            ...prev,
+            user: hirerInfo
+        }))
+    }
+
+    // Driver Info Veiw And Update States
+    const [driverEdit, setDriverEdit] = useState(null)
     const [selectedDriver, setSelectedDriver] = useState({})
     const [showDriverEdit, setShowDriverEdit] = useState(false)
+    const [viewDriver, setViewDriver] = useState(false);
+
+    // Driver Info View And Update Functions
+    const handleDriverIndex = (index) => {
+        setDriverEdit((prev) => prev !== index ? index : null)
+    }
 
     const handleDriverEditModal = (item) => {
         setShowDriverEdit(true)
@@ -322,26 +356,28 @@ const UpdateBooking = () => {
     }
 
     const handleDetails = (item) => {
-        console.log("driver item", item);
+        setViewDriver(true)
         setSelectedDriver(item)
+        setShowDriverEdit(true)
     }
 
-
-
-
+    // Insurance View And Update
     const [insuranceModal, setInsuranceModal] = useState(false);
     const handleUpdateInsurance = () => {
         setInsuranceModal(true)
     }
 
+    // Extras View And Update States
+    const [showExtras, setShowExtras] = useState(false);
 
+    // Summary Functions
     const handleExtrasTotal = () => {
         const extrasPrices = [];
 
         let extrasTotal = 0
 
         editBookingPayload?.booking?.extras.map((item, index) => {
-            extrasPrices.push(parseFloat(item.rate) * vehicleData?.rates?.length)
+            extrasPrices.push((parseFloat(item.rate) * vehicleData?.rates?.length) * item.quantity)
         })
 
         extrasPrices.map((item) => {
@@ -350,13 +386,12 @@ const UpdateBooking = () => {
 
         return extrasTotal
     }
-
     const handleGrandTotal = () => {
 
         const extraArray = []
         let extraValues = 0
         editBookingPayload?.booking?.extras?.map((item, index) => {
-            extraArray.push(parseFloat(item.rate) * vehicleData?.rates?.length)
+            extraArray.push((parseFloat(item.rate) * vehicleData?.rates?.length) * item.quantity)
         })
         extraArray.map((item) => {
             extraValues += parseFloat(item)
@@ -367,16 +402,152 @@ const UpdateBooking = () => {
         const subTotal = parseFloat(carRates) - parseFloat(discount);
         const offHourCharges = vehicleData?.off_hour_charges;
         const insuranceTotal = vehicleData?.insurances ? parseFloat(vehicleData?.insurances[0]?.CarInsurancePricing?.rate) * vehicleData?.rates?.length : 0
-        
+
         const grandTotal = parseFloat(subTotal) + parseFloat(offHourCharges) + parseFloat(insuranceTotal) + parseFloat(extraValues)
-        
+
         return grandTotal
+    }
+
+    const handleValidateAddDriver = () => {
+        const extraDrivers = editBookingPayload?.booking?.extras?.find((item) => item.name === "Extra Driver");
+        if (editBookingPayload?.drivers?.length < parseInt(extraDrivers?.quantity)) {
+            handleDriverEditModal()
+        }
+        console.log("spacific extra driver object", extraDrivers)
+    }
+
+
+
+    useEffect(() => {
+        setEditBookingPayload((prev) => ({
+            ...prev,
+            signature: {
+                ...prev.signature,
+                signature_image: userSignature
+            }
+        }))
+    }, [userSignature])
+
+    const handleReUploadSignature = () => {
+        setEditBookingPayload((prev) => ({
+            ...prev,
+            signature: {
+                ...prev.signature,
+                signature_image: ''
+            }
+        }))
+    }
+
+    const uploadFileAndGetUrl = async (file, apiEndpoint) => {
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            // Call your API (replace /api/upload with your endpoint)
+            const response = await fetch(`${url}${apiEndpoint}`, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error("File upload failed");
+            }
+
+            const data = await response.json();
+            return data.fileUrl;
+        } catch (error) {
+            console.error("Error uploading file:", error.message);
+            return null;
+        }
+    };
+
+
+    const handleUpdateBooking = async () => {
+        const bookingData = JSON.parse(sessionStorage.getItem('bookingDetails'));
+        const api = `${url}/booking/edit/${bookingData?.booking_id}`;
+
+        if (!bookingData) {
+            setManageBookingSteper(0);
+            return
+        }
+
+        console.log("before update payload", editBookingPayload)
+
+        const updatedDrivers = await Promise.all(
+            editBookingPayload.drivers.map(async (drv) => {
+                let frontUrl = drv.front_license_image;
+                let backUrl = drv.back_license_image;
+
+
+                // Upload front license image if it's a File object
+                if (drv.front_license_image instanceof File) {
+                    frontUrl = await uploadFileAndGetUrl(drv.front_license_image, '/uploader/upload/liscences');
+                }
+
+
+                // Upload back license image if it's a File object
+                if (drv.back_license_image instanceof File) {
+                    backUrl = await uploadFileAndGetUrl(drv.back_license_image, '/uploader/upload/liscences');
+                }
+
+
+                return {
+                    ...drv,
+                    front_license_image: frontUrl,
+                    back_license_image: backUrl,
+                };
+            })
+        );
+
+        // 3️⃣ Update bookingPayload with drivers + signature URL
+        setEditBookingPayload((prev) => ({
+            ...prev,
+            drivers: updatedDrivers,
+        }));
+
+        // 2️⃣ Upload customer signature (if File exists)
+        let signatureUrl = editBookingPayload.signature.signature_image;
+        if (userSignature instanceof File) {
+            signatureUrl = await uploadFileAndGetUrl(
+                userSignature,
+                "/uploader/upload/signatures"
+            );
+        }
+
+        // 3️⃣ Build final payload
+        const finalPayload = {
+            ...editBookingPayload,
+            drivers: updatedDrivers,
+            signature: {
+                signature_image: signatureUrl,
+            },
+        };
+
+        console.log("final payload", finalPayload)
+
+        try {
+
+            const response = await axios.put(api, finalPayload, {
+                headers: {
+                    Authorization: `Bearer ${bookingData?.token}`
+                }
+            })
+
+            console.log("respons update booking", response);
+        } catch (error) {
+            console.log("UnExpected Servr Error", error);
+            setLoading(false)
+        } finally {
+            setLoading(false);
+        }
     }
 
 
 
 
-    useEffect(() => { console.log("vehicle data payload", vehicleData) }, [vehicleData])
+
+    useEffect(() => { console.log("edit payload", editBookingPayload) }, [editBookingPayload])
+    useEffect(() => { console.log("vehicle Data", vehicleData) }, [vehicleData])
 
     return (
         <div className='booking-edit-main-continair'>
@@ -449,29 +620,34 @@ const UpdateBooking = () => {
 
                     <div className='hirer-info-head'>
                         <h3>Hirer Information</h3>
-                        <button onClick={handleHirerAdit}>
-                            <CiEdit size={15} color='#000' />
-                        </button>
+                        <div className='hirer-info-edit-update-contianer'>
+                            <button onClick={handleUpdateHirerInfo} className={`update-hirer-info-button ${isHirerEditable ? 'show-update-hirer' : ''}`} style={{ cursor: isHirerEditable ? 'pointer' : 'not-allowed', opacity: isHirerEditable ? 1 : 0.4 }}>Update</button>
+                            <button className='hirer-info-edit-button' onClick={handleHirerAdit}>
+                                <CiEdit size={15} color='#000' />
+                            </button>
+                        </div>
                     </div>
 
                     <div className='hirer-info-inputs'>
                         <div className={`hirer-info-two-columns `}>
+
                             <label style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
                                 First Name
                                 <input
                                     type='text'
                                     name='firstname'
-                                    value={editBookingPayload?.user?.firstname}
+                                    value={hirerInfo?.firstname}
                                     onChange={handleHirerDetialsChange}
                                     readOnly={!isHirerEditable}
                                 />
                             </label>
+
                             <label style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
                                 Last Name
                                 <input
                                     type='text'
                                     name='lastname'
-                                    value={editBookingPayload?.user?.lastname}
+                                    value={hirerInfo?.lastname}
                                     onChange={handleHirerDetialsChange}
                                     readOnly={!isHirerEditable}
                                 />
@@ -483,7 +659,7 @@ const UpdateBooking = () => {
                                 <div ref={livingCountryRef} className='edit-booking-living-country'>
                                     <p>Which country do you live</p>
                                     <div className='edit-booking-living-country-head' onClick={() => setShowLivingCountry(!showLivingCountry)}>
-                                        <h3>{editBookingPayload?.user?.country}</h3>
+                                        <h3>{hirerInfo?.country}</h3>
                                         <IoIosArrowDown size={20} color='#000' />
                                     </div>
                                     <div className={`edit-booking-living-country-dropdown ${showLivingCountry ? 'show-living-country-list' : ''}`}>
@@ -501,7 +677,7 @@ const UpdateBooking = () => {
 
                             <label style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
                                 Email
-                                <input type='text' readOnly name='email' value={editBookingPayload?.user?.email} />
+                                <input type='text' readOnly name='email' value={hirerInfo?.email} />
                             </label>
                         </div>
 
@@ -511,7 +687,7 @@ const UpdateBooking = () => {
                                 <input
                                     type='text'
                                     name='phone'
-                                    value={editBookingPayload?.user?.phone}
+                                    value={hirerInfo?.phone}
                                     onChange={handleHirerDetialsChange}
                                     readOnly={!isHirerEditable}
                                 />
@@ -521,7 +697,7 @@ const UpdateBooking = () => {
                                 <input
                                     type='text'
                                     name='local_phone'
-                                    value={editBookingPayload?.user?.local_phone}
+                                    value={hirerInfo?.local_phone}
                                     onChange={handleHirerDetialsChange}
                                     readOnly={!isHirerEditable}
                                 />
@@ -533,7 +709,7 @@ const UpdateBooking = () => {
                                 <div ref={howFindusRef} className='edit-how-you-find-us'>
                                     <p>How did you find us?</p>
                                     <div className='edit-how-you-find-head' onClick={() => setHowFind(!howFind)}>
-                                        <h3>{editBookingPayload?.user?.how_find_us}</h3>
+                                        <h3>{hirerInfo?.how_find_us}</h3>
                                         <IoIosArrowDown size={20} color='#000' />
                                     </div>
                                     <div className={`edit-how-you-find-list ${howFind ? 'show-how-find-us' : ''}`}>
@@ -545,7 +721,7 @@ const UpdateBooking = () => {
                             ) : (
                                 <div className='living-country' style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
                                     <p>How did you find us?</p>
-                                    <h3>{editBookingPayload?.user?.how_find_us}</h3>
+                                    <h3>{hirerInfo?.how_find_us}</h3>
                                 </div>
                             )}
 
@@ -553,7 +729,7 @@ const UpdateBooking = () => {
                                 <div ref={visitPerposeRef} className='visit-perpose-dropdown-main'>
                                     <p>Purpose of visit</p>
                                     <div className='visit-perpose-head' onClick={() => setShowVisitPerpose(!showVisitPerpose)}>
-                                        <h3>{editBookingPayload?.user?.travel_reason}</h3>
+                                        <h3>{hirerInfo?.travel_reason}</h3>
                                         <IoIosArrowDown size={20} color='#000' />
                                     </div>
                                     <div className={`visit-perpose-list ${showVisitPerpose ? 'show-visit-perpose' : ''}`}>
@@ -571,7 +747,7 @@ const UpdateBooking = () => {
                             ) : (
                                 <div className='living-country' style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
                                     <p>Purpose of visit</p>
-                                    <h3>{editBookingPayload?.user?.travel_reason}</h3>
+                                    <h3>{hirerInfo?.travel_reason}</h3>
                                 </div>
                             )}
 
@@ -579,17 +755,16 @@ const UpdateBooking = () => {
                         </div>
                     </div>
 
-                    {/* <div className='hirer-info-update-button-contianer' style={{ opacity: isHirerEditable ? 1 : 0.4 }}>
-                        <button style={{ cursor: isHirerEditable ? 'pointer' : 'not-allowed' }}>Update</button>
-                    </div> */}
-
                 </div>
 
                 <div className='edit-driver-info'>
 
                     <div className='edit-driver-info-head'>
                         <h3>Driver Info</h3>
-                        <button>
+                        <button
+                            onClick={handleValidateAddDriver}
+                        // onClick={handleDriverEditModal}
+                        >
                             <GoPlus size={15} color='#000' />
                         </button>
                     </div>
@@ -598,66 +773,12 @@ const UpdateBooking = () => {
                         {editBookingPayload?.drivers && editBookingPayload?.drivers?.map((item, index) => (
                             <div className='driver-list-single-item'>
                                 <div className='driver-list-single-item-head' onClick={() => handleDriverIndex(index)}>
-                                    <h3>{item.driver_name}</h3>
+                                    <h3>{item?.driver_name}</h3>
                                     <span className='driver-view-or-adit-contianer'>
                                         <FaEye size={20} color='#000' onClick={() => handleDetails(item)} />
                                         <CiEdit size={20} color='#000' onClick={() => handleDriverEditModal(item)} />
                                     </span>
                                 </div>
-                                {/* <div className={`driver-list-single-item-inputs ${driverEdit === index ? 'edit-driver-detials' : ''}`}>
-
-                                    <div className='hirer-info-two-columns'>
-
-                                        <div className='living-country'>
-                                            <p>Date of birth</p>
-                                            <h3>{formatIsoDate(item.driver_dob)}</h3>
-                                        </div>
-
-                                        <div className='living-country'>
-                                            <p>Driver Age</p>
-                                            <h3>24</h3>
-                                        </div>
-
-                                    </div>
-                                    <div className='hirer-info-two-columns'>
-
-                                        <div className='living-country'>
-                                            <p>Licence Issuing Country</p>
-                                            <div className='licence-issue-country-list-main-contianer'>
-                                                <div className='licence-issue-country-head' onClick={handleShowLicenceCountry}>
-                                                    <h3>{item.license_country}</h3>
-                                                </div>
-                                                <div className={`licence-issue-country-list ${showLLicenceCountry ? 'show-licence-country-list' : ''}`}>
-                                                    {countriesList.map((item, index) => (
-                                                        <p key={index} className={`licence-country-list-item`}>{item.country}</p>
-                                                    ))}
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div className='living-country'>
-                                            <p>Licence Number</p>
-                                            <h3>{item.license_no}</h3>
-                                        </div>
-
-                                    </div>
-                                    <div className='hirer-info-two-columns'>
-
-                                        <div className='living-country'>
-                                            <p>Licence Expiry Date</p>
-                                            <h3>{formatIsoDate(item.license_expiry)}</h3>
-                                        </div>
-
-                                        <div className='living-country'>
-                                            <p>Living Country</p>
-                                            <h3>24</h3>
-                                        </div>
-
-                                    </div>
-
-
-                                </div> */}
                             </div>
                         ))}
                     </div>
@@ -694,7 +815,7 @@ const UpdateBooking = () => {
                         <div className='extras-count-container'>
                             <div className='extras-count-head'>
                                 <h3>Extras</h3>
-                                <button>
+                                <button onClick={() => setShowExtras(!showExtras)}>
                                     <CiEdit size={15} color='#000' />
                                 </button>
                             </div>
@@ -702,14 +823,34 @@ const UpdateBooking = () => {
                                 {editBookingPayload?.booking?.extras?.map((item, index) => (
                                     <span key={index}>
                                         <h3>{item.name}</h3>
-                                        <p>NZD {parseFloat(item.rate) * vehicleData?.rates?.length}</p>
+                                        <p>NZD {(parseFloat(item.rate) * vehicleData?.rates?.length) * item.quantity}</p>
                                     </span>
                                 ))}
                             </div>
                         </div>
 
                         <div className='summary-signature-option'>
-                            <p>Add Signature</p>
+                            {editBookingPayload?.signature?.signature_image !== '' ? (
+                                <div className='summary-signature-image-contianer'>
+                                    <button className='summary-image-reupload-option' onClick={handleReUploadSignature}>
+                                        <CgCloseO size={20} color='#000' />
+                                    </button>
+
+                                    <img
+                                        // src={url+editBookingPayload?.signature?.signature_image} 
+                                        src={
+                                            editBookingPayload?.signature?.signature_image instanceof File
+                                                ? URL.createObjectURL(editBookingPayload?.signature?.signature_image) // 🧠 for new upload
+                                                : url + editBookingPayload?.signature?.signature_image // 🌐 for existing image
+                                        }
+                                        alt='signature img'
+                                    />
+                                </div>
+                            ) : (
+                                <div className='summary-upload-image-container' onClick={() => setShowSignature(true)}>
+                                    <p>Add Signature</p>
+                                </div>
+                            )}
                         </div>
 
                     </div>
@@ -748,12 +889,16 @@ const UpdateBooking = () => {
                                 <p>Extras</p>
                                 <h3>NZD {handleExtrasTotal()}</h3>
                             </span>
-                            <span style={{borderTop: '1px solid #afafaf', paddingTop: '10px'}}>
-                                <p style={{fontSize: '15px', fontWeight: 400, color: '#000'}}>Grand Total</p>
-                                <h3 style={{fontSize: '15px', fontWeight: 500, color: '#000'}}>NZD {handleGrandTotal()}</h3>
+                            <span style={{ borderTop: '1px solid #afafaf', paddingTop: '10px' }}>
+                                <p style={{ fontSize: '15px', fontWeight: 400, color: '#000' }}>Grand Total</p>
+                                <h3 style={{ fontSize: '15px', fontWeight: 500, color: '#000' }}>NZD {handleGrandTotal()}</h3>
                             </span>
                         </div>
                     </div>
+                </div>
+
+                <div className='update-booking-button-container'>
+                    <button onClick={handleUpdateBooking}>Update Booking</button>
                 </div>
 
             </div>
@@ -776,6 +921,8 @@ const UpdateBooking = () => {
             />
 
             <ExtrasUpdateModal
+                showExtrasModal={showExtras}
+                setShowExtrasModal={setShowExtras}
                 payload={editBookingPayload}
                 setPayload={setEditBookingPayload}
                 carId={vehicleData?.car_id}
@@ -784,10 +931,18 @@ const UpdateBooking = () => {
             <EditDriverModal
                 isEdit={showDriverEdit}
                 setIsEdit={setShowDriverEdit}
+                isViewOnly={viewDriver}
+                setIsViewOnly={setViewDriver}
                 payload={editBookingPayload}
                 setPayload={setEditBookingPayload}
                 data={selectedDriver}
                 setData={setSelectedDriver}
+            />
+
+            <SignatureModal
+                showSignature={showSignature}
+                setShowSignature={setShowSignature}
+                setCustomerSignature={setSignature}
             />
 
         </div>

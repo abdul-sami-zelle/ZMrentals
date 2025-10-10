@@ -263,8 +263,7 @@
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
-    height: auto;
+    width: 100% !important;
     background-color: #fff;
     border-radius: 10px;
     z-index: 999999;
@@ -277,7 +276,7 @@
     width: 100%;
     height: auto;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 5px;
     z-index: 999999999;
     border: 1px solid #afafaf;
 }
@@ -287,13 +286,13 @@
 
 .react-calendar {
     width: 100%;
-    min-width: 280px;
+    min-width: unset !important;
 }
 
 .pickup-date-calander-contianer .react-calendar,
 .drop-date-calander-contianer .react-calendar {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    border-radius: 15px;
+    border-radius: 5px !important;
     border: none !important;
 }
 

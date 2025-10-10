@@ -93,7 +93,7 @@
     padding: 10px;
     align-items: start;
     justify-content: start;
-    width: 50%;
+    width: 48%;
     gap: 10px;
     border: 1px solid #000;
     border-radius: 5px;
@@ -107,7 +107,7 @@
 }
 
 .pick-drop-detial-head > h3 {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
@@ -125,7 +125,7 @@
 }
 
 .pick-drop-location {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
@@ -148,7 +148,7 @@
 }
 
 .pick-drop-date-and-month > h3 {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
@@ -171,7 +171,7 @@
 }
 
 .pick-drop-time-and-date > h3 {
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
@@ -220,7 +220,15 @@
     color: #000;
 }
 
-.hirer-info-head > button {
+.hirer-info-edit-update-contianer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    gap: 15px;
+}
+
+.hirer-info-edit-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -588,16 +596,21 @@
     margin-top: 15px;
 }
 
-.hirer-info-update-button-contianer > button {
+.update-hirer-info-button {
+    display: none;
     background-color: #961502;
-    padding: 10px 20px;
+    padding: 10px;
     border: 1px solid #961502;
-    border-radius: 10px;
-    font-size: 13px;
+    border-radius: 5px;
+    font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
     color: #FFF;
     width: max-content;
+}
+
+.update-hirer-info-button.show-update-hirer {
+    display: flex;
 }
 
 /* Driver info */
@@ -965,7 +978,45 @@
     border-radius: 5px;
 }
 
-.summary-signature-option > p {
+.summary-signature-image-contianer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.summary-image-reupload-option {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: max-content;
+    height: max-content;
+    display: flex;
+    flex-shrink: 0;
+    background-color: #FFF;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.summary-signature-image-contianer > img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.summary-upload-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.summary-upload-image-container > p {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
@@ -1121,3 +1172,28 @@
 }
 
 /* Extras Feature Value */
+
+/* Update Booking button */
+.update-booking-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.update-booking-button-container > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 34px;
+    border-radius: 5px;
+    border: 1px solid #961502;
+    background-color: #961502;
+    color: #FFF;
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    cursor: pointer;
+}

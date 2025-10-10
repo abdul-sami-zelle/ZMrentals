@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import './SelectBooking.css'
+import { url } from '@/utils/services';
+import axios from 'axios';
 
 const SelectBooking = ({ manageBookingSteper, setManageBookingSteper, imageChaneg }) => {
     const [bookingPayload, setBookingPayload] = useState({
-        booking_no: '',
+        booking_id: '',
         email: ''
     })
 
@@ -42,7 +44,7 @@ const SelectBooking = ({ manageBookingSteper, setManageBookingSteper, imageChane
         validate(name, value);
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         // run validation for all fields first
         let newErrors = {};
 
@@ -65,8 +67,23 @@ const SelectBooking = ({ manageBookingSteper, setManageBookingSteper, imageChane
             return;
         }
 
-        setManageBookingSteper(manageBookingSteper + 1)
-        localStorage.setItem('booking_email_and_number', JSON.stringify(bookingPayload))
+        const api = `${url}/booking/verify-booking`
+        try {
+            const response = await axios.post(api, bookingPayload);
+            if(response.status === 200) {
+                const bookingDetails = {
+                    booking_id: bookingPayload?.booking_id,
+                    token: response.data.token
+                }
+                sessionStorage.setItem('bookingDetails', JSON.stringify(bookingDetails))
+                setManageBookingSteper(manageBookingSteper + 1)
+            }
+            console.log("verify booking response", response)
+        } catch (error) {
+            console.error("UnExpected Server Error", error);
+        }
+
+        // setManageBookingSteper(manageBookingSteper + 1)
         imageChaneg()
     };
 
@@ -80,7 +97,7 @@ const SelectBooking = ({ manageBookingSteper, setManageBookingSteper, imageChane
             <div className='select-booking-inputs-continaer'>
                 <label>
                     Booking Number
-                    <input type='text' name='booking_no' value={bookingPayload.booking_no} onChange={handleBookingSelect} style={{ border: errors.booking_no ? '1px solid red' : '1px solid #000' }} />
+                    <input type='text' name='booking_id' value={bookingPayload.booking_id} onChange={handleBookingSelect} style={{ border: errors.booking_id ? '1px solid red' : '1px solid #000' }} />
                 </label>
                 <label>
                     Email

@@ -8,7 +8,6 @@ import { useOutsideClick } from '../../../utils/DetectClickOutside';
 import Calendar from 'react-calendar';
 import { useDropdownNavigation } from '@/utils/keyPress';
 import useCalendarNavigation from '@/utils/calanderKeyPress';
-import MainLoader from '@/loaders/MainLoader/MainLoader';
 
 const CarAvailabilityModal = ({
     showModal,
@@ -256,7 +255,6 @@ const CarAvailabilityModal = ({
             car_id: editBookingPayload?.booking?.car_id
         }
 
-        console.log("availability obj", availabilityObj)
         setLoading(true)
         try {
             const response = await axios.post(api, availabilityObj)
@@ -268,7 +266,6 @@ const CarAvailabilityModal = ({
                     setCarAvailabilityCheck('no');
                 }
             }
-            console.log("availability response", response)
         } catch (error) {
             console.error("UnExpected server error", error);
             setLoading(false)
@@ -284,7 +281,6 @@ const CarAvailabilityModal = ({
         setCarAvailabilityCheck('')
     }
 
-
     const handleUpdateBookingTiming = () => {
         setVehicleData((prev) => ({
             ...prev,
@@ -296,7 +292,6 @@ const CarAvailabilityModal = ({
         }))
         setShowModal(false)
     }
-
 
     return (
         <div className={`car-available-modal-main-contianer ${showModal ? 'show-car-available-modal' : ''}`} onClick={handleCloseModal}>
@@ -323,6 +318,7 @@ const CarAvailabilityModal = ({
                     <div className='car-available-edit-pickup'>
                         <h3>Pick up Location</h3>
                         <div className='car-available-pick-up-inputs-main'>
+
                             <div ref={pickupLocationRef} className='pick-up-location-dropdown'>
                                 <div className='pickup-dropdown-head' onClick={handlePickupListShow}>
                                     <h3>{pickupLocation?.name}</h3>
@@ -336,6 +332,7 @@ const CarAvailabilityModal = ({
                             </div>
 
                             <div className='pick-up-location-time-and-date'>
+                                
                                 <div ref={pickupDateRef} className='pick-up-location-date'>
                                     <p>Date</p>
                                     <h3 onClick={handlePickupDateCalender}>{pickupResult.date}</h3>
@@ -348,7 +345,7 @@ const CarAvailabilityModal = ({
                                                 next2Label={null}
                                                 prev2Label={null}
                                                 formatShortWeekday={(locale, date) =>
-                                                    date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)
+                                                    date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
                                                 }
                                                 minDate={new Date()}
                                             />
