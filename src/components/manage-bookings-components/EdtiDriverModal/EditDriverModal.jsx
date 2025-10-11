@@ -4,10 +4,36 @@ import { CgCloseO } from 'react-icons/cg';
 import { IoIosArrowDown } from "react-icons/io";
 import Calendar from 'react-calendar';
 import { url } from '@/utils/services';
+import { useOutsideClick } from '@/utils/DetectClickOutside';
+import useDropdownNavigationWithSearch from '@/utils/keyPress';
+import useCalendarNavigation from '@/utils/calanderKeyPress';
+import { CiCalendarDate, CiEdit } from "react-icons/ci";
+import { FaEye } from "react-icons/fa";
+import { LuEyeClosed } from "react-icons/lu";
 
-const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload, setPayload, data, setData, }) => {
+const EditDriverModal = (
+    { 
+        isEdit, 
+        setIsEdit, 
+        isViewOnly, 
+        setIsViewOnly, 
+        payload, 
+        setPayload, 
+        data, 
+        setData, 
+    }) => {
 
-    // console.log("data", data)
+
+    const dobRef = useRef();
+    const driverAgeRef = useRef();
+    const licenceCountryRef = useRef();
+    const expiryCalenderRef = useRef();
+
+    // const [isViewOnly, setIsViewOnly] = useState(true)
+
+
+
+
     const [showDobCalender, setShowDobCalender] = useState(false);
     const [countryList, setCountryList] = useState([]);
 
@@ -216,28 +242,18 @@ const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload
     const handleUpdateDriverDetails = () => {
 
         setPayload((prev) => {
-            const existingDrivr = prev?.drivers?.some((item) => item.id === data.id);
+            const existingDrivr = prev?.drivers?.some((item) => item.id === data?.id);
             let updatedDrivers;
-            if(existingDrivr) {
-                updatedDrivers = prev.drivers.map((item) => item.id === data.id ? {...item, ...updatedDriver} : item)
+            if (existingDrivr) {
+                updatedDrivers = prev.drivers.map((item) => item.id === data?.id ? { ...item, ...updatedDriver, id: data?.id } : item)
             } else {
-                updatedDrivers = [...prev.drivers, {...updatedDriver}];
+                updatedDrivers = [...prev.drivers, { ...updatedDriver }];
             }
             return {
                 ...prev,
                 drivers: updatedDrivers
             }
         })
-
-
-        // setPayload((prev) => {
-        //     const driver = prev.drivers.map((item) => item.id === data.id ? { ...item, ...updatedDriver } : item)
-
-        //     return {
-        //         ...prev,
-        //         drivers: driver
-        //     }
-        // })
 
         setIsEdit(false)
     }
@@ -246,6 +262,25 @@ const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload
         setIsEdit(false);
         setIsViewOnly(false)
     }
+
+
+    // Dropdown key controls
+    useOutsideClick(dobRef, () => setShowDobCalender(false));
+    useOutsideClick(driverAgeRef, () => setShowDriverAgeList(false));
+    useOutsideClick(licenceCountryRef, () => setShowCountries(false));
+    useOutsideClick(expiryCalenderRef, () => setShowExpiry(false));
+
+
+    const driverAgeIndex = useDropdownNavigationWithSearch(driverAgeRef, showDriverAgeList, 'driver-age-list-item')
+    const licenceCountryIndex = useDropdownNavigationWithSearch(licenceCountryRef, showCountries, 'licence-country-list-item')
+
+
+    useCalendarNavigation(dobRef, eighteenYearsAgo, (el) => {
+        if (eighteenYearsAgo) handleDobChange(eighteenYearsAgo);
+    });
+    useCalendarNavigation(expiryCalenderRef, expiryYears, (el) => {
+        if (expiryYears) handleLicenceExpiryDate(expiryYears);
+    });
 
     // useEffect(() => {console.log("updated driver", updatedDriver)}, [updatedDriver])
 
@@ -258,22 +293,25 @@ const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload
 
                 <div className='edit-driver-modal-head'>
                     <h3>Driver Information</h3>
-                    <CgCloseO color='#000' size={20} style={{ cursor: 'pointer' }} onClick={handleCloseDriverModal} />
+                    <div className='edit-and-close-modal-contianer'>
+                        <CiEdit color='#000' size={20} style={{ cursor: 'pointer' }} onClick={() => setIsViewOnly(!isViewOnly)} />
+                        <CgCloseO color='#000' size={20} style={{ cursor: 'pointer' }} onClick={handleCloseDriverModal} />
+                    </div>
                 </div>
 
                 <div className='edit-driver-inputs'>
 
                     <div className='driver-two-equal-columns'>
-                        <label style={{opacity: isViewOnly ? 0.6 : 1}}>
+                        <label style={{ opacity: isViewOnly ? 0.6 : 1 }}>
                             Driver Name
                             <input type='text' readOnly={isViewOnly} name='driver_name' value={updatedDriver.driver_name} onChange={handleSetDriverDetails} />
                         </label>
 
-                        <div className='driver-bod-contianer' style={{opacity: isViewOnly ? 0.6 : 1}}>
+                        <div ref={dobRef} className='driver-bod-contianer' style={{ opacity: isViewOnly ? 0.6 : 1 }}>
                             <p>Date of Birth</p>
                             <div className='edit-driver-dob-head' onClick={() => isViewOnly ? null : handleShowDobCalender()}>
                                 <h3>{formatISOToDDMMYYYYStrict(updatedDriver?.driver_dob)}</h3>
-                                <IoIosArrowDown color='#000' size={15} />
+                                <CiCalendarDate color='#000' size={15} />
                             </div>
                             <div className={`edit-driver-dob-calender ${showDobCalender ? 'show-driver-dob-calender' : ''}`}>
                                 <Calendar
@@ -282,9 +320,16 @@ const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload
                                     view="month"
                                     next2Label={null}
                                     prev2Label={null}
+                                    // defaultView="month" // ✅ Start at month view but allow switching
+                                    // minDetail="decade" // ✅ Allow navigation up to decades
+                                    // maxDetail="month" // ✅ Allow down to days
+
                                     formatShortWeekday={(locale, date) =>
                                         date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
                                     }
+                                    // formatMonthYear={(locale, date) =>
+                                    //     date.toLocaleDateString(locale, { month: 'long' }) // 👈 Only month
+                                    // }
                                     minDate={new Date(today.getFullYear() - 100, today.getMonth(), today.getDate())}
                                     maxDate={eighteenYearsAgo}
                                 />
@@ -296,7 +341,7 @@ const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload
 
                     <div className='driver-two-equal-columns'>
 
-                        <div className='edit-driver-age-dropdown' style={{opacity: isViewOnly ? 0.6 : 1}}>
+                        <div ref={driverAgeRef} className='edit-driver-age-dropdown' style={{ opacity: isViewOnly ? 0.6 : 1 }}>
                             <p>Driver Age</p>
                             <div className='driver-age-head' onClick={() => isViewOnly ? null : setShowDriverAgeList(!showDriverAgeList)}>
                                 <h3>{updatedDriver?.driver_age}</h3>
@@ -304,12 +349,12 @@ const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload
                             </div>
                             <div className={`driver-age-list ${showDriverAgeList ? 'show-age-list' : ''}`}>
                                 {driverAgeList.map((item, index) => (
-                                    <p key={index} className={`driver-age-list-item`} onClick={() => handleSelectDriverAge(item)}>{item}</p>
+                                    <p key={index} className={`driver-age-list-item ${driverAgeIndex === index ? 'active-driver-age-list-item' : ''}`} onClick={() => handleSelectDriverAge(item)}>{item}</p>
                                 ))}
                             </div>
                         </div>
 
-                        <div className='licence-country-dropdown' style={{opacity: isViewOnly ? 0.6 : 1}}>
+                        <div ref={licenceCountryRef} className='licence-country-dropdown' style={{ opacity: isViewOnly ? 0.6 : 1 }}>
                             <p>Licence Issuing Country</p>
                             <div className='licence-country-head' onClick={() => isViewOnly ? null : setShowCountries(!showCountries)}>
                                 <h3>{updatedDriver?.license_country}</h3>
@@ -317,23 +362,23 @@ const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload
                             </div>
                             <div className={`licence-country-list ${showCountries ? 'show-licence-countries' : ''}`}>
                                 {countryList.map((item, index) => (
-                                    <p key={index} className={`licence-country-list-item`} onClick={() => handleUpdateLicenceCountry(item)}>{item.country}</p>
+                                    <p key={index} className={`licence-country-list-item ${licenceCountryIndex === index ? 'active-licence-country-item' : ''}`} onClick={() => handleUpdateLicenceCountry(item)}>{item.country}</p>
                                 ))}
                             </div>
                         </div>
                     </div>
 
                     <div className='driver-two-equal-columns'>
-                        <label style={{opacity: isViewOnly ? 0.6 : 1}}>
+                        <label style={{ opacity: isViewOnly ? 0.6 : 1 }}>
                             Licence No
                             <input type='text' readOnly={isViewOnly} name='license_no' value={updatedDriver.license_no} onChange={handleSetDriverDetails} />
                         </label>
 
-                        <div className='licence-expiry-dropdown' style={{opacity: isViewOnly ? 0.6 : 1}}>
+                        <div ref={expiryCalenderRef} className='licence-expiry-dropdown' style={{ opacity: isViewOnly ? 0.6 : 1 }}>
                             <p>Expiry Date</p>
                             <div className='licence-expiry-head' onClick={() => isViewOnly ? null : setShowExpiry(!showExpiry)}>
                                 <h3>{formatISOToDDMMYYYYStrict(updatedDriver?.license_expiry)}</h3>
-                                <IoIosArrowDown size={15} color='#000' />
+                                <CiCalendarDate size={15} color='#000' />
                             </div>
                             <div className={`licence-expiry-calender ${showExpiry ? 'show-licence-expiry' : ''}`}>
                                 <Calendar
@@ -345,6 +390,9 @@ const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload
                                     formatShortWeekday={(locale, date) =>
                                         date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)
                                     }
+                                    // formatMonthYear={(locale, date) =>
+                                    //     date.toLocaleDateString(locale, { year: 'long' }) // 👈 Only month
+                                    // }
                                     minDate={expiryYears}
                                 />
                             </div>
@@ -384,12 +432,12 @@ const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload
                     </div>
 
                     <div className='driver-two-equal-columns'>
-                        <label style={{opacity: isViewOnly ? 0.6 : 1}}>
+                        <label style={{ opacity: isViewOnly ? 0.6 : 1 }}>
                             Remarks
                             <textarea name='remarks' readOnly={isViewOnly} value={updatedDriver.remarks} onChange={handleSetDriverDetails} />
                         </label>
 
-                        <div className='licence-upload-contianer' style={{opacity: isViewOnly ? 0.6 : 1}}>
+                        <div className='licence-upload-contianer' style={{ opacity: isViewOnly ? 0.6 : 1 }}>
                             {updatedDriver?.front_license_image === '' || updatedDriver?.back_license_image === '' ? (
                                 // <div className='licence-upload-message'>
                                 updatedDriver?.front_license_image === '' ? (
@@ -433,7 +481,7 @@ const EditDriverModal = ({ isEdit, setIsEdit, isViewOnly, setIsViewOnly, payload
 
                 </div>
 
-                <div className='edit-driver-update-button' style={{opacity: isViewOnly ? 0.6 : 1, cursor: isViewOnly ? 'not-allowed' : 'pointer'}}>
+                <div className='edit-driver-update-button' style={{ opacity: isViewOnly ? 0.6 : 1, cursor: isViewOnly ? 'not-allowed' : 'pointer' }}>
                     <button onClick={isViewOnly ? null : handleUpdateDriverDetails}>Update</button>
                 </div>
 

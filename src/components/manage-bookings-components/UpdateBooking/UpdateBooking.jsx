@@ -19,6 +19,8 @@ import EditDriverModal from '../EdtiDriverModal/EditDriverModal'
 import MainLoader from '@/loaders/MainLoader/MainLoader';
 import { CgCloseO } from "react-icons/cg";
 import SignatureModal from '../../../global-components/SignatureModal/SignatureModal'
+import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
+import CarDateNotAvailable from '../../../modals/CarDateNotAvailable/CarDateNotAvailable'
 
 const UpdateBooking = ({ setManageBookingSteper }) => {
 
@@ -29,6 +31,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
     const [countriesList, setCountriesList] = useState([])
     const [showSignature, setShowSignature] = useState(false)
     const [userSignature, setSignature] = useState();
+    const [confirmModal, setConfirmModal] = useState(false)
     const [editBookingPayload, setEditBookingPayload] = useState({
         booking: {
             car_id: null,
@@ -58,6 +61,12 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
             signature_image: ''
         }
     });
+
+    const [confirmData, setConfirmData] = useState({
+        head: '',
+        para: '',
+        link: ''
+    })
 
     // Gernal Functions 
     const handleGetVehicleData = async () => {
@@ -465,31 +474,26 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
     const handleUpdateBooking = async () => {
         const bookingData = JSON.parse(sessionStorage.getItem('bookingDetails'));
         const api = `${url}/booking/edit/${bookingData?.booking_id}`;
-
+        setLoading(true);
         if (!bookingData) {
             setManageBookingSteper(0);
             return
         }
-
-        console.log("before update payload", editBookingPayload)
 
         const updatedDrivers = await Promise.all(
             editBookingPayload.drivers.map(async (drv) => {
                 let frontUrl = drv.front_license_image;
                 let backUrl = drv.back_license_image;
 
-
                 // Upload front license image if it's a File object
                 if (drv.front_license_image instanceof File) {
                     frontUrl = await uploadFileAndGetUrl(drv.front_license_image, '/uploader/upload/liscences');
                 }
 
-
                 // Upload back license image if it's a File object
                 if (drv.back_license_image instanceof File) {
                     backUrl = await uploadFileAndGetUrl(drv.back_license_image, '/uploader/upload/liscences');
                 }
-
 
                 return {
                     ...drv,
@@ -523,8 +527,6 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
             },
         };
 
-        console.log("final payload", finalPayload)
-
         try {
 
             const response = await axios.put(api, finalPayload, {
@@ -533,21 +535,35 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                 }
             })
 
-            console.log("respons update booking", response);
+            if (response.status === 200) {
+                setConfirmModal(true)
+                setConfirmData({
+                    head: 'All Set!',
+                    para: 'We’ve updated your booking with the latest details.',
+                    link: 'Explore More'
+                })
+                
+            }
+
         } catch (error) {
-            console.log("UnExpected Servr Error", error);
+            console.error("UnExpected Servr Error", error);
+            setConfirmData({
+                    head: 'Update Failed',
+                    para: 'Something went wrong while updating your booking. Please try again',
+                    link: 'Please Try Again'
+                })
             setLoading(false)
         } finally {
             setLoading(false);
         }
     }
 
+    const handleClose = () => {
+        setConfirmModal(false)
+    }
 
-
-
-
-    useEffect(() => { console.log("edit payload", editBookingPayload) }, [editBookingPayload])
-    useEffect(() => { console.log("vehicle Data", vehicleData) }, [vehicleData])
+    useEffect(() => {console.log("edit payload", editBookingPayload)}, [editBookingPayload])
+    useEffect(() => {console.log("vehicle payload", vehicleData)}, [vehicleData])
 
     return (
         <div className='booking-edit-main-continair'>
@@ -570,13 +586,13 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                     ))}
                 </div>
 
-                <div className='edit-booking-dick-and-drop-time'>
+                <div className='edit-booking-pick-and-drop-time'>
 
                     <div className='pick-drop-details-box'>
                         <div className='pick-drop-detial-head'>
                             <h3>Pick-up Location</h3>
                             <button onClick={handleShowAvailabilityCheckModal}>
-                                <CiEdit size={15} color='#000' />
+                                <CiEdit size={20} color='#961502' />
                             </button>
                         </div>
                         <h3 className='pick-drop-location'>{locations.find((item) => item.id === editBookingPayload?.booking?.pickup_location)?.name}</h3>
@@ -595,7 +611,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                         <div className='pick-drop-detial-head'>
                             <h3>Drop-off Location</h3>
                             <button onClick={handleShowAvailabilityCheckModal}>
-                                <CiEdit size={15} color='#000' />
+                                <CiEdit size={20} color='#961502' />
                             </button>
                         </div>
                         <h3 className='pick-drop-location'>{locations.find((item) => item.id === editBookingPayload?.booking?.drop_location)?.name}</h3>
@@ -623,7 +639,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                         <div className='hirer-info-edit-update-contianer'>
                             <button onClick={handleUpdateHirerInfo} className={`update-hirer-info-button ${isHirerEditable ? 'show-update-hirer' : ''}`} style={{ cursor: isHirerEditable ? 'pointer' : 'not-allowed', opacity: isHirerEditable ? 1 : 0.4 }}>Update</button>
                             <button className='hirer-info-edit-button' onClick={handleHirerAdit}>
-                                <CiEdit size={15} color='#000' />
+                                <CiEdit size={20} color='#961502' />
                             </button>
                         </div>
                     </div>
@@ -765,7 +781,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                             onClick={handleValidateAddDriver}
                         // onClick={handleDriverEditModal}
                         >
-                            <GoPlus size={15} color='#000' />
+                            <GoPlus size={25} color='#961502' />
                         </button>
                     </div>
 
@@ -774,9 +790,10 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                             <div className='driver-list-single-item'>
                                 <div className='driver-list-single-item-head' onClick={() => handleDriverIndex(index)}>
                                     <h3>{item?.driver_name}</h3>
-                                    <span className='driver-view-or-adit-contianer'>
-                                        <FaEye size={20} color='#000' onClick={() => handleDetails(item)} />
-                                        <CiEdit size={20} color='#000' onClick={() => handleDriverEditModal(item)} />
+                                    <span className='driver-view-or-adit-contianer' onClick={() => handleDetails(item)}>
+                                        View
+                                        {/* <FaEye size={20} color='#000' onClick={() => handleDetails(item)} /> */}
+                                        {/* <CiEdit size={20} color='#000' onClick={() => handleDriverEditModal(item)} /> */}
                                     </span>
                                 </div>
                             </div>
@@ -785,6 +802,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                 </div>
 
                 <div className='insurance-main-contianer'>
+
                     <div className='car-insurance-head'>
                         <h3>Insurance</h3>
                         {vehicleData?.insurances && (
@@ -801,9 +819,10 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                         )}
 
                     </div>
+
                     <div className='insurance-content-sec' onClick={handleUpdateInsurance}>
                         <button>
-                            <CiEdit size={15} color='#000' />
+                            <CiEdit size={20} color='#961502' />
                         </button>
                     </div>
 
@@ -815,17 +834,17 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                         <div className='extras-count-container'>
                             <div className='extras-count-head'>
                                 <h3>Extras</h3>
-                                <button onClick={() => setShowExtras(!showExtras)}>
-                                    <CiEdit size={15} color='#000' />
+                                <button onClick={() => setShowExtras(!showExtras)} style={{cursor: 'pointer'}}>
+                                    <CiEdit size={20} color='#961502'  />
                                 </button>
                             </div>
                             <div className='extras-count-option-contianer'>
-                                {editBookingPayload?.booking?.extras?.map((item, index) => (
-                                    <span key={index}>
+                                {editBookingPayload?.booking?.extras?.map((item, index) => {
+                                    return <span key={index}>
                                         <h3>{item.name}</h3>
-                                        <p>NZD {(parseFloat(item.rate) * vehicleData?.rates?.length) * item.quantity}</p>
+                                        <p>NZD {(parseFloat(item.rate) * vehicleData?.rates?.length) * parseInt(item.quantity)}</p>
                                     </span>
-                                ))}
+                                })}
                             </div>
                         </div>
 
@@ -943,6 +962,16 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                 showSignature={showSignature}
                 setShowSignature={setShowSignature}
                 setCustomerSignature={setSignature}
+            />
+
+            {/* <ConfirmationModal
+                showUpdadeSuccess={confirmModal}
+                setShowUpdateSuccess={setConfirmModal} 
+            /> */}
+            <CarDateNotAvailable
+                showModal={confirmModal}
+                handleCloseModal={handleClose}
+                modalMessages={confirmData}
             />
 
         </div>

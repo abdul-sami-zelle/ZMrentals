@@ -8,6 +8,10 @@ import { useOutsideClick } from '../../../utils/DetectClickOutside';
 import Calendar from 'react-calendar';
 import { useDropdownNavigation } from '@/utils/keyPress';
 import useCalendarNavigation from '@/utils/calanderKeyPress';
+import { IoWarningOutline } from "react-icons/io5";
+import { FaRegCircleCheck } from "react-icons/fa6";
+import Spinner from '../../../loaders/Spinner/Spinner'
+import { CiCalendarDate } from "react-icons/ci";
 
 const CarAvailabilityModal = ({
     showModal,
@@ -34,9 +38,10 @@ const CarAvailabilityModal = ({
     const [dropupTime, setDropupTime] = useState(dropoffResult.time);
     const [timeLlistShow, setTimeListShow] = useState(false);
     const [dropTimeListShow, setDropTimeList] = useState(false);
+    const [carAvailableLoad, setCarAvailableLoad] = useState(false);
     const [carAvailablilityCheck, setCarAvailabilityCheck] = useState('');
     const [loading, setLoading] = useState(false)
-    
+
 
     const pickupLocationRef = useRef();
     const dropoffLocationRef = useRef();
@@ -258,8 +263,8 @@ const CarAvailabilityModal = ({
         setLoading(true)
         try {
             const response = await axios.post(api, availabilityObj)
-            if(response.status === 200) {
-                if(response.data.available === 1) {
+            if (response.status === 200) {
+                if (response.data.available === 1) {
                     setUpdatedVehilceData(response.data)
                     setCarAvailabilityCheck('yes');
                 } else {
@@ -273,7 +278,7 @@ const CarAvailabilityModal = ({
             setLoading(false)
         }
 
-        
+
     }
     const handleCloseModal = () => setShowModal(false);
 
@@ -295,10 +300,10 @@ const CarAvailabilityModal = ({
 
     return (
         <div className={`car-available-modal-main-contianer ${showModal ? 'show-car-available-modal' : ''}`} onClick={handleCloseModal}>
-            
+
             <div className={`car-available-modal-inner ${showModal ? 'show-car-available-inner-modal' : ''}`} onClick={(e) => e.stopPropagation()}>
                 <div className='car-available-modal-head'>
-                    <h3>Edit Car Information</h3>
+                    <h3>Booking Information</h3>
                     <CgCloseO color='#000' size={20} style={{ cursor: 'pointer' }} onClick={handleCloseModal} />
                 </div>
 
@@ -332,10 +337,13 @@ const CarAvailabilityModal = ({
                             </div>
 
                             <div className='pick-up-location-time-and-date'>
-                                
+
                                 <div ref={pickupDateRef} className='pick-up-location-date'>
                                     <p>Date</p>
-                                    <h3 onClick={handlePickupDateCalender}>{pickupResult.date}</h3>
+                                    <span>
+                                        <h3 onClick={handlePickupDateCalender}>{pickupResult.date}</h3>
+                                        <CiCalendarDate size={20} color='#000' />
+                                    </span>
                                     {pickupCalender && (
                                         <div className='pickup-date-calander-contianer'>
                                             <Calendar
@@ -346,6 +354,9 @@ const CarAvailabilityModal = ({
                                                 prev2Label={null}
                                                 formatShortWeekday={(locale, date) =>
                                                     date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
+                                                }
+                                                formatMonthYear={(locale, date) =>
+                                                    date.toLocaleDateString(locale, { month: 'long' }) // 👈 Only month
                                                 }
                                                 minDate={new Date()}
                                             />
@@ -388,7 +399,11 @@ const CarAvailabilityModal = ({
                             <div className='pick-up-location-time-and-date'>
                                 <div ref={dropoffDateRef} className='pick-up-location-date'>
                                     <p>Date</p>
-                                    <h3 onClick={handleDropDateCalender}>{dropoffResult.date}</h3>
+                                    <span>
+                                        <h3 onClick={handleDropDateCalender}>{dropoffResult.date}</h3>
+                                        <CiCalendarDate size={20} color='#000' />
+                                    </span>
+                                    
                                     {dropDateCalander && (
                                         <div className='drop-date-calander-contianer'>
                                             <Calendar
@@ -398,7 +413,10 @@ const CarAvailabilityModal = ({
                                                 next2Label={null}
                                                 prev2Label={null}
                                                 formatShortWeekday={(locale, date) =>
-                                                    date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)
+                                                    date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
+                                                }
+                                                formatMonthYear={(locale, date) =>
+                                                    date.toLocaleDateString(locale, { month: 'long' }) // 👈 Only month
                                                 }
                                                 minDate={selectedPickupDate || new Date()}
                                             />
@@ -426,14 +444,33 @@ const CarAvailabilityModal = ({
                 {/* Availability Check */}
                 <div className='available-or-not-contianer'>
                     {carAvailablilityCheck !== '' && <button className='recheck-availability' onClick={handleRecheckAvailability}><CgCloseO size={20} color='#000' /></button>}
+                    {loading && <Spinner />}
                     {carAvailablilityCheck === '' ? (
                         <div className='car-availability-check-button-contianer'>
                             <h3 onClick={handleCheckAvailability}>Check Availability</h3>
                         </div>
                     ) : carAvailablilityCheck === 'yes' ? (
-                        <img src={'/assets/manage-bookings/car-available.png'} alt='img' />
+                        // <img src={'/assets/manage-bookings/car-available.png'} alt='img' />
+                        <div className='available-main-contianer'>
+                            <div className='available-icon-color'>
+                                <FaRegCircleCheck size={50} color='#FFF' />
+                            </div>
+                            <span className='available-message'>
+                                <h3>Car Available</h3>
+                                <p>The vehicle is available. Please proceed with your booking</p>
+                            </span>
+                        </div>
                     ) : (
-                        <img src={'/assets/manage-bookings/car-not-available.png'} alt='img' />
+                        // <img src={'/assets/manage-bookings/car-not-available.png'} alt='img' />
+                        <div className='not-available-main-contianer'>
+                            <div className='not-available-icon-color'>
+                                <IoWarningOutline size={50} color='#FFF' />
+                            </div>
+                            <span className='not-available-message'>
+                                <h3>Car Not Available</h3>
+                                <p>The vehicle is not available on the selected date. Please select another date</p>
+                            </span>
+                        </div>
                     )}
                 </div>
 

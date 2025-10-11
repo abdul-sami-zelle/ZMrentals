@@ -49,6 +49,14 @@
     width: 100%;
 }
 
+.edit-and-close-modal-contianer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    gap: 15px;
+}
+
 .edit-driver-modal-head > h3 {
     font-size: 15px;
     line-height: 1.2;
@@ -392,6 +400,10 @@
     background-color: #961502;
     color: #fff;
 }
+.driver-age-list-item.active-driver-age-list-item {
+    background-color: #961502;
+    color: #fff;
+}
 
 
 /* Licence Country */
@@ -476,6 +488,10 @@
     background-color: #961502;
     color: #fff;
 }
+.licence-country-list-item.active-licence-country-item {
+    background-color: #961502;
+    color: #fff;
+}
 
 /* Expiry Date */
 
@@ -530,6 +546,7 @@
     height: 0;
     max-height: 0;
     overflow: hidden;
+    z-index: 999999999;
     transition: all 0.33s ease-in-out;
 }
 

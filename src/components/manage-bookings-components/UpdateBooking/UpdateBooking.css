@@ -17,9 +17,10 @@
 .edit-booking-left-sec {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    /* gap: 30px; */
+    gap: 1.875rem;
     align-items: start;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0;
     width: 50%;
     /* border-radius: 25px; */
@@ -34,12 +35,13 @@
     width: 100%;
     height: auto;
     overflow: hidden;
-    border-radius: 25px;
+    /* border-radius: 25px; */
+    border-radius: 1.563rem;
     border: 1px solid #afafaf;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
 }
 
-.edit-booking-vehicle-image-and-name > img {
+.edit-booking-vehicle-image-and-name>img {
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -54,7 +56,8 @@
     justify-content: center;
     width: 100%;
     height: auto;
-    padding: 10px;
+    padding: 0.625rem;
+    /* padding: 10px; */
     background-color: rgba(255, 255, 255, 0.2);
 }
 
@@ -62,41 +65,48 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 25px;
+    gap: 1.563rem;
+    /* gap: 25px; */
     width: 100%;
 }
 
-.edit-booking-car-features > span {
+.edit-booking-car-features>span {
     display: flex;
     align-items: center;
     justify-content: center;
     width: max-content;
-    gap: 10px;
-    font-size: 13px;
+    gap: 0.625rem;
+    /* gap: 10px; */
+    font-size: 0.813rem;
+    /* font-size: 13px; */
     line-height: 1.2;
     font-weight: 500;
     color: #000;
 }
 
 
-.edit-booking-dick-and-drop-time {
+.edit-booking-pick-and-drop-time {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: 15px;
+    gap: 1rem;
+    /* gap: 15px; */
 }
 
 .pick-drop-details-box {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 0.625rem;
+    /* padding: 10px; */
     align-items: start;
     justify-content: start;
     width: 48%;
-    gap: 10px;
+    gap: 0.625rem;
+    /* gap: 10px; */
     border: 1px solid #000;
-    border-radius: 5px;
+    border-radius: 0.313rem;
+    /* border-radius: 5px; */
 }
 
 .pick-drop-detial-head {
@@ -106,26 +116,31 @@
     width: 100%;
 }
 
-.pick-drop-detial-head > h3 {
-    font-size: 13px;
+.pick-drop-detial-head>h3 {
+    /* font-size: 13px; */
+    font-size: 0.813rem;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
 }
 
-.pick-drop-detial-head > button {
-    width: 25px;
-    height: 25px;
-    border: 1px solid #000;
+.pick-drop-detial-head>button {
+    width: 2.188rem;
+    height: 2.188rem;
+    /* width: 35px;
+    height: 35px; */
+    border: 1px solid #961502;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
+    border-radius: 0.313rem;
+    /* border-radius: 5px; */
     cursor: pointer;
 }
 
 .pick-drop-location {
-    font-size: 13px;
+    font-size: 0.813rem;
+    /* font-size: 13px; */
     line-height: 1.2;
     font-weight: 500;
     color: #000;
@@ -136,8 +151,9 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 25px;
-    gap: 10px;
+    height: 1.563rem;
+    /* height: 25px; */
+    gap: 0.625rem;
 }
 
 .pick-drop-date-and-month {
@@ -147,20 +163,24 @@
     width: max-content;
 }
 
-.pick-drop-date-and-month > h3 {
-    font-size: 13px;
+.pick-drop-date-and-month>h3 {
+    font-size: 0.813rem;
+    /* font-size: 13px; */
     line-height: 1.2;
     font-weight: 500;
     color: #000;
 }
 
-.pick-drop-date-and-month > p {
-    font-size: 12px;
+.pick-drop-date-and-month>p {
+    font-size: 0.75rem;
+    /* font-size: 12px; */
     line-height: 1.5;
     font-weight: 400;
     color: #000;
-    margin-top: -10px;
-    margin-right: 5px;
+    margin-top: -0.625rem;
+    /* margin-top: -10px; */
+    margin-right: 0.313rem;
+    /* margin-right: 5px; */
 }
 
 .pick-drop-time-date-saprator {
@@ -170,8 +190,9 @@
     background-color: #000;
 }
 
-.pick-drop-time-and-date > h3 {
-    font-size: 13px;
+.pick-drop-time-and-date>h3 {
+    /* font-size: 13px; */
+    font-size: 0.813rem;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
@@ -181,7 +202,8 @@
 .edit-booking-left-right {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1.25rem;
+    /* gap: 20px; */
     align-items: start;
     justify-content: space-between;
     padding: 0;
@@ -210,11 +232,13 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    gap: 15px;
+    gap: 0.938rem;
+    /* gap: 15px; */
 }
 
-.hirer-info-head > h3 {
-    font-size: 15px;
+.hirer-info-head>h3 {
+    font-size: 0.938rem;
+    /* font-size: 15px; */
     line-height: 1.2;
     font-weight: 500;
     color: #000;
@@ -225,17 +249,19 @@
     align-items: center;
     justify-content: center;
     width: max-content;
-    gap: 15px;
+    gap: 0.938rem;
+    /* gap: 15px; */
 }
 
 .hirer-info-edit-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 35px;
-    height: 35px;
-    border: 1px solid #000;
-    border-radius: 5px;
+    width: 2.188rem;
+    height: 2.188rem;
+    /* height: 35px; */
+    border: 1px solid #961502;
+    border-radius: 0.313rem;
     cursor: pointer;
 }
 
@@ -245,7 +271,7 @@
     flex-direction: column;
     align-items: start;
     justify-content: start;
-    gap: 10px;
+    gap: 0.625rem;
 }
 
 .hirer-info-two-columns {
@@ -253,17 +279,18 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: 10px;
+    gap: 0.625rem;
 }
 
-.hirer-info-two-columns > label {
+.hirer-info-two-columns>label {
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: start;
     width: 50%;
-    gap: 5px;
-    font-size: 12px;
+    gap: 0.313rem;
+    font-size: 0.75rem;
+    /* font-size: 12px; */
     line-height: 1.2;
     font-weight: 400;
     color: #000;
@@ -271,12 +298,14 @@
 
 
 
-.hirer-info-two-columns > label > input {
+.hirer-info-two-columns>label>input {
     width: 100%;
-    height: 35px;
-    padding: 5px 15px;
+    height: 2.188rem;
+    /* height: 35px; */
+    padding: 0.313rem 0.938rem;
+    /* padding: 5px 15px; */
     border: 1px solid #afafaf;
-    border-radius: 5px;
+    border-radius: 0.313rem;
     outline: none;
 }
 
@@ -287,12 +316,12 @@
     align-items: start;
     justify-content: start;
     width: 50%;
-    gap: 5px;
+    gap: 0.313rem;
     position: relative;
 }
 
-.edit-booking-living-country > p {
-    font-size: 12px;
+.edit-booking-living-country>p {
+    font-size: 0.75rem;
     line-height: 1.2;
     font-weight: 400;
     color: #000;
@@ -303,15 +332,17 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 5px 15px;
+    padding: 0.313rem 0.938rem;
+    /* padding: 5px 15px; */
     border: 1px solid #afafaf;
-    border-radius: 5px;
+    border-radius: 0.313rem;
     width: 100%;
-    height: 35px;
+    height: 2.188rem;
+    /* height: 35px; */
     cursor: pointer;
 }
 
-.edit-booking-living-country-head > h3 {
+.edit-booking-living-country-head>h3 {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
@@ -365,7 +396,8 @@
     background-color: #961502;
     color: #FFF;
 }
-.living-country-list-item.active-country-list-item{
+
+.living-country-list-item.active-country-list-item {
     background-color: #961502;
     color: #FFF;
 }
@@ -384,7 +416,7 @@
     position: relative;
 }
 
-.edit-how-you-find-us > p {
+.edit-how-you-find-us>p {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
@@ -404,7 +436,7 @@
     cursor: pointer;
 }
 
-.edit-how-you-find-head> h3 {
+.edit-how-you-find-head>h3 {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
@@ -457,7 +489,8 @@
     background-color: #961502;
     color: #FFF;
 }
-.edit-where-found-item.active-find-us-item{
+
+.edit-where-found-item.active-find-us-item {
     background-color: #961502;
     color: #FFF;
 }
@@ -476,7 +509,7 @@
     position: relative;
 }
 
-.visit-perpose-dropdown-main > p {
+.visit-perpose-dropdown-main>p {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
@@ -496,7 +529,7 @@
     cursor: pointer;
 }
 
-.visit-perpose-head > h3 {
+.visit-perpose-head>h3 {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
@@ -566,14 +599,14 @@
     gap: 5px;
 }
 
-.living-country > p {
+.living-country>p {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
     color: #000;
 }
 
-.living-country > h3 {
+.living-country>h3 {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
@@ -633,20 +666,20 @@
     gap: 10px;
 }
 
-.edit-driver-info-head > h3 {
+.edit-driver-info-head>h3 {
     font-size: 15px;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
 }
 
-.edit-driver-info-head > button {
+.edit-driver-info-head>button {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 35px;
     height: 35px;
-    border: 1px solid #000;
+    border: 1px solid #961502;
     cursor: pointer;
     border-radius: 5px;
 }
@@ -668,7 +701,7 @@
     justify-content: start;
     width: 100%;
     background-color: #fff;
-    
+
     border-radius: 5px;
     border: 1px solid #afafaf;
 }
@@ -680,11 +713,11 @@
     width: 100%;
     gap: 10px;
     height: 35px;
-    padding: 5px 15px;
+    padding: 5px 5px 5px 15px;
     cursor: pointer;
 }
 
-.driver-list-single-item-head > h3 {
+.driver-list-single-item-head>h3 {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
@@ -696,8 +729,16 @@
     align-items: center;
     justify-content: space-between;
     width: max-content;
-    height: 100%;
-    gap: 15px;
+    height: max-content;
+    padding: 5px 10px;
+    background-color: transparent;
+    border: 1px solid #961502;
+    border-radius: 5px;
+    color: #961502;
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    
 }
 
 /* 
@@ -818,20 +859,20 @@
     width: 100%;
 }
 
-.car-insurance-head> h3 {
+.car-insurance-head>h3 {
     font-size: 15px;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
 }
 
-.insurance-content-sec > button {
+.insurance-content-sec>button {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 35px;
     height: 35px;
-    border: 1px solid #000;
+    border: 1px solid #961502;
     cursor: pointer;
     flex-shrink: 0;
     border-radius: 5px;
@@ -846,7 +887,7 @@
     flex-shrink: 0;
 }
 
-.car-insurance-head> span {
+.car-insurance-head>span {
     display: flex;
     align-items: center;
     justify-content: start;
@@ -854,20 +895,21 @@
     width: 100%;
 }
 
-.car-insurance-head > span > h3 {
+.car-insurance-head>span>h3 {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
 }
-.car-insurance-head > span > p {
+
+.car-insurance-head>span>p {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
     color: #000;
 }
 
-.car-insurance-head > p {
+.car-insurance-head>p {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
@@ -922,7 +964,7 @@
     padding-bottom: 10px;
 }
 
-.extras-count-head > h3 {
+.extras-count-head>h3 {
     font-size: 13px;
     line-height: 1.2;
     font-weight: 500;
@@ -945,7 +987,7 @@
     display: none;
 }
 
-.extras-count-option-contianer > span {
+.extras-count-option-contianer>span {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -953,14 +995,14 @@
     gap: 10px;
 }
 
-.extras-count-option-contianer > span > h3 {
+.extras-count-option-contianer>span>h3 {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
     color: #000;
 }
 
-.extras-count-option-contianer > span > p {
+.extras-count-option-contianer>span>p {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
@@ -1002,7 +1044,7 @@
     cursor: pointer;
 }
 
-.summary-signature-image-contianer > img {
+.summary-signature-image-contianer>img {
     width: 100%;
     height: auto;
     object-fit: contain;
@@ -1016,7 +1058,7 @@
     height: 100%;
 }
 
-.summary-upload-image-container > p {
+.summary-upload-image-container>p {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
@@ -1036,7 +1078,7 @@
     border-radius: 5px;
 }
 
-.summary-total-section > h3 {
+.summary-total-section>h3 {
     font-size: 13px;
     line-height: 1.2;
     font-weight: 500;
@@ -1056,7 +1098,7 @@
     gap: 10px;
 }
 
-.summary-values-and-totals > span {
+.summary-values-and-totals>span {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1064,14 +1106,14 @@
     gap: 10px;
 }
 
-.summary-values-and-totals > span > p {
+.summary-values-and-totals>span>p {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
     color: #000;
 }
 
-.summary-values-and-totals > span > h3 {
+.summary-values-and-totals>span>h3 {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
@@ -1099,14 +1141,14 @@
     width: 100%;
 }
 
-.extras-head-contianer > h3 {
+.extras-head-contianer>h3 {
     font-size: 15px;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
 }
 
-.extras-head-contianer > button {
+.extras-head-contianer>button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1118,7 +1160,7 @@
     border-radius: 5px;
 }
 
-.extras-selected-options-contianer{
+.extras-selected-options-contianer {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -1134,7 +1176,7 @@
     width: 100%;
 }
 
-.extra-selected-single-option > h3 {
+.extra-selected-single-option>h3 {
     font-size: 13px;
     line-height: 1.2;
     font-weight: 500;
@@ -1149,7 +1191,7 @@
     width: max-content;
 }
 
-.extra-selected-option-quantity-and-total > span {
+.extra-selected-option-quantity-and-total>span {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1157,14 +1199,14 @@
     width: max-content;
 }
 
-.extra-selected-option-quantity-and-total > span > p {
+.extra-selected-option-quantity-and-total>span>p {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 400;
     color: #000;
 }
 
-.extra-selected-option-quantity-and-total > span > h3 {
+.extra-selected-option-quantity-and-total>span>h3 {
     font-size: 12px;
     line-height: 1.2;
     font-weight: 500;
@@ -1182,7 +1224,7 @@
 
 }
 
-.update-booking-button-container > button {
+.update-booking-button-container>button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1196,4 +1238,14 @@
     line-height: 1.2;
     font-weight: 500;
     cursor: pointer;
+}
+
+@media only screen and (maax-width: 1200px) {
+    .summary-values-and-totals>span>p {
+        font-size: 10px;
+    }
+
+    .summary-values-and-totals>span>h3 {
+        font-size: 10px;
+    }
 }

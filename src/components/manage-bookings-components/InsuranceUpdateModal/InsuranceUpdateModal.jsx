@@ -47,7 +47,7 @@ const InsuranceUpdateModal = ({insuranceModal, setInsuranceModal, carId, payload
     <div className={`insurance-update-modal-main-contianer ${insuranceModal ? 'show-insurance-modal' : ''}`} onClick={() => setInsuranceModal(false)}>
         <div className={`insurance-modal-inner-contianer ${insuranceModal ? 'show-inner-modal' : ''}`} onClick={(e) => e.stopPropagation()}>
             <div className='insurance-update-head'>
-                <h3>Update Insurance</h3>
+                <h3>Insurance</h3>
                 <CgCloseO color='#000' size={20} style={{ cursor: 'pointer' }} onClick={() => setInsuranceModal(false)} />
             </div> 
 

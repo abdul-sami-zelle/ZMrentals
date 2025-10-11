@@ -230,10 +230,10 @@ const Navbar = () => {
               Check-in
             </span>
 
-            <span>
+            <Link href={'/manage-booking'} onClick={() => setOpenMenu(false)}>
               <FaRegCheckCircle size={20} color='var(--color-white)' />
               Manage booking
-            </span>
+            </Link>
           </div>
 
           <div className='mobile-menu-other-options-bottom'>

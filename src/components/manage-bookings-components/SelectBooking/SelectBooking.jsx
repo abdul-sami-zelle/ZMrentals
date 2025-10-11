@@ -36,9 +36,14 @@ const SelectBooking = ({ manageBookingSteper, setManageBookingSteper, imageChane
     const handleBookingSelect = (event) => {
         const { name, value } = event.target;
 
+        let newValue = value
+        if(name === 'booking_id') {
+            newValue = newValue.replace(/[^\d+]/g, '');
+        }
+
         setBookingPayload((prev) => ({
             ...prev,
-            [name]: value
+            [name]: newValue
         }))
 
         validate(name, value);

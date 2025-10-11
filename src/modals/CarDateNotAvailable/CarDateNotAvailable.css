@@ -7,7 +7,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
     visibility: hidden;
     opacity: 0;
     z-index: 999999999999;

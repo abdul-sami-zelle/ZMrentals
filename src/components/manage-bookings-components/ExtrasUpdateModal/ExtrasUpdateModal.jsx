@@ -111,7 +111,7 @@ const ExtrasUpdateModal = ({ showExtrasModal, setShowExtrasModal, payload, setPa
             <div className={`extrasinner-modal ${showExtrasModal ? 'show-extras-inner-modal' : ''}`} onClick={(e) => e.stopPropagation()}>
 
                 <div className='extras-head-contianer'>
-                    <h3>Extras Update</h3>
+                    <h3>Extras</h3>
                     <CgCloseO color='#000' size={20} style={{ cursor: 'pointer' }} onClick={() => setShowExtrasModal(false)} />
                 </div>
 

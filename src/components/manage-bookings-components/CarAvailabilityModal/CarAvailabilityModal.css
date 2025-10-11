@@ -246,12 +246,23 @@
     color: #000;
 }
 
-.pick-up-location-date > h3 {
+.pick-up-location-date > span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     border: 1px solid #afafaf;
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.pick-up-location-date > h3 {
+    /* width: 100%;
+    border: 1px solid #afafaf;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer; */
     font-size: 15px;
     line-height: 22px;
     font-weight: 400;
@@ -267,6 +278,7 @@
     background-color: #fff;
     border-radius: 10px;
     z-index: 999999;
+    overflow: hidden;
     border: 1px solid #afafaf;
 }
 .drop-date-calander-contianer {
@@ -278,6 +290,7 @@
     background-color: #fff;
     border-radius: 5px;
     z-index: 999999999;
+    overflow: hidden;
     border: 1px solid #afafaf;
 }
 
@@ -637,11 +650,100 @@
     position: relative;
 }
 
-.available-or-not-contianer > img {
+.available-main-contianer {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    gap: 15px;
+    padding: 0 15px;
+}
+
+.available-icon-color {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-color: #223A84;
+    
+}
+
+.available-message {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 5px;
+}
+
+.available-message > h3 {
+    font-size: 35px;
+    line-height: 45px;
+    font-weight: 500;
+    color: #223A84;
+}
+
+.available-message > p {
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 500;
+    color: #223A84;
+}
+
+/*  Not available */
+.not-available-main-contianer {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    gap: 15px;
+    padding: 0 15px;
+}
+
+.not-available-icon-color {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background-color: #961502;
+}
+
+.not-available-message {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    gap: 5px;
+}
+
+.not-available-message > h3 {
+    font-size: 35px;
+    line-height: 45px;
+    font-weight: 500;
+    color: #961502;
+}
+
+.not-available-message > p {
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 500;
+    color: #961502;
+}
+
+
+/* .available-or-not-contianer > img {
     width: 100%;
     height: auto;
     object-fit: contain;
-}
+} */
 
 .recheck-availability {
     position: absolute;

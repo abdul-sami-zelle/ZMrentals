@@ -2,21 +2,17 @@ import React from 'react'
 import './CarDateNotAvailable.css';
 import { IoIosClose } from "react-icons/io";
 import { FaCar } from "react-icons/fa";
-import { useRouter } from 'next/navigation';
 
 const CarDateNotAvailable = ({ showModal, handleCloseModal, modalMessages }) => {
-    const router = useRouter();
+    
     const handleNavigateToHome = () => {
-        // router.push('/');
-        // setTimeout(() => {
-        //     router.refresh();
-        // }, 100);
-         window.location.href = '/';
+        handleCloseModal()
+        window.location.href = '/';
     }
     return (
-        <div className={`date-not-available-modal-main-container ${showModal ? 'show-car-not-available-modal' : ''}`}>
-            <div className={`date-not-available-modal-inner-container ${showModal ? 'slide-modal-up' : ''}`}>
-                <button className='date-not-available-close-modal-button' onClick={handleCloseModal}>
+        <div className={`date-not-available-modal-main-container ${showModal ? 'show-car-not-available-modal' : ''}`} onClick={handleNavigateToHome}>
+            <div className={`date-not-available-modal-inner-container ${showModal ? 'slide-modal-up' : ''}`} onClick={(e) => e.stopPropagation()}>
+                <button className='date-not-available-close-modal-button' onClick={handleNavigateToHome}>
                     <IoIosClose size={30} />
                 </button>
                 <div className='date-not-available-modal-body'>
