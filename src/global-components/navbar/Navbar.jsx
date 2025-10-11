@@ -164,24 +164,24 @@ const Navbar = () => {
             ))}
           </ul>
 
-            <div className='nav-login-and-manage'>
+          <div className='nav-login-and-manage'>
 
-              <Link
-                className='nav-login-item'
-                href={'/sign-up'}
-              >
-                <FaRegUser />
-                Login
-              </Link>
-              <Link
-                className='nav-login-item'
-                href={'/manage-booking'}
-              >
-                <FaRegUser />
-                Manage Booking
-              </Link>
+            <Link
+              className='nav-login-item'
+              href={'/sign-up'}
+            >
+              <FaRegUser />
+              Login
+            </Link>
+            <Link
+              className='nav-login-item'
+              href={'/manage-booking'}
+            >
+              <FaRegUser />
+              Manage Booking
+            </Link>
 
-            </div>
+          </div>
 
 
         </nav>
@@ -222,13 +222,13 @@ const Navbar = () => {
           <div className='mobile-menu-other-options-top'>
             <Link href={'/sign-up'} onClick={() => setOpenMenu(false)}>
               <HiOutlineUserCircle size={20} color='var(--color-white)' />
-              Sign in
+              Login
             </Link>
 
-            <span>
+            {/* <span>
               <FaRegCheckCircle size={20} color='var(--color-white)' />
               Check-in
-            </span>
+            </span> */}
 
             <Link href={'/manage-booking'} onClick={() => setOpenMenu(false)}>
               <FaRegCheckCircle size={20} color='var(--color-white)' />
@@ -237,16 +237,26 @@ const Navbar = () => {
           </div>
 
           <div className='mobile-menu-other-options-bottom'>
-            <span>
+            {/* <Link href="tel:+64221708848">
               <MdOutlinePhoneIphone size={20} color='var(--color-white)' />
               <strong>NZ</strong> +64221708848
               <MdOutlineArrowDropDown size={15} color='var(--color-white)' />
-            </span>
+            </Link>
 
             <span>
               <IoMailOutline size={20} color='var(--color-white)' />
               Email us
-            </span>
+            </span> */}
+            <a href="tel:+64221708848" className="contact-link">
+              <MdOutlinePhoneIphone size={20} color='var(--color-white)' />
+              <strong>NZ</strong> +64221708848
+              <MdOutlineArrowDropDown size={15} color='var(--color-white)' />
+            </a>
+
+            <a href="mailto:info@zmrentals.co.nz" className="contact-link">
+              <IoMailOutline size={20} color='var(--color-white)' />
+              Email us
+            </a>
           </div>
 
         </div>

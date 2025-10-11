@@ -280,6 +280,20 @@
     gap: 15px;
 }
 
+.mobile-menu-other-options-bottom > a {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: max-content;
+    height: max-content;
+    gap: 5px;
+    font-size: var(--font-body-md);
+    line-height: var(--line-height-body);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-white);
+    text-decoration: none;
+}
+
 .mobile-menu-other-options-bottom > span {
     display: flex;
     align-items: center;
