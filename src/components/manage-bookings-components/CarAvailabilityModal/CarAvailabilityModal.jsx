@@ -12,6 +12,7 @@ import { IoWarningOutline } from "react-icons/io5";
 import { FaRegCircleCheck } from "react-icons/fa6";
 import Spinner from '../../../loaders/Spinner/Spinner'
 import { CiCalendarDate } from "react-icons/ci";
+import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
 const CarAvailabilityModal = ({
     showModal,
@@ -41,6 +42,10 @@ const CarAvailabilityModal = ({
     const [carAvailableLoad, setCarAvailableLoad] = useState(false);
     const [carAvailablilityCheck, setCarAvailabilityCheck] = useState('');
     const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        setCarAvailabilityCheck('');
+    }, [editBookingPayload?.booking?.pickup_location, editBookingPayload?.booking?.drop_location, editBookingPayload?.booking?.pickup_time, editBookingPayload?.booking?.drop_time])
 
 
     const pickupLocationRef = useRef();
@@ -330,7 +335,7 @@ const CarAvailabilityModal = ({
                                     <IoMdArrowDropdown size={20} color='#000' />
                                 </div>
                                 <div className={`pickup-dropdown-body ${showPickupList ? 'show-pick-up-locations-list' : ''}`}>
-                                    {locations.map((item, index) => (
+                                    {locations?.map((item, index) => (
                                         <p className={`pick-up-location-item ${pickLocationIndex === index ? 'active-pick-up-location-index' : ''}`} key={index} onClick={() => handleUpdatePickupLocation(item)}>{item.name}</p>
                                     ))}
                                 </div>
@@ -340,8 +345,8 @@ const CarAvailabilityModal = ({
 
                                 <div ref={pickupDateRef} className='pick-up-location-date'>
                                     <p>Date</p>
-                                    <span>
-                                        <h3 onClick={handlePickupDateCalender}>{pickupResult.date}</h3>
+                                    <span onClick={handlePickupDateCalender}>
+                                        <h3 >{pickupResult.date}</h3>
                                         <CiCalendarDate size={20} color='#000' />
                                     </span>
                                     {pickupCalender && (
@@ -390,7 +395,7 @@ const CarAvailabilityModal = ({
                                     <IoMdArrowDropdown size={20} color='#000' />
                                 </div>
                                 <div className={`drop-dropdown-body ${showDropList ? 'show-drop-off-locations-list' : ''}`}>
-                                    {locations.map((item, index) => (
+                                    {locations?.map((item, index) => (
                                         <p className={`drop-location-item ${dropLocationIndex === index ? 'active-drop-location-off' : ''}`} key={index} onClick={() => handleUpdateDropLocation(item)}>{item.name}</p>
                                     ))}
                                 </div>
@@ -399,8 +404,8 @@ const CarAvailabilityModal = ({
                             <div className='pick-up-location-time-and-date'>
                                 <div ref={dropoffDateRef} className='pick-up-location-date'>
                                     <p>Date</p>
-                                    <span>
-                                        <h3 onClick={handleDropDateCalender}>{dropoffResult.date}</h3>
+                                    <span onClick={handleDropDateCalender}>
+                                        <h3 >{dropoffResult.date}</h3>
                                         <CiCalendarDate size={20} color='#000' />
                                     </span>
                                     

@@ -4,6 +4,7 @@ import { CgCloseO } from 'react-icons/cg';
 import { url } from '@/utils/services';
 import axios from 'axios';
 import { FiMinus, FiPlus } from "react-icons/fi";
+import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
 const ExtrasUpdateModal = ({ showExtrasModal, setShowExtrasModal, payload, setPayload, carId }) => {
 
@@ -28,15 +29,14 @@ const ExtrasUpdateModal = ({ showExtrasModal, setShowExtrasModal, payload, setPa
     // ✅ initialize state from payload.booking.extras (if any)
     useEffect(() => {
         if (!payload?.booking?.extras?.length) return;
-
         const mapped = {};
         payload.booking.extras.forEach((extra, index) => {
-            mapped[index] = { ...extra };
-            // mapped[index] = {
-            //     main_id: extra.extras_option_id,
-            //     extras_option_id: extra.id,
-            //     quantity: extra.quantity,
-            // };
+            // mapped[index] = { ...extra };
+            mapped[index] = {
+                    main_id: item.extras_option_id,
+                    extras_option_id: item.id,
+                    quantity: newQty
+                };
         });
 
         // ✅ Only update if values actually changed
@@ -80,15 +80,15 @@ const ExtrasUpdateModal = ({ showExtrasModal, setShowExtrasModal, payload, setPa
             if (newQty === 0) {
                 delete update[index]
             } else {
-                update[index] = {
-                    ...item,
-                    quantity: newQty
-                }
                 // update[index] = {
-                //     main_id: item.extras_option_id,
-                //     extras_option_id: item.id,
+                //     ...item,
                 //     quantity: newQty
                 // }
+                update[index] = {
+                    main_id: item.extras_option_id,
+                    extras_option_id: item.id,
+                    quantity: newQty
+                }
             }
 
             return update

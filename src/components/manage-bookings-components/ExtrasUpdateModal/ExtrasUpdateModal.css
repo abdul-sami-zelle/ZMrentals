@@ -75,6 +75,28 @@
     gap: 5px;
 }
 
+.extras-name-and-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+}
+
+.extras-name-and-price > h3 {
+    font-size: 15px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
+.extras-name-and-price > p {
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+}
+
 .update-extras-single-option > h3 {
     font-size: 15px;
     line-height: 1.2;

@@ -7,19 +7,21 @@
     flex: 1;
     padding: 60px;
     backdrop-filter: blur(15px);
-  background-size: cover;
-  background-position: center;
-  overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
 }
 
 /* add blur overlay */
 .manage-booking-main-contianer::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  backdrop-filter: blur(5px); /* ✅ blur works here */
-  background-color: rgba(255, 255, 255, 0.1); /* semi-transparent orange */
-  z-index: 0;
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(5px);
+    /* ✅ blur works here */
+    background-color: rgba(255, 255, 255, 0.1);
+    /* semi-transparent orange */
+    z-index: 0;
 }
 
 .manage-booking-inner-contianer {
@@ -93,7 +95,50 @@
     .manage-booking-inner-contianer {
         width: 90vw;
     }
+
     .booking-edit-main-continair {
         width: 90vw;
     }
+}
+
+@media only screen and (max-width: 767px) {
+    .manage-booking-main-contianer {
+        padding: 10px;
+    }
+
+    .manage-booking-inner-contianer {
+        gap: 10px;
+        width: 100%;
+        height: 100%;
+        flex: unset !important;
+    }
+
+
+
+    .manage-booking-left-sec {
+        display: none;
+    }
+
+    .manage-booking-right-sec {
+        gap: 20px;
+        flex-direction: column;
+        width: 100%;
+        height: max-content;
+        padding: 0;
+        /* height: 100%; */
+        flex: unset !important;
+        border-radius: 25px;
+    }
+
+    .manage-booking-form-arrow-back-contianer {
+        display: none;
+    }
+
+    .select-booking-heaing-contianer > h3 {
+        font-size: 28px !important;
+    }
+    .select-booking-heaing-contianer > p  {
+        font-size: 16px !important;
+    }
+
 }

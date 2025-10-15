@@ -5,9 +5,24 @@ import SelectBooking from '../../components/manage-bookings-components/SelectBoo
 import VerifyBooking from '../../components/manage-bookings-components/VerifyBooking/VerifyBooking'
 import UpdateBooking from '../../components/manage-bookings-components/UpdateBooking/UpdateBooking'
 import { IoIosArrowRoundBack } from "react-icons/io";
+import UpdateBookingMobile from '../../components/manage-bookings-components/UpdateBookingMobile/UpdateBookingMobile'
 import axios from 'axios'
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return isMobile;
+}
+
 const page = () => {
+    const isMobile = useIsMobile();
     const [manageBookingSteper, setManageBookingSteper] = useState(0);
 
     const images = [
@@ -72,7 +87,10 @@ const page = () => {
                     </div>
                 </div>
             ) : (
-                <UpdateBooking setManageBookingSteper={setManageBookingSteper} />
+                <>
+                {!isMobile && <UpdateBooking setManageBookingSteper={setManageBookingSteper} />}
+                {isMobile && <UpdateBookingMobile />}
+                </>
                 
             )}
 

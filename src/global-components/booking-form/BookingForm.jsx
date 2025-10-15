@@ -71,6 +71,14 @@ const BookingForm = (
         getApi();
     }, []);
 
+    useEffect(() => {
+        if(searchVehiclePayload.pickup_location === null && searchVehiclePayload.drop_location === null) {
+            const defaultLocationObject = locations?.find((item) => item.id === 5);
+            setPickupCity(defaultLocationObject?.name)
+            setDropupCity(defaultLocationObject?.name)
+        }
+    }, [locations])
+
     const generateTimeList = () => {
         const times = [];
         for (let hour = 6; hour <= 21; hour++) {  // 6 AM (6) to 9 PM (21)

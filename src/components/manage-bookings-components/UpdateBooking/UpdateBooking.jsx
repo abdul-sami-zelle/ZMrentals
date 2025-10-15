@@ -14,15 +14,30 @@ import useDropdownNavigationWithSearch, { useDropdownNavigation } from '@/utils/
 import InsuranceUpdateModal from '../InsuranceUpdateModal/InsuranceUpdateModal';
 import ExtrasUpdateModal from '../ExtrasUpdateModal/ExtrasUpdateModal'
 import { GoPlus } from "react-icons/go";
-import { FaEye } from "react-icons/fa";
 import EditDriverModal from '../EdtiDriverModal/EditDriverModal'
 import MainLoader from '@/loaders/MainLoader/MainLoader';
 import { CgCloseO } from "react-icons/cg";
 import SignatureModal from '../../../global-components/SignatureModal/SignatureModal'
-import ConfirmationModal from '../ConfirmationModal/ConfirmationModal'
 import CarDateNotAvailable from '../../../modals/CarDateNotAvailable/CarDateNotAvailable'
 
 const UpdateBooking = ({ setManageBookingSteper }) => {
+
+    // const {
+    //     loading, setLoading,
+    //         vehicleData, setVehicleData,
+    //         locations, setLocations,
+    //         countriesList, setCountriesList,
+    //         hirerInfo, setHirerInfo,
+    //         editBookingPayload, setEditBookingPayload,
+    //         handleGetVehicleData,
+    //         getApi,
+    //         handleGetAllCountries,
+    //         carFeatures,
+    //         perposes,
+    //         formatDate,
+    //         formatISODate,
+    //         generateTimeList,
+    // } = useManageBooking()
 
     // Gernel States
     const [loading, setLoading] = useState(false)
@@ -114,8 +129,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                     drivers: response.data.data.drivers,
                     signature: response.data.data.signatures[0] || []
                 })
-                getApi();
-                handleGetAllCountries();
+                
             } else {
                 setManageBookingSteper(0);
             }
@@ -166,9 +180,12 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
 
     useEffect(() => {
         handleGetVehicleData()
+        getApi();
+        handleGetAllCountries();
     }, []);
 
     // Location View And Update States
+    
     const [pickupDetails, setPickupDetails] = useState({})
     const [dropupDetails, setDropUpDetails] = useState({})
     const [showAvailabilitycheckModal, setShowAvailabilitycheckModal] = useState(false);
@@ -180,6 +197,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
     ]
 
     // Location View Update Functions
+    
     const handleShowAvailabilityCheckModal = () => {
         setShowAvailabilitycheckModal(!showAvailabilitycheckModal);
     }
@@ -562,8 +580,6 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
         setConfirmModal(false)
     }
 
-    useEffect(() => {console.log("edit payload", editBookingPayload)}, [editBookingPayload])
-    useEffect(() => {console.log("vehicle payload", vehicleData)}, [vehicleData])
 
     return (
         <div className='booking-edit-main-continair'>
@@ -578,7 +594,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                 </div>
 
                 <div className='edit-booking-car-features'>
-                    {carFeatures.map((item) => (
+                    {carFeatures?.map((item) => (
                         <span>
                             <item.icon size={20} color='#000' />
                             {item.value}
@@ -595,15 +611,15 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                                 <CiEdit size={20} color='#961502' />
                             </button>
                         </div>
-                        <h3 className='pick-drop-location'>{locations.find((item) => item.id === editBookingPayload?.booking?.pickup_location)?.name}</h3>
+                        <h3 className='pick-drop-location'>{locations?.find((item) => item.id === editBookingPayload?.booking?.pickup_location)?.name}</h3>
                         <div className='pick-drop-time-and-date'>
                             <span className='pick-drop-date-and-month'>
-                                <h3>{pickupDetails.pickDate}</h3>
-                                <p>{pickupDetails.pickSuffix}</p>
-                                <h3>{pickupDetails.pickMonth}</h3>
+                                <h3>{pickupDetails?.pickDate}</h3>
+                                <p>{pickupDetails?.pickSuffix}</p>
+                                <h3>{pickupDetails?.pickMonth}</h3>
                             </span>
                             <div className='pick-drop-time-date-saprator'></div>
-                            <h3>{pickupDetails.pickTime}</h3>
+                            <h3>{pickupDetails?.pickTime}</h3>
                         </div>
                     </div>
 
@@ -614,15 +630,15 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                                 <CiEdit size={20} color='#961502' />
                             </button>
                         </div>
-                        <h3 className='pick-drop-location'>{locations.find((item) => item.id === editBookingPayload?.booking?.drop_location)?.name}</h3>
+                        <h3 className='pick-drop-location'>{locations?.find((item) => item.id === editBookingPayload?.booking?.drop_location)?.name}</h3>
                         <div className='pick-drop-time-and-date'>
                             <span className='pick-drop-date-and-month'>
-                                <h3>{dropupDetails.dropDate}</h3>
-                                <p>{dropupDetails.dropSuffix}</p>
-                                <h3>{dropupDetails.dropMonth}</h3>
+                                <h3>{dropupDetails?.dropDate}</h3>
+                                <p>{dropupDetails?.dropSuffix}</p>
+                                <h3>{dropupDetails?.dropMonth}</h3>
                             </span>
                             <div className='pick-drop-time-date-saprator'></div>
-                            <h3>{dropupDetails.dropTime}</h3>
+                            <h3>{dropupDetails?.dropTime}</h3>
                         </div>
                     </div>
 
@@ -811,7 +827,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                                 <p>NZD {vehicleData?.insurances[0]?.CarInsurancePricing?.rate}</p>
                             </span>
                         )}
-                        {vehicleData.insurances && (
+                        {vehicleData?.insurances && (
                             <span>
                                 <h3>Total: </h3>
                                 <p>NZD {parseFloat(vehicleData?.insurances[0]?.CarInsurancePricing?.rate) * vehicleData?.rates?.length}</p>
@@ -876,26 +892,32 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                     <div className='summary-total-section'>
                         <h3>Summary</h3>
                         <div className='summary-values-and-totals'>
+
                             <span>
                                 <p>Car Rate</p>
                                 <h3>NZD {parseFloat(vehicleData?.car_rates)}</h3>
                             </span>
+
                             <span>
                                 <p>Discount {parseInt(vehicleData?.discount_percent)}%</p>
                                 <h3>NZD {vehicleData?.discount_amount}</h3>
                             </span>
+
                             <span>
                                 <p>Duration</p>
                                 <h3>{vehicleData?.rates?.length} {vehicleData?.rates?.length > 1 ? 'days' : 'day'}</h3>
                             </span>
+
                             <span>
                                 <p>Sub Total</p>
                                 <h3>NZD {parseFloat(vehicleData?.car_rates) - parseFloat(vehicleData?.discount_amount)}</h3>
                             </span>
+
                             <span>
                                 <p>Off hour charges</p>
                                 <h3>NZD {vehicleData?.off_hour_charges}</h3>
                             </span>
+
                             <span>
                                 <p>Transaction Fees</p>
                                 <h3>NZD 0</h3>
@@ -904,6 +926,8 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                                 <p>Insurance</p>
                                 <h3>NZD {vehicleData?.insurances ? parseFloat(vehicleData?.insurances[0]?.CarInsurancePricing?.rate) * vehicleData?.rates?.length : 0}</h3>
                             </span>
+
+
                             <span>
                                 <p>Extras</p>
                                 <h3>NZD {handleExtrasTotal()}</h3>

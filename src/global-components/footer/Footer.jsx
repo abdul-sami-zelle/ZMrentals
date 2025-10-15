@@ -11,6 +11,13 @@ import { usePathname } from 'next/navigation';
 const Footer = () => {
 
   const pathname = usePathname()
+
+  const excludedNotFooter = ['/manage-booking'];
+  
+
+  const hideFooter = excludedNotFooter.includes(pathname)
+
+
   const footerData = [
     {
       name: 'Vehicles', link: '#', footerItems: [
@@ -48,7 +55,7 @@ const Footer = () => {
 
   return ( 
     <div className='footer-main-container'>
-      <div className='footer-bg-container' style={{display: pathname === '/manage-booking' ? 'none' : 'flex'}}>
+      <div className='footer-bg-container' style={{display: hideFooter ? 'none' : 'flex'}}>
         <div className='footer-width-controller-container'>
 
           <div className='footer-menu-items-main-container'>
@@ -91,7 +98,7 @@ const Footer = () => {
 
         </div>
       </div>
-      <div className='footer-social-links-main-container'>
+      <div className='footer-social-links-main-container' style={{display: hideFooter ? 'none' : 'flex'}} >
         <div className='footer-social-links-width-controller'>
 
             <div className='footer-social-and-terms-inner-section'>
