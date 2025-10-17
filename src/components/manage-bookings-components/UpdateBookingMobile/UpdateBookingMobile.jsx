@@ -69,6 +69,8 @@ const UpdateBookingMobile = () => {
                 }
             });
 
+            console.log("booking response", response)
+            console.log("refetched response")
             if (response.status === 200) {
                 setVehicleData(response.data.data)
                 setEditBookingPayload({
@@ -95,7 +97,7 @@ const UpdateBookingMobile = () => {
                         how_find_us: response.data.data.user.how_find_us,
                         travel_reason: response.data.data.user.travel_reason
                     },
-                    drivers: response.data.data.drivers,
+                    driverDetails: response.data.data.drivers,
                     signature: response.data.data.signatures[0] || []
                 })
                 getApi();
@@ -340,40 +342,37 @@ const UpdateBookingMobile = () => {
     }
 
     const uploadFileAndGetUrl = async (file, apiEndpoint) => {
-            try {
-                const formData = new FormData();
-                formData.append("file", file);
-    
-                // Call your API (replace /api/upload with your endpoint)
-                const response = await fetch(`${url}${apiEndpoint}`, {
-                    method: "POST",
-                    body: formData,
-                });
-    
-                if (!response.ok) {
-                    throw new Error("File upload failed");
-                }
-    
-                const data = await response.json();
-                return data.fileUrl;
-            } catch (error) {
-                console.error("Error uploading file:", error.message);
-                return null;
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            // Call your API (replace /api/upload with your endpoint)
+            const response = await fetch(`${url}${apiEndpoint}`, {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error("File upload failed");
             }
-        };
+
+            const data = await response.json();
+            return data.fileUrl;
+        } catch (error) {
+            console.error("Error uploading file:", error.message);
+            return null;
+        }
+    };
 
 
     const handleUpdateBooking = async () => {
         const bookingData = JSON.parse(sessionStorage.getItem('bookingDetails'));
         const api = `${url}/booking/edit/${bookingData?.booking_id}`;
         setLoading(true);
-        // if (!bookingData) {
-        //     setManageBookingSteper(0);
-        //     return
-        // }
+        
 
         const updatedDrivers = await Promise.all(
-            editBookingPayload.drivers.map(async (drv) => {
+            editBookingPayload.driverDetails.map(async (drv) => {
                 let frontUrl = drv.front_license_image;
                 let backUrl = drv.back_license_image;
 
@@ -398,7 +397,7 @@ const UpdateBookingMobile = () => {
         // 3️⃣ Update bookingPayload with drivers + signature URL
         setEditBookingPayload((prev) => ({
             ...prev,
-            drivers: updatedDrivers,
+            driverDetails: updatedDrivers,
         }));
 
         // 2️⃣ Upload customer signature (if File exists)
@@ -413,7 +412,7 @@ const UpdateBookingMobile = () => {
         // 3️⃣ Build final payload
         const finalPayload = {
             ...editBookingPayload,
-            drivers: updatedDrivers,
+            driverDetails: updatedDrivers,
             signature: {
                 signature_image: signatureUrl,
             },
@@ -429,13 +428,19 @@ const UpdateBookingMobile = () => {
                 }
             })
 
+            if(response.status === 200) {
+                handleGetVehicleData()
+                setShowConfirmationModal(false)
+                // window.location.href = '/manage-booking'
+            }
+
             console.log("response ", response)
 
-            
+
 
         } catch (error) {
             console.error("UnExpected Servr Error", error);
-            
+
             setLoading(false)
         } finally {
             setLoading(false);
@@ -485,45 +490,10 @@ const UpdateBookingMobile = () => {
                         </div>
                     )}
                 </div>
-                
-                {!loading && (
-                    <div className='mobile-view-bottom-sticky-summary'>
-                        {/* <span>
-                            <p>Sub Total</p>
-                            <h3>NZD {parseFloat(vehicleData?.car_rates)}</h3>
-                        </span>
 
-                        {parseInt(vehicleData?.off_hour_charges) > 0 && (
-                            <span>
-                                <p>Off hour charges</p>
-                                <h3>NZD {vehicleData?.off_hour_charges}</h3>
-                            </span>
-                        )}
-
-                        <span>
-                            <p>Insurance</p>
-                            <h3>NZD {vehicleData?.insurances ? parseFloat(vehicleData?.insurances[0]?.CarInsurancePricing?.rate) * vehicleData?.rates?.length : 0}</h3>
-                        </span>
-
-                        <span>
-                            <p>Extras</p>
-                            <h3>NZD {handleExtrasTotal()}</h3>
-                        </span> */}
-
-                        <span>
-                            <p style={{ fontSize: '15px', fontWeight: 400, color: '#000' }}>Grand Total</p>
-                            <div className='view-summary-and-grand-total'>
-                                <p onClick={handleShowSummary}>View Summary</p>
-                                <h3 style={{ fontSize: '15px', fontWeight: 500, color: '#000' }}>NZD {handleGrandTotal()}</h3>
-                            </div>
-                        </span>
-
-                        <button className='mobile-update-booking-button' onClick={handleShowConfirmationModal}>Update Booking</button>
-
-                    </div>
-                )}
             </div>
 
+            
             <div className={`mobile-view-edit-data-bottom-popup ${bottomModal ? 'show-bottom-popup' : ''}`} onClick={() => setBottomModal(false)}>
                 <div className={`bottom-popup-inner-contianer ${bottomModal ? 'drag-inner-modal' : ''}`} onClick={(e) => e.stopPropagation()}>
 
@@ -600,6 +570,7 @@ const UpdateBookingMobile = () => {
                                 setEditBookingPayload={setEditBookingPayload}
                                 carId={vehicleData?.car_id}
                                 setBottomModal={setBottomModal}
+                                bottomModal={bottomModal}
                             />
                         ) : bottomStepper === 5 ? (
                             <BottomDrivers
@@ -629,13 +600,30 @@ const UpdateBookingMobile = () => {
                 handleConfirm={handleUpdateBooking}
             />
 
-            <SummaryModal 
+            <SummaryModal
                 showModal={showSummary}
                 handleClose={handleClose}
                 vehicleData={vehicleData}
                 editBookingPayload={editBookingPayload}
-                        
+
             />
+
+            {!loading && (
+                <div className='mobile-view-bottom-sticky-summary'>
+                    
+
+                    <span>
+                        <p style={{ fontSize: '15px', fontWeight: 400, color: '#000' }}>Grand Total</p>
+                        <div className='view-summary-and-grand-total'>
+                            <p onClick={handleShowSummary}>View Summary</p>
+                            <h3 style={{ fontSize: '15px', fontWeight: 500, color: '#000' }}>NZD {handleGrandTotal()}</h3>
+                        </div>
+                    </span>
+
+                    <button className='mobile-update-booking-button' onClick={handleShowConfirmationModal}>Update Booking</button>
+
+                </div>
+            )}
         </div>
     )
 }

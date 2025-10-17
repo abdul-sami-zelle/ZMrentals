@@ -249,7 +249,6 @@ const BottomCarAvailability = ({isEditabel, setIsEditable, editBookingPayload, s
     setLoading(true)
     try {
       const response = await axios.post(api, availabilityObj)
-      console.log("response", response)
       if (response.status === 200) {
         if (response.data.available === 1) {
           setUpdatedVehilceData(response.data)
@@ -284,10 +283,6 @@ const BottomCarAvailability = ({isEditabel, setIsEditable, editBookingPayload, s
     setCarAvailabilityCheck('');
     setBottomModal(false)
   }
-
-  useEffect(() => { console.log("pick and drop modal", pickAndDropPayload) }, [pickAndDropPayload])
-
-
 
   return (
     <div className='mobile-pick-and-drop-main-contianer'>

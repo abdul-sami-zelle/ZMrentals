@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import '../../manage-bookings-components/ExtrasUpdateModal/ExtrasUpdateModal.css'
+// import '../../manage-bookings-components/ExtrasUpdateModal/ExtrasUpdateModal.css'
+import './BottomExtras.css'
 import { url } from '@/utils/services';
 import axios from 'axios';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 
-const BottomExtras = ({ editBookingPayload, setEditBookingPayload, carId }) => {
+const BottomExtras = ({isEditabel, editBookingPayload, setEditBookingPayload, carId, bottomModal, setBottomModal }) => {
+  const [tempExtras, setTempExtras] = useState([])
   const [vehicleData, setVehicleData] = useState({});
   const handleGetCarWithId = async () => {
     const api = `${url}/cars/get/${editBookingPayload?.booking?.car_id}`;
@@ -18,176 +20,254 @@ const BottomExtras = ({ editBookingPayload, setEditBookingPayload, carId }) => {
       console.error("UnExpected Server Error", error);
     }
   }
+
   useEffect(() => { handleGetCarWithId() }, [carId])
 
-  const [extraQuantities, setExtraQuantities] = useState({});
+  // useEffect(() => {
+  //   if (
+  //     editBookingPayload?.booking?.extras?.length > 0 &&
+  //     vehicleData?.extras?.length > 0
+  //   ) {
+  //     const mappedExtras = editBookingPayload.booking.extras.map((extraItem) => {
+  //       // find the matching object from vehicleData
 
-  // ✅ initialize state from payload.booking.extras (if any)
-  useEffect(() => {
-    if (!editBookingPayload?.booking?.extras?.length) return;
-    const mapped = {};
-    editBookingPayload.booking.extras.forEach((extra, index) => {
-      // mapped[index] = { ...extra };
-      mapped[index] = {
-        main_id: extra.extras_option_id,
-        extras_option_id: extra.id,
-        quantity: extra.quantity
-      };
-    });
+  //       console.log("looped item", extraItem)
+  //       console.log("vehicle data", vehicleData)
 
-    // ✅ Only update if values actually changed
-    setUpdateExtras((prev) => {
-      const prevString = JSON.stringify(prev);
-      const newString = JSON.stringify(mapped);
-      return prevString !== newString ? mapped : prev;
-    });
-  }, [editBookingPayload?.booking?.extras]);
+  //       const foundItem = vehicleData.extras.find(
+  //         (v) => v.id === extraItem.extras_pricing_id
+  //       );
 
-  // const handleUpdateExtras = (index, type, item) => {
-  //   console.log("extras item", item)
-  //   setUpdateExtras((prev) => {
-  //     const currentQuantity = parseInt(prev[index]?.quantity) || 0
-  //     const minQty = parseInt(item.min_qty) || 1;
-  //     const maxQty = parseInt(item.max_qty) || 99;
+  //       console.log("metched object", foundItem)
 
-  //     let newQty = currentQuantity;
+  //       return {
+  //         extras_option_id: foundItem ? foundItem.id : 0,
+  //         main_id: foundItem ? foundItem.extras_option_id : 0,
+  //         quantity: extraItem.quantity || 0, // 👈 taking quantity from booking payload
+  //       };
+  //     });
 
-  //     if (type === 'increase') {
-  //       if (currentQuantity === 0) {
-  //         newQty = minQty
-  //       } else if (currentQuantity < maxQty) {
-  //         newQty = currentQuantity + 1
-  //       } else {
-  //         return prev
-  //       }
+  //     setTempExtras(mappedExtras);
+  //   }
+  // }, [vehicleData]);
+
+
+  // const handleInputChange = (item, value) => {
+
+  //   let quantity = Number(value);
+
+  //   const min = Number(item.min_qty) || 0;
+  //   const max = Number(item.max_qty) || Infinity;
+
+  //   // Prevent going above max
+  //   if (quantity > max) quantity = max;
+
+  //   // ✅ If quantity is 0, just remove the item (don’t set min)
+  //   if (quantity === 0) {
+  //     setTempExtras((prev) =>
+  //       prev.filter((extra) => extra.extras_option_id !== item.id)
+  //     );
+  //     return;
+  //   }
+
+  //   setTempExtras((prev) => {
+  //     const existingItem = prev.findIndex((extra) => extra.extras_option_id === item.id);
+
+  //     // If quantity is 0 or below min, remove item
+  //     if (quantity === 0 || quantity < min) {
+  //       return prev.filter((extra) => extra.extras_option_id !== item.id);
   //     }
 
-  //     if (type === 'decrease') {
-  //       if (currentQuantity > minQty) {
-  //         newQty = currentQuantity - 1
-  //       } else if (currentQuantity === minQty) {
-  //         newQty = 0
-  //       } else {
-  //         return prev
-  //       }
+  //     if (existingItem !== -1) {
+  //       const updated = [...prev];
+  //       updated[existingItem] = {
+  //         ...updated[existingItem],
+  //         quantity
+  //       };
+  //       return updated
   //     }
 
-  //     const update = { ...prev }
+  //     return [
+  //       ...prev,
+  //       {
+  //         extras_option_id: item.id,
+  //         main_id: item.extras_option_id,
+  //         quantity,
+  //       },
+  //     ];
 
-  //     if (newQty === 0) {
-  //       delete update[index]
-  //     } else {
-  //       update[index] = {
-  //           main_id: item.extras_option_id,
-  //           extras_option_id: item.id,
-  //           quantity: newQty
-  //       }
-  //     }
-
-  //     setEditBookingPayload((prevPayload) => ({
-  //     ...prevPayload,
-  //     booking: {
-  //       ...prevPayload.booking,
-  //       extras: Object.values(update),
-  //     },
-  //   }));
-
-  //     return update
   //   })
   // }
 
-
-  const handleQuantityChange = (index, type, item) => {
-    setExtraQuantities((prev) => {
-      const currentQty = prev[index]?.quantity || 0;
-      const minQty = parseInt(item.min_qty) || 1;
-      const maxQty = parseInt(item.max_qty) || 99;
-
-      let newQty = currentQty;
-
-      if (type === 'increment') {
-        if (currentQty === 0) {
-          newQty = minQty;
-        } else if (currentQty < maxQty) {
-          newQty = currentQty + 1;
-        } else {
-          return prev; // don't exceed max
-        }
-      }
-
-      if (type === 'decrement') {
-        if (currentQty > minQty) {
-          newQty = currentQty - 1;
-        } else if (currentQty === minQty) {
-          newQty = 0;
-        } else {
-          return prev; // already 0
-        }
-      }
-
-      const updated = { ...prev };
-
-      if (newQty === 0) {
-        delete updated[index]; // remove from list
-      } else {
-        updated[index] = {
-          main_id: item.extras_option_id,
-          extras_option_id: item.id,
-          quantity: newQty
-        };
-      }
-
-      // Update bookingPayload in context
-      // setEditBookingPayload((prevPayload) => ({
-      //   ...prevPayload,
-      //   booking: {
-      //     ...prevPayload.booking,
-      //     extras: Object.values(updated)
-      //   }
-      // }));
-
-      return updated;
-    });
-  };
-
   useEffect(() => {
-    setEditBookingPayload((prevPayload) => ({
-        ...prevPayload,
-        booking: {
-          ...prevPayload.booking,
-          extras: Object.values(extraQuantities)
+          if (
+              editBookingPayload?.booking?.extras?.length > 0 &&
+              vehicleData?.extras?.length > 0
+          ) {
+              const mappedExtras = editBookingPayload.booking.extras.map((extraItem) => {
+                  // find the matching object from vehicleData
+  
+                  console.log("looped item", extraItem)
+                  console.log("vehicle data", vehicleData)
+  
+                  const foundItem = vehicleData.extras.find(
+                      (v) => v.id === extraItem.extras_pricing_id
+                  );
+  
+                  console.log("metched object", foundItem)
+  
+                  return {
+                      extras_option_id: foundItem ? foundItem.id : 0,
+                      main_id: foundItem ? foundItem.extras_option_id : 0,
+                      quantity: extraItem.quantity || 0, // 👈 taking quantity from booking payload
+                      rate: extraItem.rate,
+                      name: extraItem.name
+                  };
+              });
+  
+              setTempExtras(mappedExtras);
+          }
+      }, [vehicleData]);
+
+
+  const handleInputChange = (item, value) => {
+        const min = Number(item.min_qty) || 0;
+        const max = Number(item.max_qty) || Infinity;
+
+        // Convert to number safely
+        let quantity = Number(value);
+        if (isNaN(quantity)) quantity = 0;
+
+        // Get current quantity if already exists
+        const existingExtra = tempExtras.find(e => e.extras_option_id === item.id);
+        const currentQty = existingExtra ? Number(existingExtra.quantity) : 0;
+
+        // 🔹 If increasing or decreasing manually, always step by 1
+        if (quantity > currentQty) quantity = currentQty + 1;
+        if (quantity < currentQty) quantity = currentQty - 1;
+
+        // 🔹 Clamp within min/max
+        if (quantity < 0) quantity = 0;
+        if (quantity > max) quantity = max;
+
+        // 🔹 Remove if quantity = 0
+        if (quantity === 0) {
+            setTempExtras(prev =>
+                prev.filter(extra => extra.extras_option_id !== item.id)
+            );
+            return;
         }
-      }));
-  }, [extraQuantities])
+
+        // 🔹 Update or add new
+        setTempExtras(prev => {
+            const existingIndex = prev.findIndex(
+                extra => extra.extras_option_id === item.id
+            );
+
+            if (existingIndex !== -1) {
+                const updated = [...prev];
+                updated[existingIndex] = {
+                    ...updated[existingIndex],
+                    quantity,
+                };
+                return updated;
+            }
+
+            // Add new item on first click
+            return [
+                ...prev,
+                {
+                    extras_option_id: item.id,
+                    main_id: item.extras_option_id,
+                    quantity,
+                    rate: item.rate,
+                    name: item.name
+                },
+            ];
+        });
+    };
+
+
+  const handleUpdateExtras = () => {
+    setEditBookingPayload((prev) => ({
+      ...prev,
+      booking: {
+        ...prev.booking,
+        extras: tempExtras
+      }
+    }))
+    setBottomModal(false)
+  }
+
+  useEffect(() => { console.log("temporary extras", tempExtras) }, [tempExtras])
+
+
+
 
 
   return (
-      <div className='update-extras-options-contianer' style={{display: 'flex', width: '100%', height: '100%'}}>
-        {vehicleData?.extras?.map((item, index) => (
-          <div className='update-extras-single-option' key={index}>
-            <span className='extras-name-and-price'>
-              <h3>{item.name}</h3>
-            <p>NZD {item.rate}</p>
-            </span>
-            <div className='update-extras-single-option-quantity-controler'>
-              <button onClick={() => handleQuantityChange(index, 'decrease', item)} ><FiMinus size={20} color='#FFF' /> </button>
-              <input
-                type='text'
-                name='quantity'
-                className='quantity-show-input'
-                inputMode='numeric'
-                min={item.min_qty}
-                max={item.max_qty}
-                pattern='[0-9]*'
-                readOnly
-                value={extraQuantities[index]?.quantity || 0}
-              />
-              <button onClick={() => handleQuantityChange(index, 'increase', item)}><FiPlus size={20} color='#FFF' /></button>
-            </div>
+    <div className='bottom-extras-main-contianer'>
+      <div className='bottom-extras-items-list-contianer'>
 
-          </div>
-        ))}
+        {vehicleData?.extras?.map((item, index) => {
+
+          return (
+            <div key={item.id} className='bottom-single-extras-item'>
+
+              <span className='bottom-extras-single-item-name-and-price'>
+                <h3>{item.name}</h3>
+                <p>NZD {item.rate}</p>
+              </span>
+
+              <div className='bottom-single-extras-increase-decrease'>
+
+                <div className='bottom-single-extra-increas-decrease-buttons-and-input-container' style={{opacity: isEditabel.extrasInfo ? 1 : 0.4}}>
+
+                  <button
+                    className='bottom-single-extra-decrease-button'
+                    disabled={!isEditabel.extrasInfo}
+                    onClick={() => { 
+                      const currentQty = tempExtras.find(q => q.extras_option_id === item.id)?.quantity || 0;
+                      if (!isEditabel.extrasInfo || currentQty === 0) return
+                      handleInputChange(item, currentQty - 1);
+                    }}
+                  >
+                    <FiMinus size={20} color='#FFF' />
+                  </button>
+
+                  <input
+                    type="number"
+                    className="bottom-single-extra-input-value"
+                    readOnly
+                    value={
+                      tempExtras.find((qty) => qty.extras_option_id === item.id)?.quantity ?? 0
+                    }
+                    onChange={(e) => handleInputChange(item, e.target.value)}
+                  />
+
+
+                  <button
+                    className='bottom-single-extra-increase-button'
+                    disabled={!isEditabel.extrasInfo}
+                    onClick={() => {
+                      if (!isEditabel.extrasInfo) return
+                      const currentQty = tempExtras.find(q => q.extras_option_id === item.id)?.quantity || 0;
+                      handleInputChange(item, currentQty + 1);
+                    }}
+                  >
+                    <FiPlus size={20} color='#FFF' />
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
       </div>
+      <div className='bottom-extras-update-button-contianer' style={{opacity: isEditabel.extrasInfo ? 1 : 0.4}}>
+        <button disabled={!isEditabel.extrasInfo} onClick={handleUpdateExtras}>Update Extras</button>
+      </div>
+    </div>
   )
 }
 

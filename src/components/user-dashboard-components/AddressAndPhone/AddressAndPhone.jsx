@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './AddressAndPhone.css'
 import { IoIosLock, IoMdArrowDropdown } from "react-icons/io";
 import { url } from '@/utils/services';
 import axios from 'axios';
+import { useOutsideClick } from '@/utils/DetectClickOutside';
+import useDropdownNavigationWithSearch from '@/utils/keyPress';
 
-const AddressAndPhone = () => {
+const AddressAndPhone = ({ userDetails }) => {
   const [showCountries, setShowCountries] = useState(false);
   const [countriesList, setCountriesList] = useState([]);
   const [selectedCountryItem, setSelectedCountryItem] = useState('')
@@ -17,6 +19,19 @@ const AddressAndPhone = () => {
     phone: "",
     alternate_phone: ""
   })
+
+  useEffect(() => {
+    setAddressAndPhone({
+      street_no: userDetails?.address?.street_no,
+      suburb: userDetails?.address?.suburb,
+      city: userDetails?.address?.city,
+      post_code: userDetails?.address?.post_code,
+      country: userDetails?.address?.country,
+      phone: userDetails?.address?.phone,
+      alternate_phone: userDetails?.address?.alternate_phone,
+    })
+    setSelectedCountryItem(userDetails?.address?.country)
+  }, [userDetails])
 
 
   useEffect(() => {
@@ -57,7 +72,7 @@ const AddressAndPhone = () => {
   }
 
   const handleSetAddressAndPhoneValue = (event) => {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
 
     setAddressAndPhone((prev) => ({
       ...prev,
@@ -80,6 +95,10 @@ const AddressAndPhone = () => {
       console.error("UnExpected Server Error", error);
     }
   }
+
+  const countryRef = useRef()
+  useOutsideClick(countryRef, () => setShowCountries(false));
+  const countryIndex = useDropdownNavigationWithSearch(countryRef, showCountries, 'countries-list-item')
 
   // useEffect(() => {handleGetAddressAndPhone()}, [])
 
@@ -107,7 +126,7 @@ const AddressAndPhone = () => {
             <div className='two-input-row'>
               <label>
                 City/town
-                <input type='text' name='city' value={addressAndPhon.city} onChange={handleSetAddressAndPhoneValue}  />
+                <input type='text' name='city' value={addressAndPhon.city} onChange={handleSetAddressAndPhoneValue} />
               </label>
 
               <label>
@@ -116,7 +135,7 @@ const AddressAndPhone = () => {
               </label>
             </div>
 
-            <div className='country-dropdown-main-continar'>
+            <div ref={countryRef} className='country-dropdown-main-continar'>
               <p className='country-dropdown-main-continar-label'>Country</p>
               <div className='country-dropdown-label' onClick={() => setShowCountries(!showCountries)}>
                 <p>{selectedCountryItem !== '' ? selectedCountryItem : 'Select Country'}</p>
@@ -127,7 +146,7 @@ const AddressAndPhone = () => {
                 {countriesList.map((item, index) => (
                   <p
                     key={index}
-                    className={`countries-list-item ${selectedCountryItem === item.country ? 'active-country-list-item' : ''}`}
+                    className={`countries-list-item ${countryIndex === index ? 'active-country-list-item' : ''}`}
                     onClick={() => handleSelectCountry(item)}
                   >
                     {item.country}

@@ -3,7 +3,7 @@ import './InsuranceUpdateModal.css';
 import { CgCloseO } from "react-icons/cg";
 import { url } from '@/utils/services';
 import axios from 'axios';
-import { useBookingContext } from '@/context/bookingContext/bookingContext';
+import { useBookingContext } from '@/context/bookingContext/bookingContext'; 
 
 const InsuranceUpdateModal = ({ insuranceModal, setInsuranceModal, carId, payload, setPayload }) => {
 
@@ -25,7 +25,8 @@ const InsuranceUpdateModal = ({ insuranceModal, setInsuranceModal, carId, payloa
     useEffect(() => { handleGetCarWithId() }, [carId])
 
     useEffect(() => {
-        const selectedOption = vehicleData?.insurance?.find((item) => item.insurance_option_id === payload?.booking?.insurance_id);
+        const selectedOption = vehicleData?.insurance?.find((item) => item.id === payload?.booking?.insurance_id);
+        // const selectedOption = vehicleData?.insurance?.find((item) => item.insurance_option_id === payload?.booking?.insurance_id);
         setSelectedPackage(selectedOption?.insurance_option_id)
     }, [vehicleData])
 

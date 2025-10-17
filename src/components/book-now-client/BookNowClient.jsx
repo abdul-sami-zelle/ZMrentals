@@ -132,39 +132,95 @@ const BookNowClient = () => {
   }, [step, searchParam, router]);
 
 
+  // const isUserInfoFilled = () => {
+  //   let newErrors = {};
+
+  //   // loop all keys of user payload
+  //   Object.entries(bookingPayload.user).forEach(([key, value]) => {
+  //     if (key === "local_phone") return; // skip validation for local_phone
+
+  //     if (!value || value.trim() === "") {
+  //       newErrors[key] = "Required";
+  //     }
+  //   });
+
+  //   // merge new errors with existing ones
+  //   setErrors((prev) => ({ ...prev, ...newErrors }));
+
+  //   // 1. Check if all fields (except local_phone) are filled
+  //   const allFilled = Object.keys(newErrors).length === 0;
+
+  //   // 2. Check if there are no format errors (email, phone, etc.)
+  //   const noErrors = Object.keys(errors).length === 0 && allFilled;
+  //   console.log("formate error", allFilled);
+  //   console.log("input error", noErrors);
+
+  //   return allFilled && noErrors;
+  // };
+
+  // const isUserInfoFilled = () => {
+  //   const newErrors = {};
+
+  //   // Loop all keys of user payload
+  //   Object.entries(bookingPayload.user).forEach(([key, value]) => {
+  //     if (key === "local_phone") return; // skip validation for local_phone
+
+  //     if (!value || value.trim() === "") {
+  //       newErrors[key] = "Required";
+  //     }
+  //   });
+
+  //   // 1️⃣ Set errors for UI display
+  //   setErrors((prev) => ({ ...prev, ...newErrors }));
+
+  //   // 2️⃣ Check if all fields are filled (except local_phone)
+  //   const allFilled = Object.keys(newErrors).length === 0;
+
+  //   // 3️⃣ Directly compute if there are *any* previous format errors
+  //   const hasFormatErrors = Object.values(errors).some((msg) => msg && msg !== "");
+
+  //   // 4️⃣ Return validation result
+  //   const result = allFilled && !hasFormatErrors;
+
+  //   console.log("All filled:", allFilled);
+  //   console.log("Has format errors:", hasFormatErrors);
+  //   console.log("Result:", result);
+
+  //   return result;
+  // };
+
   const isUserInfoFilled = () => {
-    let newErrors = {};
+    const user = bookingPayload?.user || {};
+    const newErrors = {};
 
-    // loop all keys of user payload
-    Object.entries(bookingPayload.user).forEach(([key, value]) => {
-      if (key === "local_phone") return; // skip validation for local_phone
-
+    Object.entries(user).forEach(([key, value]) => {
+      if (key === "local_phone") return;
+      if(key === 'customer_id') return
       if (!value || value.trim() === "") {
         newErrors[key] = "Required";
       }
     });
 
-    // merge new errors with existing ones
-    setErrors((prev) => ({ ...prev, ...newErrors }));
+    setErrors(newErrors); // overwrite — not merge
 
-    // 1. Check if all fields (except local_phone) are filled
+
     const allFilled = Object.keys(newErrors).length === 0;
-
-    // 2. Check if there are no format errors (email, phone, etc.)
-    const noErrors = Object.keys(errors).length === 0 && allFilled;
-
-    return allFilled && noErrors;
+    console.log("all filled", allFilled)
+    return allFilled;
   };
+
 
   const isArrivalDetailsAdded = () => {
     const flightNumber = bookingPayload?.booking?.flight_number || "";
     const arrivalCity = bookingPayload?.booking?.arrival_city || "";
     const newErrors = {};
 
-    if (!flightNumber) newErrors.flight_number = "Flight number is required";
-    if (!arrivalCity) newErrors.arrival_city = "Arrival city is required";
+    if (!flightNumber.trim()) newErrors.flight_number = "Flight number is required";
+    if (!arrivalCity.trim()) newErrors.arrival_city = "Arrival city is required";
 
     setArrivalErrors(newErrors);
+
+    console.log("errors", newErrors)
 
     // Return true only if both are filled
     return Object.keys(newErrors).length === 0;
@@ -183,21 +239,31 @@ const BookNowClient = () => {
     link: ''
   })
 
+  // useEffect(() => {
+  //    const userId = localStorage.getItem('userId');
+
+  //   console.log("user id", userId);
+  // }, [step])
+
   const handleCompleteBooking = async () => {
     const api = `https://zm.skyhub.pk/booking/add-booking`;
+
+    const userId = localStorage.getItem('userId');
 
     const payloadWithPhoneCode = {
       ...bookingPayload,
       user: {
         ...bookingPayload.user,
         phone: `${selectedCountryDetails?.code}${bookingPayload.user.phone}`,
-        local_phone: bookingPayload?.user?.local_phone ? `+64${bookingPayload.user.local_phone}` : ''
+        local_phone: bookingPayload?.user?.local_phone ? `+64${bookingPayload.user.local_phone}` : '',
+        customer_id: userId || null
       }
     };
 
     try {
       setISloading(true)
       const response = await axios.post(api, payloadWithPhoneCode);
+      console.log("user booked", payloadWithPhoneCode)
       if (response.status === 201) {
         setISloading(false);
         setShowAvailableModal(true)
@@ -633,6 +699,10 @@ const BookNowClient = () => {
     }
   };
 
+  useEffect(() => {
+    console.log("bookings", bookingPayload)
+  }, [bookingPayload])
+
   const handleBookNow = () => {
     if (selectedTabIndex < 3) {
 
@@ -641,6 +711,7 @@ const BookNowClient = () => {
         setToustMessage("Please Fill Flight Number and Arrival City");
         return
       } else if (selectedTabIndex === 2 && !isUserInfoFilled()) {
+        console.log("seper index", selectedTabIndex)
         setTOustShow(true)
         setToustMessage("Please Fill All The Information")
       } else if (activeShuttle === 3 && selectedTabIndex === 0) {

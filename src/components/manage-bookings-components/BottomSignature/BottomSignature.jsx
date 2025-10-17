@@ -74,7 +74,7 @@ const BottomSignature = ({ editBookingPayload, setEditBookingPayload, setCustome
               style={{
                 border: "1px solid #ccc",
                 width: "100%", // responsive
-                height: "360px",
+                height: 550,
                 backgroundColor: "#d7d7d7",
               }}
             />

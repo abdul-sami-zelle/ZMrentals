@@ -8,13 +8,13 @@ import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
 const ExtrasUpdateModal = ({ showExtrasModal, setShowExtrasModal, payload, setPayload, carId }) => {
 
+    const [tempExtras, setTempExtras] = useState([])
     const [vehicleData, setVehicleData] = useState({});
-    const [newExtras, setNewExtras] = useState([])
-
     const handleGetCarWithId = async () => {
         const api = `${url}/cars/get/${payload?.booking?.car_id}`;
         try {
             const response = await axios.get(api);
+            console.log("respose", response)
             if (response.status === 200) {
                 setVehicleData(response.data)
             }
@@ -22,88 +22,118 @@ const ExtrasUpdateModal = ({ showExtrasModal, setShowExtrasModal, payload, setPa
             console.error("UnExpected Server Error", error);
         }
     }
+
     useEffect(() => { handleGetCarWithId() }, [carId])
 
-    const [updateExtras, setUpdateExtras] = useState({});
-
-    // ✅ initialize state from payload.booking.extras (if any)
     useEffect(() => {
-        if (!payload?.booking?.extras?.length) return;
-        const mapped = {};
-        payload.booking.extras.forEach((extra, index) => {
-            // mapped[index] = { ...extra };
-            mapped[index] = {
-                    main_id: item.extras_option_id,
-                    extras_option_id: item.id,
-                    quantity: newQty
+        if (
+            payload?.booking?.extras?.length > 0 &&
+            vehicleData?.extras?.length > 0
+        ) {
+            const mappedExtras = payload.booking.extras.map((extraItem) => {
+                // find the matching object from vehicleData
+
+                console.log("looped item", extraItem)
+                console.log("vehicle data", vehicleData)
+
+                const foundItem = vehicleData.extras.find(
+                    (v) => v.id === extraItem.extras_pricing_id
+                );
+
+                console.log("metched object", foundItem)
+
+                return {
+                    extras_option_id: foundItem ? foundItem.id : 0,
+                    main_id: foundItem ? foundItem.extras_option_id : 0,
+                    quantity: extraItem.quantity || 0, // 👈 taking quantity from booking payload
+                    rate: extraItem.rate,
+                    name: extraItem.name
                 };
-        });
+            });
 
-        // ✅ Only update if values actually changed
-        setUpdateExtras((prev) => {
-            const prevString = JSON.stringify(prev);
-            const newString = JSON.stringify(mapped);
-            return prevString !== newString ? mapped : prev;
-        });
-    }, [payload?.booking?.extras]);
+            setTempExtras(mappedExtras);
+        }
+    }, [vehicleData]);
 
-    const handleUpdateExtras = (index, type, item) => {
-        setUpdateExtras((prev) => {
-            const currentQuantity = parseInt(prev[index]?.quantity) || 0
-            const minQty = parseInt(item.min_qty) || 1;
-            const maxQty = parseInt(item.max_qty) || 99;
 
-            let newQty = currentQuantity;
+    
 
-            if (type === 'increase') {
-                if (currentQuantity === 0) {
-                    newQty = minQty
-                } else if (currentQuantity < maxQty) {
-                    newQty = currentQuantity + 1
-                } else {
-                    return prev
-                }
+
+
+
+    const handleInputChange = (item, value) => {
+        const min = Number(item.min_qty) || 0;
+        const max = Number(item.max_qty) || Infinity;
+
+        // Convert to number safely
+        let quantity = Number(value);
+        if (isNaN(quantity)) quantity = 0;
+
+        // Get current quantity if already exists
+        const existingExtra = tempExtras.find(e => e.extras_option_id === item.id);
+        const currentQty = existingExtra ? Number(existingExtra.quantity) : 0;
+
+        // 🔹 If increasing or decreasing manually, always step by 1
+        if (quantity > currentQty) quantity = currentQty + 1;
+        if (quantity < currentQty) quantity = currentQty - 1;
+
+        // 🔹 Clamp within min/max
+        if (quantity < 0) quantity = 0;
+        if (quantity > max) quantity = max;
+
+        // 🔹 Remove if quantity = 0
+        if (quantity === 0) {
+            setTempExtras(prev =>
+                prev.filter(extra => extra.extras_option_id !== item.id)
+            );
+            return;
+        }
+
+        // 🔹 Update or add new
+        setTempExtras(prev => {
+            const existingIndex = prev.findIndex(
+                extra => extra.extras_option_id === item.id
+            );
+
+            if (existingIndex !== -1) {
+                const updated = [...prev];
+                updated[existingIndex] = {
+                    ...updated[existingIndex],
+                    quantity,
+                };
+                return updated;
             }
 
-            if (type === 'decrease') {
-                if (currentQuantity > minQty) {
-                    newQty = currentQuantity - 1
-                } else if (currentQuantity === minQty) {
-                    newQty = 0
-                } else {
-                    return prev
-                }
-            }
-
-            const update = { ...prev }
-
-            if (newQty === 0) {
-                delete update[index]
-            } else {
-                // update[index] = {
-                //     ...item,
-                //     quantity: newQty
-                // }
-                update[index] = {
-                    main_id: item.extras_option_id,
+            // Add new item on first click
+            return [
+                ...prev,
+                {
                     extras_option_id: item.id,
-                    quantity: newQty
-                }
-            }
+                    main_id: item.extras_option_id,
+                    quantity,
+                    rate: item.rate,
+                    name: item.name,
+                },
+            ];
+        });
+    };
 
-            return update
-        })
+
+
+
+    const handleUpdateExtras = () => {
+        setPayload((prev) => ({
+            ...prev,
+            booking: {
+                ...prev.booking,
+                extras: tempExtras
+            }
+        }))
+        setShowExtrasModal(false)
     }
 
-    useEffect(() => {
-        setPayload((prevPayload) => ({
-            ...prevPayload,
-            booking: {
-                ...prevPayload.booking,
-                extras: Object.values(updateExtras),
-            },
-        }));
-    }, [updateExtras]);
+
+
 
 
     return (
@@ -131,24 +161,43 @@ const ExtrasUpdateModal = ({ showExtrasModal, setShowExtrasModal, payload, setPa
                         <div className='update-extras-single-option' key={index}>
                             <h3>{item.name}</h3>
                             <div className='update-extras-single-option-quantity-controler'>
-                                <button onClick={() => handleUpdateExtras(index, 'decrease', item)} ><FiMinus size={20} color='#FFF' /> </button>
+                                <button
+                                    disabled={
+                                        (tempExtras.find(q => q.extras_option_id === item.id)?.quantity || 0) <= 0
+                                    }
+                                    onClick={() => {
+                                        const currentQty = tempExtras.find(q => q.extras_option_id === item.id)?.quantity || 0;
+                                        handleInputChange(item, currentQty - 1);
+                                    }}
+                                >
+                                    <FiMinus size={20} color='#FFF' />
+                                </button>
                                 <input
-                                    type='text'
+                                    type="number"
+                                    className="bottom-single-extra-input-value"
                                     readOnly
-                                    pattern='[0-9]*'
-                                    min={item.min_qty}
-                                    max={item.max_qty}
-                                    inputMode='numeric'
-                                    name='quantity'
-                                    value={updateExtras[index]?.quantity || 0}
+                                    value={
+                                        tempExtras.find((qty) => qty.extras_option_id === item.id)?.quantity ?? 0
+                                    }
                                 />
-                                <button onClick={() => handleUpdateExtras(index, 'increase', item)}><FiPlus size={20} color='#FFF' /></button>
+                                <button
+                                    disabled={
+                                        (tempExtras.find(q => q.extras_option_id === item.id)?.quantity || 0) >= Number(item.max_qty)
+                                    }
+                                    onClick={() => {
+                                        const currentQty = tempExtras.find(q => q.extras_option_id === item.id)?.quantity || 0;
+                                        handleInputChange(item, currentQty + 1);
+                                    }}
+                                >
+                                    <FiPlus size={20} color='#FFF' />
+                                </button>
                             </div>
 
                         </div>
                     ))}
                 </div>
 
+                <button onClick={handleUpdateExtras} className='desktop-extras-update-button'>Update Extras</button>
 
 
             </div>

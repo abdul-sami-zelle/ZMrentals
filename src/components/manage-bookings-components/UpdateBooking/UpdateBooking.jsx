@@ -110,7 +110,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                         pickup_time: response.data.data.pickup_time,
                         drop_time: response.data.data.drop_time,
                         extras: response.data.data.extras,
-                        insurance_id: response.data.data?.insurances[0]?.CarInsurancePricing?.insurance_option_id,
+                        insurance_id: response.data.data?.insurances[0]?.CarInsurancePricing?.id,
                         shuttle_option: response.data.data.shuttle_option || '',
                         flight_number: response.data.data.flight_number || '',
                         arrival_city: response.data.data.arrival_city || ''
@@ -126,10 +126,10 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                         how_find_us: response.data.data.user.how_find_us,
                         travel_reason: response.data.data.user.travel_reason
                     },
-                    drivers: response.data.data.drivers,
+                    driverDetails: response.data.data.drivers,
                     signature: response.data.data.signatures[0] || []
                 })
-                
+
             } else {
                 setManageBookingSteper(0);
             }
@@ -185,7 +185,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
     }, []);
 
     // Location View And Update States
-    
+
     const [pickupDetails, setPickupDetails] = useState({})
     const [dropupDetails, setDropUpDetails] = useState({})
     const [showAvailabilitycheckModal, setShowAvailabilitycheckModal] = useState(false);
@@ -197,7 +197,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
     ]
 
     // Location View Update Functions
-    
+
     const handleShowAvailabilityCheckModal = () => {
         setShowAvailabilitycheckModal(!showAvailabilitycheckModal);
     }
@@ -437,7 +437,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
 
     const handleValidateAddDriver = () => {
         const extraDrivers = editBookingPayload?.booking?.extras?.find((item) => item.name === "Extra Driver");
-        if (editBookingPayload?.drivers?.length < parseInt(extraDrivers?.quantity)) {
+        if (editBookingPayload?.driverDetails?.length < parseInt(extraDrivers?.quantity)) {
             handleDriverEditModal()
         }
         console.log("spacific extra driver object", extraDrivers)
@@ -499,7 +499,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
         }
 
         const updatedDrivers = await Promise.all(
-            editBookingPayload.drivers.map(async (drv) => {
+            editBookingPayload.driverDetails.map(async (drv) => {
                 let frontUrl = drv.front_license_image;
                 let backUrl = drv.back_license_image;
 
@@ -524,7 +524,7 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
         // 3️⃣ Update bookingPayload with drivers + signature URL
         setEditBookingPayload((prev) => ({
             ...prev,
-            drivers: updatedDrivers,
+            driverDetails: updatedDrivers,
         }));
 
         // 2️⃣ Upload customer signature (if File exists)
@@ -539,11 +539,13 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
         // 3️⃣ Build final payload
         const finalPayload = {
             ...editBookingPayload,
-            drivers: updatedDrivers,
+            driverDetails: updatedDrivers,
             signature: {
                 signature_image: signatureUrl,
             },
         };
+
+        console.log("insur check", finalPayload)
 
         try {
 
@@ -560,16 +562,16 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                     para: 'We’ve updated your booking with the latest details.',
                     link: 'Explore More'
                 })
-                
+
             }
 
         } catch (error) {
             console.error("UnExpected Servr Error", error);
             setConfirmData({
-                    head: 'Update Failed',
-                    para: 'Something went wrong while updating your booking. Please try again',
-                    link: 'Please Try Again'
-                })
+                head: 'Update Failed',
+                para: 'Something went wrong while updating your booking. Please try again',
+                link: 'Please Try Again'
+            })
             setLoading(false)
         } finally {
             setLoading(false);
@@ -579,6 +581,9 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
     const handleClose = () => {
         setConfirmModal(false)
     }
+
+
+    useEffect(() => { console.log("edit booking", editBookingPayload) }, [editBookingPayload])
 
 
     return (
@@ -802,14 +807,12 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                     </div>
 
                     <div className='edit-drivers-list-contianer'>
-                        {editBookingPayload?.drivers && editBookingPayload?.drivers?.map((item, index) => (
+                        {editBookingPayload?.driverDetails && editBookingPayload?.driverDetails?.map((item, index) => (
                             <div className='driver-list-single-item'>
                                 <div className='driver-list-single-item-head' onClick={() => handleDriverIndex(index)}>
                                     <h3>{item?.driver_name}</h3>
                                     <span className='driver-view-or-adit-contianer' onClick={() => handleDetails(item)}>
                                         View
-                                        {/* <FaEye size={20} color='#000' onClick={() => handleDetails(item)} /> */}
-                                        {/* <CiEdit size={20} color='#000' onClick={() => handleDriverEditModal(item)} /> */}
                                     </span>
                                 </div>
                             </div>
@@ -850,15 +853,16 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
                         <div className='extras-count-container'>
                             <div className='extras-count-head'>
                                 <h3>Extras</h3>
-                                <button onClick={() => setShowExtras(!showExtras)} style={{cursor: 'pointer'}}>
-                                    <CiEdit size={20} color='#961502'  />
+                                <button onClick={() => setShowExtras(!showExtras)} style={{ cursor: 'pointer' }}>
+                                    <CiEdit size={20} color='#961502' />
                                 </button>
                             </div>
                             <div className='extras-count-option-contianer'>
                                 {editBookingPayload?.booking?.extras?.map((item, index) => {
+
                                     return <span key={index}>
                                         <h3>{item.name}</h3>
-                                        <p>NZD {(parseFloat(item.rate) * vehicleData?.rates?.length) * parseInt(item.quantity)}</p>
+                                        <p>NZD {(parseFloat(item?.rate) * vehicleData?.rates?.length) * parseInt(item.quantity)}</p>
                                     </span>
                                 })}
                             </div>

@@ -76,6 +76,11 @@ const BookingForm = (
             const defaultLocationObject = locations?.find((item) => item.id === 5);
             setPickupCity(defaultLocationObject?.name)
             setDropupCity(defaultLocationObject?.name)
+            setSearchVehiclePayload((prev) => ({
+                ...prev,
+                pickup_location: 5,
+                drop_location: 5
+            }))
         }
     }, [locations])
 
@@ -99,7 +104,6 @@ const BookingForm = (
         formatePickupDateAndTime(date, pickupTime)
         setPickupCalender(false); // hide after selection
     };
-
 
     const handleDropDateChange = (date) => {
         setSelectedDropDate(date);

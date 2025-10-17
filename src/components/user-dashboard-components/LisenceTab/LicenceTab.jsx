@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './LicenceTab.css'
 import { IoIosLock, IoMdArrowDropdown } from "react-icons/io";
 import { url } from '@/utils/services';
 import axios from 'axios';
 import MainLoader from '@/loaders/MainLoader/MainLoader';
+import { useOutsideClick } from '@/utils/DetectClickOutside';
+import useDropdownNavigationWithSearch from '@/utils/keyPress';
 
-const LisenceTab = () => {
+const LisenceTab = ({ userDetails }) => {
 
   const [showCountries, setShowCountries] = useState(false);
   const [countriesList, setCountriesList] = useState([]);
@@ -13,14 +15,24 @@ const LisenceTab = () => {
   const [loading, setLoading] = useState(false);
   const [licenceDetails, setLicenceDetails] = useState({
     name_on_license: '',
-    dob: '',
-    license_number: '',
-    expiry_date: '',
-    issue_country: ''
+      dob: '',
+      license_no: '',
+      license_expiry: '',
+      issue_country: ''
   })
 
+  useEffect(() => {
+    setLicenceDetails({  
+    name_on_license: userDetails?.license?.name_on_license,
+    dob: userDetails?.license?.dob,
+    license_no: userDetails?.license?.license_no,
+    license_expiry: userDetails?.license?.license_expiry,
+    issue_country: userDetails?.license?.issue_country
+    })
+  }, [userDetails])
+
   const handleSetLicenceValues = (event) => {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
 
     setLicenceDetails((prev) => ({
       ...prev,
@@ -72,20 +84,24 @@ const LisenceTab = () => {
 
     const api = `${url}/customer/license`;
     setLoading(true)
-    try {
-      const response = await axios.post(api, licenceDetails, {
-        headers: {
-          "Authorization": `Bearer ${userToken}`
-        }
-      })
+    // try {
+    //   const response = await axios.post(api, licenceDetails, {
+    //     headers: {
+    //       "Authorization": `Bearer ${userToken}`
+    //     }
+    //   })
 
-    } catch (error) {
-      setLoading(false)
-      console.error("UnExpected Server Error", error);
-    } finally {
-      setLoading(false)
-    }
+    // } catch (error) {
+    //   setLoading(false)
+    //   console.error("UnExpected Server Error", error);
+    // } finally {
+    //   setLoading(false)
+    // }
   }
+
+  const countryRef = useRef()
+    useOutsideClick(countryRef, () => setShowCountries(false));
+    const countryIndex = useDropdownNavigationWithSearch(countryRef, showCountries, 'countries-list-item')
 
   return (
     <div className='driver-licence-main-contianer'>
@@ -107,18 +123,18 @@ const LisenceTab = () => {
           <div className='driver-licence-dual-inputs'>
             <label>
               Licence number
-              <input type='text' name='license_number' value={licenceDetails.license_number} onChange={handleSetLicenceValues} />
+              <input type='text' name='license_no' value={licenceDetails.license_no} onChange={handleSetLicenceValues} />
             </label>
             <label>
               Licence expiry date
-              <input type='text' placeholder='YY-MM-DD' name='expiry_date' value={licenceDetails.expiry_date} onChange={handleSetLicenceValues} />
+              <input type='text' placeholder='YY-MM-DD' name='license_expiry' value={licenceDetails.license_expiry} onChange={handleSetLicenceValues} />
             </label>
           </div>
 
-          <div className='country-dropdown-main-continar'>
+          <div ref={countryRef} className='country-dropdown-main-continar'>
             <p className='country-dropdown-main-continar-label'>Country</p>
             <div className='country-dropdown-label' onClick={() => setShowCountries(!showCountries)}>
-              <p>{selectedCountryItem !== '' ? selectedCountryItem : 'Select Country'}</p>
+              <p>{licenceDetails?.issue_country !== '' ? licenceDetails?.issue_country : 'Select Country'}</p>
               <IoMdArrowDropdown size={20} color='var(--primary-color)' />
             </div>
 
@@ -126,7 +142,7 @@ const LisenceTab = () => {
               {countriesList.map((item, index) => (
                 <p
                   key={index}
-                  className={`countries-list-item ${selectedCountryItem === item.country ? 'active-country-list-item' : ''}`}
+                  className={`countries-list-item ${countryIndex === index ? 'active-country-list-item' : ''}`}
                   onClick={() => handleSelectCountry(item)}
                 >
                   {item.country}

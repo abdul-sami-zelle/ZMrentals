@@ -5,8 +5,6 @@ import { CgCloseO } from "react-icons/cg";
 
 const SummaryModal = ({ showModal, handleClose, vehicleData, editBookingPayload }) => {
 
-    console.log("vehicle data", vehicleData)
-    console.log("payload data data", editBookingPayload)
 
 
     const handleExtrasTotal = () => {
@@ -43,7 +41,6 @@ const SummaryModal = ({ showModal, handleClose, vehicleData, editBookingPayload 
 
         const grandTotal = parseFloat(subTotal) + parseFloat(offHourCharges) + parseFloat(insuranceTotal) + parseFloat(extraValues)
 
-        console.log("grand total", grandTotal)
 
         return grandTotal
     }

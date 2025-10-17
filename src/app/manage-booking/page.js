@@ -9,16 +9,16 @@ import UpdateBookingMobile from '../../components/manage-bookings-components/Upd
 import axios from 'axios'
 
 function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
-  return isMobile;
+    return isMobile;
 }
 
 const page = () => {
@@ -50,8 +50,6 @@ const page = () => {
         setBgImage(images[randomIndex]);
         setPosterBg(posterImages[posterINdex])
     };
-
-    
 
     return (
         <div
@@ -88,10 +86,10 @@ const page = () => {
                 </div>
             ) : (
                 <>
-                {!isMobile && <UpdateBooking setManageBookingSteper={setManageBookingSteper} />}
-                {isMobile && <UpdateBookingMobile />}
+                    {!isMobile && <UpdateBooking setManageBookingSteper={setManageBookingSteper} />}
+                    {isMobile && <UpdateBookingMobile />}
                 </>
-                
+
             )}
 
         </div>

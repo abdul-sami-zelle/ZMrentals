@@ -242,16 +242,16 @@ const EditDriverModal = (
     const handleUpdateDriverDetails = () => {
 
         setPayload((prev) => {
-            const existingDrivr = prev?.drivers?.some((item) => item.id === data?.id);
+            const existingDrivr = prev?.driverDetails?.some((item) => item.id === data?.id);
             let updatedDrivers;
             if (existingDrivr) {
-                updatedDrivers = prev.drivers.map((item) => item.id === data?.id ? { ...item, ...updatedDriver, id: data?.id } : item)
+                updatedDrivers = prev.driverDetails.map((item) => item.id === data?.id ? { ...item, ...updatedDriver, id: data?.id } : item)
             } else {
-                updatedDrivers = [...prev.drivers, { ...updatedDriver }];
+                updatedDrivers = [...prev.driverDetails, { ...updatedDriver }];
             }
             return {
                 ...prev,
-                drivers: updatedDrivers
+                driverDetails: updatedDrivers
             }
         })
 

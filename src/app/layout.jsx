@@ -38,15 +38,24 @@ export default function RootLayout({ children }) {
 
       </head>
 
-      <body suppressHydrationWarning style={{display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#FFFFFF' }} >
+      <body 
+        suppressHydrationWarning 
+        // style={
+        //   {
+        //     display: 'flex', 
+        //     flexDirection: 'column', 
+        //     // height: '100%',
+        //     // minHeight: '100vh', 
+        //     // backgroundColor: '#FFFFFF' ,
+        //     backgroundColor: 'orange'
+        //   }
+        // } 
+      >
         <SearchVehicleProvider>
           <BookingProvider>
             <StripeProvider>
               <UserDashboardProvider>
                 <ManageBookingProvider>
-
-                
-
 
                 <Header />
                 <main className="page-content">

@@ -3,9 +3,9 @@
     align-items: start;
     justify-content: start;
     width: 100%;
-    height: 100%;
+    height: max-content;
     /* padding: 15px; */
-    position: relative;
+    /* position: relative; */
     flex: 1;
     /* background-color: #FFF; */
 }
@@ -16,12 +16,12 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 100%;
+    height: max-content;
     position: relative;
     gap: 10px;
-    /* overflow: hidden; */
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden;
+    /* overflow-x: hidden;
+    overflow-y: auto; */
 }
 
 .edit-booking-mobile-inner::-webkit-scrollbar {
@@ -293,7 +293,7 @@
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: 100%;
 }
 
 .bottom-pop-up-content-contianer::-webkit-scrollbar {

@@ -35,7 +35,8 @@ export const BookingProvider = ({ children }) => {
             country: "New Zealand",
             driver_age: '24',
             how_find_us: "Google",
-            travel_reason: "Leisure"
+            travel_reason: "Leisure",
+            customer_id: null,
         }
     });
 
