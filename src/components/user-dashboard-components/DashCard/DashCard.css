@@ -1,10 +1,11 @@
 .dashboard_tab {
   position: relative;
-  width: 180px;
+  width: 220px;
+  
 }
 
 .dashboard_tab>.dashboard_tab_svg {
-  width: 180px;
+  width: 220px;
 }
 
 
@@ -40,8 +41,8 @@
 }
 
 .dashboard_tab>.circular_button {
-  height: 35px;
-  width: 35px;
+  height: 40px;
+  width: 40px;
   background-color: #961502;
   border-radius: 50%;
   position: absolute;
@@ -110,8 +111,38 @@
   height: 400px;
 }
 
+/* @media only screen and (min-width: 1024px) and (max-width: 1330px) {
+  .dashboard_tab {
+        width: 130px;
+    }
 
-@media (max-width: 1230px) {
+    .dashboard_tab>.dashboard_tab_svg {
+        width: 130px;
+    }
+
+    .dashboard_tab>.heading {
+      font-size: 16px;
+    }
+
+    .dashboard_tab>.count {
+      font-size: 28px;
+      bottom: 0;
+    }
+
+    .dashboard_tab>.count>span {
+      font-size: 13px;
+    }
+
+    .dashboard_tab>.circular_button {
+      top: -5px;
+      right: -3px;
+      width: 30px;
+      height: 30px;
+    }
+} */
+
+
+/* @media (max-width: 1230px) {
   .dashboard_tab {
     width: 220px;
   }
@@ -146,7 +177,7 @@
   .user-dashboard-main-page {
     padding: 35px 20px 70px 20px;
   }
-}
+} */
 
 @media (max-width: 800px) {
   .upper_tabs {

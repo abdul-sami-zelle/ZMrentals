@@ -5,8 +5,10 @@ import { url } from '@/utils/services';
 import axios from 'axios';
 import { useOutsideClick } from '@/utils/DetectClickOutside';
 import useDropdownNavigationWithSearch from '@/utils/keyPress';
+import MainLoader from '@/loaders/MainLoader/MainLoader';
 
 const AddressAndPhone = ({ userDetails }) => {
+  const [loading, setLoading] = useState(false);
   const [showCountries, setShowCountries] = useState(false);
   const [countriesList, setCountriesList] = useState([]);
   const [selectedCountryItem, setSelectedCountryItem] = useState('')
@@ -73,26 +75,48 @@ const AddressAndPhone = ({ userDetails }) => {
 
   const handleSetAddressAndPhoneValue = (event) => {
     const { name, value } = event.target;
+    let formattedValue = value;
+
+    if (name === "phone") {
+      // ✅ Allow only digits and an optional + at the start
+      const phoneRegex = /^\+?\d*$/;
+
+      // If user types something invalid, ignore it
+      if (!phoneRegex.test(value)) return;
+
+      // Optional: prevent multiple "+" symbols anywhere else
+      formattedValue = value.startsWith("+")
+        ? "+" + value.slice(1).replace(/\+/g, "")
+        : value.replace(/\+/g, "");
+    }
 
     setAddressAndPhone((prev) => ({
       ...prev,
-      [name]: value
-    }))
+      [name]: formattedValue,
+    }));
   }
 
   const handleUpdateAddressAndPhone = async () => {
     const userToken = localStorage.getItem('userToken');
     const api = `${url}/customer/address`
-
+  
+    setLoading(true)
     try {
       const response = await axios.post(api, addressAndPhon, {
         headers: {
           "Authorization": `Bearer ${userToken}`
         }
       })
+      if(response.status == 200) {
+        setLoading(false)
+      }
+      console.log("addrss response", response)
 
     } catch (error) {
       console.error("UnExpected Server Error", error);
+      setLoading(false);
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -105,6 +129,7 @@ const AddressAndPhone = ({ userDetails }) => {
 
   return (
     <div className='address-and-phone-main-contianer'>
+      {loading && <MainLoader />}
       <div className='address-and-phone-width-controller'>
 
         <div className='address-input-contianer'>

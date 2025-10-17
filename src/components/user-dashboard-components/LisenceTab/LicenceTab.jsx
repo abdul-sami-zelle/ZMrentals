@@ -15,29 +15,52 @@ const LisenceTab = ({ userDetails }) => {
   const [loading, setLoading] = useState(false);
   const [licenceDetails, setLicenceDetails] = useState({
     name_on_license: '',
-      dob: '',
-      license_no: '',
-      license_expiry: '',
-      issue_country: ''
+    dob: '',
+    license_no: '',
+    license_expiry: '',
+    issue_country: ''
   })
 
   useEffect(() => {
-    setLicenceDetails({  
-    name_on_license: userDetails?.license?.name_on_license,
-    dob: userDetails?.license?.dob,
-    license_no: userDetails?.license?.license_no,
-    license_expiry: userDetails?.license?.license_expiry,
-    issue_country: userDetails?.license?.issue_country
+    setLicenceDetails({
+      name_on_license: userDetails?.license?.name_on_license,
+      dob: userDetails?.license?.dob,
+      license_no: userDetails?.license?.license_no,
+      license_expiry: userDetails?.license?.license_expiry,
+      issue_country: userDetails?.license?.issue_country
     })
   }, [userDetails])
 
   const handleSetLicenceValues = (event) => {
     const { name, value } = event.target;
 
+    let formattedValue = value;
+
+    // Restrict only date fields
+    if (name === "dob" || name === "license_expiry") {
+      // Remove non-digit characters first
+      formattedValue = value.replace(/[^\d]/g, "");
+
+      // Auto-add dashes: YYYY-MM-DD
+      if (formattedValue.length > 4 && formattedValue.length <= 6) {
+        formattedValue = formattedValue.slice(0, 4) + "-" + formattedValue.slice(4);
+      } else if (formattedValue.length > 6) {
+        formattedValue =
+          formattedValue.slice(0, 4) +
+          "-" +
+          formattedValue.slice(4, 6) +
+          "-" +
+          formattedValue.slice(6, 8);
+      }
+
+      // Trim to max length of YYYY-MM-DD
+      if (formattedValue.length > 10) formattedValue = formattedValue.slice(0, 10);
+    }
+
     setLicenceDetails((prev) => ({
       ...prev,
-      [name]: value
-    }))
+      [name]: formattedValue,
+    }));
   }
 
   useEffect(() => {
@@ -84,24 +107,24 @@ const LisenceTab = ({ userDetails }) => {
 
     const api = `${url}/customer/license`;
     setLoading(true)
-    // try {
-    //   const response = await axios.post(api, licenceDetails, {
-    //     headers: {
-    //       "Authorization": `Bearer ${userToken}`
-    //     }
-    //   })
+    try {
+      const response = await axios.post(api, licenceDetails, {
+        headers: {
+          "Authorization": `Bearer ${userToken}`
+        }
+      })
 
-    // } catch (error) {
-    //   setLoading(false)
-    //   console.error("UnExpected Server Error", error);
-    // } finally {
-    //   setLoading(false)
-    // }
+    } catch (error) {
+      setLoading(false)
+      console.error("UnExpected Server Error", error);
+    } finally {
+      setLoading(false)
+    }
   }
 
   const countryRef = useRef()
-    useOutsideClick(countryRef, () => setShowCountries(false));
-    const countryIndex = useDropdownNavigationWithSearch(countryRef, showCountries, 'countries-list-item')
+  useOutsideClick(countryRef, () => setShowCountries(false));
+  const countryIndex = useDropdownNavigationWithSearch(countryRef, showCountries, 'countries-list-item')
 
   return (
     <div className='driver-licence-main-contianer'>
