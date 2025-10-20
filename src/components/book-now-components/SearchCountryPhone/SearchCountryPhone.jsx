@@ -84,38 +84,6 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
         }
     }, [showCountryCodeList, filteredCountries, selectedCountryDetails]);
 
-
-    // useEffect(() => {
-    //     if (showCountryCodeList) {
-    //         const index = filteredCountries.findIndex(
-    //             (c) =>
-    //                 c.country === selectedCountryDetails?.country &&
-    //                 c.code === selectedCountryDetails?.code
-    //         );
-    //         setActiveIndex(index !== -1 ? index : 0);
-
-    //         // ✅ Stable cross-device scroll adjustment (mobile safe)
-    //         requestAnimationFrame(() => {
-    //             const container = document.querySelector(".country-code-inner-list-contianer");
-    //             const activeEl = document.querySelector(".country-code-inner-item.active-code");
-    //             if (container && activeEl) {
-    //                 const top =
-    //                     activeEl.offsetTop -
-    //                     container.offsetTop -
-    //                     container.clientHeight / 2 +
-    //                     activeEl.clientHeight / 2;
-
-    //                 // Only scroll if needed — prevents screen shake on mobile
-    //                 if (top > 0 && Math.abs(container.scrollTop - top) > 10) {
-    //                     container.scrollTo({ top, behavior: "auto" });
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }, [showCountryCodeList, filteredCountries, selectedCountryDetails]);
-
-
-
     // ⚡ TAB from search → go to next field (not reopen dropdown)
     const handleSearchKeyDown = (e) => {
         if (e.key === "Tab") {
@@ -148,21 +116,25 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
 
     return (
         <label
-            ref={countryCodeRef}
-            tabIndex={0}
+            
             className="width-full-on-phone"
             style={{
                 border: errors?.phone ? "1px solid red" : "1px solid transparent",
             }}
-            onFocus={handleLabelFocus}
-            onBlur={handleLabelBlur}
-            onKeyDown={handleKeyDown}
+            // onFocus={handleLabelFocus}
+            // onBlur={handleLabelBlur}
+            // onKeyDown={handleKeyDown}
         >
             Phone Number
-            <div className="hirer-phone-with-country-code">
+            <div className="hirer-phone-with-country-code" >
                 <div
+                    ref={countryCodeRef}
+                    tabIndex={0}
                     className="country-code-dropdown"
                     onClick={() => setShowCountryCodeList((prev) => !prev)}
+                    onFocus={handleLabelFocus}
+                    // onBlur={handleLabelBlur}
+                    onKeyDown={handleKeyDown}
                 >
                     <p>
                         {selectedCountryDetails?.code}{" "}
@@ -179,7 +151,7 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
                     placeholder="Enter phone"
                     tabIndex={0}
                     style={{ flex: 1 }}
-                    onFocus={() => setShowCountryCodeList(false)}
+                    // onFocus={() => setShowCountryCodeList(false)}
                 />
             </div>
 

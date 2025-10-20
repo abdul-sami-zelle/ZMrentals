@@ -4,11 +4,13 @@ import Image from 'next/image';
 import SecondaryButton from '@/global-components/secondary-button/SecondaryButton';
 
 import imgOne from '../../assets/home/home_pageFlexible_Car_Rental_Services_image_2.jpg'
+import { useRouter } from 'next/navigation';
 
 const FeedbackGallery = () => {
+    const router = useRouter()
     const handleNavigate = () => {
-    router.push('/car-rental-services')
-  }
+        router.push('/car-rental-services')
+    }
     return (
         <div className='feedback-gallery-main-container'>
 
@@ -23,10 +25,10 @@ const FeedbackGallery = () => {
             <div className='feedback-gallery-description-container'>
                 <h3 className='section-main-heading'>Flexible Car Rental Services in Auckland</h3>
                 <p>
-                    At ZM Rentals, our top priority is to provide a flexible and enjoyable car rental experience, ensuring your time in Auckland, New Zealand is free of any hassles. 
-                    With tourism booming in New Zealand, we are committed to enhancing visitors’ experiences by offering the most adaptable car rental services. Whether you’re 
-                    embarking on an extensive solo adventure, enjoying a week-long family holiday, or here for a quick business trip, we provide full flexibility when it comes 
-                    to vehicle selection and rental durations. With ZM Rentals, you can count on a smooth and adaptable journey throughout Auckland, making your trip as 
+                    At ZM Rentals, our top priority is to provide a flexible and enjoyable car rental experience, ensuring your time in Auckland, New Zealand is free of any hassles.
+                    With tourism booming in New Zealand, we are committed to enhancing visitors’ experiences by offering the most adaptable car rental services. Whether you’re
+                    embarking on an extensive solo adventure, enjoying a week-long family holiday, or here for a quick business trip, we provide full flexibility when it comes
+                    to vehicle selection and rental durations. With ZM Rentals, you can count on a smooth and adaptable journey throughout Auckland, making your trip as
                     convenient and enjoyable as possible.
                 </p>
                 <SecondaryButton

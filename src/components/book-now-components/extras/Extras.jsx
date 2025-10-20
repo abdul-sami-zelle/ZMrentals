@@ -101,7 +101,7 @@ const Extras = ({ extras }) => {
           </div>
           <div className='extra-item-and-price-container'>
             <h3>{item.name}</h3>
-            <p>NZ$ {item.rate}</p>
+            <p>NZ$ {checkIsZero(item.rate)}</p>
           </div>
         </div>
       ))}

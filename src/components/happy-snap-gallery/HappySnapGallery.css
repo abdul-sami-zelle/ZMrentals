@@ -22,6 +22,15 @@
     border-top-right-radius: 25px;
 }
 
+.happy-snap-single-image,
+.mobile-happy-snap-gallery-image-one,
+.mobile-happy-snap-gallery-image-two,
+.desktop-snap-gallery-main-image,
+.desktop-snap-gallery-image-one,
+.desktop-snap-gallery-image-two {
+  pointer-events: none;
+}
+
 .happy-snap-description-main-container {
     display: flex;
     flex-direction: column;
