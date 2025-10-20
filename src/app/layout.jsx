@@ -9,6 +9,7 @@ import WhatsappButton from '../global-components/WhatsappButton/WhatsappButton'
 import StripeProvider from '../context/stripeProvider/stripeProvider'
 import { UserDashboardProvider } from "@/context/dashContext/dashContext";
 import { ManageBookingProvider } from '@/context/manageBooking/manageBooking'
+import Navbar from "@/global-components/navbar/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,28 +41,16 @@ export default function RootLayout({ children }) {
 
       <body 
         suppressHydrationWarning 
-        // style={
-        //   {
-        //     display: 'flex', 
-        //     flexDirection: 'column', 
-        //     // height: '100%',
-        //     // minHeight: '100vh', 
-        //     // backgroundColor: '#FFFFFF' ,
-        //     backgroundColor: 'orange'
-        //   }
-        // } 
       >
         <SearchVehicleProvider>
           <BookingProvider>
             <StripeProvider>
               <UserDashboardProvider>
                 <ManageBookingProvider>
-
                 <Header />
                 <main className="page-content">
                   {children}
                 </main>
-                {/* {children} */}
                 <Footer />
                 <WhatsappButton />
                 </ManageBookingProvider>

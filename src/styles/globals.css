@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -18,7 +18,7 @@
   --header-bg: #F7F7F7;
 
 
-  
+
 
   /* Mobile Heading Sizes */
   --font-mobile-heading-xl: 2.5rem;
@@ -36,7 +36,7 @@
   --font-body-md: 0.875rem;
   --font-body-sm: 0.675rem;
 
-  
+
 
   /* Line Heights*/
   --line-height-heading: 1.2;
@@ -89,9 +89,10 @@
     --foreground: #ededed;
   }
 } */
- html, body {
-  height: 100%;        /* Makes them stretch to the viewport height */
-  min-height: 100%;    /* Ensures at least full-screen height */
+html,
+body {
+  height: 100%;
+  min-height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
@@ -107,9 +108,12 @@ body {
 }
 
 .page-content {
-  flex: 1;                 
-  display: flex;           /* optional: allows inner flex layouts */
-  flex-direction: column;  /* keeps children vertical */
+  flex: 1;
+  display: flex;
+  /* height: calc(100vh - 63px); */
+  /* optional: allows inner flex layouts */
+  flex-direction: column;
+  /* keeps children vertical */
 }
 
 .section-main-heading {
@@ -133,11 +137,28 @@ body {
 }
 
 
+button:focus-visible,
+div:focus-visible,
+p:focus-visible,
+span:focus-visible,
+h1:focus-visible,
+h2:focus-visible,
+h3:focus-visible,
+h4:focus-visible,
+h5:focus-visible,
+h6:focus-visible,
+input:focus-visible {
+  outline: 2px solid #961502;
+  outline-offset: 1px;
+}
+
+
 @media only screen and (max-width: 480px) {
   .section-main-heading {
     font-size: var(--font-heading-md);
     /* padding: 0 16px; */
   }
+
   .global-content-style {
     font-size: var(--font-body-16);
     line-height: var(--line-height-body);

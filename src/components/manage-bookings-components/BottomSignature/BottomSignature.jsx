@@ -3,7 +3,7 @@ import './BottomSignature.css'
 import SignaturePad from 'react-signature-pad-wrapper';
 import { url } from '@/utils/services';
 
-const BottomSignature = ({ editBookingPayload, setEditBookingPayload, setCustomerSignature, isEditabel }) => {
+const BottomSignature = ({ editBookingPayload, setEditBookingPayload, setCustomerSignature, isEditabel, setBottomModal }) => {
   const sigPadRef = useRef(null);
 
   const handleClear = () => {
@@ -11,8 +11,13 @@ const BottomSignature = ({ editBookingPayload, setEditBookingPayload, setCustome
   };
 
   const handleSave = () => {
-    if (!sigPadRef.current.isEmpty()) {
-      const dataURL = sigPadRef.current.toDataURL("image/png");
+    const sigPad = sigPadRef.current;
+    if (!sigPad) {
+      setBottomModal(false)
+      // return;
+    }
+    if (!sigPad.isEmpty()) {
+      const dataURL = sigPad.toDataURL("image/png");
 
       // Convert Base64 → Blob
       const byteString = atob(dataURL.split(",")[1]);
@@ -31,6 +36,7 @@ const BottomSignature = ({ editBookingPayload, setEditBookingPayload, setCustome
 
       setCustomerSignature(file)
     }
+    setBottomModal(false)
   };
 
   const handleUpload = (e) => {
@@ -53,8 +59,9 @@ const BottomSignature = ({ editBookingPayload, setEditBookingPayload, setCustome
 
   return (
     <div className='mobile-signature-section'>
-      <div className={`mobile-signature-modal-inner `} style={{opacity: isEditabel.signatureInfo ? 1 : 0.4}} >
+      <div className={`mobile-signature-modal-inner `} style={{ opacity: isEditabel.signatureInfo ? 1 : 0.4 }} >
         {editBookingPayload?.signature?.signature_image !== '' ? (
+
           <img
             src={
               editBookingPayload?.signature?.signature_image instanceof File
@@ -63,6 +70,7 @@ const BottomSignature = ({ editBookingPayload, setEditBookingPayload, setCustome
             }
             alt='img'
           />
+
         ) : (
           <div className='mobile-signature-modal-pad'>
 
@@ -74,8 +82,8 @@ const BottomSignature = ({ editBookingPayload, setEditBookingPayload, setCustome
               style={{
                 border: "1px solid #ccc",
                 width: "100%", // responsive
-                height: 550,
-                backgroundColor: "#d7d7d7",
+                height: "100%",
+                backgroundColor: "#eee",
               }}
             />
           </div>

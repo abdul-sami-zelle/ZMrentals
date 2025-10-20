@@ -154,6 +154,12 @@
     color: #FFF;
 }
 
+@media only screen and (min-width: 1024px) and (max-width: 1060px) {
+    .dropdown-option-select-head > p {
+        font-size: 12px;
+    }
+}
+
 
 @media only screen and (max-width: 767px) {
     .dropdown-placeholder>p:nth-child(1) {

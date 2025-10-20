@@ -42,13 +42,14 @@ const MyBookings = () => {
   return (
     <div className='my-bookings-main-container'>
       {bookingTable.length > 0 ? (
+        <>
         <div className='user-bookings-preview-table'>
           <table className='booking-table-main-container'>
             <thead>
               <th>Booking Id</th>
               <th>Name</th>
-              <th>Vehicle Name</th>
-              <th>Pick-Up Date</th>
+              <th className='hide-on-mobile'>Vehicle Name</th>
+              <th className='hide-on-mobile'>Pick-Up Date</th>
               <th>Drop-Off Date</th>
               <th>Status</th>
             </thead>
@@ -57,8 +58,8 @@ const MyBookings = () => {
                 <tbody>
                   <td>{item.booking_id}</td>
                   <td>{item?.Customer?.first_name + ' ' + item.Customer?.last_name}</td>
-                  <td>{item.Car.name}</td>
-                  <td>{formatDate(item.pickup_time)}</td>
+                  <td className='hide-on-mobile'>{item.Car.name}</td>
+                  <td className='hide-on-mobile'>{formatDate(item.pickup_time)}</td>
                   <td>{formatDate(item.drop_time)}</td>
                   <td>{item.status}</td>
                 </tbody>
@@ -66,6 +67,41 @@ const MyBookings = () => {
             })}
           </table>
         </div>
+
+        <div className='mobile-booking-detials-main-contianer'>
+          {bookingTable?.map((item) => (
+            <div className='single-booking-details'>
+
+              <div className='single-booking-details-head'>
+                <span>
+                  <p>Booking id:</p>
+                  <h3>{item.booking_id}</h3>
+                </span>
+
+                <button>{item.status}</button>
+              </div>
+
+              <div className='single-booking-hirer-and-vehicle-name'>
+                <h3>{item?.Customer?.first_name + ' ' + item.Customer?.last_name}</h3>
+                <p>{item.Car.name}</p>
+              </div>
+
+              <div className='single-booking-pick-and-drop-contianer'>
+                <span>
+                  <p>Pick-Up Date</p>
+                  <h3>{formatDate(item.pickup_time)}</h3>
+                </span>
+
+                <span>
+                  <p>Drop-Off Date</p>
+                  <h3>{formatDate(item.pickup_time)}</h3>
+                </span>
+              </div>
+
+            </div>
+          ))}
+        </div>
+        </>
       ) : (
         <div className='add-booking-button-contianer'>
           <Link href={'/vehicles'}>Add Booking Now</Link>

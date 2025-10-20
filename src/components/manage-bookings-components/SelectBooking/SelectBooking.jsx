@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import './SelectBooking.css'
 import { url } from '@/utils/services';
 import axios from 'axios';
+import MainLoader from '@/loaders/MainLoader/MainLoader';
 
 const SelectBooking = ({ manageBookingSteper, setManageBookingSteper, imageChaneg }) => {
+    const [loading, setLoading] = useState(false);
     const [bookingPayload, setBookingPayload] = useState({
         booking_id: '',
         email: ''
@@ -73,6 +75,7 @@ const SelectBooking = ({ manageBookingSteper, setManageBookingSteper, imageChane
         }
 
         const api = `${url}/booking/verify-booking`
+        setLoading(true)
         try {
             const response = await axios.post(api, bookingPayload);
             if (response.status === 200) {
@@ -80,11 +83,18 @@ const SelectBooking = ({ manageBookingSteper, setManageBookingSteper, imageChane
                     booking_id: bookingPayload?.booking_id,
                     token: response.data.token
                 }
+                if(response.status === 200) {
+                    setLoading(false)
+                }
                 sessionStorage.setItem('bookingDetails', JSON.stringify(bookingDetails))
                 setManageBookingSteper(manageBookingSteper + 1)
+                
             }
         } catch (error) {
+            setLoading(false)
             console.error("UnExpected Server Error", error);
+        } finally {
+            setLoading(false)
         }
 
         imageChaneg()
@@ -109,6 +119,7 @@ const SelectBooking = ({ manageBookingSteper, setManageBookingSteper, imageChane
 
     return (
         <div className='select-booking-main-contianer'>
+            {loading && <MainLoader />}
             <div className='select-booking-heaing-contianer'>
                 <h3>Manage Booking</h3>
                 <p>Manage Your Booking</p>

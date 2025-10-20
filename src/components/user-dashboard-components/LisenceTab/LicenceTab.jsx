@@ -143,7 +143,7 @@ const LisenceTab = ({ userDetails }) => {
               <input type='text' placeholder='YY-MM-DD' name='dob' value={licenceDetails.dob} onChange={handleSetLicenceValues} />
             </label>
           </div>
-          <div className='driver-licence-dual-inputs'>
+          <div className='licence-number-and-expiry-container'>
             <label>
               Licence number
               <input type='text' name='license_no' value={licenceDetails.license_no} onChange={handleSetLicenceValues} />

@@ -34,7 +34,7 @@ const HappySnapGallery = () => {
                       width={'157px'}
                       height={'44px'}
                       secondaryBgColor={'transparent'}
-                      secondaryBorder={'2px solid var(--primary-color)'}
+                      secondaryBorder={'2px solid var(--primary-color !important)'}
                       textColor={'var(--primary-color)'}
                       fontSize={'var(--font-body-lg)'}
                       lineHeight={'var(--line-height-body)'}

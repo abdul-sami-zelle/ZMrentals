@@ -135,13 +135,34 @@ const Navbar = () => {
   }, [currentPath])
 
 
+  const [navSticky, setNavSticky] = useState(false);
+    useEffect(() => {
+  
+      const handleScroll = () => {
+        const scrollPosition = window.scrollY;
+  
+        if (scrollPosition > 90) {
+          setNavSticky(true); // hide
+        } else if (scrollPosition < 60) {
+          setNavSticky(false); // show again when back up
+        }
+      };
+  
+  
+  
+      document.addEventListener('scroll', handleScroll);
+  
+      return () => { document.removeEventListener('scroll', handleScroll) }
+    }, [])
+
+
 
 
 
 
   return (
     <>
-      <div className='navbar-main-container'>
+      <div className={`navbar-main-container ${navSticky ? 'fix-nav-contianer' : ''}`}>
         <Link href={'/'}>
           <Image src={'/assets/logos/ZM-Rentals-Horizontal-logo.png'} alt="Logo" width={200} height={50} className="navbar-logo" />
         </Link>
@@ -225,11 +246,6 @@ const Navbar = () => {
               Login
             </Link>
 
-            {/* <span>
-              <FaRegCheckCircle size={20} color='var(--color-white)' />
-              Check-in
-            </span> */}
-
             <Link href={'/manage-booking'} onClick={() => setOpenMenu(false)}>
               <FaRegCheckCircle size={20} color='var(--color-white)' />
               Manage booking
@@ -237,16 +253,7 @@ const Navbar = () => {
           </div>
 
           <div className='mobile-menu-other-options-bottom'>
-            {/* <Link href="tel:+64221708848">
-              <MdOutlinePhoneIphone size={20} color='var(--color-white)' />
-              <strong>NZ</strong> +64221708848
-              <MdOutlineArrowDropDown size={15} color='var(--color-white)' />
-            </Link>
-
-            <span>
-              <IoMailOutline size={20} color='var(--color-white)' />
-              Email us
-            </span> */}
+            
             <a href="tel:+64221708848" className="contact-link">
               <MdOutlinePhoneIphone size={20} color='var(--color-white)' />
               <strong>NZ</strong> +64221708848
@@ -266,10 +273,9 @@ const Navbar = () => {
       {/* {
         currentIndex !== null && navData.find((item) => item.id === currentIndex)?.dropdown && ( */}
 
-      <div
+      {/* <div
         className={`nav-drop-down-main-container ${currentIndex !== null && navData.find((item) => item.id === currentIndex)?.dropdown ? 'show-drop-down' : ''} `}
         onMouseEnter={() => setCurrentIndex(currentIndex)}
-        // Close the dropdown when the cursor leaves
         onMouseLeave={() => setCurrentIndex(null)}
       >
         {
@@ -287,7 +293,7 @@ const Navbar = () => {
             </div>
           })
         }
-      </div>
+      </div> */}
       {/* )
       } */}
 

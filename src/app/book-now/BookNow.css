@@ -76,6 +76,7 @@
 .booking-tabs-numbers.booking-selected-tab {
     font-weight: var(--font-weight-medium);
     color: var(--color-white);
+    -webkit-text-fill-color: var(--color-white);
     background-color: var(--secondary-color);
     width: 36px;
     height: 36px;
@@ -96,6 +97,7 @@
     border-radius: 25px;
     background-color: rgba(255, 139, 64, 1);
     color: var(--color-white);
+    -webkit-text-fill-color: var(--color-white);
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
@@ -123,6 +125,7 @@
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     color: var(--primary-color);
+    -webkit-text-fill-color:var(--primary-color);
 }
 
 .booking-summary-details-container {
@@ -161,6 +164,7 @@
 
 .pick-up-section > h3:nth-child(2) {
     color: red;
+    -webkit-text-fill-color: red;
 }
 
 .pick-up-section > p {
@@ -182,6 +186,7 @@
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
     color: var(--primary-color);
+    -webkit-text-fill-color: var(--primary-color);
     cursor: pointer;
 }
 
@@ -202,6 +207,7 @@
 
 .drop-off-section > h3:nth-child(2) {
     color: green;
+    -webkit-text-fill-color: green;
 }
 
 .drop-off-section > p {
@@ -250,6 +256,7 @@
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     color: var(--primary-color);
+    -webkit-text-fill-color: var(--primary-color);
 }
 
 .vehicle-details > p {
@@ -261,6 +268,7 @@
 
 .vehicle-details > p:nth-child(4) {
     color: var(--primary-color);
+    -webkit-text-fill-color: var(--primary-color);
     opacity: 1;
     cursor: pointer;
 }
@@ -270,6 +278,7 @@
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     color: var(--secondary-color);
+    -webkit-text-fill-color: var(--primary-color);
 }
 
 .vehicle-image-container {
@@ -313,6 +322,7 @@
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     color: var(--secondary-color);
+    -webkit-text-fill-color: var(--primary-color);
 }
 
 .booking-price-que {
@@ -333,6 +343,7 @@
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-heading);
     color: var(--primary-color);
+    -webkit-text-fill-color: var(--primary-color);
 }
 
 .grand-total-section > h3 {
@@ -340,6 +351,7 @@
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-heading);
     color: var(--secondary-color);
+    -webkit-text-fill-color: var(--secondary-color);
 }
 
 .queries-section {
@@ -362,6 +374,7 @@
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     color: var(--primary-color);
+    -webkit-text-fill-color: var(--primary-color);
 }
 
 .close-on-mobile-view {

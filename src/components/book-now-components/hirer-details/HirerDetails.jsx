@@ -350,32 +350,6 @@ const HirerDetails = () => {
     setFilterLivingCountry(countryList)
   }, [countryList, countryCode]);
 
-
-  // const handleSearchCountryQuery = (query) => {
-  //   setQuery(query);
-
-  //   if (!query) {
-  //     // if input is empty -> reset to full list
-  //     setFilteredCountries(countryList);
-  //     return;
-  //   }
-
-  //   const lowerCaseQuery = query.toLowerCase();
-
-  //   const result = countryList.filter(
-  //     (item) =>
-  //       item.country.toLowerCase().startsWith(lowerCaseQuery) ||
-  //       item.code.toLowerCase().startsWith(lowerCaseQuery)
-  //   );
-
-  //   setFilteredCountries(result);
-  // };
-
-  // const handleSelectCountryWithCode = (item) => {
-  //   setSelectedCountryDetails(item);
-  //   setShowCountryCodeList(false)
-  // }
-
   const options = filterLivingCountry.map((item) => ({
     value: item.country,
     label: item.country,
@@ -383,8 +357,21 @@ const HirerDetails = () => {
 
   const [menuOpen, setMenuOpen] = useState(false)
 
-  
+  // track if user actually confirmed selection
+  const [isConfirmedSelection, setIsConfirmedSelection] = useState(false);
 
+  const handleChange = (selectedOption, actionMeta) => {
+    if (actionMeta.action === "select-option") {
+      // only trigger when user clicks or presses Enter/Space
+      setIsConfirmedSelection(true);
+      handleSelectLivingCountry(selectedOption);
+    }
+  };
+
+  const handleBlur = () => {
+    setMenuOpen(false);
+    setIsConfirmedSelection(false);
+  };
 
   const livingCountryRef = useRef();
   const driverAgeRef = useRef();
@@ -396,10 +383,8 @@ const HirerDetails = () => {
   useOutsideClick(foundUsRef, () => setFindUs(false))
   useOutsideClick(countryCodeRef, () => setShowCountryCodeList(false))
 
-  // const countryIndex = useDropdownNavigationWithSearch(livingCountryRef, parentCountryShow, 'living-country-item')
   const ageIndex = useDropdownNavigation(driverAgeRef, driverAgeShow, 'hirer-age-list-item')
   const foundUsIndex = useDropdownNavigation(foundUsRef, findUs, 'living-country-item')
-  // const countryCodeIndex = useDropdownNavigation(countryCodeRef, showCountryCodeList, 'country-code-inner-item')
 
   return (
     <div className='hirer-details-main-container'>
@@ -435,16 +420,35 @@ const HirerDetails = () => {
           <Select
 
             options={options}
-            value={options.find((opt) => opt.value === bookingPayload.user.country) || null}
-            onChange={(selected) => handleSelectLivingCountry(selected)}
+            // value={options.find((opt) => opt.value === bookingPayload.user.country) || null}
+            value={
+              isConfirmedSelection
+                ? options.find(
+                  (opt) => opt.value === bookingPayload.user.country
+                ) || null
+                : bookingPayload.user.country
+                  ? options.find(
+                    (opt) => opt.value === bookingPayload.user.country
+                  )
+                  : null
+            }
+            // onChange={(selected) => handleSelectLivingCountry(selected)}
+            onChange={handleChange}
             styles={customStyles}
             isClearable={false}
+            defaultMenuIsOpen={false}
+            autoFocus={false}
+            backspaceRemovesValue={false}
+            tabSelectsValue={false} // prevent selecting on tab press
+            openMenuOnFocus={true}
+            blurInputOnSelect={false}
             isSearchable
             className="my-country-input"
             placeholder="Which country do you live in?"
             menuIsOpen={menuOpen}               // force open/close
             onFocus={() => setMenuOpen(true)}   // open on focus (Tab)
-            onBlur={() => setMenuOpen(false)}
+            // onBlur={() => setMenuOpen(false)}
+            onBlur={handleBlur}
             filterOption={(option, inputValue) =>
               option.label.toLowerCase().startsWith(inputValue.toLowerCase())
             }
@@ -527,7 +531,7 @@ const HirerDetails = () => {
           />
         </label>
 
-        <CountryCodeDropdown 
+        <CountryCodeDropdown
           countryList={countryList}
           selectedCountryDetails={selectedCountryDetails}
           bookingPayload={bookingPayload}

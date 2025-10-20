@@ -122,9 +122,6 @@ export default function Home() {
     
   }, []);
 
-  // const {getCurrentFormattedHourInAuckland} = useBookingContext();
-  // useEffect(() => {getCurrentFormattedHourInAuckland()}, [])
-
 
 
   return (
@@ -182,6 +179,7 @@ export default function Home() {
         sectionImage={'/assets/home/home_Smooth_Pick-Up_and_Drop-Off_image.jpg'}
         flexDirection={'row'}
         buttonText={'Find Out More'}
+        navigateUrl='/booking-info'
       />
 
       <FeedbackGallery />

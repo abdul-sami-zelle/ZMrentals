@@ -152,7 +152,7 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
               </span>
 
 
-              <p className='insurance-bottom-text'>{parseInt(item.rate) === 0 ? 'Free' : `NZ$ ${parseInt(item.rate)}/Day`}</p>
+              <p className='insurance-bottom-text'>{parseInt(item.rate) === 0 ? 'Free' : `NZ$ ${parseInt(item.rate)}/day`}</p>
 
             </div>
           ))}

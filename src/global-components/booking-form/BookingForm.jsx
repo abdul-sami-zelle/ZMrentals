@@ -72,7 +72,7 @@ const BookingForm = (
     }, []);
 
     useEffect(() => {
-        if(searchVehiclePayload.pickup_location === null && searchVehiclePayload.drop_location === null) {
+        if(locations.length > 0 && searchVehiclePayload.pickup_location === null && searchVehiclePayload.drop_location === null) {
             const defaultLocationObject = locations?.find((item) => item.id === 5);
             setPickupCity(defaultLocationObject?.name)
             setDropupCity(defaultLocationObject?.name)
@@ -83,6 +83,7 @@ const BookingForm = (
             }))
         }
     }, [locations])
+
 
     const generateTimeList = () => {
         const times = [];

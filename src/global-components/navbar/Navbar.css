@@ -6,8 +6,16 @@
     gap: 0;
     padding: 0 32px;
     position: relative;
+    top: 0;
+    z-index: 999999999999;
     background-color: var(--background);
     border-bottom: 1px solid var(--primary-color);
+}
+
+.navbar-main-container.fix-nav-contianer {
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .navbar {
@@ -309,14 +317,21 @@
 
 @media only screen and (min-width: 1024px) and (max-width: 1200px) {
     .navbar-list {
-        gap: 5px;
+        gap: 0px;
         padding: 0 10px;
+    }
+    .nav-login-and-manage {
+        gap: 0;
     }
 
     .navbar-item  {
         padding: 5px 10px;
-        font-size: 14px;
+        font-size: 12px;
 
+    }
+    .nav-login-item {
+        font-size: 12px;
+        padding: 5px 10px;
     }
 }
 

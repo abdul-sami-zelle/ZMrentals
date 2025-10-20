@@ -117,3 +117,18 @@
     border: 1px solid #afafaf;
     border-radius: 10px;
 }
+
+@media only screen and (max-width: 767px) {
+    .user-dash-car-and-total-booking-contianer {
+        flex-direction: column;
+    }
+    .user-dash-car-contianer {
+        width: 100%;
+    }
+    .user-dash-total-bookings-chart {
+        width: 100%;
+    }
+    .user-dashboard-booked-car-features-contianer {
+        gap: 10px;
+    }
+}

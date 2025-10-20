@@ -479,6 +479,7 @@ const UpdateBookingMobile = () => {
                         </div>
 
                     )}
+
                     {!loading && (
                         <div className='mobile-manage-booking-main-continainer'>
                             {stepersData?.map((item) => (
@@ -510,7 +511,7 @@ const UpdateBookingMobile = () => {
                             </span>
                         ) : bottomStepper === 3 ? (
                             <span className='modal-type-and-edit-button'>
-                                <h3>Insurace </h3>
+                                <h3>Insurance </h3>
                                 <button className={`edit-info-button ${isEditabel.insuranceInfo ? 'edit-insurance' : ''}`} onClick={() => allowEditSecion('insurance-info')}>Edit</button>
                             </span>
                         ) : bottomStepper === 4 ? (
@@ -613,7 +614,7 @@ const UpdateBookingMobile = () => {
                     
 
                     <span>
-                        <p style={{ fontSize: '15px', fontWeight: 400, color: '#000' }}>Grand Total</p>
+                        <p style={{ fontSize: '15px', fontWeight: 500, color: '#000' }}>Grand Total</p>
                         <div className='view-summary-and-grand-total'>
                             <p onClick={handleShowSummary}>View Summary</p>
                             <h3 style={{ fontSize: '15px', fontWeight: 500, color: '#000' }}>NZD {handleGrandTotal()}</h3>

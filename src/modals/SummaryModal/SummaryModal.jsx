@@ -74,8 +74,8 @@ const SummaryModal = ({ showModal, handleClose, vehicleData, editBookingPayload 
                         <h3>NZD {handleExtrasTotal()}</h3>
                     </span>
 
-                    <span style={{borderTop: '1px solid #afafaf'}}>
-                        <p style={{ fontSize: '15px', fontWeight: 400, color: '#000' }}>Grand Total</p>
+                    <span style={{borderTop: '1px solid #afafaf' , paddingTop: '15px'}}>
+                        <p style={{ fontSize: '15px', fontWeight: 500, color: '#000' }}>Grand Total</p>
                         <h3 style={{ fontSize: '15px', fontWeight: 500, color: '#000' }}>NZD {handleGrandTotal()}</h3>
 
                     </span>

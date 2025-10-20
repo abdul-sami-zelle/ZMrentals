@@ -30,13 +30,12 @@ const BottomDrivers = ({ editBookingPayload, setEditBookingPayload, setBottomMod
 
   const handleAddNewDriverObject = () => {
     setTempDriver((prev) => [...prev, addDriver])
+    setDriverEtidIndex(tempDriver.length - 1 + 1)
   }
 
   useEffect(() => {
     setTempDriver(editBookingPayload?.driverDetails)
   }, [editBookingPayload])
-
-  
 
   const handleDriverChange = (index, field, value) => {
     setTempDriver((prev) =>
@@ -109,13 +108,7 @@ const BottomDrivers = ({ editBookingPayload, setEditBookingPayload, setBottomMod
   const driverAgeList = ['21', '22', '23', '24', '25+']
   const [showDriverAgeList, setShowDriverAgeList] = useState(false);
 
-  const handleSelectDriverAge = (age) => {
-    setUpdatedDriver((prev) => ({
-      ...prev,
-      driver_age: age
-    }))
-    setShowDriverAgeList(false)
-  }
+  
 
   const [countryList, setCountryList] = useState([]);
   useEffect(() => {
@@ -151,13 +144,6 @@ const BottomDrivers = ({ editBookingPayload, setEditBookingPayload, setBottomMod
   const [showCountries, setShowCountries] = useState(false);
 
   const [showExpiry, setShowExpiry] = useState(false);
-
-  // const handleUpdateDriversInfo = () => {
-  //   setEditBookingPayload((prev) => ({
-  //     ...prev,
-  //     drivers: tempDriver
-  //   }))
-  // }
 
   const [licenceSide, setLicenceSide] = useState('front')
   const handleDivClick = (type, index) => {
@@ -214,209 +200,234 @@ const BottomDrivers = ({ editBookingPayload, setEditBookingPayload, setBottomMod
     setBottomModal(false)
   }
 
-  useEffect(() => { console.log("temp driver payload", tempDriver) })
 
   return (
     <div className='mobile-driver-edit-main-contianer'>
-      <div className='mobile-add-new-driver-contianer'>
+
+      <div className='mobile-add-new-driver-contianer' style={{ display: tempDriver.length > 0 ? 'flex' : 'none' }}>
         <button className='mobile-add-new-driver-button'>
           <FiPlus size={20} color='#000' onClick={handleAddNewDriverObject} />
         </button>
       </div>
+
       <div className='mobile-driver-update-container'>
-        {tempDriver && tempDriver?.map((item, index) => (
-          <div className='mobile-driver-list-item' >
-            <div className={`mobile-driver-list-item-head ${driverEditIndex === index ? 'remove-driver-item-radius' : ''}`} onClick={() => handleShowDriver(index)}>
-              <h3>{item.driver_name}</h3>
-              <IoMdArrowDropdown size={20} color='#000' />
-            </div>
-            <div className={`mobile-driver-edit-section ${driverEditIndex === index ? 'show-edit-driver-option' : ''}`}>
 
-              <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
-                <label>
-                  Driver Name
-                  <input type='text' readOnly={!isEditabel?.driverInfo} name={`driver_name`} value={item.driver_name} onChange={(e) => handleDriverChange(index, 'driver_name', e.target.value)} />
-                </label>
+        {tempDriver?.length > 0 ? (
 
-                <div ref={driverDobRef} className='mobile-driver-dob'>
-                  <p>Date of Birth</p>
-                  <div className={`mobile-driver-dob-head ${showDriverDob ? 'remove-item-radius' : ''}`} onClick={() => isEditabel.driverInfo ? setShowDriverDob(!showDriverDob) : null}>
-                    <h3>{formatISOToDDMMYYYYStrict(item.driver_dob)}</h3>
-                    <CiCalendarDate size={20} color='#000' />
-                  </div>
-                  <div className={`driver-dob-calender ${showDriverDob ? 'driver-dob-show' : ''}`}>
-                    <Calendar
-                      // onChange={handleDobChange}
-                      onChange={(date) => handleDobChange(index, date)}
-                      value={eighteenYearsAgo}
-                      view="month"
-                      next2Label={null}
-                      prev2Label={null}
-                      // defaultView="month" // ✅ Start at month view but allow switching
-                      // minDetail="decade" // ✅ Allow navigation up to decades
-                      // maxDetail="month" // ✅ Allow down to days
+          tempDriver && tempDriver?.map((item, index) => (
 
-                      formatShortWeekday={(locale, date) =>
-                        date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
-                      }
-                      // formatMonthYear={(locale, date) =>
-                      //     date.toLocaleDateString(locale, { month: 'long' }) // 👈 Only month
-                      // }
-                      minDate={new Date(today.getFullYear() - 100, today.getMonth(), today.getDate())}
-                      maxDate={eighteenYearsAgo}
-                    />
-                  </div>
-                </div>
+            <div className='mobile-driver-list-item' >
+
+              <div className={`mobile-driver-list-item-head ${driverEditIndex === index ? 'remove-driver-item-radius' : ''}`} onClick={() => handleShowDriver(index)}>
+                <h3>{item.driver_name}</h3>
+                <IoMdArrowDropdown size={20} color='#000' />
               </div>
 
-              <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
+              <div className={`mobile-driver-edit-section ${driverEditIndex === index ? 'show-edit-driver-option' : ''}`}>
 
-                <div ref={driverAgeRef} className='mobille-driver-age-contianer'>
-                  <p>Driver Age</p>
-                  <div className='mobile-driver-age-head' onClick={() => isEditabel.driverInfo ? setShowDriverAgeList(!showDriverAgeList) : null}>
-                    <h3>{item.driver_age ?? driverAge}</h3>
-                    <IoMdArrowDropdown size={20} color='#000' />
-                  </div>
-                  <div className={`mobile-driver-age-list-contianer ${showDriverAgeList ? 'show-mobile-driver-age-list' : ''}`}>
-                    {driverAgeList.map((item, index) => (
-                      <p key={index} className='driver-age-item' onClick={() => handleUpdateDriverAge(index, item)}>{item}</p>
-                    ))}
-                  </div>
-                </div>
+                <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
 
-                <div ref={licenceCountryRef} className='mobile-licence-country'>
-                  <p>Licence Issuing Country</p>
-                  <div className='mobile-licence-country-head' onClick={() => isEditabel.driverInfo ? setShowCountries(!showCountries) : null}>
-                    <h3>{item.license_country}</h3>
-                    <IoMdArrowDropdown size={20} color='#000' />
-                  </div>
+                  <label>
+                    Driver Name
+                    <input type='text' readOnly={!isEditabel?.driverInfo} name={`driver_name`} value={item.driver_name} onChange={(e) => handleDriverChange(index, 'driver_name', e.target.value)} />
+                  </label>
 
-                  <div className={`mobile-licence-country-body ${showCountries ? 'show-licence-country' : ''}`}>
-                    {countryList?.map((item, innerIndex) => (
-                      <p key={innerIndex} className={`licence-country-item`} onClick={() => handleLicenceCountry(index, item.country)}>{item.country}</p>
-                    ))}
-                  </div>
-                </div>
+                  <div ref={driverDobRef} className='mobile-driver-dob'>
+                    <p>Date of Birth</p>
 
-              </div>
-
-              <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
-
-                <label>
-                  Licence No
-                  <input type='text' readOnly={!isEditabel?.driverInfo} name='license_no' value={item.license_no} onChange={(e) => handleDriverChange(index, 'license_no', e.target.value)} />
-                </label>
-
-                <div ref={expiryDateRef} className='mobile-licence-expiry-date'>
-                  <p>Licence Expiry</p>
-                  <div className='mobile-licence-expiry-head' onClick={() => isEditabel.driverInfo ? setShowExpiry(!showExpiry) : null}>
-                    <h3>{formatISOToDDMMYYYYStrict(item?.license_expiry)}</h3>
-                    <IoMdArrowDropdown size={20} color='#000' />
-                  </div>
-
-                  <div className={`mobile-expiry-calender-contianer ${showExpiry ? 'show-mobile-licence-contianer' : ''}`}>
-                    <Calendar
-                      onChange={(date) => handleLicenceExpiry(index, date)}
-                      value={expiryYears}
-                      view="month"
-                      next2Label={null}
-                      prev2Label={null}
-                      formatShortWeekday={(locale, date) =>
-                        date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
-                      }
-                      minDate={expiryYears}
-                    />
-                  </div>
-                </div>
-
-              </div>
-
-              <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
-                <label style={{ width: '70%' }} >
-                  Address
-                  <input type='text' readOnly={!isEditabel?.driverInfo} name='address' value={item.address} onChange={(e) => handleDriverChange(index, 'address', e.target.value)} />
-                </label>
-
-                <label style={{ width: '30%' }} >
-                  Zip Code
-                  <input type='text' readOnly={!isEditabel?.driverInfo} name='zipcode' value={item.zipcode} onChange={(e) => handleDriverChange(index, 'zipcode', e.target.value)} />
-                </label>
-              </div>
-
-              <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
-                <label style={{ width: '100%' }} >
-                  City
-                  <input type='text' readOnly={!isEditabel?.driverInfo} name='city' value={item.city} onChange={(e) => handleDriverChange(index, 'city', e.target.value)} />
-                </label>
-
-                <label style={{ width: '100%' }}>
-                  State
-                  <input type='text' readOnly={!isEditabel?.driverInfo} name='state' value={item.state} onChange={(e) => handleDriverChange(index, 'state', e.target.value)} />
-                </label>
-
-                <label style={{ width: '100%' }}>
-                  Country
-                  <input type='text' readOnly={!isEditabel?.driverInfo} name='country' value={item.country} onChange={(e) => handleDriverChange(index, 'country', e.target.value)} />
-                </label>
-              </div>
-
-
-              <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
-                <label>
-                  Remarks
-                  <textarea name='remarks' readOnly={!isEditabel?.driverInfo} value={item.remarks} onChange={(e) => handleDriverChange(index, 'remarks', e.target.value)} />
-                </label>
-
-                <div className='licence-upload-contianer'>
-                  {item?.front_license_image === '' || item?.back_license_image === '' ? (
-                    // <div className='licence-upload-message'>
-                    item?.front_license_image === '' ? (
-                      <div className='licence-upload-message' onClick={(e) => isEditabel?.driverInfo ? handleDivClick('front', index) : null} >
-                        <p>Upload Licence Front</p>
-                      </div>
-                    ) : (
-                      <div className='licence-upload-message' onClick={(e) => isEditabel.driverInfo ? handleDivClick('back', index) : null}>
-                        <p>Upload Licence Back</p>
-                      </div>
-                    )
-
-                    // </div>
-                  ) : (
-                    <div className='licence-update-show-front-contianer'>
-                      <button className='licence-remove-icon' >
-                        <CgCloseO size={20} color='#000' style={{ cursor: 'pointer' }} onClick={() => isEditabel.driverInfo ? handleClearLicenceImages(index) : null} />
-                      </button>
-                      <img
-                        src={
-                          item.front_license_image instanceof File
-                            ? URL.createObjectURL(item.front_license_image) // 🧠 for new upload
-                            : url + item.front_license_image // 🌐 for existing image
-                        }
-                        alt="Front License"
-                      />
-                      {/* <img src={url + updatedDriver?.front_license_image} /> */}
+                    <div className={`mobile-driver-dob-head ${showDriverDob ? 'remove-item-radius' : ''}`} onClick={() => isEditabel.driverInfo ? setShowDriverDob(!showDriverDob) : null}>
+                      <h3>{formatISOToDDMMYYYYStrict(item.driver_dob)}</h3>
+                      <CiCalendarDate size={20} color='#000' />
                     </div>
-                  )}
 
-                  <input
-                    type="file"
-                    accept="image/*"
-                    ref={(el) => (fileInputRefs.current[index] = el)}
-                    style={{ display: "none" }}
-                    onChange={(event) => handleLicenceUpload(event, index)}
-                  />
+                    <div className={`driver-dob-calender ${showDriverDob ? 'driver-dob-show' : ''}`}>
+                      <Calendar
+                        onChange={(date) => handleDobChange(index, date)}
+                        value={eighteenYearsAgo}
+                        view="month"
+                        next2Label={null}
+                        prev2Label={null}
+
+                        formatShortWeekday={(locale, date) =>
+                          date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
+                        }
+                        minDate={new Date(today.getFullYear() - 100, today.getMonth(), today.getDate())}
+                        maxDate={eighteenYearsAgo}
+                      />
+                    </div>
+
+                  </div>
 
                 </div>
+
+                <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
+
+                  <div ref={driverAgeRef} className='mobille-driver-age-contianer'>
+                    <p>Driver Age</p>
+
+                    <div className='mobile-driver-age-head' onClick={() => isEditabel.driverInfo ? setShowDriverAgeList(!showDriverAgeList) : null}>
+                      <h3>{item.driver_age ?? driverAge}</h3>
+                      <IoMdArrowDropdown size={20} color='#000' />
+                    </div>
+
+                    <div className={`mobile-driver-age-list-contianer ${showDriverAgeList ? 'show-mobile-driver-age-list' : ''}`}>
+                      {driverAgeList.map((item, index) => (
+                        <p key={index} className='driver-age-item' onClick={() => handleUpdateDriverAge(index, item)}>{item}</p>
+                      ))}
+                    </div>
+
+                  </div>
+
+                  <div ref={licenceCountryRef} className='mobile-licence-country'>
+                    <p>Licence Issuing Country</p>
+
+                    <div className='mobile-licence-country-head' onClick={() => isEditabel.driverInfo ? setShowCountries(!showCountries) : null}>
+                      <h3>{item.license_country}</h3>
+                      <IoMdArrowDropdown size={20} color='#000' />
+                    </div>
+
+                    <div className={`mobile-licence-country-body ${showCountries ? 'show-licence-country' : ''}`}>
+                      {countryList?.map((item, innerIndex) => (
+                        <p key={innerIndex} className={`licence-country-item`} onClick={() => handleLicenceCountry(index, item.country)}>{item.country}</p>
+                      ))}
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
+
+                  <label>
+                    Licence No
+                    <input type='text' readOnly={!isEditabel?.driverInfo} name='license_no' value={item.license_no} onChange={(e) => handleDriverChange(index, 'license_no', e.target.value)} />
+                  </label>
+
+                  <div ref={expiryDateRef} className='mobile-licence-expiry-date'>
+                    <p>Licence Expiry</p>
+
+                    <div className='mobile-licence-expiry-head' onClick={() => isEditabel.driverInfo ? setShowExpiry(!showExpiry) : null}>
+                      <h3>{formatISOToDDMMYYYYStrict(item?.license_expiry)}</h3>
+                      <IoMdArrowDropdown size={20} color='#000' />
+                    </div>
+
+                    <div className={`mobile-expiry-calender-contianer ${showExpiry ? 'show-mobile-licence-contianer' : ''}`}>
+                      <Calendar
+                        onChange={(date) => handleLicenceExpiry(index, date)}
+                        value={expiryYears}
+                        view="month"
+                        next2Label={null}
+                        prev2Label={null}
+                        formatShortWeekday={(locale, date) =>
+                          date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 2)
+                        }
+                        minDate={expiryYears}
+                      />
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
+                  <label style={{ width: '70%' }} >
+                    Address
+                    <input type='text' readOnly={!isEditabel?.driverInfo} name='address' value={item.address} onChange={(e) => handleDriverChange(index, 'address', e.target.value)} />
+                  </label>
+
+                  <label style={{ width: '30%' }} >
+                    Zip Code
+                    <input type='text' readOnly={!isEditabel?.driverInfo} name='zipcode' value={item.zipcode} onChange={(e) => handleDriverChange(index, 'zipcode', e.target.value)} />
+                  </label>
+                </div>
+
+                <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
+                  <label style={{ width: '100%' }} >
+                    City
+                    <input type='text' readOnly={!isEditabel?.driverInfo} name='city' value={item.city} onChange={(e) => handleDriverChange(index, 'city', e.target.value)} />
+                  </label>
+
+                  <label style={{ width: '100%' }}>
+                    State
+                    <input type='text' readOnly={!isEditabel?.driverInfo} name='state' value={item.state} onChange={(e) => handleDriverChange(index, 'state', e.target.value)} />
+                  </label>
+
+                  <label style={{ width: '100%' }}>
+                    Country
+                    <input type='text' readOnly={!isEditabel?.driverInfo} name='country' value={item.country} onChange={(e) => handleDriverChange(index, 'country', e.target.value)} />
+                  </label>
+                </div>
+
+
+                <div className='mobile-driver-input-outer' style={{ opacity: isEditabel.driverInfo ? 1 : 0.4 }}>
+
+                  <label>
+                    Remarks
+                    <textarea name='remarks' readOnly={!isEditabel?.driverInfo} value={item.remarks} onChange={(e) => handleDriverChange(index, 'remarks', e.target.value)} />
+                  </label>
+
+                  <div className='licence-upload-contianer'>
+                    {item?.front_license_image === '' || item?.back_license_image === '' ? (
+                      // <div className='licence-upload-message'>
+                      item?.front_license_image === '' ? (
+                        <div className='licence-upload-message' onClick={(e) => isEditabel?.driverInfo ? handleDivClick('front', index) : null} >
+                          <p>Upload Licence Front</p>
+                        </div>
+                      ) : (
+                        <div className='licence-upload-message' onClick={(e) => isEditabel.driverInfo ? handleDivClick('back', index) : null}>
+                          <p>Upload Licence Back</p>
+                        </div>
+                      )
+
+                      // </div>
+                    ) : (
+                      <div className='licence-update-show-front-contianer'>
+                        <button className='licence-remove-icon' >
+                          <CgCloseO size={20} color='#000' style={{ cursor: 'pointer' }} onClick={() => isEditabel.driverInfo ? handleClearLicenceImages(index) : null} />
+                        </button>
+                        <img
+                          src={
+                            item.front_license_image instanceof File
+                              ? URL.createObjectURL(item.front_license_image) // 🧠 for new upload
+                              : url + item.front_license_image // 🌐 for existing image
+                          }
+                          alt="Front License"
+                        />
+                        {/* <img src={url + updatedDriver?.front_license_image} /> */}
+                      </div>
+                    )}
+
+                    <input
+                      type="file"
+                      accept="image/*"
+                      ref={(el) => (fileInputRefs.current[index] = el)}
+                      style={{ display: "none" }}
+                      onChange={(event) => handleLicenceUpload(event, index)}
+                    />
+
+                  </div>
+
+                </div>
+
               </div>
 
             </div>
+          ))
+        ) : (
+          <div className='expty-drivers-add-new-contianer'>
+            <button onClick={handleAddNewDriverObject}>
+              <FiPlus size={20} color='#FFF' />
+              Add New Driver
+            </button>
           </div>
-        ))}
+        )}
+
       </div>
 
       <div className='mobile-update-driver-contianer'>
         <button className={`mobile-update-driver-button`} style={{ opacity: isEditabel.driverInfo ? 1 : 0.4, cursor: isEditabel.driverInfo ? 'pointer' : 'not-allowed' }} disabled={!isEditabel.driverInfo} onClick={handleUpdateDriversInfo}>Update</button>
       </div>
+
     </div>
   )
 }

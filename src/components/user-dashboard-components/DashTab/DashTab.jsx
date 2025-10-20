@@ -208,13 +208,16 @@ const DashTab = () => {
                 {
                   dataKey: 'month',
                   scaleType: 'band',
+                  paddingInner: 0.2,   // spacing *between* bars
+                  paddingOuter: 0, 
                   tickPlacement: 'middle',
                   tickLabelPlacement: 'middle',
                 },
               ]}
               barGap="20%"
               height={310}
-              margin={{ left: 20, right: 20, top: 20, bottom: 30 }}
+              // margin={{ left: 20, right: 20, top: 20, bottom: 30 }}
+              margin={{ left: 0, right: 0, top: 20, bottom: 30 }}
               slotProps={{
                 legend: { hidden: true },
                 bar: {

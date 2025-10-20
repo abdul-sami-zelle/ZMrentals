@@ -53,6 +53,7 @@
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
   color: var(--primary-color);
+  -webkit-text-fill-color: var(--primary-color)
 }
 
 .auckland-visiting-point-details {

@@ -148,7 +148,7 @@ const AddressAndPhone = ({ userDetails }) => {
               </label>
             </div>
 
-            <div className='two-input-row'>
+            <div className='zip-and-city-contianer'>
               <label>
                 City/town
                 <input type='text' name='city' value={addressAndPhon.city} onChange={handleSetAddressAndPhoneValue} />

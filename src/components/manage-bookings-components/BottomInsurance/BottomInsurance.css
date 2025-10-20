@@ -1,4 +1,4 @@
-/* .insurace-update-options {
+.mobile-insurance-main-contianer {
     display: flex;
     flex-direction: column;
     align-items: start;
@@ -7,24 +7,24 @@
     height: 100%;
 }
 
-.insurace-update-options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+.insurace-update-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    height: auto;
-    column-gap: 15px;
-    row-gap: 15px;
 }
 
-.insurance-update-single-option {
+.insurace-update-button-container > button {
     display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: start;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    gap: 15px;
-    padding: 10px;
-    background-color: rgba(150, 21, 2, 0.1);
-    border: 1px solid rgba(150, 21, 2, 0.1);
-    cursor: pointer;
-} */
+    height: 42px;
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #FFF;
+    background-color: #961502;
+    border: 1px solid #961502;
+    border-radius: 5px;
+}

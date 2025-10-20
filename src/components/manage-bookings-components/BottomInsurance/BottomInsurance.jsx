@@ -3,10 +3,11 @@ import './BottomInsurance.css'
 import { url } from '../../../utils/services'
 import axios from 'axios';
 
-const BottomInsurance = ({ editBookingPayload, setEditBookingPayload, carId, isEditabel }) => {
+const BottomInsurance = ({ editBookingPayload, setEditBookingPayload, carId, isEditabel, setBottomModal }) => {
 
   const [vehicleData, setVehicleData] = useState({});
   const [selectedPackage, setSelectedPackage] = useState()
+  const [selectedInsuranceId, setSelectedInsuranceId] = useState(null)
 
   const handleGetCarWithId = async () => {
     const api = `${url}/cars/get/${editBookingPayload?.booking?.car_id}`;
@@ -28,13 +29,19 @@ const BottomInsurance = ({ editBookingPayload, setEditBookingPayload, carId, isE
 
   const handleInsuranceSelect = (item) => {
     setSelectedPackage(item.insurance_option_id)
+    setSelectedInsuranceId(item.id)
+    
+  }
+
+  const handleUpdateInsuranceId = () => {
     setEditBookingPayload((prev) => ({
       ...prev,
       booking: {
         ...prev.booking,
-        insurance_id: item.id
+        insurance_id: selectedInsuranceId
       }
     }))
+    setBottomModal(false)
   }
 
   return (
@@ -72,6 +79,10 @@ const BottomInsurance = ({ editBookingPayload, setEditBookingPayload, carId, isE
             </div>
           </div>
         ))}
+      </div>
+
+      <div className='insurace-update-button-container'>
+        <button onClick={handleUpdateInsuranceId}>Update Insurance</button>
       </div>
 
     </div>

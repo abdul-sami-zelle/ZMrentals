@@ -39,6 +39,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 100%;
     align-items: center;
     justify-content: center;
     min-height: 450px;
@@ -170,6 +171,7 @@
 @media only screen and (max-width: 480px) {
     .login-signup-main-contianer {
         min-height: auto;
+        padding: 20px 10px;
     }
     .signup-login-max-width {
         display: none;

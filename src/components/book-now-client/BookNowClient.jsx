@@ -131,64 +131,6 @@ const BookNowClient = () => {
     }
   }, [step, searchParam, router]);
 
-
-  // const isUserInfoFilled = () => {
-  //   let newErrors = {};
-
-  //   // loop all keys of user payload
-  //   Object.entries(bookingPayload.user).forEach(([key, value]) => {
-  //     if (key === "local_phone") return; // skip validation for local_phone
-
-  //     if (!value || value.trim() === "") {
-  //       newErrors[key] = "Required";
-  //     }
-  //   });
-
-  //   // merge new errors with existing ones
-  //   setErrors((prev) => ({ ...prev, ...newErrors }));
-
-  //   // 1. Check if all fields (except local_phone) are filled
-  //   const allFilled = Object.keys(newErrors).length === 0;
-
-  //   // 2. Check if there are no format errors (email, phone, etc.)
-  //   const noErrors = Object.keys(errors).length === 0 && allFilled;
-  //   console.log("formate error", allFilled);
-  //   console.log("input error", noErrors);
-
-  //   return allFilled && noErrors;
-  // };
-
-  // const isUserInfoFilled = () => {
-  //   const newErrors = {};
-
-  //   // Loop all keys of user payload
-  //   Object.entries(bookingPayload.user).forEach(([key, value]) => {
-  //     if (key === "local_phone") return; // skip validation for local_phone
-
-  //     if (!value || value.trim() === "") {
-  //       newErrors[key] = "Required";
-  //     }
-  //   });
-
-  //   // 1️⃣ Set errors for UI display
-  //   setErrors((prev) => ({ ...prev, ...newErrors }));
-
-  //   // 2️⃣ Check if all fields are filled (except local_phone)
-  //   const allFilled = Object.keys(newErrors).length === 0;
-
-  //   // 3️⃣ Directly compute if there are *any* previous format errors
-  //   const hasFormatErrors = Object.values(errors).some((msg) => msg && msg !== "");
-
-  //   // 4️⃣ Return validation result
-  //   const result = allFilled && !hasFormatErrors;
-
-  //   console.log("All filled:", allFilled);
-  //   console.log("Has format errors:", hasFormatErrors);
-  //   console.log("Result:", result);
-
-  //   return result;
-  // };
-
   const isUserInfoFilled = () => {
     const user = bookingPayload?.user || {};
     const newErrors = {};
@@ -238,12 +180,6 @@ const BookNowClient = () => {
     para: '',
     link: ''
   })
-
-  // useEffect(() => {
-  //    const userId = localStorage.getItem('userId');
-
-  //   console.log("user id", userId);
-  // }, [step])
 
   const handleCompleteBooking = async () => {
     const api = `https://zm.skyhub.pk/booking/add-booking`;
@@ -815,7 +751,6 @@ const BookNowClient = () => {
     setModalType(type)
     setEmailModal(true);
   }
-
 
   const getDiscountAmount = (price, discountPercent) => {
     const numPrice = parseFloat(price);

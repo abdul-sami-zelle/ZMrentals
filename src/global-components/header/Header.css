@@ -6,7 +6,7 @@
     width: 100%;
     height: auto;
     gap: 0;
-    position: sticky;
+    position: sticky !important;
     top: 0;
     z-index: 999999;
     background-color: #FFFFFF;

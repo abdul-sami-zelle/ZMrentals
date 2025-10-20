@@ -14,6 +14,7 @@ const Header = () => {
   const pathname = usePathname()
   const [currentIndex, setCurrentIndex] = useState(0);
   const dynamicHeading = [0, 1, 2]
+
   useEffect(() => {
     const intervelId = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % dynamicHeading.length)
