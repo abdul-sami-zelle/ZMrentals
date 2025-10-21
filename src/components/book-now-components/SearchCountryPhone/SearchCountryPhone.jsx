@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
+import { useOutsideClick } from "@/utils/DetectClickOutside";
 
 const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedCountryDetails, errors, bookingPayload, handleHirerDetailsAdd }) => {
     const [showCountryCodeList, setShowCountryCodeList] = useState(false);
@@ -33,7 +34,47 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
     };
 
     // 🎹 Keyboard navigation inside dropdown
+    // const handleKeyDown = (e) => {
+    //     if (!showCountryCodeList) return;
+
+    //     if (e.key === "ArrowDown") {
+    //         e.preventDefault();
+    //         setActiveIndex((prev) =>
+    //             prev < filteredCountries.length - 1 ? prev + 1 : 0
+    //         );
+    //     } else if (e.key === "ArrowUp") {
+    //         e.preventDefault();
+    //         setActiveIndex((prev) =>
+    //             prev > 0 ? prev - 1 : filteredCountries.length - 1
+    //         );
+    //     } else if (e.key === "Enter") {
+    //         e.preventDefault();
+    //         if (activeIndex >= 0) handleSelectCountry(filteredCountries[activeIndex]);
+    //     } else if (e.key === "Escape") {
+    //         e.preventDefault();
+    //         setShowCountryCodeList(false);
+    //     }
+    // };
+
+
     const handleKeyDown = (e) => {
+        // Handle Tab navigation manually
+        if (e.key === "Tab") {
+            e.preventDefault();
+
+            // Only close dropdown if it's open
+            if (showCountryCodeList) {
+                setShowCountryCodeList(false);
+            }
+
+            // Delay focus change to ensure dropdown unmount completes
+            setTimeout(() => {
+                phoneInputRef.current?.focus();
+            }, 100); // <-- 100ms gives React time to re-render safely
+            return;
+        }
+
+        // Normal keyboard navigation
         if (!showCountryCodeList) return;
 
         if (e.key === "ArrowDown") {
@@ -114,16 +155,16 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
         }
     };
 
+    useOutsideClick(countryCodeRef, () => setShowCountryCodeList(false))
+
+    
+
     return (
         <label
-            
             className="width-full-on-phone"
             style={{
                 border: errors?.phone ? "1px solid red" : "1px solid transparent",
             }}
-            // onFocus={handleLabelFocus}
-            // onBlur={handleLabelBlur}
-            // onKeyDown={handleKeyDown}
         >
             Phone Number
             <div className="hirer-phone-with-country-code" >
@@ -131,7 +172,11 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
                     ref={countryCodeRef}
                     tabIndex={0}
                     className="country-code-dropdown"
-                    onClick={() => setShowCountryCodeList((prev) => !prev)}
+                    // onClick={() => setShowCountryCodeList((prev) => !prev)}
+                    onMouseDown={(e) => {
+                        e.preventDefault(); // prevent losing focus
+                        setShowCountryCodeList((prev) => !prev);
+                    }}
                     onFocus={handleLabelFocus}
                     // onBlur={handleLabelBlur}
                     onKeyDown={handleKeyDown}
@@ -151,7 +196,7 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
                     placeholder="Enter phone"
                     tabIndex={0}
                     style={{ flex: 1 }}
-                    // onFocus={() => setShowCountryCodeList(false)}
+                // onFocus={() => setShowCountryCodeList(false)}
                 />
             </div>
 
@@ -173,7 +218,7 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
                             <input
                                 ref={searchRef}
                                 type="text"
-                                placeholder="search country"
+                                placeholder="Search Country"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
                                 onKeyDown={handleSearchKeyDown}

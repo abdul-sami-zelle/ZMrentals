@@ -383,8 +383,86 @@ const HirerDetails = () => {
   useOutsideClick(foundUsRef, () => setFindUs(false))
   useOutsideClick(countryCodeRef, () => setShowCountryCodeList(false))
 
-  const ageIndex = useDropdownNavigation(driverAgeRef, driverAgeShow, 'hirer-age-list-item')
+  // const ageIndex = useDropdownNavigation(driverAgeRef, driverAgeShow, 'hirer-age-list-item')
   const foundUsIndex = useDropdownNavigation(foundUsRef, findUs, 'living-country-item')
+
+  // Age Select
+
+  const [open, setOpen] = useState(false);
+  const [highlightIndex, setHighlightIndex] = useState(-1);
+  const dropdownRef = useRef(null);
+  const listRef = useRef(null);
+
+  const selectedAge = bookingPayload.user.driver_age || "Please Select";
+
+  // close dropdown when clicked outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+        setHighlightIndex(-1);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // handle key controls
+  const handleKeyDown = (e) => {
+    if (e.key === "Tab") {
+      // Tab behavior: open if not open, close and move if open
+      if (!open) {
+        setOpen(true);
+        e.preventDefault(); // stay on element, open dropdown
+      } else {
+        setOpen(false);
+        setHighlightIndex(-1);
+      }
+    }
+
+    if ((e.key === "Enter" || e.key === " ") && !open) {
+      e.preventDefault();
+      setOpen(true);
+      return;
+    }
+
+    if ((e.key === "Enter" || e.key === " ") && open) {
+      e.preventDefault();
+      if (highlightIndex >= 0) {
+        const selected = driverAgeList[highlightIndex];
+        handleSellectDriverAge(selected);
+      }
+      setOpen(false);
+      setHighlightIndex(-1);
+    }
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setOpen(true);
+      setHighlightIndex((prev) =>
+        prev < driverAgeList.length - 1 ? prev + 1 : 0
+      );
+    }
+
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setOpen(true);
+      setHighlightIndex((prev) =>
+        prev > 0 ? prev - 1 : driverAgeList.length - 1
+      );
+    }
+
+    if (e.key === "Escape") {
+      setOpen(false);
+      setHighlightIndex(-1);
+    }
+  };
+
+  const handleSelect = (item) => {
+    handleSellectDriverAge(item);
+    setOpen(false);
+    setHighlightIndex(-1);
+  };
 
   return (
     <div className='hirer-details-main-container'>
@@ -455,67 +533,48 @@ const HirerDetails = () => {
           />
         </div>
 
+        {/* driver age */}
 
-        <div
-          className='hirer-age'
-          ref={driverAgeRef}
-          tabIndex={0}
-          role='button'
-          aria-expanded={driverAgeShow}
-          onFocus={(e) => {
-            if (e.target === e.currentTarget) {
-              setDriverAgeShow(true); // open dropdown
-            } else {
-              setDriverAgeShow(false)
-            }
-          }}
-          onKeyDown={(e) => {
-            if ((e.key === 'Enter' || e.key === ' ')
-              && e.target === e.currentTarget   // only run if parent is focus target
-              && !driverAgeShow                        // only toggle if dropdown closed
-            ) {
-              e.preventDefault();
-              setDriverAgeShow(true);
-            }
-            if (e.key === "ArrowDown" && e.target === e.currentTarget) {
-              e.preventDefault();
-              document.getElementById("driver-item-0")?.focus();
-            }
-          }}
-          style={{ border: errors.driver_age ? '1px solid red' : '1px solid transparent' }}
-        >
-          <p>Driver Age</p>
-          <span
-            onClick={() => setDriverAgeShow((prevState) => prevState === true ? false : true)}
+        <div className="smooth-dropdown" ref={dropdownRef}>
+          <label htmlFor="driver_age">Driver Age</label>
 
-
-
-
-          >
-            <h3>{bookingPayload.user.driver_age ? bookingPayload.user.driver_age : 'Please Select'}</h3>
-            <IoIosArrowDown size={17} color='rgba(204,204,204,1)' strokeWidth={5} />
-          </span>
           <div
-            className={`hirer-age-list ${driverAgeShow ? 'show-hirer-age-list' : ''}`}
+            id="driver_age"
+            className="smooth-dropdown-toggle"
+            tabIndex={0}
+            onClick={() => setOpen((prev) => !prev)}
+            onKeyDown={handleKeyDown}
+            aria-haspopup="listbox"
+            aria-expanded={open}
+          >
+            <p>{selectedAge}</p>
+            <span className={`arrow ${open ? "open" : ""}`}>
+              <IoIosArrowDown size={17} color='rgba(204,204,204,1)' strokeWidth={5} />
+            </span>
+          </div>
 
+          <div
+            ref={listRef}
+            className={`smooth-dropdown-list ${open ? "open" : ""}`}
+            role="listbox"
           >
             {driverAgeList.map((item, index) => (
-              <p
-                className={`hirer-age-list-item ${ageIndex === index ? 'active-hirer-age' : ''} `}
+              <div
                 key={index}
-                onClick={() => handleSellectDriverAge(item)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleSellectDriverAge(item);
-                  }
-                }}
+                role="option"
+                aria-selected={highlightIndex === index}
+                className={`smooth-dropdown-item ${highlightIndex === index ? "highlighted" : ""
+                  }`}
+                onClick={() => handleSelect(item)}
               >
-                {item}</p>
+                {item}
+              </div>
             ))}
           </div>
         </div>
+
+
+        {/* driver age */}
 
       </div>
 

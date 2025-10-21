@@ -121,7 +121,7 @@
     gap: 15px;
 }
 
-.country-code-drop-down-head > h3 {
+.country-code-drop-down-head>h3 {
     font-size: 13px;
     line-height: 1.2;
     font-weight: 500;
@@ -136,7 +136,7 @@
     gap: 10px;
 }
 
-.country-code-selected-and-search > span {
+.country-code-selected-and-search>span {
     display: flex;
     align-items: center;
     justify-content: start;
@@ -145,14 +145,14 @@
     gap: 20px;
 }
 
-.country-code-selected-and-search > span > h3 {
+.country-code-selected-and-search>span>h3 {
     font-size: 13px;
     line-height: 1.2;
     font-weight: 500;
     color: #000;
 }
 
-.country-code-selected-and-search > span > p {
+.country-code-selected-and-search>span>p {
     font-size: 13px;
     line-height: 1.2;
     font-weight: 400;
@@ -168,7 +168,7 @@
     height: 40px;
 }
 
-.country-code-search > button {
+.country-code-search>button {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -180,7 +180,7 @@
     justify-content: center;
 }
 
-.country-code-search > input {
+.country-code-search>input {
     width: 100%;
     height: 100%;
     padding: 0 10px;
@@ -234,14 +234,15 @@
     color: #FFF;
 }
 
-.country-code-inner-item > p {
+.country-code-inner-item>p {
     color: #535353;
 }
 
-.country-code-inner-item:hover > p {
+.country-code-inner-item:hover>p {
     color: #FFF;
 }
-.country-code-inner-item.active-code > p {
+
+.country-code-inner-item.active-code>p {
     color: #FFF;
 }
 
@@ -404,7 +405,7 @@
     position: relative;
 }
 
-.hirer-details-select-contianer > p {
+.hirer-details-select-contianer>p {
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
@@ -459,9 +460,9 @@
     color: #000;
 } */
 
-.hirer-parent-country > span > input {
+.hirer-parent-country>span>input {
     width: 100%;
-    height: 100%; 
+    height: 100%;
     /* padding: 0 10px; */
     color: #000;
     font-size: var(--font-body-lg);
@@ -728,6 +729,106 @@
 
 
 
+/* Driver age */
+
+.smooth-dropdown {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: 5px;
+    align-items: start;
+    justify-content: start;
+    padding: 8px 16px;
+    width: 170px;
+    height: 60px;
+    background-color: #f7f7f7;
+    position: relative;
+}
+
+.smooth-dropdown > label {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 400;
+    color: #000;
+}
+
+.smooth-dropdown-toggle {
+    /* padding: 8px 10px;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; */
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.smooth-dropdown-toggle:focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: transparent;
+}
+
+
+
+.arrow {
+    transition: transform 0.3s ease;
+}
+
+.arrow.open {
+    transform: rotate(180deg);
+}
+
+.smooth-dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #961502;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform-origin: top;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.smooth-dropdown-list.open {
+    max-height: 200px;
+    opacity: 1;
+    pointer-events: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.smooth-dropdown-item {
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: #000;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+
+.smooth-dropdown-item:hover,
+.smooth-dropdown-item.highlighted {
+    background: #961502;
+    color: white;
+}
+
+
+/* Driver Age */
+
+
+
 @media only screen and (max-width: 767px) {
     .hirer-age {
         /* width: 120px; */
@@ -761,13 +862,16 @@
     .hirer-age>span>h3 {
         font-size: 12px;
     }
+
     .flex-colum-on-mobile {
         display: flex !important;
         flex-direction: column !important;
     }
+
     .width-full-on-phone {
         width: 100% !important;
     }
+
     .find-us-and-local-phone-number {
         flex-direction: column;
     }
@@ -779,6 +883,7 @@
     .hirer-parent-country {
         width: 100% !important;
     }
+
     .hirer-living-country-and-age-container {
         flex-direction: column;
     }
