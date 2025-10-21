@@ -1,10 +1,11 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './InsuranceType.css';
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { useBookingContext } from '@/context/bookingContext/bookingContext';
 import { AiFillQuestionCircle } from "react-icons/ai";
 import { checkIsZero } from '../../../utils/checkZero'
+import { useOutsideClick } from '@/utils/DetectClickOutside';
 
 const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, packageSelected, setPackageSelected }) => {
 
@@ -119,6 +120,9 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
     }));
   }
 
+  const infoRef = useRef();
+  useOutsideClick(infoRef, () => setFlightReason(false))
+
   return (
 
     <div className='insurance-type-main-container'>
@@ -195,7 +199,7 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
                     value={bookingPayload?.booking?.flight_number}
                     onChange={handleSetFlightInfo}
                   />
-                  <div className={`flight-number-reason-contianer ${flightReason ? 'show-reason-message' : ''}`}>
+                  <div ref={infoRef} className={`flight-number-reason-contianer ${flightReason ? 'show-reason-message' : ''}`}>
                     <p>We'll monitor your flight to make sure we have your car ready on time, even if your flight is early or late </p>
                   </div>
                 </div>
