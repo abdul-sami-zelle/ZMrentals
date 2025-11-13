@@ -167,7 +167,7 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
             }}
         >
             Phone Number
-            <div className="hirer-phone-with-country-code" >
+            <div className="hirer-phone-with-country-code" > 
                 <div
                     ref={countryCodeRef}
                     tabIndex={0}

@@ -22,24 +22,11 @@ import CarDateNotAvailable from '../../../modals/CarDateNotAvailable/CarDateNotA
 
 const UpdateBooking = ({ setManageBookingSteper }) => {
 
-    // const {
-    //     loading, setLoading,
-    //         vehicleData, setVehicleData,
-    //         locations, setLocations,
-    //         countriesList, setCountriesList,
-    //         hirerInfo, setHirerInfo,
-    //         editBookingPayload, setEditBookingPayload,
-    //         handleGetVehicleData,
-    //         getApi,
-    //         handleGetAllCountries,
-    //         carFeatures,
-    //         perposes,
-    //         formatDate,
-    //         formatISODate,
-    //         generateTimeList,
-    // } = useManageBooking()
+    
 
     // Gernel States
+    
+    
     const [loading, setLoading] = useState(false)
     const [vehicleData, setVehicleData] = useState([]);
     const [locations, setLocations] = useState([])
@@ -140,8 +127,6 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
             setLoading(false)
         }
     }
-
-
 
     const getApi = async () => {
         try {

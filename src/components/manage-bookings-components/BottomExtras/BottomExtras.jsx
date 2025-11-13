@@ -105,16 +105,8 @@ const BottomExtras = ({isEditabel, editBookingPayload, setEditBookingPayload, ca
               vehicleData?.extras?.length > 0
           ) {
               const mappedExtras = editBookingPayload.booking.extras.map((extraItem) => {
-                  // find the matching object from vehicleData
   
-                  console.log("looped item", extraItem)
-                  console.log("vehicle data", vehicleData)
-  
-                  const foundItem = vehicleData.extras.find(
-                      (v) => v.id === extraItem.extras_pricing_id
-                  );
-  
-                  console.log("metched object", foundItem)
+                  const foundItem = vehicleData.extras.find((v) => v.id === extraItem.extras_pricing_id);
   
                   return {
                       extras_option_id: foundItem ? foundItem.id : 0,

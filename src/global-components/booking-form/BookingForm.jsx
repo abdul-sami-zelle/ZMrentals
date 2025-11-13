@@ -344,9 +344,9 @@ const BookingForm = (
                                         <Calendar
                                             onChange={handlePickupDateChange}
                                             value={selectedPickupDate}
-                                            view="month"
-                                            maxDetail="month"
-                                            minDetail="month"
+                                            defaultView="month"
+                                            // maxDetail="month"
+                                            // minDetail="month"
                                             next2Label={null}
                                             prev2Label={null}
                                             minDate={new Date()}
@@ -418,9 +418,9 @@ const BookingForm = (
                                         <Calendar
                                             onChange={handleDropDateChange}
                                             value={selectedDropDate}
-                                            view="month"            // always show month view
-                                            maxDetail="month"       // prevent navigating into days
-                                            minDetail="month"       // prevent navigating to years
+                                            defaultView="month"            // always show month view
+                                            // maxDetail="month"       // prevent navigating into days
+                                            // minDetail="month"       // prevent navigating to years
                                             next2Label={null}       // hides double right arrow (>>)
                                             prev2Label={null}
                                             formatShortWeekday={(locale, date) => date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)}

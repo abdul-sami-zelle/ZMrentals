@@ -98,7 +98,7 @@ const Footer = () => {
 
         </div>
       </div>
-      <div className='footer-social-links-main-container' style={{display: hideFooter ? 'none' : 'none'}} >
+      <div className='footer-social-links-main-container' style={{display: hideFooter ? 'none' : 'flex'}} >
         <div className='footer-social-links-width-controller'>
 
             <div className='footer-social-and-terms-inner-section'>

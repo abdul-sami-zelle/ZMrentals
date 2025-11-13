@@ -8,6 +8,7 @@ import { useBookingContext } from '@/context/bookingContext/bookingContext';
 
 const ExtrasUpdateModal = ({ showExtrasModal, setShowExtrasModal, payload, setPayload, carId }) => {
 
+    
     const [tempExtras, setTempExtras] = useState([])
     const [vehicleData, setVehicleData] = useState({});
     const handleGetCarWithId = async () => {
