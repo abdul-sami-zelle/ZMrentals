@@ -162,7 +162,7 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
             >
                 <div className='email-enquiry-modal-head'>
                     <div className='email-moda-head-close-and-heading'>
-                        <p>Email Enquiry</p>
+                        <p>{modalType !== 'email-qoute' ? 'Quote' : 'Email Enquiry'}</p>
                         <IoIosClose size={25} color='#595959' onClick={() => setShowEmailEnquiry(false)} style={{ cursor: 'pointer' }} />
                     </div>
                     {modalType !== 'email-qoute' ? (
@@ -291,7 +291,7 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                         <input type='checkbox' style={{ accentColor: "var(--primary-color)" }} />
                         Unlock the best of New Zealand with ZM: Join our newsletter for exclusive deals, travel tips and inspiration!
                     </span>
-                    <button onClick={handleSubmit} disabled={isFormValid} style={{ cursor: isFormValid ? 'pointer' : 'not-allowed' }} className={`send-email-enquiry-button ${isFormValid ? 'active-booking-button' : ''}`}>Send Enquiry</button>
+                    <button onClick={handleSubmit} disabled={isFormValid} style={{ cursor: isFormValid ? 'pointer' : 'not-allowed' }} className={`send-email-enquiry-button ${isFormValid ? 'active-booking-button' : ''}`}>{modalType !== 'email-qoute' ? 'Send Quote' : 'Send Enquiry'}</button>
                 </div>
             </div>
         </div>

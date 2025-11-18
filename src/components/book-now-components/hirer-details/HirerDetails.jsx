@@ -117,6 +117,7 @@ const HirerDetails = () => {
   const [countryList, setCountryList] = useState([]);
   const [filterLivingCountry, setFilterLivingCountry] = useState([])
 
+
   useEffect(() => {
     const handleGetAllCountries = async () => {
       try {
@@ -344,11 +345,10 @@ const HirerDetails = () => {
 
     if (countryObj) {
       setSelectedCountryDetails(countryObj)
-
     }
     setFilteredCountries(countryList);
     setFilterLivingCountry(countryList)
-  }, [countryList, countryCode]);
+  }, [countryList, countryCode, bookingPayload]);
 
   const options = filterLivingCountry.map((item) => ({
     value: item.country,
@@ -476,7 +476,6 @@ const HirerDetails = () => {
             name='firstname'
             value={bookingPayload.user.firstname}
             onChange={handleHirerDetailsAdd}
-          // onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, firstname: e.target.value } }))}
           />
         </label>
         <label style={{ border: errors.lastname ? '1px solid red' : '1px solid transparent' }}>
@@ -486,7 +485,6 @@ const HirerDetails = () => {
             name='lastname'
             value={bookingPayload.user.lastname}
             onChange={handleHirerDetailsAdd}
-          // onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, lastname: e.target.value } }))}
           />
         </label>
       </div>
@@ -586,7 +584,6 @@ const HirerDetails = () => {
             name='email'
             value={bookingPayload.user.email}
             onChange={handleHirerDetailsAdd}
-          // onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, email: e.target.value } }))}
           />
         </label>
 

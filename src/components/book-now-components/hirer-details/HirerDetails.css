@@ -27,7 +27,6 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    /* color: var(--primary-color); */
     color: #000;
     position: relative;
 }
@@ -37,15 +36,12 @@
     height: 100%;
     border: none;
     outline: none;
-    /* color: var(--primary-color); */
     color: #000;
 }
 
 .hirer-first-and-last-name>label>input::placeholder {
-    /* color: var(--primary-color); */
     color: #000;
 }
-
 
 .hirer-phone-with-country-code {
     display: flex;
@@ -192,14 +188,10 @@
     color: #000;
 }
 
-/* .country-code-search > input::placeholder {
-    color: #000;
-} */
 
 .country-code-inner-list-contianer {
     display: flex;
     flex-direction: column;
-    /* padding: 10px; */
     align-items: start;
     justify-content: start;
     width: 100%;
@@ -246,22 +238,6 @@
     color: #FFF;
 }
 
-/* .country-code-list>p {
-    padding: 5px 10px;
-    width: 100%;
-    background-color: transparent;
-    color: #000;
-    font-size: 12px;
-    line-height: 1.2;
-    font-weight: 500;
-    cursor: pointer;
-} */
-
-/* .country-code-list>p:hover {
-    color: #FFF;
-    background-color: var(--primary-color);
-} */
-
 .local-phone-number {
     display: flex;
     flex-direction: column;
@@ -271,7 +247,6 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    /* color: var(--primary-color); */
     color: #000;
 }
 
@@ -281,12 +256,10 @@
     border: none;
     background-color: transparent;
     outline: none;
-    /* color: var(--primary-color); */
     color: #000;
 }
 
 .hirer-phone-with-country-codeinput>input::placeholder {
-    /* color: var(--primary-color); */
     color: #000;
 }
 
@@ -312,12 +285,10 @@
     height: 100%;
     border: none;
     outline: none;
-    /* color: var(--primary-color); */
     color: #000;
 }
 
 .hirer-local-phone-with-country-code>input::placeholder {
-    /* color: var(--primary-color); */
     color: #000;
 }
 
@@ -370,8 +341,6 @@
     border: 1px solid var(--primary-color);
 }
 
-
-
 .local-phone-country-code-list::-webkit-scrollbar {
     display: none;
 }
@@ -380,7 +349,6 @@
     padding: 5px 10px;
     width: 100%;
     background-color: transparent;
-    /* color: var(--primary-color); */
     color: #000;
     font-size: 12px;
     line-height: 1.2;
@@ -410,7 +378,6 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    /* color: var(--primary-color); */
     color: #000;
     margin-left: 16px;
 }
@@ -422,7 +389,6 @@
     height: 19px;
     border: none !important;
 }
-
 
 .hirer-parent-country {
     display: flex;
@@ -442,7 +408,6 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    /* color: var(--primary-color); */
     color: #000;
 }
 
@@ -454,17 +419,9 @@
     cursor: pointer;
 }
 
-/* .hirer-parent-country>span>h3 {
-    font-size: var(--font-body-lg);
-    line-height: var(--line-height-heading);
-    font-weight: var(--font-weight-regular);
-    color: #000;
-} */
-
 .hirer-parent-country>span>input {
     width: 100%;
     height: 100%;
-    /* padding: 0 10px; */
     color: #000;
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
@@ -490,7 +447,6 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    /* color: var(--primary-color); */
     color: #000;
 }
 
@@ -506,7 +462,6 @@
     font-size: var(--font-body-lg);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    /* color: var(--primary-color); */
     color: #000;
 }
 
@@ -551,7 +506,6 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    /* color: var(--primary-color); */
     color: #000;
     cursor: pointer;
 }
@@ -579,7 +533,6 @@
     width: 100%;
     height: 0;
     max-height: 0;
-    /* visibility: hidden; */
     background-color: transparent;
     z-index: 999;
     top: 100%;
@@ -599,7 +552,6 @@
     max-height: 150px;
     background-color: #FFFFFF;
     border: 1px solid var(--primary-color);
-    /* visibility: visible; */
 }
 
 .hirer-age-list-item {
@@ -608,7 +560,6 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    /* color: var(--primary-color); */
     color: #000;
     cursor: pointer;
 }
@@ -670,7 +621,6 @@
     font-size: var(--font-body-md);
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-regular);
-    /* color: var(--primary-color); */
     color: #000;
 }
 
@@ -701,10 +651,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* padding: 2px; */
     height: 18px;
     border: 2px solid rgba(150, 21, 2, 0.6);
-    /* Light border */
     border-radius: 50%;
     position: relative;
     cursor: pointer;
@@ -718,8 +666,6 @@
 
 .travel-reason-radio-container input[type='radio']:checked::after {
     content: '';
-    /* position: absolute; */
-
     top: 0px;
     left: 0px;
     width: 17px;
@@ -728,10 +674,7 @@
     border-radius: 50%;
 }
 
-
-
 /* Driver age */
-
 .smooth-dropdown {
     display: flex;
     flex-direction: column;
@@ -754,13 +697,6 @@
 }
 
 .smooth-dropdown-toggle {
-    /* padding: 8px 10px;
-    border-radius: 6px;
-    background: white;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; */
     display: flex;
     width: 100%;
     align-items: center;
@@ -774,8 +710,6 @@
     border-color: transparent;
     box-shadow: transparent;
 }
-
-
 
 .arrow {
     transition: transform 0.3s ease;
@@ -825,14 +759,9 @@
     color: white;
 }
 
-
 /* Driver Age */
-
-
-
 @media only screen and (max-width: 767px) {
     .hirer-age {
-        /* width: 120px; */
         width: 100%;
     }
 
@@ -884,8 +813,11 @@
     .hirer-parent-country {
         width: 100% !important;
     }
-
-    .hirer-living-country-and-age-container {
-        flex-direction: column;
+    .smooth-dropdown {
+        width: 100px;
     }
+
+    /* .hirer-living-country-and-age-container {
+        flex-direction: column;
+    } */
 }

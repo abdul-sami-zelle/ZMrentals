@@ -848,6 +848,7 @@ const BookNowClient = () => {
                   <div className='vehicle-details-section'>
                     <div className='vehicle-details'>
                       <h3>{bookingVehicleData.name}</h3>
+                      
                       {vehicleSesionData?.duration_discount !== 0 ? (
                         <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'start', width: 'auto', flexDirection: 'column' }}>
                           <del>NZ$ {vehicleSesionData?.was_price}</del>
