@@ -14,7 +14,6 @@ const InsuranceUpdateModal = ({ insuranceModal, setInsuranceModal, carId, payloa
         const api = `${url}/cars/get/${payload?.booking?.car_id}`;
         try {
             const response = await axios.get(api);
-            // console.log(response.data)
             if (response.status === 200) {
                 setVehicleData(response.data)
             }

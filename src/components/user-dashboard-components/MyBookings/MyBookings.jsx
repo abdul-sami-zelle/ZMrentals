@@ -18,7 +18,6 @@ const MyBookings = () => {
       if (response.status === 200) {
         setBookingTable(response.data.data)
       }
-      console.log("response bookings", response)
     } catch (error) {
       console.log("unedpected server Error", error)
     }

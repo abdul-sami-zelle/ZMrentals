@@ -33,7 +33,6 @@ const UserDashoard = () => {
           "Authorization": `Bearer ${userToken}`
         }
       })
-      console.log("user data response", response);
       if(response.status === 200) {
         setUserDetails(response.data.data)
       }

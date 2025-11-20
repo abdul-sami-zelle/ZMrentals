@@ -35,7 +35,6 @@ const InsuranceType = ({ insurances, insuranceSeleted, setInsuranceSelected, pac
 
   const { setBookingPayload, bookingPayload, bookingVehicleData, activeShuttle, setActiveShuttle, arrivlaErrors, setArrivalErrors, } = useBookingContext();
   const handleSelectInsurance = (item) => {
-    console.log("selected insurance", item)
     setInsuranceSelected(item)
     setPackageSelected(item.insurance_option_id);
     setBookingPayload((prev) => ({

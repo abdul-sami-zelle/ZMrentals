@@ -26,7 +26,6 @@ const VehicleCard = ({
   const { setVehicleSesionData } = useBookingContext();
   const [toustShow, setTOustShow] = useState(false);
   const [toustMessage, setToustMessage] = useState("");
-  console.log("vehicle data", vehicleData);
 
   const router = useRouter();
   const { setBookingVehicleData } = useBookingContext();

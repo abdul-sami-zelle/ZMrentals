@@ -13,7 +13,6 @@ const BottomInsurance = ({ editBookingPayload, setEditBookingPayload, carId, isE
     const api = `${url}/cars/get/${editBookingPayload?.booking?.car_id}`;
     try {
       const response = await axios.get(api);
-      console.log("insurance vehicle data" , response.data)
       if (response.status === 200) {
         setVehicleData(response.data)
       }

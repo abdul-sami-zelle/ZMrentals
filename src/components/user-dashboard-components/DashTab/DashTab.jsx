@@ -30,7 +30,6 @@ const DashTab = () => {
       if (response.status === 200) {
         setDashData(response.data.data)
       }
-      console.log("dash response", response);
     } catch (error) {
       console.log("UnExpected Server Error", error);
     }

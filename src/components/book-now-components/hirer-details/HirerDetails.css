@@ -259,7 +259,7 @@
     color: #000;
 }
 
-.hirer-phone-with-country-codeinput>input::placeholder {
+.hirer-phone-with-country-code > input>input::placeholder {
     color: #000;
 }
 

@@ -282,7 +282,6 @@ const EditDriverModal = (
         if (expiryYears) handleLicenceExpiryDate(expiryYears);
     });
 
-    // useEffect(() => {console.log("updated driver", updatedDriver)}, [updatedDriver])
 
 
 

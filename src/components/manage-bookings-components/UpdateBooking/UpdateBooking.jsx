@@ -425,7 +425,6 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
         if (editBookingPayload?.driverDetails?.length < parseInt(extraDrivers?.quantity)) {
             handleDriverEditModal()
         }
-        console.log("spacific extra driver object", extraDrivers)
     }
 
 
@@ -530,7 +529,6 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
             },
         };
 
-        console.log("insur check", finalPayload)
 
         try {
 
@@ -568,7 +566,6 @@ const UpdateBooking = ({ setManageBookingSteper }) => {
     }
 
 
-    useEffect(() => { console.log("edit booking", editBookingPayload) }, [editBookingPayload])
 
 
     return (

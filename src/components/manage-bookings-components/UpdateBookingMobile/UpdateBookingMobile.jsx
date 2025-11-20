@@ -69,8 +69,6 @@ const UpdateBookingMobile = () => {
                 }
             });
 
-            console.log("booking response", response)
-            console.log("refetched response")
             if (response.status === 200) {
                 setVehicleData(response.data.data)
                 setEditBookingPayload({
@@ -418,7 +416,6 @@ const UpdateBookingMobile = () => {
             },
         };
 
-        console.log("final payload", finalPayload)
 
         try {
 
@@ -434,7 +431,6 @@ const UpdateBookingMobile = () => {
                 // window.location.href = '/manage-booking'
             }
 
-            console.log("response ", response)
 
 
 
@@ -455,9 +451,6 @@ const UpdateBookingMobile = () => {
     const handleClose = () => {
         setShowSummary(false)
     }
-
-
-    useEffect(() => { console.log("edit payload", editBookingPayload) }, [editBookingPayload])
 
 
 

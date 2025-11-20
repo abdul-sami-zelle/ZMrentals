@@ -13,7 +13,6 @@ const HappySnapGallery = () => {
     const router = useRouter();
 
     const handleNavigate = () => {
-        console.log("find more")
         router.push('/about-us')
     }
     return (

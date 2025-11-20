@@ -1,15 +1,12 @@
 export const checkIsZero = (value) => {
-  if(value === null) return
-  const strVal = String(value);
-    const splitedValue = strVal.split('.');
+  if (value === null || value === undefined) return '';
 
-    if(splitedValue.length === 1) {
-      return splitedValue[0]
-    }
-    if(splitedValue[1] === '00' || splitedValue[1] === '0' || splitedValue[1] === 0) {
-      return splitedValue[0]
-    } else {
-      return value
-    }
-   
-  }
+  const num = typeof value === 'number' ? value : parseFloat(value);
+  if (isNaN(num)) return '';
+
+  // Remove unnecessary decimal zeros
+  const cleaned = Number.isInteger(num) ? num : parseFloat(num.toFixed(2));
+
+  // Add commas for thousands
+  return cleaned.toLocaleString();
+};

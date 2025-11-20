@@ -15,7 +15,6 @@ const ExtrasUpdateModal = ({ showExtrasModal, setShowExtrasModal, payload, setPa
         const api = `${url}/cars/get/${payload?.booking?.car_id}`;
         try {
             const response = await axios.get(api);
-            console.log("respose", response)
             if (response.status === 200) {
                 setVehicleData(response.data)
             }
@@ -34,14 +33,11 @@ const ExtrasUpdateModal = ({ showExtrasModal, setShowExtrasModal, payload, setPa
             const mappedExtras = payload.booking.extras.map((extraItem) => {
                 // find the matching object from vehicleData
 
-                console.log("looped item", extraItem)
-                console.log("vehicle data", vehicleData)
 
                 const foundItem = vehicleData.extras.find(
                     (v) => v.id === extraItem.extras_pricing_id
                 );
 
-                console.log("metched object", foundItem)
 
                 return {
                     extras_option_id: foundItem ? foundItem.id : 0,

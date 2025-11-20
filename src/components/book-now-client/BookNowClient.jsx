@@ -147,7 +147,6 @@ const BookNowClient = () => {
 
 
     const allFilled = Object.keys(newErrors).length === 0;
-    console.log("all filled", allFilled)
     return allFilled;
   };
 
@@ -162,7 +161,6 @@ const BookNowClient = () => {
 
     setArrivalErrors(newErrors);
 
-    console.log("errors", newErrors)
 
     // Return true only if both are filled
     return Object.keys(newErrors).length === 0;
@@ -199,7 +197,6 @@ const BookNowClient = () => {
     try {
       setISloading(true)
       const response = await axios.post(api, payloadWithPhoneCode);
-      console.log("user booked", payloadWithPhoneCode)
       if (response.status === 201) {
         setISloading(false);
         setShowAvailableModal(true)
@@ -635,9 +632,6 @@ const BookNowClient = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("bookings", bookingPayload)
-  }, [bookingPayload])
 
   const handleBookNow = () => {
     if (selectedTabIndex < 3) {
@@ -647,7 +641,6 @@ const BookNowClient = () => {
         setToustMessage("Please Fill Flight Number and Arrival City");
         return
       } else if (selectedTabIndex === 2 && !isUserInfoFilled()) {
-        console.log("seper index", selectedTabIndex)
         setTOustShow(true)
         setToustMessage("Please Fill All The Information")
       } else if (activeShuttle === 3 && selectedTabIndex === 0) {
@@ -694,7 +687,7 @@ const BookNowClient = () => {
       const insuranceRate = parseFloat(insuranceSeleted?.rate || 0);
       total += insuranceRate * safeDays;
     }
-    return total.toFixed(2)
+    return total.toFixed(0)
   }
 
   const getSubTotal = () => {
@@ -703,7 +696,7 @@ const BookNowClient = () => {
     // Get Total Days
     const subTotal = parseFloat(vehicleSesionData.sub_total || 0);
     total += subTotal - parseFloat(vehicleSesionData?.discounts?.value);
-    return total.toFixed(2)
+    return total.toFixed(0)
   }
 
   const getGrandTotal = () => {
@@ -742,7 +735,7 @@ const BookNowClient = () => {
       total += offHourCharges
     }
 
-    return total.toFixed(2); // format to 2 decimal places if needed
+    return total.toFixed(0); // format to 2 decimal places if needed
   };
 
   const [emailModal, setEmailModal] = useState(false);
@@ -759,6 +752,7 @@ const BookNowClient = () => {
     if (isNaN(numPrice) || isNaN(discount)) return 0;
     return (numPrice * (discount / 100)).toFixed(2); // discount amount
   };
+
 
   return (
     <div className="book-now-page-main-container">
@@ -851,15 +845,15 @@ const BookNowClient = () => {
                       
                       {vehicleSesionData?.duration_discount !== 0 ? (
                         <div style={{ display: 'flex', alignItems: 'start', justifyContent: 'start', width: 'auto', flexDirection: 'column' }}>
-                          <del>NZ$ {vehicleSesionData?.was_price}</del>
+                          <del>NZ$ {checkIsZero(vehicleSesionData?.was_price)}</del>
 
                           <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', width: 'max-content' }}>
-                            NZ$ {vehicleSesionData?.sub_total}
+                            NZ$ {checkIsZero(vehicleSesionData?.sub_total)}
                             <p style={{ fontSize: '10px', lineHeight: '12px', fontWeight: 400 }}>({vehicleSesionData?.duration_discount} days discount)</p>
                           </span>
                         </div>
                       ) : (
-                        <span>NZ$ {vehicleSesionData?.sub_total}</span>
+                        <span>NZ$ {checkIsZero(vehicleSesionData?.sub_total)}</span>
                       )}
 
                       <Link href={'/vehicles'}>Change Vehicle</Link>
@@ -873,12 +867,12 @@ const BookNowClient = () => {
                   <div className='booking-prices-details-section'>
                     <span style={{ display: vehicleSesionData?.discounts?.percent === 0 ? 'none' : 'flex' }}>
                       <p>{vehicleSesionData?.discounts?.name}</p>
-                      <h3>NZ$ {getDiscountAmount(vehicleSesionData?.sub_total, vehicleSesionData?.discounts?.percent)}</h3>
+                      <h3>NZ$ {checkIsZero(getDiscountAmount(vehicleSesionData?.sub_total, vehicleSesionData?.discounts?.percent))}</h3>
                     </span>
 
                     <span>
                       <p>Sub Total</p>
-                      <h3>NZ$ {getSubTotal()}</h3>
+                      <h3>NZ$ {checkIsZero(getSubTotal())}</h3>
                     </span>
 
 
@@ -889,7 +883,7 @@ const BookNowClient = () => {
                           parseFloat(insuranceSeleted?.rate) === 0 ? (
                             <h3>Free</h3>
                           ) : (
-                            <h3>NZ$ {getInsurancesTotal()}</h3>
+                            <h3>NZ$ {checkIsZero(getInsurancesTotal())}</h3>
                           )
                         }
 
@@ -907,7 +901,7 @@ const BookNowClient = () => {
                             {extra?.name}
                           </p>
                           <h3>
-                            NZ$ {rate ? rate.toFixed(2) : "0.00"}
+                            NZ$ {rate ? checkIsZero(rate) : ""}
                           </h3>
                         </span>
                       );
@@ -917,7 +911,7 @@ const BookNowClient = () => {
                       vehicleSesionData?.off_hour_charges !== 0 && (
                         <span>
                           <p>Off Hour Charges</p>
-                          <h3>NZ$ {vehicleSesionData?.off_hour_charges}</h3>
+                          <h3>NZ$ {checkIsZero(vehicleSesionData?.off_hour_charges)}</h3>
                         </span>
                       )
                     }
@@ -927,7 +921,7 @@ const BookNowClient = () => {
                   <div className='grand-total-section'>
                     <p>Grand Total</p>
                     <span>
-                      <h3>NZ$ {getGrandTotal()}</h3>
+                      <h3>NZ$ {checkIsZero(getGrandTotal())}</h3>
                       <p>(Inclusive of GST)</p>
                     </span>
                   </div>

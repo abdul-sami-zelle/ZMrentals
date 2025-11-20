@@ -110,7 +110,6 @@ const AddressAndPhone = ({ userDetails }) => {
       if(response.status == 200) {
         setLoading(false)
       }
-      console.log("addrss response", response)
 
     } catch (error) {
       console.error("UnExpected Server Error", error);

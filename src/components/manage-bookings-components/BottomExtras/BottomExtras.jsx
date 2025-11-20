@@ -12,7 +12,6 @@ const BottomExtras = ({isEditabel, editBookingPayload, setEditBookingPayload, ca
     const api = `${url}/cars/get/${editBookingPayload?.booking?.car_id}`;
     try {
       const response = await axios.get(api);
-      console.log("respose", response)
       if (response.status === 200) {
         setVehicleData(response.data)
       }
@@ -23,81 +22,7 @@ const BottomExtras = ({isEditabel, editBookingPayload, setEditBookingPayload, ca
 
   useEffect(() => { handleGetCarWithId() }, [carId])
 
-  // useEffect(() => {
-  //   if (
-  //     editBookingPayload?.booking?.extras?.length > 0 &&
-  //     vehicleData?.extras?.length > 0
-  //   ) {
-  //     const mappedExtras = editBookingPayload.booking.extras.map((extraItem) => {
-  //       // find the matching object from vehicleData
-
-  //       console.log("looped item", extraItem)
-  //       console.log("vehicle data", vehicleData)
-
-  //       const foundItem = vehicleData.extras.find(
-  //         (v) => v.id === extraItem.extras_pricing_id
-  //       );
-
-  //       console.log("metched object", foundItem)
-
-  //       return {
-  //         extras_option_id: foundItem ? foundItem.id : 0,
-  //         main_id: foundItem ? foundItem.extras_option_id : 0,
-  //         quantity: extraItem.quantity || 0, // 👈 taking quantity from booking payload
-  //       };
-  //     });
-
-  //     setTempExtras(mappedExtras);
-  //   }
-  // }, [vehicleData]);
-
-
-  // const handleInputChange = (item, value) => {
-
-  //   let quantity = Number(value);
-
-  //   const min = Number(item.min_qty) || 0;
-  //   const max = Number(item.max_qty) || Infinity;
-
-  //   // Prevent going above max
-  //   if (quantity > max) quantity = max;
-
-  //   // ✅ If quantity is 0, just remove the item (don’t set min)
-  //   if (quantity === 0) {
-  //     setTempExtras((prev) =>
-  //       prev.filter((extra) => extra.extras_option_id !== item.id)
-  //     );
-  //     return;
-  //   }
-
-  //   setTempExtras((prev) => {
-  //     const existingItem = prev.findIndex((extra) => extra.extras_option_id === item.id);
-
-  //     // If quantity is 0 or below min, remove item
-  //     if (quantity === 0 || quantity < min) {
-  //       return prev.filter((extra) => extra.extras_option_id !== item.id);
-  //     }
-
-  //     if (existingItem !== -1) {
-  //       const updated = [...prev];
-  //       updated[existingItem] = {
-  //         ...updated[existingItem],
-  //         quantity
-  //       };
-  //       return updated
-  //     }
-
-  //     return [
-  //       ...prev,
-  //       {
-  //         extras_option_id: item.id,
-  //         main_id: item.extras_option_id,
-  //         quantity,
-  //       },
-  //     ];
-
-  //   })
-  // }
+  
 
   useEffect(() => {
           if (
@@ -191,7 +116,6 @@ const BottomExtras = ({isEditabel, editBookingPayload, setEditBookingPayload, ca
     setBottomModal(false)
   }
 
-  useEffect(() => { console.log("temporary extras", tempExtras) }, [tempExtras])
 
 
 
