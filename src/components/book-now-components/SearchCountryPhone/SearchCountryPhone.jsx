@@ -8,6 +8,16 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
     const [query, setQuery] = useState("");
     const [filteredCountries, setFilteredCountries] = useState(countryList);
     const [activeIndex, setActiveIndex] = useState(-1);
+    const [focusCameFromTab, setFocusCameFromTab] = useState(false);
+
+    useEffect(() => {
+        const handleTabPress = (e) => {
+            if (e.key === "Tab") setFocusCameFromTab(true);
+        };
+
+        document.addEventListener("keydown", handleTabPress);
+        return () => document.removeEventListener("keydown", handleTabPress);
+    }, []);
 
     const countryCodeRef = useRef(null);
     const searchRef = useRef(null);
@@ -126,6 +136,7 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
 
     useOutsideClick(countryCodeRef, () => setShowCountryCodeList(false))
 
+
     return (
         <label
             className="width-full-on-phone"
@@ -162,7 +173,13 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
                     placeholder="Enter phone"
                     tabIndex={0}
                     style={{ flex: 1 }}
-                onFocus={() => setShowCountryCodeList(true)}
+                onFocus={() => {
+                    if(focusCameFromTab) {
+                        setShowCountryCodeList(true)
+                    }else {
+                        setShowCountryCodeList(false)
+                    }
+                }}
                 />
             </div>
 

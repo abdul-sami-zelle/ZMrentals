@@ -175,9 +175,7 @@ const HirerDetails = () => {
     handleGetAllCountries();
   }, []);
 
-  useEffect(() => {
-    console.log("countries list", countryList);
-  }, [countryList]);
+  
 
   const [showCountryCodeList, setShowCountryCodeList] = useState(false);
 
@@ -379,7 +377,7 @@ const HirerDetails = () => {
     }
     setFilteredCountries(countryList);
     setFilterLivingCountry(countryList);
-  }, [countryList, countryCode, bookingPayload]);
+  }, [countryList, bookingPayload?.user?.country]);
 
   const options = filterLivingCountry.map((item) => ({
     value: item.country,
