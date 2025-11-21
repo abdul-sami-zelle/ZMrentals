@@ -1,13 +1,13 @@
-'use client'
-import React, { useEffect, useRef, useState } from 'react'
-import './HirerDetails.css'
-import { useBookingContext } from '@/context/bookingContext/bookingContext';
-import { useOutsideClick } from '../../../utils/DetectClickOutside'
-import useDropdownNavigation from '@/utils/keyPress';
-import Select from 'react-select';
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import "./HirerDetails.css";
+import { useBookingContext } from "@/context/bookingContext/bookingContext";
+import { useOutsideClick } from "../../../utils/DetectClickOutside";
+import useDropdownNavigation from "@/utils/keyPress";
+import Select from "react-select";
 import { IoIosArrowDown } from "react-icons/io";
-import CountryCodeDropdown from '../SearchCountryPhone/SearchCountryPhone'
-import PhoneInput from 'react-phone-input-2';
+import CountryCodeDropdown from "../SearchCountryPhone/SearchCountryPhone";
+import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 
 // import { MdOutlineArrowDropDown } from "react-icons/md";
@@ -18,35 +18,34 @@ const customStyles = {
     minHeight: "24px",
     height: "24px",
     borderRadius: 0,
-    padding: '0 16px',
-    border: "none",          // 🚀 removed border from the input
+    padding: "0 16px",
+    border: "none", // 🚀 removed border from the input
     boxShadow: "none",
-    background: 'Transparent',          // no border radius
+    background: "Transparent", // no border radius
     borderColor: state.isFocused ? "#961502" : "#ccc", // red on focus/open
     boxShadow: "none",
     "&:hover": {
       borderColor: "#961502",
     },
-
   }),
   valueContainer: (provided) => ({
     ...provided,
     height: "24px",
     padding: "0",
-    border: 'none',
+    border: "none",
   }),
   input: (provided) => ({
     ...provided,
     margin: 0,
     padding: 0,
-    fontSize: "13px",        // 🚀 font size set to 13px
-    lineHeight: 1.5,         // 🚀 line height set to 1.5
-    fontWeight: 400,         // 🚀 font weight set to 400
+    fontSize: "13px", // 🚀 font size set to 13px
+    lineHeight: 1.5, // 🚀 line height set to 1.5
+    fontWeight: 400, // 🚀 font weight set to 400
     color: "#000",
   }),
   singleValue: (provided) => ({
     ...provided,
-    fontSize: "13px",        // 🚀 same font rules applied to selected value
+    fontSize: "13px", // 🚀 same font rules applied to selected value
     lineHeight: 1.5,
     fontWeight: 400,
     color: "#000",
@@ -60,8 +59,8 @@ const customStyles = {
     backgroundColor: state.isSelected
       ? "#961502"
       : state.isFocused
-        ? "#961502"
-        : "white",    // active/hover red
+      ? "#961502"
+      : "white", // active/hover red
     color: state.isSelected || state.isFocused ? "white" : "black",
     borderRadius: 0,
     cursor: "pointer",
@@ -80,24 +79,23 @@ const customStyles = {
     ...provided,
     paddingTop: 0,
     paddingBottom: 0,
-    maxHeight: "200px",               // 🚀 cap height to avoid huge dropdown
-    overflowY: "auto",                // allow scrolling
+    maxHeight: "200px", // 🚀 cap height to avoid huge dropdown
+    overflowY: "auto", // allow scrolling
     "::-webkit-scrollbar": {
-      display: "none",                // 🚀 hide scrollbar (still scrollable)
+      display: "none", // 🚀 hide scrollbar (still scrollable)
     },
   }),
 };
 
 const HirerDetails = () => {
-
   const whereFindUs = [
-    'Google',
-    'Facebook',
-    'Instagram',
-    'Tiktok',
-    'Friends referral',
-    'Other',
-  ]
+    "Google",
+    "Facebook",
+    "Instagram",
+    "Tiktok",
+    "Friends referral",
+    "Other",
+  ];
 
   const {
     bookingPayload,
@@ -108,37 +106,66 @@ const HirerDetails = () => {
     countryCode,
     setCountryCode,
     selectedCountryDetails,
-    setSelectedCountryDetails
-  } = useBookingContext()
+    setSelectedCountryDetails,
+  } = useBookingContext();
 
   const [parentCountryShow, setParentCountryShow] = useState(false);
   const [driverAgeShow, setDriverAgeShow] = useState(false);
   const [findUs, setFindUs] = useState(false);
   const [countryList, setCountryList] = useState([]);
-  const [filterLivingCountry, setFilterLivingCountry] = useState([])
+  const [filterLivingCountry, setFilterLivingCountry] = useState([]);
 
+  // useEffect(() => {
+  //   const handleGetAllCountries = async () => {
+  //     try {
+  //       const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
+  //       const data = await res.json();
+  //       console.log("response", data);
+
+  //       const formatted = data
+  //         .map((item) => {
+  //           const root = item.idd?.root || "";
+  //           const suffix = item.idd?.suffixes?.[0] || "";
+  //           return {
+  //             country: item.name.common,
+  //             code: root + suffix, // e.g. +92
+  //           };
+  //         })
+  //         // sort alphabetically by country name
+  //         .sort((a, b) => a.country.localeCompare(b.country));
+
+  //         console.log("sorted countries", formatted)
+  //       setCountryList(formatted);
+  //     } catch (err) {
+  //       console.error("Error fetching countries:", err);
+  //     }
+  //   };
+
+  //   handleGetAllCountries();
+  // }, []);
 
   useEffect(() => {
     const handleGetAllCountries = async () => {
       try {
-        const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
+        const res = await fetch("https://countries.skyhub.pk/countries");
+        if (!res.ok) throw new Error("Network response was not ok");
+
         const data = await res.json();
-
-
+        console.log("response", data);
 
         const formatted = data
           .map((item) => {
-            const root = item.idd?.root || "";
-            const suffix = item.idd?.suffixes?.[0] || "";
             return {
-              country: item.name.common,
-              code: root + suffix, // e.g. +92
+              country: item.name,
+              code: item.phoneCode ? `+${item.phoneCode}` : "", // e.g., +93
+              emoji: item.emojiU || "",
+              native: item.native || "",
             };
           })
-          // sort alphabetically by country name
+          // Sort alphabetically by country name
           .sort((a, b) => a.country.localeCompare(b.country));
 
-
+        console.log("sorted countries", formatted);
         setCountryList(formatted);
       } catch (err) {
         console.error("Error fetching countries:", err);
@@ -147,6 +174,10 @@ const HirerDetails = () => {
 
     handleGetAllCountries();
   }, []);
+
+  useEffect(() => {
+    console.log("countries list", countryList);
+  }, [countryList]);
 
   const [showCountryCodeList, setShowCountryCodeList] = useState(false);
 
@@ -268,7 +299,7 @@ const HirerDetails = () => {
         ...prev.user,
         country: item.value,
         // phone: item.code
-      }
+      },
     }));
     // setLivingCountryQuery(item.value)
 
@@ -276,7 +307,7 @@ const HirerDetails = () => {
     setErrors((prev) => {
       const newErrors = { ...prev };
       if (item && item.value?.trim() !== "") {
-        delete newErrors.country;  // remove error
+        delete newErrors.country; // remove error
       } else {
         newErrors.country = "Required"; // keep error if empty
       }
@@ -284,25 +315,25 @@ const HirerDetails = () => {
     });
 
     setParentCountryShow(false);
-    setMenuOpen(false)
+    setMenuOpen(false);
   };
 
-  const driverAgeList = ['21', '22', '23', '24', '25+']
+  const driverAgeList = ["21", "22", "23", "24", "25+"];
 
   const handleSellectDriverAge = (item) => {
     setBookingPayload((prev) => ({
       ...prev,
       user: {
         ...prev.user,
-        driver_age: item
-      }
+        driver_age: item,
+      },
     }));
 
     // ✅ Clear error for country when a valid value is selected
     setErrors((prev) => {
       const newErrors = { ...prev };
       if (item && item.trim() !== "") {
-        delete newErrors.country;  // remove error
+        delete newErrors.country; // remove error
       } else {
         newErrors.country = "Required"; // keep error if empty
       }
@@ -317,24 +348,24 @@ const HirerDetails = () => {
       ...prev,
       user: {
         ...prev.user,
-        how_find_us: item
-      }
-    }))
+        how_find_us: item,
+      },
+    }));
 
     setErrors((prev) => {
       const newErrors = { ...prev };
       if (item && item.trim() !== "") {
-        delete newErrors.how_find_us;  // remove error
+        delete newErrors.how_find_us; // remove error
       } else {
         newErrors.how_find_us = "Required"; // keep error if empty
       }
       return newErrors;
     });
 
-    setFindUs(false)
-  }
+    setFindUs(false);
+  };
 
-  const [filteredCountries, setFilteredCountries] = useState(countryList)
+  const [filteredCountries, setFilteredCountries] = useState(countryList);
   // const [query, setQuery] = useState('');
 
   useEffect(() => {
@@ -344,10 +375,10 @@ const HirerDetails = () => {
     );
 
     if (countryObj) {
-      setSelectedCountryDetails(countryObj)
+      setSelectedCountryDetails(countryObj);
     }
     setFilteredCountries(countryList);
-    setFilterLivingCountry(countryList)
+    setFilterLivingCountry(countryList);
   }, [countryList, countryCode, bookingPayload]);
 
   const options = filterLivingCountry.map((item) => ({
@@ -355,7 +386,7 @@ const HirerDetails = () => {
     label: item.country,
   }));
 
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // track if user actually confirmed selection
   const [isConfirmedSelection, setIsConfirmedSelection] = useState(false);
@@ -378,13 +409,17 @@ const HirerDetails = () => {
   const foundUsRef = useRef();
   const countryCodeRef = useRef();
 
-  useOutsideClick(livingCountryRef, () => setParentCountryShow(false))
-  useOutsideClick(driverAgeRef, () => setDriverAgeShow(false))
-  useOutsideClick(foundUsRef, () => setFindUs(false))
-  useOutsideClick(countryCodeRef, () => setShowCountryCodeList(false))
+  useOutsideClick(livingCountryRef, () => setParentCountryShow(false));
+  useOutsideClick(driverAgeRef, () => setDriverAgeShow(false));
+  useOutsideClick(foundUsRef, () => setFindUs(false));
+  useOutsideClick(countryCodeRef, () => setShowCountryCodeList(false));
 
   // const ageIndex = useDropdownNavigation(driverAgeRef, driverAgeShow, 'hirer-age-list-item')
-  const foundUsIndex = useDropdownNavigation(foundUsRef, findUs, 'living-country-item')
+  const foundUsIndex = useDropdownNavigation(
+    foundUsRef,
+    findUs,
+    "living-country-item"
+  );
 
   // Age Select
 
@@ -465,48 +500,59 @@ const HirerDetails = () => {
   };
 
   return (
-    <div className='hirer-details-main-container'>
-      <p>The Hirer's name must match the name of the person collecting the vehicle as shown on their driver licence and credit/debit card</p>
+    <div className="hirer-details-main-container">
+      <p>
+        The Hirer's name must match the name of the person collecting the
+        vehicle as shown on their driver licence and credit/debit card
+      </p>
 
-      <div className='hirer-first-and-last-name' >
-        <label style={{ border: errors.firstname ? '1px solid red' : '1px solid transparent' }}>
+      <div className="hirer-first-and-last-name">
+        <label
+          style={{
+            border: errors.firstname
+              ? "1px solid red"
+              : "1px solid transparent",
+          }}
+        >
           First Name
           <input
-            type='text'
-            name='firstname'
+            type="text"
+            name="firstname"
             value={bookingPayload.user.firstname}
             onChange={handleHirerDetailsAdd}
           />
         </label>
-        <label style={{ border: errors.lastname ? '1px solid red' : '1px solid transparent' }}>
+        <label
+          style={{
+            border: errors.lastname ? "1px solid red" : "1px solid transparent",
+          }}
+        >
           Last Name
           <input
-            type='text'
-            name='lastname'
+            type="text"
+            name="lastname"
             value={bookingPayload.user.lastname}
             onChange={handleHirerDetailsAdd}
           />
         </label>
       </div>
 
-      <div className='hirer-living-country-and-age-container'>
-
-        <div className='hirer-details-select-contianer'>
+      <div className="hirer-living-country-and-age-container">
+        <div className="hirer-details-select-contianer">
           <p>Which country do you live in?</p>
           <Select
-
             options={options}
             // value={options.find((opt) => opt.value === bookingPayload.user.country) || null}
             value={
               isConfirmedSelection
                 ? options.find(
-                  (opt) => opt.value === bookingPayload.user.country
-                ) || null
+                    (opt) => opt.value === bookingPayload.user.country
+                  ) || null
                 : bookingPayload.user.country
-                  ? options.find(
+                ? options.find(
                     (opt) => opt.value === bookingPayload.user.country
                   )
-                  : null
+                : null
             }
             // onChange={(selected) => handleSelectLivingCountry(selected)}
             onChange={handleChange}
@@ -521,8 +567,8 @@ const HirerDetails = () => {
             isSearchable
             className="my-country-input"
             placeholder="Which country do you live in?"
-            menuIsOpen={menuOpen}               // force open/close
-            onFocus={() => setMenuOpen(true)}   // open on focus (Tab)
+            menuIsOpen={menuOpen} // force open/close
+            onFocus={() => setMenuOpen(true)} // open on focus (Tab)
             // onBlur={() => setMenuOpen(false)}
             onBlur={handleBlur}
             filterOption={(option, inputValue) =>
@@ -547,7 +593,11 @@ const HirerDetails = () => {
           >
             <p>{selectedAge}</p>
             <span className={`arrow ${open ? "open" : ""}`}>
-              <IoIosArrowDown size={17} color='rgba(204,204,204,1)' strokeWidth={5} />
+              <IoIosArrowDown
+                size={17}
+                color="rgba(204,204,204,1)"
+                strokeWidth={5}
+              />
             </span>
           </div>
 
@@ -561,8 +611,9 @@ const HirerDetails = () => {
                 key={index}
                 role="option"
                 aria-selected={highlightIndex === index}
-                className={`smooth-dropdown-item ${highlightIndex === index ? "highlighted" : ""
-                  }`}
+                className={`smooth-dropdown-item ${
+                  highlightIndex === index ? "highlighted" : ""
+                }`}
                 onClick={() => handleSelect(item)}
               >
                 {item}
@@ -571,17 +622,20 @@ const HirerDetails = () => {
           </div>
         </div>
 
-
         {/* driver age */}
-
       </div>
 
-      <div className='hirer-first-and-last-name flex-colum-on-mobile'>
-        <label className='width-full-on-phone' style={{ border: errors.email ? '1px solid red' : '1px solid transparent' }}>
+      <div className="hirer-first-and-last-name flex-colum-on-mobile">
+        <label
+          className="width-full-on-phone"
+          style={{
+            border: errors.email ? "1px solid red" : "1px solid transparent",
+          }}
+        >
           Email Address
           <input
-            type='text'
-            name='email'
+            type="text"
+            name="email"
             value={bookingPayload.user.email}
             onChange={handleHirerDetailsAdd}
           />
@@ -595,46 +649,42 @@ const HirerDetails = () => {
           errors={errors}
           handleHirerDetailsAdd={handleHirerDetailsAdd}
         />
-
       </div>
 
-      <div className='find-us-and-local-phone-number'>
-
-        <label className='local-phone-number' style={{ width: '60%' }}>
+      <div className="find-us-and-local-phone-number">
+        <label className="local-phone-number" style={{ width: "60%" }}>
           Local Phone Number
-
-          <div className='hirer-local-phone-with-country-code'>
-            <div className='local-phone-country-code-dropdown'>
+          <div className="hirer-local-phone-with-country-code">
+            <div className="local-phone-country-code-dropdown">
               <p>+64</p>
             </div>
             <input
-              type='text'
-              name='local_phone'
+              type="text"
+              name="local_phone"
               value={bookingPayload.user.local_phone}
               onChange={handleHirerDetailsAdd}
-
             />
-
           </div>
         </label>
 
         <div
-          className='hirer-parent-country'
+          className="hirer-parent-country"
           ref={foundUsRef}
           tabIndex={0}
-          role='button'
+          role="button"
           aria-expanded={findUs}
           onFocus={(e) => {
             if (e.target === e.currentTarget) {
               setFindUs(true); // open dropdown
             } else {
-              setFindUs(false)
+              setFindUs(false);
             }
           }}
           onKeyDown={(e) => {
-            if ((e.key === 'Enter' || e.key === ' ')
-              && e.target === e.currentTarget   // only run if parent is focus target
-              && !findUs                        // only toggle if dropdown closed
+            if (
+              (e.key === "Enter" || e.key === " ") &&
+              e.target === e.currentTarget && // only run if parent is focus target
+              !findUs // only toggle if dropdown closed
             ) {
               e.preventDefault();
               setFindUs(true);
@@ -644,20 +694,40 @@ const HirerDetails = () => {
               document.getElementById("find-item-0")?.focus();
             }
           }}
-          style={{ width: '40%', border: errors.how_find_us ? '1px solid red' : '1px solid transparent' }}
-
+          style={{
+            width: "40%",
+            border: errors.how_find_us
+              ? "1px solid red"
+              : "1px solid transparent",
+          }}
         >
           <p>How did you find us?</p>
-          <span onClick={() => setFindUs((prevState) => prevState === true ? false : true)}>
-            <h3>{bookingPayload.user.how_find_us.length > 0 ? bookingPayload.user.how_find_us : 'Please Select'}</h3>
-            <IoIosArrowDown size={17} color='rgba(204,204,204,1)' strokeWidth={5} />
+          <span
+            onClick={() =>
+              setFindUs((prevState) => (prevState === true ? false : true))
+            }
+          >
+            <h3>
+              {bookingPayload.user.how_find_us.length > 0
+                ? bookingPayload.user.how_find_us
+                : "Please Select"}
+            </h3>
+            <IoIosArrowDown
+              size={17}
+              color="rgba(204,204,204,1)"
+              strokeWidth={5}
+            />
           </span>
           <div
-            className={`parent-country-list ${findUs ? 'show-parent-country-list' : ''}`}
+            className={`parent-country-list ${
+              findUs ? "show-parent-country-list" : ""
+            }`}
           >
             {whereFindUs.map((item, index) => (
               <p
-                className={`living-country-item ${foundUsIndex === index ? 'active-country-item' : ''}`}
+                className={`living-country-item ${
+                  foundUsIndex === index ? "active-country-item" : ""
+                }`}
                 key={index}
                 onClick={() => handleFoundTell(item)}
                 onKeyDown={(e) => {
@@ -673,48 +743,61 @@ const HirerDetails = () => {
             ))}
           </div>
         </div>
-
       </div>
 
-      <div className='travel-reason-container'>
+      <div className="travel-reason-container">
         <p>Travel Reason</p>
-        <div className='travel-reason-radio-container'>
+        <div className="travel-reason-radio-container">
           <label>
             Leisure
             <input
-              type='radio'
-              name='Leisure'
-              value={'Leisure'}
-              checked={bookingPayload.user.travel_reason === 'Leisure'}
-              onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, travel_reason: e.target.value } }))}
+              type="radio"
+              name="Leisure"
+              value={"Leisure"}
+              checked={bookingPayload.user.travel_reason === "Leisure"}
+              onChange={(e) =>
+                setBookingPayload((prev) => ({
+                  ...prev,
+                  user: { ...prev.user, travel_reason: e.target.value },
+                }))
+              }
             />
           </label>
 
           <label>
             Business
             <input
-              type='radio'
-              name='Business'
-              value={'Business'}
-              checked={bookingPayload.user.travel_reason === 'Business'}
-              onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, travel_reason: e.target.value } }))}
+              type="radio"
+              name="Business"
+              value={"Business"}
+              checked={bookingPayload.user.travel_reason === "Business"}
+              onChange={(e) =>
+                setBookingPayload((prev) => ({
+                  ...prev,
+                  user: { ...prev.user, travel_reason: e.target.value },
+                }))
+              }
             />
           </label>
           <label>
             Other
             <input
-              type='radio'
-              name='Other'
-              value={'Other'}
-              checked={bookingPayload.user.travel_reason === 'Other'}
-              onChange={(e) => setBookingPayload((prev) => ({ ...prev, user: { ...prev.user, travel_reason: e.target.value } }))}
+              type="radio"
+              name="Other"
+              value={"Other"}
+              checked={bookingPayload.user.travel_reason === "Other"}
+              onChange={(e) =>
+                setBookingPayload((prev) => ({
+                  ...prev,
+                  user: { ...prev.user, travel_reason: e.target.value },
+                }))
+              }
             />
           </label>
-
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default HirerDetails
+export default HirerDetails;
