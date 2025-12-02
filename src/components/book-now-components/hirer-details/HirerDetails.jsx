@@ -115,35 +115,6 @@ const HirerDetails = () => {
   const [countryList, setCountryList] = useState([]);
   const [filterLivingCountry, setFilterLivingCountry] = useState([]);
 
-  // useEffect(() => {
-  //   const handleGetAllCountries = async () => {
-  //     try {
-  //       const res = await fetch("https://restcountries.com/v3.1/all?fields=name,idd");
-  //       const data = await res.json();
-  //       console.log("response", data);
-
-  //       const formatted = data
-  //         .map((item) => {
-  //           const root = item.idd?.root || "";
-  //           const suffix = item.idd?.suffixes?.[0] || "";
-  //           return {
-  //             country: item.name.common,
-  //             code: root + suffix, // e.g. +92
-  //           };
-  //         })
-  //         // sort alphabetically by country name
-  //         .sort((a, b) => a.country.localeCompare(b.country));
-
-  //         console.log("sorted countries", formatted)
-  //       setCountryList(formatted);
-  //     } catch (err) {
-  //       console.error("Error fetching countries:", err);
-  //     }
-  //   };
-
-  //   handleGetAllCountries();
-  // }, []);
-
   useEffect(() => {
     const handleGetAllCountries = async () => {
       try {
@@ -151,7 +122,6 @@ const HirerDetails = () => {
         if (!res.ok) throw new Error("Network response was not ok");
 
         const data = await res.json();
-        console.log("response", data);
 
         const formatted = data
           .map((item) => {
@@ -165,7 +135,6 @@ const HirerDetails = () => {
           // Sort alphabetically by country name
           .sort((a, b) => a.country.localeCompare(b.country));
 
-        console.log("sorted countries", formatted);
         setCountryList(formatted);
       } catch (err) {
         console.error("Error fetching countries:", err);
@@ -536,7 +505,7 @@ const HirerDetails = () => {
       </div>
 
       <div className="hirer-living-country-and-age-container">
-        <div className="hirer-details-select-contianer">
+        <div className="hirer-details-select-contianer" >
           <p>Which country do you live in?</p>
           <Select
             options={options}

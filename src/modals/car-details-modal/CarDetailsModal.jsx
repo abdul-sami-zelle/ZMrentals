@@ -254,12 +254,12 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                             )}
 
 
-                            {vehicleDetails?.available !== 0 && (
+                            {/* {vehicleDetails?.available !== 0 && (
                                 <span onClick={() => emailModal('qoute')}>
                                     <CgFileDocument size={20} />
                                     Save Qoute
                                 </span>
-                            )}
+                            )} */}
 
                         </div>
 
@@ -297,12 +297,12 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
                                     Email Enquiry
                                 </span>
 
-                                {vehicleDetails.available !== 0 && (
+                                {/* {vehicleDetails.available !== 0 && (
                                     <span onClick={() => emailModal('qoute')}>
                                         <CgFileDocument size={20} />
                                         Save Qoute
                                     </span>
-                                )}
+                                )} */}
 
                             </div>
                         </div>

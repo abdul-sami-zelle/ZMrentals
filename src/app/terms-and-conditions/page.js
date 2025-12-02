@@ -10,7 +10,7 @@ const TermsAndConditions = () => {
           This vehicle rental contract establishes the complete agreement between the rental provider and customer, incorporating both the specific rental details (sections 1-7) and the comprehensive terms outlined below.
         </p>
         <p className='global-content-style'>
-          This Contract is established between ZM Rentals (Auckland) Limited (referred to as "the Company"), the primary renter specified in section 1 (referred to as "the Customer"), and, when applicable, the credit card holder mentioned in section 1 (referred to as "the Cardholder"). This agreement defines the conditions under which the Company provides rental services for the designated vehicle(s) listed in section 3, including any substitute or replacement vehicles provided during the rental period.
+          This Contract is established between ZM Rentals (referred to as "the Company"), the primary renter specified in section 1 (referred to as "the Customer"), and, when applicable, the credit card holder mentioned in section 1 (referred to as "the Cardholder"). This agreement defines the conditions under which the Company provides rental services for the designated vehicle(s) listed in section 3, including any substitute or replacement vehicles provided during the rental period.
         </p>
         <p className='global-content-style'>
           Both the Customer and Cardholder bear complete joint responsibility for all actions taken and obligations fulfilled under this rental contract, regardless of who actually performs these duties.

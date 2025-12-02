@@ -754,6 +754,7 @@ const BookNowClient = () => {
   };
 
 
+
   return (
     <div className="book-now-page-main-container">
       {isLoading && <MainLoader />}
@@ -875,6 +876,14 @@ const BookNowClient = () => {
                       <h3>NZ$ {checkIsZero(getSubTotal())}</h3>
                     </span>
 
+                    {vehicleSesionData?.daily_rates?.length > 0 && (
+                      <span>
+                        <p>Duration</p>
+                        <h3>{vehicleSesionData?.daily_rates?.length} {vehicleSesionData?.daily_rates?.length > 1 ? 'days' : 'day'}</h3>
+                      </span>
+                    )}
+
+
 
                     {Object.keys(insuranceSeleted).length > 0 && (
                       <span>
@@ -930,10 +939,10 @@ const BookNowClient = () => {
                       <FaEnvelope size={15} color='var(--primary-color)' />
                       <p>Email Enquiry</p>
                     </span>
-                    <span onClick={() => handleOpenEmailEnquiry('qoute')}>
+                    {/* <span onClick={() => handleOpenEmailEnquiry('qoute')}>
                       <CgFileDocument size={15} color='var(--primary-color)' />
                       <p>Save Quote</p>
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>

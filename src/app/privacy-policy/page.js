@@ -8,7 +8,7 @@ const PrivacyAndPolicy = () => {
       <div className='privacy-policy-width-contianer'>
           <h1 className='section-main-heading'>Privacy and Cookie Policy</h1>
           <p className='global-content-style'>
-            ZM Rentals (Auckland) Limited (referred to as "the Company," "we," "us," or "our") maintains strong commitments to privacy protection obligations. Throughout this Privacy Statement ("Statement"), references to "you" and "your" indicate individuals who provide Personal Data to our organization.
+            ZM Rentals (referred to as "the Company," "we," "us," or "our") maintains strong commitments to privacy protection obligations. Throughout this Privacy Statement ("Statement"), references to "you" and "your" indicate individuals who provide Personal Data to our organization.
           </p>
 
           <p className='global-content-style'>
