@@ -58,13 +58,12 @@ const customStyles = {
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isSelected ? "#961502" : "white",
-    color: state.isSelected ? "white" : "black",
-    ...(state.isFocused &&
-      !state.isSelected && {
-        backgroundColor: "white", // remove default focus red
-        color: "black",
-      }),
+    backgroundColor: state.isSelected
+      ? "#961502"
+      : state.isFocused
+      ? "#961502" // highlight color when focused via arrow keys
+      : "white",
+    color: state.isSelected ? "white" : state.isFocused ? "#fff" : "#961502",
     "&:hover": {
       backgroundColor: "#961502",
       color: "white",
@@ -74,6 +73,24 @@ const customStyles = {
     minHeight: "24px",
     fontSize: "13px",
   }),
+  // option: (provided, state) => ({
+  //   ...provided,
+  //   backgroundColor: state.isSelected ? "#961502" : "white",
+  //   color: state.isSelected ? "white" : "black",
+  //   ...(state.isFocused &&
+  //     !state.isSelected && {
+  //       backgroundColor: "white", // remove default focus red
+  //       color: "black",
+  //     }),
+  //   "&:hover": {
+  //     backgroundColor: "#961502",
+  //     color: "white",
+  //   },
+  //   borderRadius: 0,
+  //   cursor: "pointer",
+  //   minHeight: "24px",
+  //   fontSize: "13px",
+  // }),
   menu: (provided) => ({
     ...provided,
     borderRadius: 0,
@@ -536,7 +553,7 @@ const HirerDetails = () => {
             isSearchable
             className="my-country-input"
             placeholder="Which country do you live in?"
-            menuIsOpen={menuOpen} // force open/close
+            // menuIsOpen={menuOpen} // force open/close
             onFocus={() => setMenuOpen(true)} // open on focus (Tab)
             onBlur={handleBlur}
             filterOption={(option, inputValue) =>
