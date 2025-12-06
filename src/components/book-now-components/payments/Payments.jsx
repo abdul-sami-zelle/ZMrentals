@@ -10,9 +10,9 @@ import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import {checkIsZero} from '../../../utils/checkZero'
 
 
-const Payments = ({ grandTotal, isChecked, setIsChecked, selectPaymentType, setSelectPaymentType }) => {
+const Payments = ({ grandTotal, isChecked, setIsChecked, selectPaymentType, setSelectPaymentType, setRefundModal }) => {
   const payTime = [
-    {id: 1, title: 'Pay Later', val: 'pay-leter', disc: 'Pay when you check in or pick-up.', total: `NZ$ ${checkIsZero(grandTotal)}` },
+    {id: 1, title: 'Pay Later', val: 'pay-leter', disc: 'Pay when you check in or pick-up.', total: `NZ$ 0` },
     {id: 2, title: 'Pay Now', val: 'pay-now', disc: 'Pay the full amount now, save time later.', total: `NZ$ ${checkIsZero(grandTotal)}` },
   ]
   const paymentTypeCards = [
@@ -59,7 +59,7 @@ const Payments = ({ grandTotal, isChecked, setIsChecked, selectPaymentType, setS
 
       <span className='payment-policy-hightlight'>
         <p>Heads up, all online payments are subject to a non-refundable payment processing fee. </p>
-        <FaQuestionCircle size={15} color='var(--primary-color)' className='payment-policy-icon' />
+        <FaQuestionCircle size={15} color='var(--primary-color)' className='payment-policy-icon' onClick={() => setRefundModal(true)} />
       </span>
 
       <span className='agree-to-terms-and-conditions-highlight'>

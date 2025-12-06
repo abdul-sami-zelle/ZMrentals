@@ -10,6 +10,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import Toust from '../../modals/Toust/Toust'
 import StickySection from '@/global-components/sticky-section/StickySection'
+import RefundPolicyModal from '@/modals/RefundPolicyModal/RefundPolicyModal'
 
 
 const Vehicles = () => {
@@ -296,6 +297,8 @@ const Vehicles = () => {
       <div className={`vehicle-booking-sticky-form ${isSticky ? 'vehicle-show-sticky-booking-form' : ''}`}>
         <StickySection bgColor={'var(--color-white)'} isPickupSelected={true} setIsPickupSelected={setIsPickupSelected} setHeight={true} handleSearchVehicles={handleSearchVehicles} boxShadow={'rgba(0, 0, 0, 0.24) 0px 3px 8px'} textColor={'var(--color-white)'} textShadow={'1px 1px 2px #961502;'} primaryButtonText={'Search Cars'} />
       </div>
+
+
     </div>
   )
 }

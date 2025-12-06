@@ -23,6 +23,7 @@ import { disconnect } from 'process';
 import countries from "i18n-iso-countries";
 import en from "i18n-iso-countries/langs/en.json";
 import { checkIsZero } from '../../utils/checkZero'
+import RefundPolicyModal from '../../modals/RefundPolicyModal/RefundPolicyModal'
 
 
 
@@ -753,6 +754,8 @@ const BookNowClient = () => {
     return (numPrice * (discount / 100)).toFixed(2); // discount amount
   };
 
+  const [refundModal, setRefundModal] = useState(false);
+
 
 
   return (
@@ -811,6 +814,7 @@ const BookNowClient = () => {
                         setIsChecked={setIsChecked}
                         selectPaymentType={selectPaymentType}
                         setSelectPaymentType={setSelectPaymentType}
+                        setRefundModal={setRefundModal}
                       />
                 }
               </div>
@@ -968,6 +972,11 @@ const BookNowClient = () => {
         message={toustMessage}
       />
 
+      <RefundPolicyModal 
+        showRefundModal={refundModal}
+        setShowRefundModal={setRefundModal}
+      />
+
       <EmailEnquiryModal
         showEmailEnquiry={emailModal}
         setShowEmailEnquiry={setEmailModal}
@@ -975,6 +984,8 @@ const BookNowClient = () => {
         modalType={modalType}
 
       />
+
+      
 
     </div>
   )

@@ -3,10 +3,12 @@ import './EmailEnquiryModal.css'
 import { IoIosClose, IoMdArrowDropdown } from 'react-icons/io'
 import { url } from '../../utils/services'
 import axios from 'axios'
+import Spinner from '../../loaders/Spinner/Spinner'
 
 const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, modalType }) => {
 
     const [countries, setCountries] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchCountries = async () => {
@@ -43,7 +45,8 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
     const handleSelectCountry = (item) => {
         setQoutePayload((prev) => ({
             ...prev,
-            parent_country: item
+            country: item,
+            car_id: carObj?.car_id
         }))
         setShowCountry(false)
 
@@ -58,20 +61,29 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
     const handleSelectOption = (item) => {
         setQoutePayload((prev) => ({
             ...prev,
-            how_you_found_us: item
+            how_did_you_find_us: item
         }))
         setShowOptionList(false)
     }
 
     const [qoutePayload, setQoutePayload] = useState({
-        vehicle_name: carObj?.name,
+        // vehicle_name: carObj?.name,
         first_name: '',
         last_name: '',
-        parent_country: '',
         email: '',
         phone: '',
-        how_you_found_us: '',
-        message: ''
+        how_did_you_find_us: '',
+        message: '',
+        extras: [],
+        country: '',
+        insurance_id: null,
+        unlock_subscription: false,
+        car_id: carObj?.car_id,
+        pickup_time: '',
+        drop_time: '',
+        pickup_location: '',
+        drop_location: '',
+        mailtype: 0,
     })
 
     const handleInputChange = (e) => {
@@ -118,16 +130,27 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
         return diffDays + 1;
     }
 
+
+    const [isChecked, setIsChecked] = useState(false);
+    const handleSubscription = (e) => {
+        setIsChecked(e.target.checked)
+        setQoutePayload((prev) => ({
+            ...prev,
+            unlock_subscription: e.target.checked
+        }))
+    }
+
+
     const [errors, setErrors] = useState({});
 
     const validateForm = () => {
         const newErrors = {};
 
-        Object.entries(qoutePayload).forEach(([key, value]) => {
-            if (!value || value.trim() === "") {
-                newErrors[key] = "Required"; // mark field as missing
-            }
-        });
+        // Object.entries(qoutePayload).forEach(([key, value]) => {
+        //     if (!value || value.trim() === "") {
+        //         newErrors[key] = "Required"; // mark field as missing
+        //     }
+        // });
 
         setErrors(newErrors);
 
@@ -138,10 +161,28 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
     const handleSubmit = async () => {
         if (validateForm()) {
             const api = `${url}/mail-enquiry/add`;
+            const pickAndDropLocation = JSON.parse(sessionStorage.getItem('pick_and_drop_details'))
+            const newPayload = {
+                ...qoutePayload,
+                pickup_time: pickAndDropLocation?.pickup_time,
+                drop_time: pickAndDropLocation?.drop_time,
+                pickup_location: pickAndDropLocation?.pickup_location,
+                drop_location: pickAndDropLocation?.drop_location,
+            }
+            console.log("new payload", newPayload)
+            setLoading(true)
             try {
-                const response = await axios.post(api, qoutePayload);
+                const response = await axios.post(api, newPayload);
+                if(response.status === 201) {
+                    setLoading(false)
+                    setShowEmailEnquiry(false)
+                }
+                console.log("response", response)
             } catch (error) {
+                setLoading(false)
                 console.error("UnExpected Server Error", error)
+            } finally {
+                setLoading(false)
             }
         } else {
             // ❌ Some fields missing
@@ -159,7 +200,8 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
             <div
                 className={`emaill-enquiry-inner ${showEmailEnquiry ? 'show-email-enquiry-inner' : ''}`}
                 onClick={(e) => e.stopPropagation()}
-            >
+            >   
+                {loading && <Spinner />}
                 <div className='email-enquiry-modal-head'>
                     <div className='email-moda-head-close-and-heading'>
                         <p>{modalType !== 'email-qoute' ? 'Quote' : 'Email Enquiry'}</p>
@@ -243,7 +285,7 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                     <div className='email-enquiry-country-select'>
                         <p>Which country do you live in?</p>
                         <div className='email-enquiry-country-select-head' onClick={handleOpenCountryList}>
-                            <h3>Select Country</h3>
+                            <h3>{qoutePayload?.country !== '' ? qoutePayload?.country : 'Select Country'}</h3>
                             <IoMdArrowDropdown size={15} color='rgba(rgba(102, 102, 102, 0.5))' />
                         </div>
 
@@ -288,10 +330,10 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
 
                 <div className='email-enquiry-footer-section'>
                     <span>
-                        <input type='checkbox' style={{ accentColor: "var(--primary-color)" }} />
+                        <input type='checkbox' checked={isChecked} onChange={(e) => handleSubscription(e)} style={{ accentColor: "var(--primary-color)" }} />
                         Unlock the best of New Zealand with ZM: Join our newsletter for exclusive deals, travel tips and inspiration!
                     </span>
-                    <button onClick={handleSubmit} disabled={isFormValid} style={{ cursor: isFormValid ? 'pointer' : 'not-allowed' }} className={`send-email-enquiry-button ${isFormValid ? 'active-booking-button' : ''}`}>{modalType !== 'email-qoute' ? 'Send Quote' : 'Send Enquiry'}</button>
+                    <button onClick={handleSubmit}  style={{ cursor: 'pointer' }} className={`send-email-enquiry-button ${isChecked ? 'active-booking-button' : ''}`}>{modalType !== 'email-qoute' ? 'Send Quote' : 'Send Enquiry'}</button>
                 </div>
             </div>
         </div>

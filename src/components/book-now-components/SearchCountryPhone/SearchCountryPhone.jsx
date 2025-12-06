@@ -142,10 +142,11 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
             className="width-full-on-phone"
             ref={countryCodeRef}
             style={{
+                color: errors.phone ? '#961502' : '#000',
                 border: errors?.phone ? "1px solid red" : "1px solid transparent",
             }}
         >
-            Phone Number
+            Phone Number *
             <div  className="hirer-phone-with-country-code" > 
                 <div
                     
@@ -155,7 +156,14 @@ const CountryCodeDropdown = ({ countryList, selectedCountryDetails, setSelectedC
                         e.preventDefault(); // prevent losing focus
                         setShowCountryCodeList((prev) => !prev);
                     }}
-                    onFocus={handleLabelFocus}
+                    // onFocus={handleLabelFocus}
+                    onFocus={(e) => {
+                        // ✅ Only open on focus if it's not from a click
+                        if (e.detail === 0 && !showCountryCodeList) {
+                        // e.detail === 0 means focus not from mouse click (keyboard tab)
+                        setShowCountryCodeList(true);
+                        }
+                    }}
                     onKeyDown={handleKeyDown}
                 >
                     <p>

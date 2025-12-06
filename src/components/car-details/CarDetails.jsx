@@ -48,13 +48,28 @@ const CarDetails = ({ searchedVehicles, isVehicleSearched, data, openModal, show
     }
   }, [showDetalModal])
 
-  const getAgeFromYear = (birthYear) => {
+  
+
+  const getAgeFromYear = (yearValue) => {
+    if (!yearValue) return "Invalid year";
+
+    // Always convert to string
+    const str = yearValue.toString();
+
+    // If format is like "2020-2018", get the last year (2018)
+    const year = str.includes("-")
+      ? parseInt(str.split("-").pop(), 10)
+      : parseInt(str, 10);
+
     const currentYear = new Date().getFullYear();
-    if (!birthYear || isNaN(birthYear) || birthYear > currentYear) {
+
+    if (isNaN(year) || year > currentYear) {
       return "Invalid year";
     }
-    return currentYear - birthYear;
+
+    return currentYear - year;
   };
+
 
   const [isMobile, setIsMobile] = useState(false);
 

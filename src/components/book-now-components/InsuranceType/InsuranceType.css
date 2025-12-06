@@ -27,7 +27,7 @@
     background-color: rgba(150, 21, 2, 0.1);
     border-radius: 3px;
     flex-direction: column;
-    gap: 16px;
+    gap: 5px;
     cursor: pointer;
     position: relative;
     border: 1px solid transparent;
@@ -68,6 +68,7 @@
     line-height: var(--line-height-heading);
     font-weight: var(--font-weight-bold);
     cursor: pointer;
+    margin-bottom: 15px;
 }
 
 .select-insurance-radio-container input[type='radio'] {

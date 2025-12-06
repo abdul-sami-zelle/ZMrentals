@@ -373,7 +373,8 @@
   line-height: var(--line-height-heading);
   font-weight: var(--font-weight-semibold);
   color: var(--white-color);
-  background-color: rgba(102, 102, 102, 0.3);
+  /* background-color: rgba(102, 102, 102, 0.3); */
+  background-color: var(--primary-color);
 }
 
 .active-booking-button {

@@ -24,6 +24,7 @@ const customStyles = {
     background: "Transparent", // no border radius
     borderColor: state.isFocused ? "#961502" : "#ccc", // red on focus/open
     boxShadow: "none",
+    cursor: "pointer",
     "&:hover": {
       borderColor: "#961502",
     },
@@ -42,6 +43,7 @@ const customStyles = {
     lineHeight: 1.5, // 🚀 line height set to 1.5
     fontWeight: 400, // 🚀 font weight set to 400
     color: "#000",
+    caretColor: "transparent",
   }),
   singleValue: (provided) => ({
     ...provided,
@@ -56,12 +58,17 @@ const customStyles = {
   }),
   option: (provided, state) => ({
     ...provided,
-    backgroundColor: state.isSelected
-      ? "#961502"
-      : state.isFocused
-      ? "#961502"
-      : "white", // active/hover red
-    color: state.isSelected || state.isFocused ? "white" : "black",
+    backgroundColor: state.isSelected ? "#961502" : "white",
+    color: state.isSelected ? "white" : "black",
+    ...(state.isFocused &&
+      !state.isSelected && {
+        backgroundColor: "white", // remove default focus red
+        color: "black",
+      }),
+    "&:hover": {
+      backgroundColor: "#961502",
+      color: "white",
+    },
     borderRadius: 0,
     cursor: "pointer",
     minHeight: "24px",
@@ -143,8 +150,6 @@ const HirerDetails = () => {
 
     handleGetAllCountries();
   }, []);
-
-  
 
   const [showCountryCodeList, setShowCountryCodeList] = useState(false);
 
@@ -476,12 +481,13 @@ const HirerDetails = () => {
       <div className="hirer-first-and-last-name">
         <label
           style={{
+            color: errors.firstname ? "#961502" : "#000",
             border: errors.firstname
-              ? "1px solid red"
+              ? "1px solid #961502"
               : "1px solid transparent",
           }}
         >
-          First Name
+          First Name *
           <input
             type="text"
             name="firstname"
@@ -489,12 +495,16 @@ const HirerDetails = () => {
             onChange={handleHirerDetailsAdd}
           />
         </label>
+
         <label
           style={{
-            border: errors.lastname ? "1px solid red" : "1px solid transparent",
+            color: errors.lastname ? "#961502" : "#000",
+            border: errors.lastname
+              ? "1px solid #961502"
+              : "1px solid transparent",
           }}
         >
-          Last Name
+          Last Name *
           <input
             type="text"
             name="lastname"
@@ -505,23 +515,15 @@ const HirerDetails = () => {
       </div>
 
       <div className="hirer-living-country-and-age-container">
-        <div className="hirer-details-select-contianer" >
-          <p>Which country do you live in?</p>
+        <div className="hirer-details-select-contianer">
+          <p style={{ color: errors.country ? "#961502" : "#000" }}>
+            Which country do you live in? *
+          </p>
           <Select
             options={options}
-            // value={options.find((opt) => opt.value === bookingPayload.user.country) || null}
-            value={
-              isConfirmedSelection
-                ? options.find(
-                    (opt) => opt.value === bookingPayload.user.country
-                  ) || null
-                : bookingPayload.user.country
-                ? options.find(
-                    (opt) => opt.value === bookingPayload.user.country
-                  )
-                : null
-            }
-            // onChange={(selected) => handleSelectLivingCountry(selected)}
+            value={options.find(
+              (opt) => opt.value === bookingPayload.user.country
+            )}
             onChange={handleChange}
             styles={customStyles}
             isClearable={false}
@@ -530,13 +532,12 @@ const HirerDetails = () => {
             backspaceRemovesValue={false}
             tabSelectsValue={false} // prevent selecting on tab press
             openMenuOnFocus={true}
-            blurInputOnSelect={false}
+            blurInputOnSelect={true}
             isSearchable
             className="my-country-input"
             placeholder="Which country do you live in?"
             menuIsOpen={menuOpen} // force open/close
             onFocus={() => setMenuOpen(true)} // open on focus (Tab)
-            // onBlur={() => setMenuOpen(false)}
             onBlur={handleBlur}
             filterOption={(option, inputValue) =>
               option.label.toLowerCase().startsWith(inputValue.toLowerCase())
@@ -547,7 +548,12 @@ const HirerDetails = () => {
         {/* driver age */}
 
         <div className="smooth-dropdown" ref={dropdownRef}>
-          <label htmlFor="driver_age">Driver Age</label>
+          <label
+            htmlFor="driver_age"
+            style={{ color: errors.driver_age ? "#961502" : "#000" }}
+          >
+            Driver Age *
+          </label>
 
           <div
             id="driver_age"
@@ -596,10 +602,13 @@ const HirerDetails = () => {
         <label
           className="width-full-on-phone"
           style={{
-            border: errors.email ? "1px solid red" : "1px solid transparent",
+            color: errors.email ? "#961502" : "#000",
+            border: errors.email
+              ? "1px solid #961502"
+              : "1px solid transparent",
           }}
         >
-          Email Address
+          Email Address *
           <input
             type="text"
             name="email"
@@ -638,42 +647,22 @@ const HirerDetails = () => {
           className="hirer-parent-country"
           ref={foundUsRef}
           tabIndex={0}
-          role="button"
-          aria-expanded={findUs}
-          onFocus={(e) => {
-            if (e.target === e.currentTarget) {
-              setFindUs(true); // open dropdown
-            } else {
-              setFindUs(false);
-            }
+          onMouseDown={(e) => {
+            e.preventDefault(); // ⛔ prevents unwanted blur
+            setFindUs((prev) => !prev); // ⬅ toggle on click (first click)
           }}
-          onKeyDown={(e) => {
-            if (
-              (e.key === "Enter" || e.key === " ") &&
-              e.target === e.currentTarget && // only run if parent is focus target
-              !findUs // only toggle if dropdown closed
-            ) {
-              e.preventDefault();
-              setFindUs(true);
-            }
-            if (e.key === "ArrowDown" && e.target === e.currentTarget) {
-              e.preventDefault();
-              document.getElementById("find-item-0")?.focus();
-            }
-          }}
+          onFocus={() => setFindUs(true)}
+          onBlur={() => setFindUs(false)}
           style={{
             width: "40%",
+            color: errors.how_find_us ? "#961502" : "#000",
             border: errors.how_find_us
-              ? "1px solid red"
+              ? "1px solid #961502"
               : "1px solid transparent",
           }}
         >
-          <p>How did you find us?</p>
-          <span
-            onClick={() =>
-              setFindUs((prevState) => (prevState === true ? false : true))
-            }
-          >
+          <p>How did you find us? *</p>
+          <span>
             <h3>
               {bookingPayload.user.how_find_us.length > 0
                 ? bookingPayload.user.how_find_us
@@ -713,7 +702,7 @@ const HirerDetails = () => {
       </div>
 
       <div className="travel-reason-container">
-        <p>Travel Reason</p>
+        <p>Travel Reason *</p>
         <div className="travel-reason-radio-container">
           <label>
             Leisure
