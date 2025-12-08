@@ -37,7 +37,7 @@ const UserDashoard = () => {
         setUserDetails(response.data.data)
       }
     } catch (error) {
-      console.log("UnExpected Servr Error", error);
+      console.error("UnExpected Servr Error", error);
     }
   }
 

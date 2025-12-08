@@ -31,7 +31,7 @@ const DashTab = () => {
         setDashData(response.data.data)
       }
     } catch (error) {
-      console.log("UnExpected Server Error", error);
+      console.error("UnExpected Server Error", error);
     }
   }
   useEffect(() => { handleGetDashboardData() }, [])

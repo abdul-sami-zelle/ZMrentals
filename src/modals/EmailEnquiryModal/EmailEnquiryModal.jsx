@@ -5,7 +5,8 @@ import { url } from '../../utils/services'
 import axios from 'axios'
 import Spinner from '../../loaders/Spinner/Spinner'
 
-const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, modalType }) => {
+const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, modalType, bookingPayload = {} }) => {
+
 
     const [countries, setCountries] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -85,6 +86,17 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
         drop_location: '',
         mailtype: 0,
     })
+
+    useEffect(() => {
+        if(Object.keys(bookingPayload).length > 0) {
+            setQoutePayload((prev) => ({
+                ...prev,
+                insurance_id: bookingPayload?.booking?.insurance_id,
+                extras: bookingPayload?.booking?.extras
+            }))
+        }
+    }, [bookingPayload])
+
 
     const handleInputChange = (e) => {
 
@@ -169,7 +181,6 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                 pickup_location: pickAndDropLocation?.pickup_location,
                 drop_location: pickAndDropLocation?.drop_location,
             }
-            console.log("new payload", newPayload)
             setLoading(true)
             try {
                 const response = await axios.post(api, newPayload);
@@ -177,7 +188,6 @@ const EmailEnquiryModal = ({ showEmailEnquiry, setShowEmailEnquiry, carObj, moda
                     setLoading(false)
                     setShowEmailEnquiry(false)
                 }
-                console.log("response", response)
             } catch (error) {
                 setLoading(false)
                 console.error("UnExpected Server Error", error)

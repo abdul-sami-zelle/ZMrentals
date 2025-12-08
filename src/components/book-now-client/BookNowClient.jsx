@@ -982,6 +982,7 @@ const BookNowClient = () => {
         setShowEmailEnquiry={setEmailModal}
         carObj={bookingVehicleData}
         modalType={modalType}
+        bookingPayload={bookingPayload}
 
       />
 

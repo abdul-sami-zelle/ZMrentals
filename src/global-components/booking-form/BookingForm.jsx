@@ -244,15 +244,18 @@ const BookingForm = (
     };
 
     const selectDropDate = (daysAhead) => {
-        const today = new Date();
-        const futureDate = new Date(today);
-        futureDate.setDate(today.getDate() + daysAhead);
+        if(!selectedPickupDate) return;
+
+        // const pickup = new Date(selectedPickupDate);
+        const pickup = new Date(selectedPickupDate);
+        const futureDate = new Date(pickup);
+        futureDate.setDate(pickup.getDate() + daysAhead);
         getDropOffDateAt10AM(futureDate)
         setSelectedDropDate(futureDate); // Update selected date
 
     };
 
-    const selectFutureDate = (date) => {
+    const selectFutureDate = (date) => { 
         const current = new Date(date);
         const futureDate = new Date(current);
         futureDate.setDate(current.getDate() + 4)
@@ -261,9 +264,8 @@ const BookingForm = (
     }
 
     useEffect(() => {
-        if (!selectedDropDate) {
+        if(!selectedPickupDate) return
             selectFutureDate(selectedPickupDate)
-        }
     }, [selectedPickupDate])
 
     // 🔹 Set default dates only if empty
@@ -345,8 +347,6 @@ const BookingForm = (
                                             onChange={handlePickupDateChange}
                                             value={selectedPickupDate}
                                             defaultView="month"
-                                            // maxDetail="month"
-                                            // minDetail="month"
                                             next2Label={null}
                                             prev2Label={null}
                                             minDate={new Date()}
@@ -355,12 +355,14 @@ const BookingForm = (
                                             }
                                             nextLabel={<IoIosArrowForward />}
                                             prevLabel={<IoIosArrowBack />}
-                                            tileDisabled={({ date }) => {
+                                            tileDisabled={({ date, view }) => {
+                                                if (view !== "month") return false;
+
                                                 const today = new Date();
-                                                today.setHours(0, 0, 0, 0); // strip time
+                                                today.setHours(0, 0, 0, 0);
 
                                                 const checkDate = new Date(date);
-                                                checkDate.setHours(0, 0, 0, 0); // strip time
+                                                checkDate.setHours(0, 0, 0, 0);
 
                                                 return checkDate < today;
                                             }}
@@ -419,14 +421,16 @@ const BookingForm = (
                                             onChange={handleDropDateChange}
                                             value={selectedDropDate}
                                             defaultView="month"            // always show month view
-                                            // maxDetail="month"       // prevent navigating into days
-                                            // minDetail="month"       // prevent navigating to years
                                             next2Label={null}       // hides double right arrow (>>)
                                             prev2Label={null}
                                             formatShortWeekday={(locale, date) => date.toLocaleDateString(locale, { weekday: 'short' }).slice(0, 3)}
-                                            minDate={new Date()}
-                                            tileDisabled={({ date }) => {
-                                                if (!selectedPickupDate) return true; // disable everything if no pickup date selected
+                                            // 🔹 minDate = pickup date (allows selecting 1+ day bookings)
+                                            minDate={selectedPickupDate || new Date()}
+
+                                            tileDisabled={({ date, view }) => {
+                                                if (view !== "month") return false; // only disable days
+
+                                                if (!selectedPickupDate) return true;
 
                                                 const pickupDate = new Date(selectedPickupDate);
                                                 pickupDate.setHours(0, 0, 0, 0);
@@ -434,7 +438,7 @@ const BookingForm = (
                                                 const checkDate = new Date(date);
                                                 checkDate.setHours(0, 0, 0, 0);
 
-                                                return checkDate < pickupDate;
+                                                return checkDate < pickupDate; // disable days before pickup
                                             }}
                                         />
                                     </div>

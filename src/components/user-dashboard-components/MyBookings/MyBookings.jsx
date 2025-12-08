@@ -19,7 +19,7 @@ const MyBookings = () => {
         setBookingTable(response.data.data)
       }
     } catch (error) {
-      console.log("unedpected server Error", error)
+      console.error("unexpected server Error", error)
     }
   }
 
