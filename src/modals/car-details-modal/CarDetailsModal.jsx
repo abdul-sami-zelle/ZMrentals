@@ -30,7 +30,7 @@ import VehicleCard from '@/global-components/vehicle-card/VehicleCard';
 
 const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSearched, emailModal }) => {
 
-    const url = `https://zm.skyhub.pk`
+    const url = `https://api.zmrentals.co.nz`
     const { searchVehiclePayload, setSearchVehiclePayload, searchedVehicles } = useSearchVehicle()
     useEffect(() => {
         if (showModal) {
@@ -120,7 +120,7 @@ const CarDetailsModal = ({ showModal, handleClose, vehicleDetails, isVehicleSear
     const { setBookingVehicleData } = useBookingContext()
     const handleBookNow = async (e) => {
         e.stopPropagation();
-        const api = `https://zm.skyhub.pk/cars/get/${vehicleDetails?.car_id}`;
+        const api = `https://api.zmrentals.co.nz/cars/get/${vehicleDetails?.car_id}`;
 
         try {
 

@@ -8,7 +8,7 @@ const MyBookings = () => {
 
   const handleGetBookingData = async () => {
     const userToken = localStorage.getItem('userToken');
-    const api = `https://zm.skyhub.pk/customer/bookings`;
+    const api = `https://api.zmrentals.co.nz/customer/bookings`;
     try {
       const response = await axios.get(api, {
         headers: {

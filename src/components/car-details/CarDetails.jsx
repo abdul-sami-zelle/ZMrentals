@@ -16,7 +16,7 @@ const CarDetails = ({ searchedVehicles, isVehicleSearched, data, openModal, show
 
 
   // const { searchedVehicles, isVehicleSearched, setIsVehicleSearched } = useSearchVehicle()
-  const url = `https://zm.skyhub.pk`
+  const url = `https://api.zmrentals.co.nz`
 
 
   const [modalData, setModalData] = useState([])

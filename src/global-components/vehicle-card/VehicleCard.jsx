@@ -50,7 +50,7 @@ const VehicleCard = ({
 
   const handleBookVehicle = async (e) => {
     e.stopPropagation();
-    const api = `https://zm.skyhub.pk/cars/get/${vehicleId}`;
+    const api = `https://api.zmrentals.co.nz/cars/get/${vehicleId}`;
 
     try {
       const response = await axios.get(api);

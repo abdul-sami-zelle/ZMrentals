@@ -25,7 +25,7 @@ const Vehicles = () => {
     }, [searchedVehicles]);
 
   const getAllVehicles = async () => {
-    const api = `https://zm.skyhub.pk/cars/get`;
+    const api = `https://api.zmrentals.co.nz/cars/get`;
 
     try {
       const response = await axios.get(api);
@@ -150,7 +150,7 @@ const Vehicles = () => {
   };
 
   const handleSearchVehicles = async () => {
-    const api = "https://zm.skyhub.pk/cars/available-cars";
+    const api = "https://api.zmrentals.co.nz/cars/available-cars";
     const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
 
     if (isValidDropDate(searchVehiclePayload.pickup_time, searchVehiclePayload.drop_time)) {

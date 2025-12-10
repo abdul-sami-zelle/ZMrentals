@@ -60,7 +60,7 @@ const BookingForm = (
     const [locations, setLocations] = useState([])
     const getApi = async () => {
         try {
-            const response = await axios.get(`https://zm.skyhub.pk/locations/get`);
+            const response = await axios.get(`https://api.zmrentals.co.nz/locations/get`);
             setLocations(response.data.data);
         } catch (error) {
             console.error(error);

@@ -1,1 +1,1 @@
-export const url = `https://zm.skyhub.pk`
+export const url = `https://api.zmrentals.co.nz`

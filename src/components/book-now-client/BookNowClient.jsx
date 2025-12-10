@@ -43,7 +43,7 @@ const BookNowClient = () => {
   countries.registerLocale(en);
   const stripe = useStripe();
   const elements = useElements();
-  const url = `https://zm.skyhub.pk`
+  const url = `https://api.zmrentals.co.nz`
   const {
     bookingVehicleData,
     bookingPayload,
@@ -181,7 +181,7 @@ const BookNowClient = () => {
   })
 
   const handleCompleteBooking = async () => {
-    const api = `https://zm.skyhub.pk/booking/add-booking`;
+    const api = `https://api.zmrentals.co.nz/booking/add-booking`;
 
     const userId = localStorage.getItem('userId');
 
@@ -331,7 +331,7 @@ const BookNowClient = () => {
 
       // 1️⃣ Create booking first
       const bookingResponse = await axios.post(
-        `https://zm.skyhub.pk/booking/add-booking`,
+        `https://api.zmrentals.co.nz/booking/add-booking`,
         payloadWithPhoneCode
       );
 
@@ -351,7 +351,7 @@ const BookNowClient = () => {
       if (!stripe || !elements) throw new Error("Stripe not initialized");
 
       const { data } = await axios.post(
-        'https://zm.skyhub.pk/create-payment-intent',
+        'https://api.zmrentals.co.nz/create-payment-intent',
         {
           amount: getGrandTotal() * 100, // convert to cents
           currency: 'NZD',
@@ -590,7 +590,7 @@ const BookNowClient = () => {
 
     const getApi = async () => {
       try {
-        const response = await axios.get(`https://zm.skyhub.pk/locations/get`);
+        const response = await axios.get(`https://api.zmrentals.co.nz/locations/get`);
         setLocations(response.data.data);
       } catch (error) {
         console.error(error);

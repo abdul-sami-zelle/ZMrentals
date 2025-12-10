@@ -100,7 +100,7 @@ export default function Home() {
   ]
 
   const getAllVehicles = async () => {
-    const api = `https://zm.skyhub.pk/cars/get`;
+    const api = `https://api.zmrentals.co.nz/cars/get`;
 
     
     try {

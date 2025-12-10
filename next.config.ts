@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     domains: [
       "dev.zmrentals.co.nz",
-      "zm.skyhub.pk"
+      "api.zmrentals.co.nz"
     ], // replace with your actual domain or IP
   },
 };

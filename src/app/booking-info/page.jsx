@@ -42,7 +42,7 @@ const BookingInfo = () => {
     const [toustMessage, setToustMessage] = useState('')
 
   const handleSearchVehicles = async () => {
-    const api = "https://zm.skyhub.pk/cars/available-cars";
+    const api = "https://api.zmrentals.co.nz/cars/available-cars";
     const { pickup_location, drop_location, pickup_time, drop_time } = searchVehiclePayload;
 
     try {
